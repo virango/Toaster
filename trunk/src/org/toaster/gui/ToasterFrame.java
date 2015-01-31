@@ -9,6 +9,8 @@ package org.toaster.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jaudiolibs.jnajack.JackException;
+import org.toaster.midi.RigSysEx;
+import org.toaster.midi.StompsSysEx;
 import org.toaster.midi.jack.JackMidiSender;
 
 /**
@@ -18,6 +20,7 @@ import org.toaster.midi.jack.JackMidiSender;
 public class ToasterFrame extends javax.swing.JFrame {
 
   private JackMidiSender midiSender = null;
+  private StompsSysEx stompsSysEx = null;
   /**
    * Creates new form ToasterFrame
    */
@@ -28,6 +31,7 @@ public class ToasterFrame extends javax.swing.JFrame {
     } catch (JackException ex) {
       Logger.getLogger(ToasterFrame.class.getName()).log(Level.SEVERE, null, ex);
     }
+    stompsSysEx = new StompsSysEx();
   }
 
   /**
@@ -94,11 +98,7 @@ public class ToasterFrame extends javax.swing.JFrame {
   @SuppressWarnings("empty-statement")
   private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
     // TODO add your handling code here:
-    byte[] data = new byte[]{(byte)0xB0, 0x11, 0x00};
-   
-    if(jToggleButton1.isSelected()){
-      data[2] = 0x01;
-    }
+    byte[] data = stompsSysEx.switchStomp(StompsSysEx.Stomp.A, jToggleButton1.isSelected());
     midiSender.send(data);
   }//GEN-LAST:event_jToggleButton1ActionPerformed
 
