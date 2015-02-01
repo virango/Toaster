@@ -26,13 +26,14 @@ import org.jaudiolibs.jnajack.JackStatus;
  *
  * @author tholan
  */
-public class JackMidiSender implements JackProcessCallback, JackShutdownCallback {
+public class Client implements JackProcessCallback, JackShutdownCallback {
   private JackClient client = null;
+  private JackPort inputPort = null;
   private JackPort outputPort = null;
   private byte[] sendData = null; 
   private final String clientName = "Toaster";
   
-  public JackMidiSender() throws JackException {
+  public Client() throws JackException {
     EnumSet<JackStatus> status = EnumSet.noneOf(JackStatus.class);
     try {
         Jack jack = Jack.getInstance();
@@ -41,7 +42,7 @@ public class JackMidiSender implements JackProcessCallback, JackShutdownCallback
             System.out.println("JACK client status : " + status);
         }
         outputPort = client.registerPort("MIDI out", JackPortType.MIDI, JackPortFlags.JackPortIsOutput);
-        
+        inputPort = client.registerPort("MIDI in", JackPortType.MIDI, JackPortFlags.JackPortIsInput);
         activate();
     } catch (JackException ex) {
         if (!status.isEmpty()) {
@@ -52,16 +53,15 @@ public class JackMidiSender implements JackProcessCallback, JackShutdownCallback
   }
   
   public void activate() throws JackException {
-        client.setProcessCallback(this);
-        client.onShutdown(this);
-        client.activate();
-    }
+    client.setProcessCallback(this);
+    client.onShutdown(this);
+    client.activate();
+  }
   
   public void send(byte[] data) {
     sendData = data;
   }
           
-
   @Override
   public boolean process(JackClient client, int nframes) {
     try {
@@ -71,7 +71,7 @@ public class JackMidiSender implements JackProcessCallback, JackShutdownCallback
         sendData = null;
       }
     } catch (JackException ex) {
-      Logger.getLogger(JackMidiSender.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
       return false;
     }
     return true;

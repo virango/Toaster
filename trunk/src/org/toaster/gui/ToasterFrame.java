@@ -11,15 +11,14 @@ import java.util.logging.Logger;
 import org.jaudiolibs.jnajack.JackException;
 import org.toaster.midi.RigSysEx;
 import org.toaster.midi.StompsSysEx;
-import org.toaster.midi.jack.JackMidiSender;
+import org.toaster.midi.jack.Client;
 
 /**
  *
  * @author tholan
  */
 public class ToasterFrame extends javax.swing.JFrame {
-
-  private JackMidiSender midiSender = null;
+  private Client midiSender = null;
   private StompsSysEx stompsSysEx = null;
   /**
    * Creates new form ToasterFrame
@@ -27,7 +26,7 @@ public class ToasterFrame extends javax.swing.JFrame {
   public ToasterFrame() {
     initComponents();
     try {
-      midiSender = new JackMidiSender();
+      midiSender = new Client();
     } catch (JackException ex) {
       Logger.getLogger(ToasterFrame.class.getName()).log(Level.SEVERE, null, ex);
     }
