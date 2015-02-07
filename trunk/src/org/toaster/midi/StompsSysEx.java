@@ -92,7 +92,7 @@ public class StompsSysEx extends SysExBase{
     return createSingleParamGetCmd(getAddressPage(stomp), this.type);
   }
   
-  public byte[] requestOnOff(Stomp stomp) {
+  public byte[] requestOnOffState(Stomp stomp) {
     return createSingleParamGetCmd(getAddressPage(stomp), this.onOff);
   }
     

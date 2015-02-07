@@ -9,28 +9,39 @@ package org.toaster.gui;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jaudiolibs.jnajack.JackException;
+import org.toaster.midi.MessageHandler;
 import org.toaster.midi.RigSysEx;
 import org.toaster.midi.StompsSysEx;
+import org.toaster.midi.SystemSysEx;
 import org.toaster.midi.jack.Client;
+
 
 /**
  *
  * @author tholan
  */
 public class ToasterFrame extends javax.swing.JFrame {
-  private Client midiSender = null;
+  private Client jackClient = null;
+  private RigSysEx rigSysEx = null;
   private StompsSysEx stompsSysEx = null;
+  private SystemSysEx systemSysEx = null;
+  private MessageHandler messageHandler = null;
+ 
   /**
    * Creates new form ToasterFrame
    */
   public ToasterFrame() {
     initComponents();
     try {
-      midiSender = new Client();
+      jackClient = new Client();
     } catch (JackException ex) {
       Logger.getLogger(ToasterFrame.class.getName()).log(Level.SEVERE, null, ex);
     }
+    rigSysEx = new RigSysEx();
     stompsSysEx = new StompsSysEx();
+    systemSysEx = new SystemSysEx();
+    messageHandler = new MessageHandler();
+    jackClient.addInputConsumer(messageHandler);
   }
 
   /**
@@ -40,9 +51,15 @@ public class ToasterFrame extends javax.swing.JFrame {
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
+    bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
     jPanel1 = new javax.swing.JPanel();
     jToggleButton1 = new javax.swing.JToggleButton();
+    rotaryKnob1 = new de.sciss.swingosc.RotaryKnob();
+    jSlider1 = new javax.swing.JSlider();
+    jButton1 = new javax.swing.JButton();
+    jButton2 = new javax.swing.JButton();
+    jButton3 = new javax.swing.JButton();
     jMenuBar1 = new javax.swing.JMenuBar();
     jMenu1 = new javax.swing.JMenu();
     jMenu2 = new javax.swing.JMenu();
@@ -56,20 +73,81 @@ public class ToasterFrame extends javax.swing.JFrame {
       }
     });
 
+    rotaryKnob1.setKnobColor(java.awt.Color.gray);
+
+    org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jSlider1, org.jdesktop.beansbinding.ELProperty.create("${value}"), rotaryKnob1, org.jdesktop.beansbinding.BeanProperty.create("value"));
+    bindingGroup.addBinding(binding);
+
+    rotaryKnob1.addChangeListener(new javax.swing.event.ChangeListener() {
+      public void stateChanged(javax.swing.event.ChangeEvent evt) {
+        rotaryKnob1StateChanged(evt);
+      }
+    });
+    rotaryKnob1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+      public void propertyChange(java.beans.PropertyChangeEvent evt) {
+        rotaryKnob1PropertyChange(evt);
+      }
+    });
+
+    jButton1.setText("RequestVolume");
+    jButton1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton1ActionPerformed(evt);
+      }
+    });
+
+    jButton2.setText("RequestStompState");
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton2ActionPerformed(evt);
+      }
+    });
+
+    jButton3.setText("RequestRigName");
+    jButton3.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton3ActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
-        .addComponent(jToggleButton1)
-        .addGap(0, 308, Short.MAX_VALUE))
+        .addGap(58, 58, 58)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(rotaryKnob1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap(163, Short.MAX_VALUE))
+      .addGroup(jPanel1Layout.createSequentialGroup()
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(jButton2)
+            .addGap(30, 30, 30)
+            .addComponent(jButton3)
+            .addGap(0, 0, Short.MAX_VALUE))
+          .addGroup(jPanel1Layout.createSequentialGroup()
+            .addComponent(jToggleButton1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton1)))
+        .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
-        .addGap(107, 107, 107)
-        .addComponent(jToggleButton1)
-        .addContainerGap(147, Short.MAX_VALUE))
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jToggleButton1)
+          .addComponent(jButton1))
+        .addGap(35, 35, 35)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jButton2)
+          .addComponent(jButton3))
+        .addGap(116, 116, 116)
+        .addComponent(rotaryKnob1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(52, 52, 52))
     );
 
     jMenu1.setText("File");
@@ -91,6 +169,8 @@ public class ToasterFrame extends javax.swing.JFrame {
       .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
+    bindingGroup.bind();
+
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
@@ -98,8 +178,29 @@ public class ToasterFrame extends javax.swing.JFrame {
   private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
     // TODO add your handling code here:
     byte[] data = stompsSysEx.switchStomp(StompsSysEx.Stomp.A, jToggleButton1.isSelected());
-    midiSender.send(data);
+    jackClient.send(data);
   }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+  private void rotaryKnob1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rotaryKnob1StateChanged
+    // TODO add your handling code here:
+    System.out.printf("rotaryKnob1StateChanged new value: %d\n", rotaryKnob1.getValue());
+  }//GEN-LAST:event_rotaryKnob1StateChanged
+
+  private void rotaryKnob1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_rotaryKnob1PropertyChange
+    // TODO add your handling code here:
+  }//GEN-LAST:event_rotaryKnob1PropertyChange
+
+  private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    jackClient.send(systemSysEx.requestMainOutputVolume());
+  }//GEN-LAST:event_jButton1ActionPerformed
+
+  private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    jackClient.send(stompsSysEx.requestOnOffState(StompsSysEx.Stomp.A));
+  }//GEN-LAST:event_jButton2ActionPerformed
+
+  private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    jackClient.send(rigSysEx.requestRigName());
+  }//GEN-LAST:event_jButton3ActionPerformed
 
   /**
    * @param args the command line arguments
@@ -137,10 +238,16 @@ public class ToasterFrame extends javax.swing.JFrame {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton jButton1;
+  private javax.swing.JButton jButton2;
+  private javax.swing.JButton jButton3;
   private javax.swing.JMenu jMenu1;
   private javax.swing.JMenu jMenu2;
   private javax.swing.JMenuBar jMenuBar1;
   private javax.swing.JPanel jPanel1;
+  private javax.swing.JSlider jSlider1;
   private javax.swing.JToggleButton jToggleButton1;
+  private de.sciss.swingosc.RotaryKnob rotaryKnob1;
+  private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 }

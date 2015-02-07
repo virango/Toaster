@@ -51,6 +51,7 @@ public class Client implements JackProcessCallback, JackShutdownCallback {
         inputPort = client.registerPort("MIDI in", JackPortType.MIDI, JackPortFlags.JackPortIsInput);
         midiEvent = new JackMidi.Event();
         inputConsumerList = new LinkedList<>();
+        inputData = new byte[1000];
         activate();
     } catch (JackException ex) {
         if (!status.isEmpty()) {
@@ -78,6 +79,8 @@ public class Client implements JackProcessCallback, JackShutdownCallback {
   @Override
   public boolean process(JackClient client, int nframes) {
     try {
+      
+      JackMidi.clearBuffer(outputPort);
       int eventCount = JackMidi.getEventCount(inputPort);
       for (int i = 0; i < eventCount; ++i) {
         JackMidi.eventGet(midiEvent, inputPort, i);
@@ -89,13 +92,16 @@ public class Client implements JackProcessCallback, JackShutdownCallback {
         for(int j = 0; i < inputConsumerList.size(); ++i) {
           InputConsumer inputConsumer = inputConsumerList.get(j);
           if(inputData[0] == inputConsumer.getStatusByte())
+          {
             inputConsumer.consume(inputData);
-        }
+            inputData = null;
+          }
+        }  
       }
-      JackMidi.clearBuffer(outputPort);
+      
       if(outputData != null) {
-        JackMidi.eventWrite(outputPort, 0, outputData, outputData.length);
-        outputData = null;
+          JackMidi.eventWrite(outputPort, 0, outputData, outputData.length);
+          outputData = null;
       }
     } catch (JackException ex) {
       Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
