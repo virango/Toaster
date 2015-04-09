@@ -4,11 +4,11 @@
 // address page
 BYTEARRAYDEF(CabMidi, AddressPage,     0x0C)
 // parameter
-BYTEARRAYDEF(CabMidi, OnOff            0x02)
-BYTEARRAYDEF(CabMidi, Volume           0x03)
-BYTEARRAYDEF(CabMidi, HighShift        0x04)
-BYTEARRAYDEF(CabMidi, LowShift         0x05)
-BYTEARRAYDEF(CabMidi, Character        0x06)
+BYTEARRAYDEF(CabMidi, OnOff,           0x02)
+BYTEARRAYDEF(CabMidi, Volume,          0x03)
+BYTEARRAYDEF(CabMidi, HighShift,       0x04)
+BYTEARRAYDEF(CabMidi, LowShift,        0x05)
+BYTEARRAYDEF(CabMidi, Character,       0x06)
 
 CabMidi::CabMidi()
 {

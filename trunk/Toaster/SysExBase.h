@@ -83,7 +83,7 @@ protected:
     unsigned char lsb = rawVal & 0x7F;
     ByteArray val;
     val.push_back(msb);
-    val.psuh_back(lsb);
+    val.push_back(lsb);
     return val;
   }
 };

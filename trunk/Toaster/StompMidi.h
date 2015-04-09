@@ -32,20 +32,17 @@ protected:
   StompMidi(Instance instance);
   ~StompMidi();
 
-
   // ISysExConsumer
   void consumeSysExMsg(ByteArray* msg);
   unsigned char getId();
-  
 
   // parameter
-  // Type 
-  void midiApplyType(unsigned short rawVal);
+  // Type
   void midiRequestType();
+  void midiApplyType(unsigned short rawVal);
   // OnOff
-  void midiApplyOnOff(unsigned short rawVal);
   void midiRequestOnOff();
-
+  void midiApplyOnOff(unsigned short rawVal);
   
   // receive callbacks for derived class
   virtual void midiOnOffReceived(unsigned short rawVal) = 0;
