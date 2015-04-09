@@ -13,10 +13,6 @@ BYTEARRAYDEF(SysExBase, ReqMultiParamVals,      0x42,0x00)
 BYTEARRAYDEF(SysExBase, ReqStringParam,         0x43,0x00)
 BYTEARRAYDEF(SysExBase, ReqExtStringParam,      0x47,0x00)
 
-// shared values
-BYTEARRAYDEF(SysExBase, On,                     0x00,0x01)
-BYTEARRAYDEF(SysExBase, Off,                    0x00,0x00)
-
 SysExBase::SysExBase()
 {
 }
@@ -25,7 +21,7 @@ SysExBase::~SysExBase()
 {
 }
 
-ByteArray SysExBase::createSingleParamGetCmd(ByteArray addressPage, ByteArray param)
+ByteArray SysExBase::createSingleParamGetCmd(const ByteArray& addressPage, const ByteArray& param)
 {
   ByteArray res;
   VEC_INSERT(res, sHeader);
@@ -36,7 +32,7 @@ ByteArray SysExBase::createSingleParamGetCmd(ByteArray addressPage, ByteArray pa
   return res;
 }
 
-ByteArray SysExBase::createStringParamGetCmd(ByteArray addressPage, ByteArray param)
+ByteArray SysExBase::createStringParamGetCmd(const ByteArray& addressPage, const ByteArray& param)
 {
   ByteArray res;
   VEC_INSERT(res, sHeader);
@@ -47,7 +43,7 @@ ByteArray SysExBase::createStringParamGetCmd(ByteArray addressPage, ByteArray pa
   return res;
 }
 
-ByteArray SysExBase::createSingleParamSetCmd(ByteArray addressPage, ByteArray param, ByteArray val)
+ByteArray SysExBase::createSingleParamSetCmd(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val)
 {
   ByteArray res;
   VEC_INSERT(res, sHeader);
@@ -59,7 +55,7 @@ ByteArray SysExBase::createSingleParamSetCmd(ByteArray addressPage, ByteArray pa
   return res;
 }
 
-ByteArray SysExBase::createStringParamSetCmd(ByteArray addressPage, ByteArray param, ByteArray val)
+ByteArray SysExBase::createStringParamSetCmd(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val)
 {
   ByteArray res;
   VEC_INSERT(res, sHeader);
@@ -71,16 +67,7 @@ ByteArray SysExBase::createStringParamSetCmd(ByteArray addressPage, ByteArray pa
   return res;
 }
 
-ByteArray SysExBase::createSingleParamSetCmd(ByteArray addressPage, ByteArray param, unsigned short rawVal)
+ByteArray SysExBase::createSingleParamSetCmd(const ByteArray& addressPage, const ByteArray& param, unsigned short rawVal)
 {
-  const char* tmp = (char*) &rawVal;
-  ByteArray val(tmp, tmp + sizeof(rawVal));
-  ByteArray res;
-  VEC_INSERT(res, sHeader);
-  VEC_INSERT(res, sSingleParamChange);
-  VEC_INSERT(res, addressPage);
-  VEC_INSERT(res, param);
-  VEC_INSERT(res, val);
-  VEC_INSERT(res, sEox);
-  return res;
+  return createSingleParamSetCmd(addressPage, param, packRawVal(rawVal));
 }

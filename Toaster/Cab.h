@@ -1,11 +1,9 @@
 #ifndef CAB_H
 #define CAB_H
-
 #include <QObject>
-#include "SysExMsgDispatcher.h"
 #include "CabMidi.h"
 
-class Cab : public QObject, public CabMidi, public SysExMsgDispatcher::ISysExConsumer
+class Cab : public QObject, public CabMidi
 {
   Q_OBJECT
 public:

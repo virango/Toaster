@@ -20,8 +20,7 @@ void Stomp::requestAllValues()
 // slots
 void Stomp::applyOnOff(bool onOff)
 {
-  unsigned short rawVal = onOff ? 1 : 0;
-  midiApplyOnOff(rawVal);
+  midiApplyOnOff(bool2Raw(onOff));
 }
 
 void Stomp::applyType(FXType type)
