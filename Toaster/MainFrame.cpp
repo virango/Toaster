@@ -24,12 +24,14 @@ MainFrame::MainFrame(QWidget *parent)
     // amp
     connect(&mAmp, SIGNAL(onOffReceived(bool)), this, SLOT(onAmpOnOff(bool)));
     connect(&mAmp, SIGNAL(gainReceived(double)), this, SLOT(onAmpGain(double)));
-    //eq
+    // eq
     connect(&mEq, SIGNAL(onOffReceived(bool)), this, SLOT(onEqOnOff(bool)));
     connect(&mEq, SIGNAL(bassReceived(double)), this, SLOT(onEqBass(double)));
     connect(&mEq, SIGNAL(middleReceived(double)), this, SLOT(onEqMiddle(double)));
     connect(&mEq, SIGNAL(trebleReceived(double)), this, SLOT(onEqTreble(double)));
     connect(&mEq, SIGNAL(presenceReceived(double)), this, SLOT(onEqPresence(double)));
+    // rig
+    connect(&mRig, SIGNAL(volumeReceived(double)), this, SLOT(onRigVolume(double)));
 }
 
 MainFrame::~MainFrame()
@@ -47,6 +49,7 @@ void MainFrame::requestValues()
   mStompMod.requestAllValues();
   mAmp.requestAllValues();
   mEq.requestAllValues();
+  mRig.requestAllValues();
 }
 
 void MainFrame::on_qGainDial_valueChanged(double gain)
@@ -204,3 +207,34 @@ void MainFrame::onEqPresence(double presence)
   update();
 }
 
+
+void MainFrame::on_qBigMulti1Dial_valueChanged(double physVal)
+{
+  mEq.applyBassReceived(physVal);
+}
+
+void MainFrame::on_qBigMulti2Dial_valueChanged(double physVal)
+{
+  mEq.applyMiddleReceived(physVal);
+}
+
+void MainFrame::on_qBigMulti3Dial_valueChanged(double physVal)
+{
+  mEq.applyTrebleReceived(physVal);
+}
+
+void MainFrame::on_qBigMulti4Dial_valueChanged(double physVal)
+{
+  mEq.applyPresenceReceived(physVal);
+}
+
+void MainFrame::on_qVolumeDial_valueChanged(double physVal)
+{
+  mRig.applyVolume(physVal);
+}
+
+void MainFrame::onRigVolume(double volume)
+{
+  ui->qVolumeDial->setValue(volume);
+  update();
+}

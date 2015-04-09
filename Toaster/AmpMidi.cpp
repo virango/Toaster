@@ -24,6 +24,16 @@ AmpMidi::~AmpMidi()
 {
 }
 
+unsigned char AmpMidi::getId()
+{
+  unsigned char ret = 0x00;
+  ByteArray addressPage = getAddressPage();
+  if(addressPage.size() > 0)
+    ret = addressPage[0];
+
+  return ret;
+}
+
 void AmpMidi::consumeSysExMsg(ByteArray* msg)
 {
   if(msg && msg->size() >= 12)
@@ -51,16 +61,6 @@ void AmpMidi::consumeSysExMsg(ByteArray* msg)
     else if(fct == sDirectMix[0])
       midiDirectMixReceived(rawVal);      
   }
-}
-
-unsigned char AmpMidi::getId()
-{
-  unsigned char ret = 0x00;
-  ByteArray addressPage = getAddressPage();
-  if(addressPage.size() > 0)
-    ret = addressPage[0];
-
-  return ret;
 }
 
 void AmpMidi::midiRequestOnOff()
@@ -103,7 +103,7 @@ void AmpMidi::midiApplyClarity(unsigned short rawVal)
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sClarity, rawVal));
 }
 
-void AmpMidi::midiRequestPowerSagging();
+void AmpMidi::midiRequestPowerSagging()
 {
   Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sPowerSagging));
 }

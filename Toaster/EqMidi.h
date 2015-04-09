@@ -27,19 +27,26 @@ protected:
   // parameter
   // OnOff
   void midiRequestOnOff();
-  void midiApplyOnOff(bool onOff);
+  void midiApplyOnOff(unsigned short rawVal);
   // Bass
   void midiRequestBass();
-  void midiApplyBass(double bass);
+  void midiApplyBass(unsigned short rawVal);
   // Middle
   void midiRequestMiddle();
-  void midiApplyMiddle(double middle);
+  void midiApplyMiddle(unsigned short rawVal);
   // Treble
   void midiRequestTreble();
-  void midiApplyTreble(double treble);
+  void midiApplyTreble(unsigned short rawVal);
   // Presence
   void midiRequestPresence();
-  void midiApplyPresence(double presence);
+  void midiApplyPresence(unsigned short rawVal);
+
+  // receive callbacks for derived class
+  virtual void midiOnOffReceived(unsigned short rawVal) = 0;
+  virtual void midiBassReceived(unsigned short rawVal) = 0;
+  virtual void midiMiddleReceived(unsigned short rawVal) = 0;
+  virtual void midiTrebleReceived(unsigned short rawVal) = 0;
+  virtual void midiPresenceReceived(unsigned short rawVal) = 0;
 
   // utility methods
   ByteArray getAddressPage();

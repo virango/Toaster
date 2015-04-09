@@ -44,19 +44,24 @@ unsigned char StompMidi::getId()
   return ret;
 }
 
-void StompMidi::midiApplyOnOff(unsigned short rawVal)
-{
-  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sOnOff, rawVal));
-}
-
 void StompMidi::midiRequestOnOff()
 {
   Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sOnOff));
 }
 
+void StompMidi::midiApplyOnOff(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sOnOff, rawVal));
+}
+
 void StompMidi::midiRequestType()
 {
   Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sType));
+}
+
+void StompMidi::midiApplyType(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sType, rawVal));
 }
 
 ByteArray StompMidi::getAddressPage()

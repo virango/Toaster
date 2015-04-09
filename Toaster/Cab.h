@@ -10,9 +10,6 @@ public:
   Cab();
   ~Cab();
 
-  void consumeSysExMsg(ByteArray* msg);
-  unsigned char getId();
-
   void requestValues();
   
 signals:

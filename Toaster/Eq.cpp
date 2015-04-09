@@ -10,48 +10,64 @@ Eq::~Eq()
 
 }
 
-void Eq::consumeSysExMsg(ByteArray* msg)
+void Eq::requestAllValues()
 {
-  if(msg && msg->size() >= 12)
-  {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char fct = msg->at(9);
-    if(fct == sOnOff[0])
-    {
-      bool onOff = rawVal != 0;
-      emit onOffReceived(onOff);
-    }
-    else
-    {
-      // the range of all parameter below is [-5..5]
-      double physVal = ((rawVal * 10.0) / 0x8000) - 5;
-      if(fct == sBass[0])
-        emit bassReceived(physVal);
-      else if(fct == sMiddle[0])
-        emit middleReceived(physVal);
-      else if(fct == sTreble[0])
-        emit trebleReceived(physVal);
-      else if(fct == sPresence[0])
-        emit presenceReceived(physVal);
-    }
-  }
+  midiRequestOnOff();
+  midiRequestBass();
+  midiRequestMiddle();
+  midiRequestTreble();
+  midiRequestPresence();
 }
 
-unsigned char Eq::getId()
+// slots
+void Eq::applyOnOff(bool onOff)
 {
-  unsigned char ret = 0x00;
-  ByteArray addressPage = getAddressPage();
-  if(addressPage.size() > 0)
-    ret = addressPage[0];
-
-  return ret;
+  midiApplyOnOff(bool2Raw(onOff));
 }
 
-void Eq::requestValues()
+void Eq::applyBassReceived(double bass)
 {
-  getOnOff();
-  getBass();
-  getMiddle();
-  getTreble();
-  getPresence();
+  midiApplyBass(phys2Raw(bass, 10.0, -5.0));
 }
+
+void Eq::applyMiddleReceived(double middle)
+{
+  midiApplyMiddle(phys2Raw(middle, 10.0, -5.0));
+}
+
+void Eq::applyTrebleReceived(double treble)
+{
+  midiApplyTreble(phys2Raw(treble, 10.0, -5.0));
+}
+
+void Eq::applyPresenceReceived(double presence)
+{
+  midiApplyPresence(phys2Raw(presence, 10.0, -5.0));
+}
+
+// EqMidi callbacks
+void Eq::midiOnOffReceived(unsigned short rawVal)
+{
+  emit onOffReceived(raw2Bool(rawVal));
+}
+
+void Eq::midiBassReceived(unsigned short rawVal)
+{
+  emit bassReceived(raw2Phys(rawVal, 10.0, -5.0));
+}
+
+void Eq::midiMiddleReceived(unsigned short rawVal)
+{
+  emit middleReceived(raw2Phys(rawVal, 10.0, -5.0));
+}
+
+void Eq::midiTrebleReceived(unsigned short rawVal)
+{
+  emit trebleReceived(raw2Phys(rawVal, 10.0, -5.0));
+}
+
+void Eq::midiPresenceReceived(unsigned short rawVal)
+{
+  emit presenceReceived(raw2Phys(rawVal, 10.0, -5.0));
+}
+
