@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/BigLEDDial.png</file>
+        <file>resources/BigLEDBiDial.png</file>
+        <file>resources/BigDial.png</file>
+        <file>resources/SmallDial.png</file>
+        <file>resources/SmallButton.png</file>
+        <file>resources/BigButton.png</file>
+        <file>resources/SmallButtonAnim.gif</file>
+        <file>resources/BigButtonAnim.gif</file>
+        <file>resources/LEDRingUni.png</file>
+        <file>resources/LEDRingBi.png</file>
+    </qresource>
+</RCC>
