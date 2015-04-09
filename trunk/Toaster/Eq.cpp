@@ -14,7 +14,7 @@ void Eq::consumeSysExMsg(ByteArray* msg)
 {
   if(msg && msg->size() >= 12)
   {
-    unsigned short rawVal = msg->at(10) << 8 | msg->at(11);
+    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
     const char fct = msg->at(9);
     if(fct == sOnOff[0])
     {

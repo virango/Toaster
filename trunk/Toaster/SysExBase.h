@@ -15,6 +15,8 @@ typedef vector<unsigned char> ByteArray;
 #define BYTEARRAYDEF(Class, Name, ...) \
   const unsigned char Class::c##Name[] = {__VA_ARGS__}; \
   const ByteArray Class::s##Name(INIT_FROM(c##Name));
+  
+  
 
 class SysExBase
 {
@@ -23,7 +25,7 @@ public:
   ~SysExBase();
 
 private:
-  // header & sysex base struct
+  // sysex header & base struct
   BYTEARRAYDECL(Header)
   BYTEARRAYDECL(Eox)
   // function codes (with instance)
@@ -39,17 +41,51 @@ private:
   BYTEARRAYDECL(ReqExtStringParam)
 
 protected:
-  // shared values
-  BYTEARRAYDECL(On)
-  BYTEARRAYDECL(Off)
-
-protected:
-  ByteArray createSingleParamGetCmd(ByteArray addressPage, ByteArray param);
-  ByteArray createStringParamGetCmd(ByteArray addressPage, ByteArray param);
-  ByteArray createSingleParamSetCmd(ByteArray addressPage, ByteArray param, ByteArray val);
-  ByteArray createStringParamSetCmd(ByteArray addressPage, ByteArray param, ByteArray val);
+  ByteArray createSingleParamGetCmd(const ByteArray& addressPage, const ByteArray& param);
+  ByteArray createStringParamGetCmd(const ByteArray& addressPage, const ByteArray& param);
+  ByteArray createSingleParamSetCmd(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val);
+  ByteArray createStringParamSetCmd(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val);
   
-  ByteArray createSingleParamSetCmd(ByteArray addressPage, ByteArray param, unsigned short rawVal);
+  ByteArray createSingleParamSetCmd(const ByteArray& addressPage, const ByteArray& param, unsigned short rawVal);
+  
+  // utilities
+  double raw2Phys(unsigned short rawVal, double deltaMinMax, double min)
+  {
+    double physVal = ((rawVal * deltaMinMax) / 0x3FFF) + min;
+    return physVal;
+  }
+  
+  bool raw2Bool(unsigned short rawVal)
+  {
+    return rawVal != 0;
+  }
+  
+  unsigned short phys2Raw(double physVal, double deltaMinMax, double min)
+  {
+    unsigned short rawVal = ((physVal - min) * 0x3FFF) / deltaMinMax;
+    return rawVal;
+  }
+  
+  unsigned short bool2Raw(bool val)
+  {
+    return val ? 1 : 0;
+  }
+  
+  unsigned short extractRawVal(unsigned char msb, unsigned char lsb)
+  {
+    unsigned short rawVal = (((unsigned short)msb & 0x7F) << 7) | ((unsigned short)lsb & 0x7F);
+    return rawVal;
+  }
+  
+  ByteArray packRawVal(unsigned short rawVal)
+  {
+    unsigned char msb = (rawVal >> 7) & 0x7F;
+    unsigned char lsb = rawVal & 0x7F;
+    ByteArray val;
+    val.push_back(msb);
+    val.psuh_back(lsb);
+    return val;
+  }
 };
 
 #endif // SYSEXBASE_H

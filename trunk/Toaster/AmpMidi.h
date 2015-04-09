@@ -25,8 +25,8 @@ public:
   ~AmpMidi();
   
   // ISysExConsumer
-  void consumeSysExMsg(ByteArray* msg);
   unsigned char getId();
+  void consumeSysExMsg(ByteArray* msg);
   
 protected:
   // parameter

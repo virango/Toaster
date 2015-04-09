@@ -28,7 +28,7 @@ void AmpMidi::consumeSysExMsg(ByteArray* msg)
 {
   if(msg && msg->size() >= 12)
   {
-    unsigned short rawVal = msg->at(10) << 8 | msg->at(11);
+    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
     const char fct = msg->at(9);
     if(fct == sOnOff[0])
       midiOnOffReceived(rawVal);
@@ -36,6 +36,20 @@ void AmpMidi::consumeSysExMsg(ByteArray* msg)
       midiGainReceived(rawVal);
     else if(fct == sDefinition[0])
       midiDefinitionReceived(rawVal);
+    else if(fct == sClarity[0])
+      midiClarityReceived(rawVal);
+    else if(fct == sPowerSagging[0])
+      midiPowerSaggingReceived(rawVal);
+    else if(fct == sPick[0])
+      midiPickReceived(rawVal);
+    else if(fct == sCompressor[0])
+      midiCompressorReceived(rawVal);
+    else if(fct == sTubeShape[0])
+      midiTubeShapeReceived(rawVal);
+    else if(fct == sTubeBias[0])
+      midiTubeBiasReceived(rawVal);
+    else if(fct == sDirectMix[0])
+      midiDirectMixReceived(rawVal);      
   }
 }
 
@@ -47,11 +61,6 @@ unsigned char AmpMidi::getId()
     ret = addressPage[0];
 
   return ret;
-}
-
-ByteArray AmpMidi::getAddressPage()
-{
-  return sAddressPage;
 }
 
 void AmpMidi::midiRequestOnOff()
@@ -72,4 +81,89 @@ void AmpMidi::midiRequestGain()
 void AmpMidi::midiApplyGain(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sGain, rawVal));
+}
+
+void AmpMidi::midiRequestDefinition()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sDefinition));
+}
+
+void AmpMidi::midiApplyDefinition(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDefinition, rawVal));
+}
+
+void AmpMidi::midiRequestClarity()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sClarity));
+}
+
+void AmpMidi::midiApplyClarity(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sClarity, rawVal));
+}
+
+void AmpMidi::midiRequestPowerSagging();
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sPowerSagging));
+}
+
+void AmpMidi::midiApplyPowerSagging(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sPowerSagging, rawVal));
+}
+
+void AmpMidi::midiRequestPick()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sPick));
+}
+
+void AmpMidi::midiApplyPick(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sPick, rawVal));
+}
+
+void AmpMidi::midiRequestCompressor()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sCompressor));
+}
+
+void AmpMidi::midiApplyCompressor(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sCompressor, rawVal));
+}
+
+void AmpMidi::midiRequestTubeShape()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sTubeShape));
+}
+
+void AmpMidi::midiApplyTubeShape(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sTubeShape, rawVal));
+}
+
+void AmpMidi::midiRequestTubeBias()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sTubeBias));
+}
+
+void AmpMidi::midiApplyTubeBias(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sTubeBias, rawVal));
+}
+
+void AmpMidi::midiRequestDirectMix()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sDirectMix));
+}
+
+void AmpMidi::midiApplyDirectMix(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDirectMix, rawVal));
+}
+
+ByteArray AmpMidi::getAddressPage()
+{
+  return sAddressPage;
 }

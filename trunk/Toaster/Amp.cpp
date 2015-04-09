@@ -1,5 +1,4 @@
 #include "Amp.h"
-#include "Midi.h"
 
 Amp::Amp()
 {
@@ -15,14 +14,14 @@ void Amp::requestAllValues()
   midiRequestGain();
 }
 
+// slots
 void Amp::applyGain(double gain)
 {
-  unsigned short rawVal = (gain * 0x8000) / 10;
-  midiApplyGain(rawVal);
+  midiApplyGain(phys2Raw(gain, 10.0, 0.0));
 }
 
+// AmpMidi callbacks
 void Amp::midiGainReceived(unsigned short rawVal)
 {
-  double physVal = (rawVal * 10.0) / 0x8000;
-  emit gainReceived(physVal);
+  emit gainReceived(raw2Phys(rawVal, 10.0, 0.0));
 }
