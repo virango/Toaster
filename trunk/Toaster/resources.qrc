@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/Images">
+        <file>resources/images/onoffred.png</file>
+        <file>resources/images/onoffgrey.png</file>
+        <file>resources/images/KPA_MainWindow_Dark_Skin.png</file>
+    </qresource>
+</RCC>
