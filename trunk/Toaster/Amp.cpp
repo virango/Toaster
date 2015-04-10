@@ -12,6 +12,14 @@ void Amp::requestAllValues()
 {
   midiRequestOnOff();
   midiRequestGain();
+  midiRequestDefinition();
+  midiRequestClarity();
+  midiRequestPowerSagging();
+  midiRequestPick();
+  midiRequestCompressor();
+  midiRequestTubeShape();
+  midiRequestTubeBias();
+  midiRequestDirectMix();
 }
 
 // slots
@@ -23,6 +31,46 @@ void Amp::applyOnOff(bool onOff)
 void Amp::applyGain(double gain)
 {
   midiApplyGain(phys2Raw(gain, 10.0, 0.0));
+}
+
+void Amp::applyDefinition(double definition)
+{
+  midiApplyDefinition(phys2Raw(definition, 10.0, 0.0));
+}
+
+void Amp::applyClarity(double clarity)
+{
+  midiApplyClarity(phys2Raw(definition, 10.0, 0.0));
+}
+
+void Amp::applyPowerSagging(double powerSagging)
+{
+  midiApplyPowerSagging(phys2Raw(definition, 10.0, 0.0));
+}
+
+void Amp::applyPick(double pick)
+{
+  midiApplyPick(phys2Raw(definition, 10.0, -5.0));
+}
+
+void Amp::applyCompressor(double compressor)
+{
+  midiApplyCompressor(phys2Raw(definition, 10.0, 0.0));
+}
+
+void Amp::applyTubeShape(double tubeShape)
+{
+  midiApplyTubeShape(phys2Raw(definition, 10.0, 0.0));
+}
+
+void Amp::applyTubeBias(double tubeBias)
+{
+  midiApplyTubeBias(phys2Raw(definition, 10.0, 0.0));
+}
+
+void Amp::applyDirectMix(double directMix)
+{
+  midiApplyDirectMix(phys2Raw(definition, 10.0, 0.0));
 }
 
 // AmpMidi callbacks
