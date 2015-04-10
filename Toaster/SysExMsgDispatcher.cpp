@@ -24,7 +24,7 @@ void SysExMsgDispatcher::consume(ByteArray* msg)
   for(list<ISysExConsumer*>::iterator it = mConsumer.begin(); it != mConsumer.end(); ++it)
   {
     ISysExConsumer* consumer = (*it);
-    if(consumer && consumer->getId() == (*msg)[8])
+    if(consumer && (consumer->getId() == (*msg)[8] || consumer->getId() == 0xFF)
       consumer->consumeSysExMsg(msg);
   }
 }

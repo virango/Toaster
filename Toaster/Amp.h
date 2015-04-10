@@ -28,7 +28,15 @@ signals:
 public slots:
   void applyOnOff(bool onOff);
   void applyGain(double gain);
-
+  void applyDefinition(double definition);
+  void applyClarity(double clarity);
+  void applyPowerSagging(double powerSagging);
+  void applyPick(double pick);
+  void applyCompressor(double compressor);
+  void applyTubeShape(double tubeShape);
+  void applyTubeBias(double tubeBias);
+  void applyDirectMix(double directMix);  
+ 
 protected:
   // AmpMidi
   virtual void midiOnOffReceived(unsigned short rawVal);
@@ -40,8 +48,7 @@ protected:
   virtual void midiCompressorReceived(unsigned short rawVal);
   virtual void midiTubeShapeReceived(unsigned short rawVal);
   virtual void midiTubeBiasReceived(unsigned short rawVal);
-  virtual void midiDirectMixReceived(unsigned short rawVal);  
- 
+  virtual void midiDirectMixReceived(unsigned short rawVal);
 };
 
 #endif // AMP_H
