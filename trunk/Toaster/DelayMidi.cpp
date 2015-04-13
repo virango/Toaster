@@ -4,20 +4,20 @@
 // address page
 BYTEARRAYDEF(DelayMidi, AddressPage,      0x4A)
 // parameter
-BYTEARRAYDECL(DelayMidi, Type             0x00)
-BYTEARRAYDECL(DelayMidi, OnOffCutsTail    0x02)
-BYTEARRAYDECL(DelayMidi, Mix              0x03)
-BYTEARRAYDECL(DelayMidi, Volume           0x04)
-BYTEARRAYDECL(DelayMidi, Time             0x05)
-BYTEARRAYDECL(DelayMidi, Ratio            0x06)
-BYTEARRAYDECL(DelayMidi, ClockLeft        0x07)
-BYTEARRAYDECL(DelayMidi, ClockRight       0x08)
-BYTEARRAYDECL(DelayMidi, Feedback         0x09)
-BYTEARRAYDECL(DelayMidi, Bandwidth        0x0A)
-BYTEARRAYDECL(DelayMidi, CenterFrequency  0x0B)
-BYTEARRAYDECL(DelayMidi, Modulation       0x0C)
-BYTEARRAYDECL(DelayMidi, OnOffKeepsTail   0x0D)
-BYTEARRAYDECL(DelayMidi, Ducking          0x0E)
+BYTEARRAYDEF(DelayMidi, Type,            0x00)
+BYTEARRAYDEF(DelayMidi, OnOffCutsTail,   0x02)
+BYTEARRAYDEF(DelayMidi, Mix,             0x03)
+BYTEARRAYDEF(DelayMidi, Volume,          0x04)
+BYTEARRAYDEF(DelayMidi, Time,            0x05)
+BYTEARRAYDEF(DelayMidi, Ratio,           0x06)
+BYTEARRAYDEF(DelayMidi, ClockLeft,       0x07)
+BYTEARRAYDEF(DelayMidi, ClockRight,      0x08)
+BYTEARRAYDEF(DelayMidi, Feedback,        0x09)
+BYTEARRAYDEF(DelayMidi, Bandwidth,       0x0A)
+BYTEARRAYDEF(DelayMidi, CenterFrequency, 0x0B)
+BYTEARRAYDEF(DelayMidi, Modulation,      0x0C)
+BYTEARRAYDEF(DelayMidi, OnOffKeepsTail,  0x0D)
+BYTEARRAYDEF(DelayMidi, Ducking,         0x0E)
 
 DelayMidi::DelayMidi()
 {
@@ -28,7 +28,7 @@ DelayMidi::~DelayMidi()
 {
 }
 
-unsigned char Delay::getId()
+unsigned char DelayMidi::getId()
 {
   unsigned char ret = 0x00;
   ByteArray addressPage = getAddressPage();
@@ -38,39 +38,39 @@ unsigned char Delay::getId()
   return ret;
 }
 
-void Delay::consumeSysExMsg(ByteArray* msg)
+void DelayMidi::consumeSysExMsg(ByteArray* msg)
 {
   if(msg && msg->size() >= 12)
   {
     unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char fct = msg->at(9);
-    if(fct == sType[0])
+    const char param = msg->at(9);
+    if(param == sType[0])
       midiTypeReceived(rawVal);
-    if(fct == sOnOffCutsTail[0])
+    if(param == sOnOffCutsTail[0])
       midiOnOffCutsTailReceived(rawVal);
-    if(fct == sMix[0])
+    if(param == sMix[0])
       midiMixReceived(rawVal);
-    if(fct == sVolume[0])
+    if(param == sVolume[0])
       midiVolumeReceived(rawVal);
-    if(fct == sTime[0])
+    if(param == sTime[0])
       midiTimeReceived(rawVal);
-    if(fct == sRatio[0])
+    if(param == sRatio[0])
       midiRatioReceived(rawVal);
-    if(fct == sClockLeft[0])
+    if(param == sClockLeft[0])
       midiClockLeftReceived(rawVal);
-    if(fct == sClockRight[0])
+    if(param == sClockRight[0])
       midiClockRightReceived(rawVal);
-    if(fct == sFeedback[0])
+    if(param == sFeedback[0])
       midiFeedbackReceived(rawVal);
-    if(fct == sBandwidth[0])
+    if(param == sBandwidth[0])
       midiBandwidthReceived(rawVal);
-    if(fct == sCenterFrequency[0])
+    if(param == sCenterFrequency[0])
       midiCenterFrequencyReceived(rawVal);
-    if(fct == sModulation[0])
+    if(param == sModulation[0])
       midiModulationReceived(rawVal);
-    if(fct == sOnOffKeepsTail[0])
+    if(param == sOnOffKeepsTail[0])
       midiOnOffKeepsTailReceived(rawVal);
-    if(fct == sDucking[0])
+    if(param == sDucking[0])
       midiDuckingReceived(rawVal);
   }
 }

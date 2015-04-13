@@ -7,6 +7,9 @@ BYTEARRAYDEF(RigMidi, AddressPage,     0x04)
 BYTEARRAYDEF(RigMidi, Tempo,           0x00)
 BYTEARRAYDEF(RigMidi, Volume,          0x01)
 BYTEARRAYDEF(RigMidi, TempoEnable,     0x02)
+BYTEARRAYDEF(RigMidi, StompsEnable,    0x40)
+BYTEARRAYDEF(RigMidi, StackEnable,     0x41)
+BYTEARRAYDEF(RigMidi, EffectsEnable,   0x42)
 
 RigMidi::RigMidi()
 {
@@ -32,13 +35,19 @@ void RigMidi::consumeSysExMsg(ByteArray* msg)
   if(msg && msg->size() >= 12)
   {
     unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char fct = msg->at(9);
-    if(fct == sTempo[0])
+    const char param = msg->at(9);
+    if(param == sTempo[0])
       midiTempoReceived(rawVal);
-    else if(fct == sVolume[0])
+    else if(param == sVolume[0])
       midiVolumeReceived(rawVal);
-    else if(fct == sTempoEnable[0])
+    else if(param == sTempoEnable[0])
       midiTempoEnableReceived(rawVal);
+    else if(param == sStompsEnable[0])
+      midiStompsEnableReceived(rawVal);
+    else if(param == sStackEnable[0])
+      midiStackEnableReceived(rawVal);
+    else if(param == sEffectsEnable[0])
+      midiEffectsEnableReceived(rawVal);
   }
 }
 
@@ -70,6 +79,36 @@ void RigMidi::midiRequestTempoEnable()
 void RigMidi::midiApplyTempoEnable(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sTempoEnable, rawVal));
+}
+
+void RigMidi::midiRequestStompsEnable()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sStompsEnable));
+}
+
+void RigMidi::midiApplyStompsEnable(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sStompsEnable, rawVal));
+}
+
+void RigMidi::midiRequestStackEnable()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sStackEnable));
+}
+
+void RigMidi::midiApplyStackEnable(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sStackEnable, rawVal));
+}
+
+void RigMidi::midiRequestEffectsEnable()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sEffectsEnable));
+}
+
+void RigMidi::midiApplyEffectsEnable(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sEffectsEnable, rawVal));
 }
 
 ByteArray RigMidi::getAddressPage()

@@ -8,7 +8,7 @@ Cab::~Cab()
 {
 }
 
-void Cab::requestValues()
+void Cab::requestAllValues()
 {
   midiRequestOnOff();
   midiRequestVolume();
@@ -25,22 +25,22 @@ void Cab::applyOnOff(bool onOff)
 
 void Cab::applyVolume(double volume)
 {         
-  misiApplyVolume(phys2Raw(volume, , ));
+  midiApplyVolume(phys2Raw(volume, 24.0, -12.0));
 }         
 
 void Cab::applyHighShift(double highShift)
 {         
-  midiApplyHightShift(phys2Raw(highShift, , ));
+  midiApplyHighShift(phys2Raw(highShift, 10.0, -5.0));
 }         
 
 void Cab::applyLowShift(double lowShift)
 {         
-  midiApplyLowShift(phys2Raw(lowShift, , ));
+  midiApplyLowShift(phys2Raw(lowShift, 10.0, -5.0));
 }         
 
 void Cab::applyCharacter(double character)
 {
-  midiApplyCharacter(phys2Raw(character, , ));
+  midiApplyCharacter(phys2Raw(character, 10.0, -5.0));
 }
 
 // CabMidi
@@ -51,20 +51,20 @@ void Cab::midiOnOffReceived(unsigned short rawVal)
 
 void Cab::midiVolumeReceived(unsigned short rawVal)
 {
-  emit volumeReceived(raw2Phys(rawVal, , ));
+  emit volumeReceived(raw2Phys(rawVal, 24.0, -12.0));
 }
 
 void Cab::midiHighShiftReceived(unsigned short rawVal)
 {
-  emit highShiftReceived(raw2Phys(rawVal, , ));
+  emit highShiftReceived(raw2Phys(rawVal, 10.0, -5.0));
 }
 
 void Cab::midiLowShiftReceived(unsigned short rawVal)
 {
-  emit lowShiftReceived(raw2Phys(rawVal, , ));
+  emit lowShiftReceived(raw2Phys(rawVal, 10.0, -5.0));
 }
 
 void Cab::midiCharacterReceived(unsigned short rawVal)
 {
-  emit characterReceived(raw2Phys(rawVal, , ));
+  emit characterReceived(raw2Phys(rawVal, 10.0, -5.0));
 }

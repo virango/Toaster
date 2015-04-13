@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     Global.cpp \
     Input.cpp \
     Rig.cpp \
-    Reverb.cpp
+    Reverb.cpp \
+    DebugMidi.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -61,7 +62,8 @@ HEADERS  += ToasterWindow.h \
     Global.h \
     Input.h \
     Rig.h \
-    Reverb.h
+    Reverb.h \
+    DebugMidi.h
 
 FORMS    += \
     ToasterWindow.ui \

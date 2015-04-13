@@ -10,5 +10,6 @@
         <file>resources/BigButtonAnim.gif</file>
         <file>resources/LEDRingUni.png</file>
         <file>resources/LEDRingBi.png</file>
+        <file>resources/ChickenHeadBlack.png</file>
     </qresource>
 </RCC>

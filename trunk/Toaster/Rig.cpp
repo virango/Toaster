@@ -13,6 +13,9 @@ void Rig::requestAllValues()
   midiRequestTempo();
   midiRequestVolume();
   midiRequestTempoEnable();
+  midiRequestStompsEnable();
+  midiRequestStackEnable();
+  midiRequestEffectsEnable();
 }
 
 // slots
@@ -31,6 +34,23 @@ void Rig::applyTempoEnable(bool tempoEnable)
   midiApplyTempoEnable(raw2Bool(tempoEnable));
 }
 
+void Rig::applyStompsEnable(bool stompsEnable)
+{
+  midiApplyStompsEnable(raw2Bool(stompsEnable));
+}
+
+
+void Rig::applyStackEnable(bool stackEnable)
+{
+  midiApplyStackEnable(raw2Bool(stackEnable));
+}
+
+
+void Rig::applyEffectsEnable(bool effectsEnable)
+{
+  midiApplyEffectsEnable(raw2Bool(effectsEnable));
+}
+
 // RigMidi
 void Rig::midiTempoReceived(unsigned short rawVal)
 {
@@ -46,3 +66,19 @@ void Rig::midiTempoEnableReceived(unsigned short rawVal)
 {
   emit tempoEnableReceived(raw2Bool(rawVal));
 }
+
+void Rig::midiStompsEnableReceived(unsigned short rawVal)
+{
+  emit stompsEnableReceived(raw2Bool(rawVal));
+}
+
+void Rig::midiStackEnableReceived(unsigned short rawVal)
+{
+  emit stackEnableReceived(raw2Bool(rawVal));
+}
+
+void Rig::midiEffectsEnableReceived(unsigned short rawVal)
+{
+  emit effectsEnableReceived(raw2Bool(rawVal));
+}
+

@@ -18,14 +18,17 @@ SysExMsgDispatcher& SysExMsgDispatcher::get()
 
 void SysExMsgDispatcher::consume(ByteArray* msg)
 {
-  if(!msg || msg->size() < 8)
-    return;
-
-  for(list<ISysExConsumer*>::iterator it = mConsumer.begin(); it != mConsumer.end(); ++it)
+  if(msg && msg->size() >= 8)
   {
-    ISysExConsumer* consumer = (*it);
-    if(consumer && (consumer->getId() == (*msg)[8] || consumer->getId() == 0xFF)
-      consumer->consumeSysExMsg(msg);
+    if(sHeader[0] == (*msg)[0]  && sHeader[1] == (*msg)[1] && sHeader[2] == (*msg)[2] && sHeader[3] == (*msg)[3])
+    {
+      for(list<ISysExConsumer*>::iterator it = mConsumer.begin(); it != mConsumer.end(); ++it)
+      {
+        ISysExConsumer* consumer = (*it);
+        if(consumer && (consumer->getId() == (*msg)[8] || consumer->getId() == 0xFF))
+          consumer->consumeSysExMsg(msg);
+      }
+    }
   }
 }
 

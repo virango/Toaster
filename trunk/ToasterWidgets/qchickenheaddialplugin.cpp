@@ -41,7 +41,7 @@ QString QChickenHeadDialPlugin::group() const
 
 QIcon QChickenHeadDialPlugin::icon() const
 {
-  return QIcon();
+  return QIcon(":/resources/ChickeHeadDialIcon.png");
 }
 
 QString QChickenHeadDialPlugin::toolTip() const

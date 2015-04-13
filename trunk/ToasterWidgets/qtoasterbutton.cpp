@@ -103,7 +103,6 @@ void QToasterButton::mousePressEvent(QMouseEvent* me)
 {
   if(me->button() == Qt::LeftButton)
   {
-    qDebug() << "mouse press\n";
     me->accept();
   }
   else

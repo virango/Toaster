@@ -2,8 +2,9 @@
 #define SYSEXMSGDISPATCHER_H
 #include <list>
 #include "Midi.h"
+#include "SysExBase.h"
 
-class SysExMsgDispatcher : public Midi::IMidiConsumer
+class SysExMsgDispatcher : public Midi::IMidiConsumer, public SysExBase
 {
 private:
   SysExMsgDispatcher();

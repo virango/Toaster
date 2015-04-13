@@ -10,7 +10,7 @@ public:
   Cab();
   ~Cab();
 
-  void requestValues();
+  void requestAllValues();
   
 signals:
   void onOffReceived(bool onOff);

@@ -33,17 +33,17 @@ void CabMidi::consumeSysExMsg(ByteArray* msg)
 {
   if(msg && msg->size() >= 12)
   {
-    unsigned short rawVal = msg->at(10) << 8 | msg->at(11);
-    const char fct = msg->at(9);
-    if(fct == sOnOff[0])
+    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
+    const char param = msg->at(9);
+    if(param == sOnOff[0])
       midiOnOffReceived(rawVal);
-    else if(fct == sVolume[0])
+    else if(param == sVolume[0])
       midiVolumeReceived(rawVal);
-    else if(fct == sHighShift[0])
+    else if(param == sHighShift[0])
       midiHighShiftReceived(rawVal);
-    else if(fct == sLowShift[0])
+    else if(param == sLowShift[0])
       midiLowShiftReceived(rawVal);
-    else if(fct == sCharacter[0])
+    else if(param == sCharacter[0])
       midiCharacterReceived(rawVal);  
   }
 }

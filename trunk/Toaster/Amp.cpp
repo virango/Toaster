@@ -40,37 +40,37 @@ void Amp::applyDefinition(double definition)
 
 void Amp::applyClarity(double clarity)
 {
-  midiApplyClarity(phys2Raw(definition, 10.0, 0.0));
+  midiApplyClarity(phys2Raw(clarity, 10.0, 0.0));
 }
 
 void Amp::applyPowerSagging(double powerSagging)
 {
-  midiApplyPowerSagging(phys2Raw(definition, 10.0, 0.0));
+  midiApplyPowerSagging(phys2Raw(powerSagging, 10.0, 0.0));
 }
 
 void Amp::applyPick(double pick)
 {
-  midiApplyPick(phys2Raw(definition, 10.0, -5.0));
+  midiApplyPick(phys2Raw(pick, 10.0, -5.0));
 }
 
 void Amp::applyCompressor(double compressor)
 {
-  midiApplyCompressor(phys2Raw(definition, 10.0, 0.0));
+  midiApplyCompressor(phys2Raw(compressor, 10.0, 0.0));
 }
 
 void Amp::applyTubeShape(double tubeShape)
 {
-  midiApplyTubeShape(phys2Raw(definition, 10.0, 0.0));
+  midiApplyTubeShape(phys2Raw(tubeShape, 10.0, 0.0));
 }
 
 void Amp::applyTubeBias(double tubeBias)
 {
-  midiApplyTubeBias(phys2Raw(definition, 10.0, 0.0));
+  midiApplyTubeBias(phys2Raw(tubeBias, 10.0, 0.0));
 }
 
 void Amp::applyDirectMix(double directMix)
 {
-  midiApplyDirectMix(phys2Raw(definition, 10.0, 0.0));
+  midiApplyDirectMix(phys2Raw(directMix, 10.0, 0.0));
 }
 
 // AmpMidi callbacks
