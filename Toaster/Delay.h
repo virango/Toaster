@@ -19,13 +19,24 @@ public:
     AnalogDelay
   };
 
+  enum DelayRatio
+  {
+    One2Four,
+    Two2Four,
+    Three2Four,
+    FourFour,
+    Four2Three,
+    Four2Two,
+    Four2One
+  };
+
 signals:
   void typeReceived(DelayType type);
   void onOffCutsTailReceived(bool onOffCutsTail);
   void mixReceived(double mix);
   void volumeReceived(double volume);
   void timeReceived(double time);
-  void ratioReceived(double ratio);
+  void ratioReceived(DelayRatio ratio);
   void clockLeftReceived(double clockLeft);
   void clockRightReceived(double clockRight);
   void feedbackReceived(double feedback);
@@ -38,10 +49,10 @@ signals:
 public slots:
   void applyType(DelayType type);
   void applyOnOffCutsTail(bool onOffCutsTail);
-  void applyMixdouble mix);
+  void applyMix(double mix);
   void applyVolume(double volume);
   void applyTime(double time);
-  void applyRatio(double ratio);
+  void applyRatio(DelayRatio ratio);
   void applyClockLeft(double clockLeft);
   void applyClockRight(double clockRight);
   void applyFeedback(double feedback);

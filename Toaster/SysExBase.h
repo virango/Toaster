@@ -15,8 +15,6 @@ typedef vector<unsigned char> ByteArray;
 #define BYTEARRAYDEF(Class, Name, ...) \
   const unsigned char Class::c##Name[] = {__VA_ARGS__}; \
   const ByteArray Class::s##Name(INIT_FROM(c##Name));
-  
-  
 
 class SysExBase
 {
@@ -24,7 +22,7 @@ public:
   SysExBase();
   ~SysExBase();
 
-private:
+protected:
   // sysex header & base struct
   BYTEARRAYDECL(Header)
   BYTEARRAYDECL(Eox)

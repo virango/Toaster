@@ -30,8 +30,17 @@ MainFrame::MainFrame(QWidget *parent)
     connect(&mEq, SIGNAL(middleReceived(double)), this, SLOT(onEqMiddle(double)));
     connect(&mEq, SIGNAL(trebleReceived(double)), this, SLOT(onEqTreble(double)));
     connect(&mEq, SIGNAL(presenceReceived(double)), this, SLOT(onEqPresence(double)));
+    // cab
+    connect(&mCab, SIGNAL(onOffReceived(bool)), this, SLOT(onCabOnOff(bool)));
     // rig
+    //connect(&mRig, SIGNAL(tempoReceived(double)), this, SLOT(onRigTempo(double)));
     connect(&mRig, SIGNAL(volumeReceived(double)), this, SLOT(onRigVolume(double)));
+    //connect(&mRig, SIGNAL(tempoEnableReceived(bool)), this, SLOT(onRigTempoEnable(bool)));
+    connect(&mRig, SIGNAL(stompsEnableReceived(bool)), this, SLOT(onRigStompsEnable(bool)));
+    connect(&mRig, SIGNAL(stackEnableReceived(bool)), this, SLOT(onRigStackEnable(bool)));
+    connect(&mRig, SIGNAL(effectsEnableReceived(bool)), this, SLOT(onRigEffectsEnable(bool)));
+    // global
+    connect(&mGlobal, SIGNAL(operationModeReceived(unsigned short)), this, SLOT(onGlobalOperationMode(unsigned short)));
 }
 
 MainFrame::~MainFrame()
@@ -49,7 +58,9 @@ void MainFrame::requestValues()
   mStompMod.requestAllValues();
   mAmp.requestAllValues();
   mEq.requestAllValues();
+  mCab.requestAllValues();
   mRig.requestAllValues();
+  mGlobal.requestAllValues();
 }
 
 void MainFrame::on_qGainDial_valueChanged(double gain)
@@ -237,4 +248,89 @@ void MainFrame::onRigVolume(double volume)
 {
   ui->qVolumeDial->setValue(volume);
   update();
+}
+
+void MainFrame::onRigStompsEnable(bool stompsEnable)
+{
+  QToasterButton::State state = stompsEnable ? QToasterButton::On : QToasterButton::Off;
+  ui->qStompsButton->setState(state);
+  update();
+}
+
+void MainFrame::onRigStackEnable(bool stackEnable)
+{
+  QToasterButton::State state = stackEnable ? QToasterButton::On : QToasterButton::Off;
+  ui->qStackButton->setState(state);
+  update();
+}
+
+void MainFrame::onRigEffectsEnable(bool effectsEnable)
+{
+  QToasterButton::State state = effectsEnable ? QToasterButton::On : QToasterButton::Off;
+  ui->qEffectsButton->setState(state);
+  update();
+}
+
+
+void MainFrame::on_qChickenHeadDial_valueChanged(const QChickenHeadDial::State& state)
+{
+  mGlobal.applyOperationMode((Global::OperationMode) state);
+}
+
+void MainFrame::onGlobalOperationMode(unsigned short opMode)
+{
+  ui->qChickenHeadDial->setState((QChickenHeadDial::State)opMode);
+  update();
+}
+
+void MainFrame::on_qStompsButton_valueChanged(const QToasterButton::State& state)
+{
+  if(state == QToasterButton::On)
+    mRig.applyStompsEnable(true);
+  else if(state == QToasterButton::Off)
+    mRig.applyStompsEnable(false);
+  // else ==> edit TODO
+}
+
+void MainFrame::on_qStackButton_valueChanged(const QToasterButton::State& state)
+{
+  if(state == QToasterButton::On)
+    mRig.applyStackEnable(true);
+  else if(state == QToasterButton::Off)
+    mRig.applyStackEnable(false);
+  // else ==> edit TODO
+}
+
+void MainFrame::on_qEffectsButton_valueChanged(const QToasterButton::State& state)
+{
+  if(state == QToasterButton::On)
+    mRig.applyEffectsEnable(true);
+  else if(state == QToasterButton::Off)
+    mRig.applyEffectsEnable(false);
+  // else ==> edit TODO
+}
+
+void MainFrame::on_qEQButton_valueChanged(const QToasterButton::State& state)
+{
+  if(state == QToasterButton::On)
+    mEq.applyOnOff(true);
+  else if(state == QToasterButton::Off)
+    mEq.applyOnOff(false);
+  // else ==> edit TODO
+}
+
+void MainFrame::onCabOnOff(bool onOff)
+{
+  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+  ui->qCabinetButton->setState(state);
+  update();
+}
+
+void MainFrame::on_qCabinetButton_valueChanged(const QToasterButton::State& state)
+{
+  if(state == QToasterButton::On)
+    mCab.applyOnOff(true);
+  else if(state == QToasterButton::Off)
+    mCab.applyOnOff(false);
+  // else ==> edit TODO
 }

@@ -20,15 +20,14 @@ protected:
   BYTEARRAYDECL(TubeBias)
   BYTEARRAYDECL(DirectMix)
 
-public:
+protected:
   AmpMidi();
   ~AmpMidi();
-  
+
   // ISysExConsumer
   unsigned char getId();
   void consumeSysExMsg(ByteArray* msg);
-  
-protected:
+
   // parameter
   // OnOff
   void midiRequestOnOff();

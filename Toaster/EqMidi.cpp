@@ -36,16 +36,16 @@ void EqMidi::consumeSysExMsg(ByteArray* msg)
   if(msg && msg->size() >= 12)
   {
     unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char fct = msg->at(9);
-    if(fct == sOnOff[0])
+    const char param = msg->at(9);
+    if(param == sOnOff[0])
       midiOnOffReceived(rawVal);
-    else if(fct == sBass[0])
+    else if(param == sBass[0])
       midiBassReceived(rawVal);
-    else if(fct == sMiddle[0])
+    else if(param == sMiddle[0])
       midiMiddleReceived(rawVal);
-    else if(fct == sTreble[0])
+    else if(param == sTreble[0])
       midiTrebleReceived(rawVal);
-    else if(fct == sPresence[0])
+    else if(param == sPresence[0])
       midiPresenceReceived(rawVal);
   }
 }

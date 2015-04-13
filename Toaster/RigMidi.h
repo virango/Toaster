@@ -12,6 +12,9 @@ protected:
   BYTEARRAYDECL(Tempo)
   BYTEARRAYDECL(Volume)
   BYTEARRAYDECL(TempoEnable)
+  BYTEARRAYDECL(StompsEnable)
+  BYTEARRAYDECL(StackEnable)
+  BYTEARRAYDECL(EffectsEnable)
 
 public:
   RigMidi();
@@ -32,11 +35,25 @@ protected:
   // TempoEnable
   void midiRequestTempoEnable();
   void midiApplyTempoEnable(unsigned short rawVal);
+  // StompsEnable
+  void midiRequestStompsEnable();
+  void midiApplyStompsEnable(unsigned short rawVal);
+  // StackEnablevoid
+  void midiRequestStackEnable();
+  void midiApplyStackEnable(unsigned short rawVal);
+  // EffectsEnable
+  void midiRequestEffectsEnable();
+  void midiApplyEffectsEnable(unsigned short rawVal);
+
 
   // receive callbacks for derived class
   virtual void midiTempoReceived(unsigned short rawVal) = 0;
   virtual void midiVolumeReceived(unsigned short rawVal) = 0;
   virtual void midiTempoEnableReceived(unsigned short rawVal) = 0;
+  virtual void midiStompsEnableReceived(unsigned short rawVal) = 0;
+  virtual void midiStackEnableReceived(unsigned short rawVal) = 0;
+  virtual void midiEffectsEnableReceived(unsigned short rawVal) = 0;
+
 
   ByteArray getAddressPage();
 };

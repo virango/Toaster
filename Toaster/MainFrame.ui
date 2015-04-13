@@ -736,6 +736,16 @@
     <bool>false</bool>
    </property>
   </widget>
+  <widget class="QChickenHeadDial" name="qChickenHeadDial">
+   <property name="geometry">
+    <rect>
+     <x>6</x>
+     <y>346</y>
+     <width>100</width>
+     <height>100</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -747,6 +757,11 @@
    <class>QToasterButton</class>
    <extends>QWidget</extends>
    <header>qtoasterbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QChickenHeadDial</class>
+   <extends>QWidget</extends>
+   <header>qchickenheaddial.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

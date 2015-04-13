@@ -39,26 +39,26 @@ void AmpMidi::consumeSysExMsg(ByteArray* msg)
   if(msg && msg->size() >= 12)
   {
     unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char fct = msg->at(9);
-    if(fct == sOnOff[0])
+    const char param = msg->at(9);
+    if(param == sOnOff[0])
       midiOnOffReceived(rawVal);
-    else if(fct == sGain[0])
+    else if(param == sGain[0])
       midiGainReceived(rawVal);
-    else if(fct == sDefinition[0])
+    else if(param == sDefinition[0])
       midiDefinitionReceived(rawVal);
-    else if(fct == sClarity[0])
+    else if(param == sClarity[0])
       midiClarityReceived(rawVal);
-    else if(fct == sPowerSagging[0])
+    else if(param == sPowerSagging[0])
       midiPowerSaggingReceived(rawVal);
-    else if(fct == sPick[0])
+    else if(param == sPick[0])
       midiPickReceived(rawVal);
-    else if(fct == sCompressor[0])
+    else if(param == sCompressor[0])
       midiCompressorReceived(rawVal);
-    else if(fct == sTubeShape[0])
+    else if(param == sTubeShape[0])
       midiTubeShapeReceived(rawVal);
-    else if(fct == sTubeBias[0])
+    else if(param == sTubeBias[0])
       midiTubeBiasReceived(rawVal);
-    else if(fct == sDirectMix[0])
+    else if(param == sDirectMix[0])
       midiDirectMixReceived(rawVal);      
   }
 }

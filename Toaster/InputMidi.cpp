@@ -27,12 +27,12 @@ void InputMidi::consumeSysExMsg(ByteArray* msg)
   if(msg && msg->size() >= 12)
   {
     unsigned short rawVal = msg->at(10) << 8 | msg->at(11);
-    const char fct = msg->at(9);
-    if(fct == sNoiseGate[0])
+    const char param = msg->at(9);
+    if(param == sNoiseGate[0])
       midiNoiseGateReceived(rawVal);
-    else if(fct == sCleanSense[0])
+    else if(param == sCleanSense[0])
       midiCleanSenseReceived(rawVal);
-    else if(fct == sDistortionSense[0])
+    else if(param == sDistortionSense[0])
       midiDistortionSenseReceived(rawVal);
   }
 }
