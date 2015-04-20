@@ -117,7 +117,7 @@
     <double>0.100000000000000</double>
    </property>
    <property name="unit">
-    <string>db</string>
+    <string>dB</string>
    </property>
   </widget>
   <widget class="QToasterDial" name="qBigMulti1Dial">
@@ -317,6 +317,12 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="maxValue">
+    <double>10.000000000000000</double>
+   </property>
+   <property name="stepWidth">
+    <double>0.100000000000000</double>
+   </property>
   </widget>
   <widget class="QToasterDial" name="qModRateDial">
    <property name="geometry">
@@ -365,6 +371,15 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="maxValue">
+    <double>200.000000000000000</double>
+   </property>
+   <property name="stepWidth">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="unit">
+    <string>%</string>
+   </property>
   </widget>
   <widget class="QToasterDial" name="qDelayMixDial">
    <property name="geometry">
@@ -380,6 +395,12 @@
    </property>
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
+   </property>
+   <property name="stepWidth">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="unit">
+    <string>%</string>
    </property>
   </widget>
   <widget class="QToasterDial" name="qReverbTimeDial">
@@ -397,6 +418,12 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="maxValue">
+    <double>10.000000000000000</double>
+   </property>
+   <property name="stepWidth">
+    <double>0.100000000000000</double>
+   </property>
   </widget>
   <widget class="QToasterDial" name="qReverbMixDial">
    <property name="geometry">
@@ -412,6 +439,12 @@
    </property>
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
+   </property>
+   <property name="stepWidth">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="unit">
+    <string>%</string>
    </property>
   </widget>
   <widget class="QToasterDial" name="qCleanSenseDial">
@@ -429,6 +462,18 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="minValue">
+    <double>-12.000000000000000</double>
+   </property>
+   <property name="maxValue">
+    <double>12.000000000000000</double>
+   </property>
+   <property name="stepWidth">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="unit">
+    <string>dB</string>
+   </property>
   </widget>
   <widget class="QToasterDial" name="qDistortionSenseDial">
    <property name="geometry">
@@ -444,6 +489,18 @@
    </property>
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
+   </property>
+   <property name="minValue">
+    <double>-12.000000000000000</double>
+   </property>
+   <property name="maxValue">
+    <double>12.000000000000000</double>
+   </property>
+   <property name="stepWidth">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="unit">
+    <string>dB</string>
    </property>
   </widget>
   <widget class="QToasterDial" name="qHeadphoneVolumeDial">
@@ -461,6 +518,18 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="minValue">
+    <double>-96.000000000000000</double>
+   </property>
+   <property name="maxValue">
+    <double>0.000000000000000</double>
+   </property>
+   <property name="stepWidth">
+    <double>1.000000000000000</double>
+   </property>
+   <property name="unit">
+    <string>dB</string>
+   </property>
   </widget>
   <widget class="QToasterDial" name="qMonitorVolumeDial">
    <property name="geometry">
@@ -476,6 +545,18 @@
    </property>
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
+   </property>
+   <property name="minValue">
+    <double>-96.000000000000000</double>
+   </property>
+   <property name="maxValue">
+    <double>0.000000000000000</double>
+   </property>
+   <property name="stepWidth">
+    <double>0.100000000000000</double>
+   </property>
+   <property name="unit">
+    <string>dB</string>
    </property>
   </widget>
   <widget class="QToasterButton" name="qStompAButton">

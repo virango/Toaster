@@ -2,20 +2,68 @@
 #define REVERB_H
 
 #include <QObject>
-#include "SysExMsgDispatcher.h"
 #include "ReverbMidi.h"
 
-class Reverb : public QObject, public ReverbMidi, public SysExMsgDispatcher::ISysExConsumer
+class Reverb : public QObject, public ReverbMidi
 {
   Q_OBJECT
 public:
   Reverb();
   ~Reverb();
 
-  void consumeSysExMsg(ByteArray* msg);
-  unsigned char getId();
+  enum ReverbType
+  {
+    Hall,
+    LargeRoom,
+    SmallRoom,
+    Ambience,
+    Matchbox
+  };
 
-  void requestValues();
+  void requestAllValues();
+
+signals:
+  void typeReceived(Reverb::ReverbType type);
+  void onOffCutsTailReceived(bool onOff);
+  void mixReceived(double mix);
+  void volumeReceived(double volume);
+  void delRevBalanceReceived(double balance);
+  void timeReceived(double time);
+  void dampingReceived(double damping);
+  void bandwidthReceived(double bandwidth);
+  void centerFrequencyReceived(double frequency);
+  void preDelayReceived(double preDelay);
+  void onOffKeepsTailReceived(bool onOff);
+  void duckingReceived(double ducking);
+
+public slots:
+  void applyType(Reverb::ReverbType type);
+  void applyOnOffCutsTail(bool onOff);
+  void applyMix(double mix);
+  void applyVolume(double volume);
+  void applyDelRevBalance(double balance);
+  void applyTime(double time);
+  void applyDamping(double damping);
+  void applyBandwidth(double bandwidth);
+  void applyCenterFrequency(double frequency);
+  void applyPreDelay(double preDelay);
+  void applyOnOffKeepsTail(bool onOff);
+  void applyDucking(double ducking);
+
+protected:
+  // ReverbMidi
+  virtual void midiTypeReceived(unsigned short rawVal);
+  virtual void midiOnOffCutsTailReceived(unsigned short rawVal);
+  virtual void midiMixReceived(unsigned short rawVal);
+  virtual void midiVolumeReceived(unsigned short rawVal);
+  virtual void midiDelRevBalanceReceived(unsigned short rawVal);
+  virtual void midiTimeReceived(unsigned short rawVal);
+  virtual void midiDampingReceived(unsigned short rawVal);
+  virtual void midiBandwidthReceived(unsigned short rawVal);
+  virtual void midiCenterFrequencyReceived(unsigned short rawVal);
+  virtual void midiPreDelayReceived(unsigned short rawVal);
+  virtual void midiOnOffKeepsTailReceived(unsigned short rawVal);
+  virtual void midiDuckingReceived(unsigned short rawVal);
 };
 
 #endif // REVERB_H

@@ -1,28 +1,13 @@
 #ifndef SYSEXBASE_H
 #define SYSEXBASE_H
-#include <vector>
-
-using namespace std;
-
-typedef vector<unsigned char> ByteArray;
-#define INIT_FROM(x) x, x + sizeof(x)
-#define VEC_INSERT(x, y) x.insert(x.end(), y.begin(), y.end())
-
-#define BYTEARRAYDECL(Name) \
-  static const unsigned char c##Name[];\
-  static const ByteArray s##Name;
-
-#define BYTEARRAYDEF(Class, Name, ...) \
-  const unsigned char Class::c##Name[] = {__VA_ARGS__}; \
-  const ByteArray Class::s##Name(INIT_FROM(c##Name));
+#include "CommonDefs.h"
 
 class SysExBase
 {
-public:
+protected:
   SysExBase();
   ~SysExBase();
 
-protected:
   // sysex header & base struct
   BYTEARRAYDECL(Header)
   BYTEARRAYDECL(Eox)
@@ -38,7 +23,6 @@ protected:
   BYTEARRAYDECL(ReqStringParam)
   BYTEARRAYDECL(ReqExtStringParam)
 
-protected:
   ByteArray createSingleParamGetCmd(const ByteArray& addressPage, const ByteArray& param);
   ByteArray createStringParamGetCmd(const ByteArray& addressPage, const ByteArray& param);
   ByteArray createSingleParamSetCmd(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val);
@@ -72,6 +56,19 @@ protected:
   unsigned short extractRawVal(unsigned char msb, unsigned char lsb)
   {
     unsigned short rawVal = (((unsigned short)msb & 0x7F) << 7) | ((unsigned short)lsb & 0x7F);
+    return rawVal;
+  }
+
+  unsigned int extractRawVal(unsigned char b0, unsigned char b1, unsigned char b2, unsigned char b3, unsigned char b4)
+  {
+    unsigned char t0 = (b4 & 0x7F) | (b3 << 7);
+    unsigned char t1 = ((b3 >> 1) & 0x3F) | (b2 << 6);
+    unsigned char t2 = ((b2 >> 2) & 0x1F) | (b1 << 5);
+    unsigned char t3 = ((b1 >> 3) & 0x0F) | (b0 << 4);
+    unsigned int rawVal = ((unsigned int)t0 << 24)
+                        | ((unsigned int)t1 << 16)
+                        | ((unsigned int)t2 <<  8)
+                        | ((unsigned int)t3);
     return rawVal;
   }
   

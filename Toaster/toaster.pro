@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     Input.cpp \
     Rig.cpp \
     Reverb.cpp \
-    DebugMidi.cpp
+    DebugMidi.cpp \
+    NRPNBase.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -63,7 +64,9 @@ HEADERS  += ToasterWindow.h \
     Input.h \
     Rig.h \
     Reverb.h \
-    DebugMidi.h
+    DebugMidi.h \
+    CommonDefs.h \
+    NRPNBase.h
 
 FORMS    += \
     ToasterWindow.ui \

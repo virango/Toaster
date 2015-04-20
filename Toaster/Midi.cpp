@@ -103,7 +103,21 @@ const vector<string> Midi::getOutPorts()
 
 void Midi::sendCmd(ByteArray cmd)
 {
-  mMidiOut.sendMessage(&cmd);
+  if(cmd.size() > 0)
+  {
+    if(cmd[0] != 0xB0)
+      mMidiOut.sendMessage(&cmd);
+    else if(cmd.size()%3 == 0)
+    {
+      ByteArray::iterator it = cmd.begin();
+      for(unsigned int i = 0; i < cmd.size() / 3; ++i)
+      {
+        ByteArray tmp(it, it + 3);
+        mMidiOut.sendMessage(&tmp);
+        it += 3;
+      }
+    }
+  }
 }
 
 void Midi::addConsumer(IMidiConsumer* consumer)

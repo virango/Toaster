@@ -1,9 +1,10 @@
 #ifndef INPUTMIDI_H
 #define INPUTMIDI_H
 #include "SysExBase.h"
+#include "NRPNBase.h"
 #include "SysExMsgDispatcher.h"
 
-class InputMidi : public SysExBase, public SysExMsgDispatcher::ISysExConsumer
+class InputMidi : public SysExBase, public NRPNBase, public SysExMsgDispatcher::ISysExConsumer
 {
 protected:
   // address pages
