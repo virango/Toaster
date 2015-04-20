@@ -17,10 +17,15 @@ void DebugMidi::consumeSysExMsg(ByteArray* msg)
 {
   if(msg && msg->size() >= 12)
   {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
+    unsigned int rawVal = -1;
+
     const char mod = msg->at(8);
     const char param = msg->at(9);
     const char fct = msg->at(6);
+    if(fct == sSingleParamChange[0])
+      rawVal = extractRawVal(msg->at(10), msg->at(11));
+    else if(fct == sExtParamChange[0])
+      rawVal = extractRawVal(msg->at(10), msg->at(11), msg->at(12), msg->at(13), msg->at(14));
 
     if(mod != 0x7c)
     {

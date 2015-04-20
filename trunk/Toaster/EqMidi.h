@@ -16,7 +16,6 @@ protected:
   BYTEARRAYDECL(Treble)
   BYTEARRAYDECL(Presence)
 
-protected:
   EqMidi();
   ~EqMidi();
 

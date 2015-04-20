@@ -13,6 +13,8 @@ Global::~Global()
 void Global::requestAllValues()
 {
   midiRequestOperationMode();
+  midiRequestMonitorOutputVolume();
+  midiRequestHeadphoneOutputVolume();
 }
 
 // slots

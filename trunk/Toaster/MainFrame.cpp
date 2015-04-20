@@ -41,6 +41,14 @@ MainFrame::MainFrame(QWidget *parent)
     connect(&mRig, SIGNAL(effectsEnableReceived(bool)), this, SLOT(onRigEffectsEnable(bool)));
     // global
     connect(&mGlobal, SIGNAL(operationModeReceived(unsigned short)), this, SLOT(onGlobalOperationMode(unsigned short)));
+    connect(&mGlobal, SIGNAL(mainOutputVolumeReceived(double)), this, SLOT(onGlobalMainVolume(double)));
+    connect(&mGlobal, SIGNAL(headphoneOutputVolumeReceived(double)), this, SLOT(onGlobalHeadphoneVolume(double)));
+    connect(&mGlobal, SIGNAL(monitorOutputVolumeReceived(double)), this, SLOT(onGlobalMonitorVolume(double)));
+    connect(&mGlobal, SIGNAL(directOutputVolumeReceived(double)), this, SLOT(onGlobalDirectVolume(double)));
+    // input
+    connect(&mInput, SIGNAL(noiseGateReceived(double)), this, SLOT(onInputNoiseGate(double)));
+    connect(&mInput, SIGNAL(distortionSenseReceived(double)), SLOT(onInputDistortionSense(double)));
+    connect(&mInput, SIGNAL(cleanSenseReceived(double)), SLOT(onInputCleanSense(double)));
 }
 
 MainFrame::~MainFrame()
@@ -61,6 +69,7 @@ void MainFrame::requestValues()
   mCab.requestAllValues();
   mRig.requestAllValues();
   mGlobal.requestAllValues();
+  mInput.requestAllValues();
 }
 
 void MainFrame::on_qGainDial_valueChanged(double gain)
@@ -334,3 +343,69 @@ void MainFrame::on_qCabinetButton_valueChanged(const QToasterButton::State& stat
     mCab.applyOnOff(false);
   // else ==> edit TODO
 }
+
+void MainFrame::on_qMonitorVolumeDial_valueChanged(double volume)
+{
+  mGlobal.applyMonitorOutputVolume(volume);
+}
+
+void MainFrame::on_qHeadphoneVolumeDial_valueChanged(double volume)
+{
+  mGlobal.applyHeadphoneOutputVolume(volume);
+}
+
+void MainFrame::onGlobalMainVolume(double volume)
+{
+  update();
+}
+
+void MainFrame::onGlobalHeadphoneVolume(double volume)
+{
+  ui->qHeadphoneVolumeDial->setValue(volume);
+  update();
+}
+
+void MainFrame::onGlobalMonitorVolume(double volume)
+{
+  ui->qMonitorVolumeDial->setValue(volume);
+  update();
+}
+
+void MainFrame::onGlobalDirectVolume(double volume)
+{
+  update();
+}
+
+void MainFrame::on_qNoiseGateDial_valueChanged(double noiseGate)
+{
+  mInput.applyNoiseGate(noiseGate);
+}
+
+void MainFrame::on_qDistortionSenseDial_valueChanged(double distortionSense)
+{
+  mInput.applyDistortionSense(distortionSense);
+}
+
+void MainFrame::on_qCleanSenseDial_valueChanged(double cleanSense)
+{
+  mInput.applyCleanSense(cleanSense);
+}
+
+void MainFrame::onInputNoiseGate(double noiseGate)
+{
+  ui->qNoiseGateDial->setValue(noiseGate);
+  update();
+}
+
+void MainFrame::onInputDistortionSense(double distortionSense)
+{
+  ui->qDistortionSenseDial->setValue(distortionSense);
+  update();
+}
+
+void MainFrame::onInputCleanSense(double cleanSense)
+{
+  ui->qCleanSenseDial->setValue(cleanSense);
+  update();
+}
+

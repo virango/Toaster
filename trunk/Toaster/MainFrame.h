@@ -10,6 +10,7 @@
 #include "Cab.h"
 #include "Rig.h"
 #include "Global.h"
+#include "Input.h"
 
 namespace Ui {
 class MainFrame;
@@ -85,9 +86,26 @@ private slots:
 
   // global
   // ui => kpa
-  void on_qChickenHeadDial_valueChanged(const QChickenHeadDial::State& arg1);
+  void on_qChickenHeadDial_valueChanged(const QChickenHeadDial::State& state);
+  void on_qMonitorVolumeDial_valueChanged(double volume);
+  void on_qHeadphoneVolumeDial_valueChanged(double volume);
   // kpa => ui
   void onGlobalOperationMode(unsigned short opMode);
+  void onGlobalMainVolume(double volume);
+  void onGlobalHeadphoneVolume(double volume);
+  void onGlobalMonitorVolume(double volume);
+  void onGlobalDirectVolume(double volume);
+
+  // input
+  // ui => kpa
+  void on_qNoiseGateDial_valueChanged(double noiseGate);
+  void on_qDistortionSenseDial_valueChanged(double distortionSense);
+  void on_qCleanSenseDial_valueChanged(double cleanSense);
+  // kpa => ui
+  void onInputNoiseGate(double noiseGate);
+  void onInputDistortionSense(double distortionSense);
+  void onInputCleanSense(double cleanSense);
+
 
 private:
     Ui::MainFrame *ui;
@@ -103,6 +121,7 @@ private:
     Cab           mCab;
     Rig           mRig;
     Global        mGlobal;
+    Input         mInput;
 };
 
 #endif // MAINFRAME_H

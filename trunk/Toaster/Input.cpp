@@ -18,39 +18,33 @@ void Input::requestAllValues()
 // slots
 void Input::applyNoiseGate(double noiseGate)
 {
-  unsigned short rawVal = (noiseGate * 0x8000) / 10;
-  midiApplyNoiseGate(rawVal);
+  midiApplyNoiseGate(phys2Raw(noiseGate, 10, 0));
 }
 
 void Input::applyCleanSense(double cleanSense)
 {
-  unsigned short rawVal = ((cleanSense + 12.0) * 0x8000) / 24;
-  midiApplyCleanSense(rawVal);
+  midiApplyCleanSense(phys2Raw(cleanSense, 24, -12));
 }
 
-void Input::applyDistortionSense(double cleanSense)
+void Input::applyDistortionSense(double distortionSense)
 {
-  unsigned short rawVal = ((cleanSense + 12.0) * 0x8000) / 24;
-  midiApplyDistortionSense(rawVal);
+  midiApplyDistortionSense(phys2Raw(distortionSense, 24, -12));
 }
 
 // InputMidi callbacks
 void Input::midiNoiseGateReceived(unsigned short rawVal)
 {
-  double physVal = (rawVal * 10.0) / 0x8000;
-  emit noiseGateReceived(physVal);
+  emit noiseGateReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Input::midiCleanSenseReceived(unsigned short rawVal)
 {
-  double physVal = (rawVal * 24.0) / 0x8000;
-  emit cleanSenseReceived(physVal);
+  emit cleanSenseReceived(raw2Phys(rawVal, 24, -12));
 }
 
 void Input::midiDistortionSenseReceived(unsigned short rawVal)
 {
-  double physVal = (rawVal * 24.0) / 0x8000;
-  emit distortionSenseReceived(physVal);
+  emit distortionSenseReceived(raw2Phys(rawVal, 24, -12));
 }
 
 
