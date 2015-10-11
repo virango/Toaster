@@ -23,6 +23,7 @@ protected:
   BYTEARRAYDECL(MonitorOutputEQTreble)
   BYTEARRAYDECL(MonitorOutputEQPresence)
   BYTEARRAYDECL(OperationMode)
+  BYTEARRAYDECL(ConnectName)
 
 public:
   GlobalMidi();
@@ -76,6 +77,10 @@ protected:
   // OperationMode
   void midiRequestOperationMode();
   void midiApplyOperationMode(unsigned short rawVal);
+  // ConnectName
+  void midiApplyConnectName(const QString& connectName);
+
+  void midiSendBeacon();
 
   // receive callbacks for derived class
   virtual void midiMainOutputVolumeReceived(unsigned short rawVal) = 0;

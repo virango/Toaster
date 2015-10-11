@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include "GlobalMidi.h"
+
+class QTimer;
+
 class Global : public QObject, public GlobalMidi
 {
   Q_OBJECT
@@ -53,6 +56,9 @@ public slots:
   void applyMonitorOutputEQPresence(double presence);
   void applyOperationMode(Global::OperationMode opMode);
 
+  void connect2KPA(const QString& connectName);
+  void disconnectFromKPA();
+
 protected:
   // GlobalMidi
   virtual void midiMainOutputVolumeReceived(unsigned short rawVal);
@@ -69,6 +75,14 @@ protected:
   virtual void midiMonitorOutputEQTrebleReceived(unsigned short rawVal);
   virtual void midiMonitorOutputEQPresenceReceived(unsigned short rawVal);
   virtual void midiOperationModeReceived(unsigned short rawVal);
+
+  void launchBeacon();
+
+protected slots:
+  void sendBeacon();
+
+private:
+  QTimer* mBeaconTimer;
 };
 
 #endif // GLOBAL_H

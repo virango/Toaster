@@ -35,7 +35,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-image: url(:/Images/resources/images/KPA_MainWindow_Dark_Skin.png);</string>
+   <string notr="true">QFrame#MainFrame {background-image: url(:/Images/resources/images/KPA_MainWindow_Dark_Skin.png);}</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::NoFrame</enum>
@@ -118,169 +118,6 @@
    </property>
    <property name="unit">
     <string>dB</string>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="qBigMulti1Dial">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>480</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Bi</enum>
-   </property>
-   <property name="minValue">
-    <double>-5.000000000000000</double>
-   </property>
-   <property name="maxValue">
-    <double>5.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="qBigMulti2Dial">
-   <property name="geometry">
-    <rect>
-     <x>340</x>
-     <y>480</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Bi</enum>
-   </property>
-   <property name="minValue">
-    <double>-5.000000000000000</double>
-   </property>
-   <property name="maxValue">
-    <double>5.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="qBigMulti3Dial">
-   <property name="geometry">
-    <rect>
-     <x>460</x>
-     <y>480</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Bi</enum>
-   </property>
-   <property name="minValue">
-    <double>-5.000000000000000</double>
-   </property>
-   <property name="maxValue">
-    <double>5.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="qBigMulti4Dial">
-   <property name="geometry">
-    <rect>
-     <x>580</x>
-     <y>480</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Bi</enum>
-   </property>
-   <property name="minValue">
-    <double>-5.000000000000000</double>
-   </property>
-   <property name="maxValue">
-    <double>5.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
-   </property>
-   <property name="unit">
-    <string/>
    </property>
   </widget>
   <widget class="QToasterDial" name="qNoiseGateDial">
@@ -396,6 +233,9 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="maxValue">
+    <double>200.000000000000000</double>
+   </property>
    <property name="stepWidth">
     <double>0.100000000000000</double>
    </property>
@@ -439,6 +279,9 @@
    </property>
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
+   </property>
+   <property name="maxValue">
+    <double>200.000000000000000</double>
    </property>
    <property name="stepWidth">
     <double>0.100000000000000</double>
@@ -568,9 +411,6 @@
      <height>24</height>
     </rect>
    </property>
-   <property name="triState">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QToasterButton" name="qEQButton">
    <property name="geometry">
@@ -584,9 +424,6 @@
    <property name="type">
     <enum>QToasterButton::Big</enum>
    </property>
-   <property name="triState">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QToasterButton" name="qStompBButton">
    <property name="geometry">
@@ -596,9 +433,6 @@
      <width>24</width>
      <height>24</height>
     </rect>
-   </property>
-   <property name="triState">
-    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToasterButton" name="qStompCButton">
@@ -610,9 +444,6 @@
      <height>24</height>
     </rect>
    </property>
-   <property name="triState">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QToasterButton" name="qStompDButton">
    <property name="geometry">
@@ -622,9 +453,6 @@
      <width>24</width>
      <height>24</height>
     </rect>
-   </property>
-   <property name="triState">
-    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToasterButton" name="qStompXButton">
@@ -636,9 +464,6 @@
      <height>24</height>
     </rect>
    </property>
-   <property name="triState">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QToasterButton" name="qStompModButton">
    <property name="geometry">
@@ -648,9 +473,6 @@
      <width>24</width>
      <height>24</height>
     </rect>
-   </property>
-   <property name="triState">
-    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToasterButton" name="qRigUpButton">
@@ -662,8 +484,8 @@
      <height>24</height>
     </rect>
    </property>
-   <property name="triState">
-    <bool>false</bool>
+   <property name="state">
+    <enum>QToasterButton::Off</enum>
    </property>
   </widget>
   <widget class="QToasterButton" name="qRigNextButton">
@@ -675,8 +497,8 @@
      <height>24</height>
     </rect>
    </property>
-   <property name="triState">
-    <bool>false</bool>
+   <property name="state">
+    <enum>QToasterButton::On</enum>
    </property>
   </widget>
   <widget class="QToasterButton" name="qRigDownButton">
@@ -688,8 +510,8 @@
      <height>24</height>
     </rect>
    </property>
-   <property name="triState">
-    <bool>false</bool>
+   <property name="state">
+    <enum>QToasterButton::Off</enum>
    </property>
   </widget>
   <widget class="QToasterButton" name="qRigPrevButton">
@@ -701,8 +523,8 @@
      <height>24</height>
     </rect>
    </property>
-   <property name="triState">
-    <bool>false</bool>
+   <property name="state">
+    <enum>QToasterButton::On</enum>
    </property>
   </widget>
   <widget class="QToasterButton" name="qAmplifierButton">
@@ -717,9 +539,6 @@
    <property name="type">
     <enum>QToasterButton::Big</enum>
    </property>
-   <property name="triState">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QToasterButton" name="qCabinetButton">
    <property name="geometry">
@@ -732,9 +551,6 @@
    </property>
    <property name="type">
     <enum>QToasterButton::Big</enum>
-   </property>
-   <property name="triState">
-    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToasterButton" name="qStompDelayButton">
@@ -749,9 +565,6 @@
    <property name="type">
     <enum>QToasterButton::Big</enum>
    </property>
-   <property name="triState">
-    <bool>true</bool>
-   </property>
   </widget>
   <widget class="QToasterButton" name="qStompReverbButton">
    <property name="geometry">
@@ -764,9 +577,6 @@
    </property>
    <property name="type">
     <enum>QToasterButton::Big</enum>
-   </property>
-   <property name="triState">
-    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToasterButton" name="qStompsButton">
@@ -781,9 +591,6 @@
    <property name="type">
     <enum>QToasterButton::Big</enum>
    </property>
-   <property name="triState">
-    <bool>false</bool>
-   </property>
   </widget>
   <widget class="QToasterButton" name="qStackButton">
    <property name="geometry">
@@ -796,9 +603,6 @@
    </property>
    <property name="type">
     <enum>QToasterButton::Big</enum>
-   </property>
-   <property name="triState">
-    <bool>false</bool>
    </property>
   </widget>
   <widget class="QToasterButton" name="qEffectsButton">
@@ -813,9 +617,6 @@
    <property name="type">
     <enum>QToasterButton::Big</enum>
    </property>
-   <property name="triState">
-    <bool>false</bool>
-   </property>
   </widget>
   <widget class="QChickenHeadDial" name="qChickenHeadDial">
    <property name="geometry">
@@ -827,12 +628,322 @@
     </rect>
    </property>
   </widget>
+  <widget class="QStackedWidget" name="smallDialStackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>250</y>
+     <width>460</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QStackedWidget#smallDialStackedWidget {color: transparent;}</string>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="browserPage">
+    <property name="styleSheet">
+     <string notr="true">QWidget#browserPage {
+background-color: transparent;}</string>
+    </property>
+    <widget class="QToasterDial" name="qToasterDial_2">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>10</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterDial::Small</enum>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::None</enum>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="qToasterDial_3">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>10</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterDial::Small</enum>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::None</enum>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="qToasterDial_4">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>10</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterDial::Small</enum>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::None</enum>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="qToasterEnumDial">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>10</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="stompEditorPage">
+    <widget class="QStackedWidget" name="stompStackedWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>460</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <widget class="QWidget" name="wahWahPage"/>
+     <widget class="QWidget" name="waLowPassPage"/>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QToasterLCD" name="qLCDDisplay">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>335</y>
+     <width>420</width>
+     <height>115</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <property name="color">
+    <enum>QToasterLCD::Standard</enum>
+   </property>
+  </widget>
+  <widget class="QStackedWidget" name="bigDialsStackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>480</y>
+     <width>460</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QStackedWidget#bigDialsStackedWidget{
+	background-color: transparent;
+}</string>
+   </property>
+   <widget class="QWidget" name="eqPage">
+    <property name="styleSheet">
+     <string notr="true">QWidget#eqPage{
+	background-color: transparent;
+}</string>
+    </property>
+    <widget class="QToasterDial" name="qEqBassDial">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="qEqMiddleDial">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="qEqTrebleDial">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="qEqPresenceDial">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+     <property name="unit">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_2"/>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>QToasterDial</class>
    <extends>QWidget</extends>
    <header>qtoasterdial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QToasterEnumDial</class>
+   <extends>QWidget</extends>
+   <header>qtoasterenumdial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QToasterLCD</class>
+   <extends>QStackedWidget</extends>
+   <header>QToasterLCD.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>QToasterButton</class>
@@ -846,5 +957,38 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>qToasterEnumDial</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>qLCDDisplay</receiver>
+   <slot>setBrowserModeView(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>284</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>417</x>
+     <y>356</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>qLCDDisplay</sender>
+   <signal>browserModeViewChanged(int)</signal>
+   <receiver>qToasterEnumDial</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>474</x>
+     <y>350</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>270</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

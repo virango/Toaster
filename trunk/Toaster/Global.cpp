@@ -1,8 +1,9 @@
+#include <QTimer>
 #include "Global.h"
 
 Global::Global()
 {
-
+  mBeaconTimer = new QTimer(this);
 }
 
 Global::~Global()
@@ -86,6 +87,34 @@ void Global::applyMonitorOutputEQPresence(double presence)
 void Global::applyOperationMode(Global::OperationMode opMode)
 {
   midiApplyOperationMode((unsigned short) opMode);
+}
+
+void Global::connect2KPA(const QString& connectName)
+{
+  midiApplyConnectName(connectName);
+  launchBeacon();
+}
+
+void Global::disconnectFromKPA()
+{
+  if(mBeaconTimer)
+    mBeaconTimer->stop();
+}
+
+void Global::launchBeacon()
+{
+  sendBeacon();
+  if(mBeaconTimer)
+  {
+    mBeaconTimer->setSingleShot(false);
+    connect(mBeaconTimer, SIGNAL(timeout()), this, SLOT(sendBeacon()) );
+    mBeaconTimer->start(5000);
+  }
+}
+
+void Global::sendBeacon()
+{
+  midiSendBeacon();
 }
 
 // GlobalMidi

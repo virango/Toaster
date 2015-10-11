@@ -1,33 +1,66 @@
 CONFIG      += plugin debug_and_release
 TARGET      = $$qtLibraryTarget(qtoasterwidgetsplugin)
 TEMPLATE    = lib
+QT         += core gui widgets designer
 
-HEADERS     = qlcddisplayplugin.h qbigdialplugin.h qsmalldialplugin.h qmulticolorledplugin.h qsmallknobplugin.h qchickenheaddialplugin.h qtoasterwidgets.h \
+CONFIG(debug, debug|release) {
+    DESTDIR = $$OUT_PWD/debug
+} else {
+    DESTDIR = $$OUT_PWD/release
+}
+
+
+DEFINES += TOASTERWIDGETS_LIB
+
+HEADERS     = \
+#    qbigdialplugin.h \
+#    qsmalldialplugin.h \
+    qmulticolorledplugin.h \
+#    qsmallknobplugin.h \
+    qchickenheaddialplugin.h \
+    qtoasterwidgets.h \
     qtoasterdialplugin.h \
-    qtoasterbuttonplugin.h
-SOURCES     = qlcddisplayplugin.cpp qbigdialplugin.cpp qsmalldialplugin.cpp qmulticolorledplugin.cpp qsmallknobplugin.cpp qchickenheaddialplugin.cpp qtoasterwidgets.cpp \
+    qtoasterenumdialplugin.h \
+    qtoasterbuttonplugin.h \
+    qtoasterlcdplugin.h \
+    ../Toaster/Commons.h \
+    ToasterWidgetsLib.h \
+    CtxMenuProvider.h
+SOURCES     = \
+#    qbigdialplugin.cpp \
+#    qsmalldialplugin.cpp \
+    qmulticolorledplugin.cpp \
+#   qsmallknobplugin.cpp \
+    qchickenheaddialplugin.cpp \
+    qtoasterwidgets.cpp \
     qtoasterdialplugin.cpp \
-    qtoasterbuttonplugin.cpp
+    qtoasterenumdialplugin.cpp \
+    qtoasterbuttonplugin.cpp \
+    qtoasterlcdplugin.cpp
 RESOURCES   = icons.qrc \
-    skins.qrc
+    skins.qrc \
+    fonts.qrc
 LIBS        += -L. 
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += designer
-} else {
-    CONFIG += designer
-}
+INCLUDEPATH += $$PWD/../Shared
+
+#greaterThan(QT_MAJOR_VERSION, 4) {
+#    QT += designer
+#} else {
+#    CONFIG += designer
+#}
 
 target.path = $$[QT_INSTALL_PLUGINS]/designer
 INSTALLS    += target
 
-include(qbigdial.pri)
+#include(qbigdial.pri)
 include(qtoasterbutton.pri)
 include(qtoasterdial.pri)
+include(qtoasterenumdial.pri)
 include(qmulticolorled.pri)
-include(qlcddisplay.pri)
-include(qsmalldial.pri)
+include(qtoasterlcd.pri)
+#include(qsmalldial.pri)
 include(qchickenheaddial.pri)
-include(qsmallknob.pri)
+#include(qsmallknob.pri)
 
 DISTFILES +=

@@ -13,7 +13,7 @@ BYTEARRAYDEF(EqMidi, Presence,       0x07)
 
 EqMidi::EqMidi()
 {
-
+  SysExMsgDispatcher::get().addConsumer(this);
 }
 
 EqMidi::~EqMidi()

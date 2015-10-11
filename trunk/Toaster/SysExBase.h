@@ -1,6 +1,8 @@
 #ifndef SYSEXBASE_H
 #define SYSEXBASE_H
-#include "CommonDefs.h"
+#include "Commons.h"
+#include "VolumeTables.h"
+#include <QString>
 
 class SysExBase
 {
@@ -21,14 +23,34 @@ protected:
   BYTEARRAYDECL(ReqSingleParamVal)
   BYTEARRAYDECL(ReqMultiParamVals)
   BYTEARRAYDECL(ReqStringParam)
+  BYTEARRAYDECL(ReqExtParam)
   BYTEARRAYDECL(ReqExtStringParam)
+  BYTEARRAYDECL(ReqParamAsString)
+
+  BYTEARRAYDECL(ReservedFct7E)
+  BYTEARRAYDECL(ReservedFct7F)
 
   ByteArray createSingleParamGetCmd(const ByteArray& addressPage, const ByteArray& param);
-  ByteArray createStringParamGetCmd(const ByteArray& addressPage, const ByteArray& param);
   ByteArray createSingleParamSetCmd(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val);
-  ByteArray createStringParamSetCmd(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val);
-  
   ByteArray createSingleParamSetCmd(const ByteArray& addressPage, const ByteArray& param, unsigned short rawVal);
+
+  ByteArray createStringParamGetCmd(const ByteArray& addressPage, const ByteArray& param);
+  ByteArray createStringParamSetCmd(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val);
+  ByteArray createStringParamSetCmd(const ByteArray& addressPage, const ByteArray& param, const QString& strVal);
+
+  ByteArray createExtParamGetCmd(const ByteArray& param);
+  ByteArray createExtParamSetCmd(const ByteArray& param, const ByteArray& val);
+  ByteArray createExtParamGetCmd(unsigned int param);
+  ByteArray createExtParamSetCmd(unsigned int, unsigned int val);
+
+  ByteArray createValueAsStringGetCmd(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val);
+  ByteArray createValueAsStringGetCmd(const ByteArray& addressPage, const ByteArray& param, unsigned short rawVal);
+
+  ByteArray createExtStringParamGetCmd(const ByteArray& param);
+  ByteArray createExtStringParamGetCmd(unsigned int param);
+
+  ByteArray createReservedFct7E(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val);
+  ByteArray createReservedFct7F(const ByteArray& addressPage, const ByteArray& param, const ByteArray& val);
   
   // utilities
   double raw2Phys(unsigned short rawVal, double deltaMinMax, double min)
@@ -71,6 +93,28 @@ protected:
                         | ((unsigned int)t3);
     return rawVal;
   }
+
+  unsigned int extractRawVal(ByteArray b)
+  {
+    unsigned char t0 = (b[4] & 0x7F) | (b[3] << 7);
+    unsigned char t1 = ((b[3] >> 1) & 0x3F) | (b[2] << 6);
+    unsigned char t2 = ((b[2] >> 2) & 0x1F) | (b[1] << 5);
+    unsigned char t3 = ((b[1] >> 3) & 0x0F) | (b[0] << 4);
+    unsigned int rawVal = ((unsigned int)t0)
+                        | ((unsigned int)t1 << 8)
+                        | ((unsigned int)t2 << 16)
+                        | ((unsigned int)t3 << 24);
+    return rawVal;
+  }
+
+  QString extractString(ByteArray byteArray)
+  {
+    QString strVal;
+    for(unsigned int i = 0; (i < byteArray.size() && byteArray.at(i) != 0); ++i)
+      strVal.append(byteArray.at(i));
+
+    return strVal;
+  }
   
   ByteArray packRawVal(unsigned short rawVal)
   {
@@ -80,6 +124,53 @@ protected:
     val.push_back(msb);
     val.push_back(lsb);
     return val;
+  }
+
+  ByteArray packRawVal(unsigned int rawVal)
+  {
+    ByteArray val;
+    val.push_back((rawVal >> 28) & 0x7f);
+    val.push_back((rawVal >> 21) & 0x7f);
+    val.push_back((rawVal >> 14) & 0x7f);
+    val.push_back((rawVal >> 7) & 0x7f);
+    val.push_back(rawVal & 0x7f);
+
+    return val;
+  }
+
+  ByteArray packString(const QString& strVal)
+  {
+    ByteArray val;
+    for(int i = 0; i < strVal.length(); ++i)
+      val.push_back(strVal.at(i).toLatin1());
+
+    val.push_back(0);
+    return val;
+  }
+
+  double raw2Volume(unsigned short rawVal, double deltaMinMax, double min)
+  {
+    /*
+    double physVal = 0;
+    if(rawVal >= 0x2000)
+    {
+      double posMax = deltaMinMax + min;
+      physVal = (((rawVal - 0x2000) * posMax) / 0x2000);
+    }
+    else
+    {
+      physVal = (((rawVal - 0x1FFF) * min) / 0x1FFF);
+    }
+
+    return physVal;
+    */
+
+    return VolumeTables::raw2dB(rawVal);
+  }
+
+  unsigned short volume2Raw(double val)
+  {
+    return VolumeTables::dB2Raw(val);
   }
 };
 

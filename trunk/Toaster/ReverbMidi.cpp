@@ -19,7 +19,7 @@ BYTEARRAYDEF(ReverbMidi, Ducking,         0x0C)
 
 ReverbMidi::ReverbMidi()
 {
-
+  SysExMsgDispatcher::get().addConsumer(this);
 }
 
 ReverbMidi::~ReverbMidi()

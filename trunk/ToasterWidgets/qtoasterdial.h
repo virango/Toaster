@@ -3,10 +3,11 @@
 #include <QWidget>
 #include <QPixmap>
 #include <QMap>
+#include "ToasterWidgetsLib.h"
 
 #define MAP_INSERT(x, y, z) x[y] = z
 
-class QToasterDial : public QWidget
+class TOASTERWIDGETS_EXPORT QToasterDial : public QWidget
 {
   Q_OBJECT
   Q_ENUMS(KnobSize)
@@ -15,6 +16,7 @@ class QToasterDial : public QWidget
   Q_PROPERTY(LEDRingType ledRingType READ ledRingType WRITE setLEDRingType)
   Q_PROPERTY(double minValue READ minValue WRITE setMinValue)
   Q_PROPERTY(double maxValue READ maxValue WRITE setMaxValue)
+  Q_PROPERTY(double value READ value WRITE setValue)
   Q_PROPERTY(double stepWidth READ stepWidth WRITE setStepWidth)
   Q_PROPERTY(QString unit READ unit WRITE setUnit)
 
@@ -35,11 +37,13 @@ public:
   LEDRingType ledRingType() const { return mLEDRingType; }
   double minValue() const { return mMinValue; }
   double maxValue() const { return mMaxValue; }
+  double value() const { return mCurrValue; }
   double stepWidth() const { return mStepWidth; }
   QString unit() const { return mUnit; }
 
 signals:
   void valueChanged(double);
+  void valueChanged(const QString&);
 
 public slots:
   void setKnobSize(KnobSize knobSize);
@@ -62,6 +66,7 @@ protected:
   void leaveEvent(QEvent* event);
 
   void update(int deltaSteps);
+  void updateValueText();
   void showValueTooltip();
 
   void updateLEDRing();
@@ -77,17 +82,18 @@ private:
 
   int mMouseY;
 
-  double mMinValue;
-  double mMaxValue;
-  double mStepWidth;
-  double mCurrValue;
+  double   mMinValue;
+  double   mMaxValue;
+  double   mStepWidth;
+  double   mCurrValue;
+  QString  mCurrValueText;
 
   QString mUnit;
 
   QMap<KnobSize, QString> mKnobSkins;
   QMap<LEDRingType, QString> mLEDRingSkins;
   static const int mKnobSkinNoOfFrames = 40;
-  static const int mLEDRingSkinNoOfFrames = 16;
+  static const int mLEDRingSkinNoOfFrames = 15;
 };
 
 #endif

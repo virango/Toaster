@@ -35,11 +35,12 @@ void Delay::applyType(DelayType type)
 void Delay::applyOnOffCutsTail(bool onOffCutsTail)
 {
   midiApplyOnOffCutsTail(bool2Raw(onOffCutsTail));
+  midiRequestOnOffCutsTail();
 }
 
 void Delay::applyMix(double mix)
 {
-  midiApplyMix(phys2Raw(mix, 100.0, 0.0));
+  midiApplyMix(phys2Raw(mix, 200.0, 0.0));
 }
 
 void Delay::applyVolume(double volume)
@@ -110,7 +111,7 @@ void Delay::midiOnOffCutsTailReceived(unsigned short rawVal)
 
 void Delay::midiMixReceived(unsigned short rawVal)
 {
-  emit mixReceived(raw2Phys(rawVal, 100.0, 0.0));
+  emit mixReceived(raw2Phys(rawVal, 200.0, 0.0));
 }
 
 void Delay::midiVolumeReceived(unsigned short rawVal)

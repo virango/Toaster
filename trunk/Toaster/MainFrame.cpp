@@ -1,60 +1,109 @@
 #include "MainFrame.h"
 #include "ui_MainFrame.h"
+#include "DebugMidi.h"
 
 MainFrame::MainFrame(QWidget *parent)
   : QFrame(parent)
   , ui(new Ui::MainFrame)
-  , mStompA(StompMidi::A)
-  , mStompB(StompMidi::B)
-  , mStompC(StompMidi::C)
-  , mStompD(StompMidi::D)
-  , mStompX(StompMidi::X)
-  , mStompMod(StompMidi::MOD)
+  , mStompA(StompA)
+  , mStompB(StompB)
+  , mStompC(StompC)
+  , mStompD(StompD)
+  , mStompX(StompX)
+  , mStompMod(StompMOD)
+  , mStompACtxMenu(mStompA)
+  , mStompBCtxMenu(mStompB)
+  , mStompCCtxMenu(mStompC)
+  , mStompDCtxMenu(mStompD)
+  , mStompXCtxMenu(mStompX)
+  , mStompModCtxMenu(mStompMod)
+  , mOperationMode(Browser)
+  , mEditModeButton(NULL)
 {
-    ui->setupUi(this);
+  ui->setupUi(this);
 
-    // notifications
-    // stomps
-    connect(&mStompA, SIGNAL(onOffReceived(bool)), this, SLOT(onStompAOnOff(bool)));
-    connect(&mStompB, SIGNAL(onOffReceived(bool)), this, SLOT(onStompBOnOff(bool)));
-    connect(&mStompC, SIGNAL(onOffReceived(bool)), this, SLOT(onStompCOnOff(bool)));
-    connect(&mStompD, SIGNAL(onOffReceived(bool)), this, SLOT(onStompDOnOff(bool)));
-    connect(&mStompX, SIGNAL(onOffReceived(bool)), this, SLOT(onStompXOnOff(bool)));
-    connect(&mStompMod, SIGNAL(onOffReceived(bool)), this, SLOT(onStompModOnOff(bool)));
-    // amp
-    connect(&mAmp, SIGNAL(onOffReceived(bool)), this, SLOT(onAmpOnOff(bool)));
-    connect(&mAmp, SIGNAL(gainReceived(double)), this, SLOT(onAmpGain(double)));
-    // eq
-    connect(&mEq, SIGNAL(onOffReceived(bool)), this, SLOT(onEqOnOff(bool)));
-    connect(&mEq, SIGNAL(bassReceived(double)), this, SLOT(onEqBass(double)));
-    connect(&mEq, SIGNAL(middleReceived(double)), this, SLOT(onEqMiddle(double)));
-    connect(&mEq, SIGNAL(trebleReceived(double)), this, SLOT(onEqTreble(double)));
-    connect(&mEq, SIGNAL(presenceReceived(double)), this, SLOT(onEqPresence(double)));
-    // cab
-    connect(&mCab, SIGNAL(onOffReceived(bool)), this, SLOT(onCabOnOff(bool)));
-    // rig
-    //connect(&mRig, SIGNAL(tempoReceived(double)), this, SLOT(onRigTempo(double)));
-    connect(&mRig, SIGNAL(volumeReceived(double)), this, SLOT(onRigVolume(double)));
-    //connect(&mRig, SIGNAL(tempoEnableReceived(bool)), this, SLOT(onRigTempoEnable(bool)));
-    connect(&mRig, SIGNAL(stompsEnableReceived(bool)), this, SLOT(onRigStompsEnable(bool)));
-    connect(&mRig, SIGNAL(stackEnableReceived(bool)), this, SLOT(onRigStackEnable(bool)));
-    connect(&mRig, SIGNAL(effectsEnableReceived(bool)), this, SLOT(onRigEffectsEnable(bool)));
-    // global
-    connect(&mGlobal, SIGNAL(operationModeReceived(unsigned short)), this, SLOT(onGlobalOperationMode(unsigned short)));
-    connect(&mGlobal, SIGNAL(mainOutputVolumeReceived(double)), this, SLOT(onGlobalMainVolume(double)));
-    connect(&mGlobal, SIGNAL(headphoneOutputVolumeReceived(double)), this, SLOT(onGlobalHeadphoneVolume(double)));
-    connect(&mGlobal, SIGNAL(monitorOutputVolumeReceived(double)), this, SLOT(onGlobalMonitorVolume(double)));
-    connect(&mGlobal, SIGNAL(directOutputVolumeReceived(double)), this, SLOT(onGlobalDirectVolume(double)));
-    // input
-    connect(&mInput, SIGNAL(noiseGateReceived(double)), this, SLOT(onInputNoiseGate(double)));
-    connect(&mInput, SIGNAL(distortionSenseReceived(double)), SLOT(onInputDistortionSense(double)));
-    connect(&mInput, SIGNAL(cleanSenseReceived(double)), SLOT(onInputCleanSense(double)));
+  // notifications
+  // stomps
+  qRegisterMetaType<::FXType>("::FXType");
+  connect(&mStompA, SIGNAL(onOffReceived(bool)), this, SLOT(onStompAOnOff(bool)));
+  connect(&mStompB, SIGNAL(onOffReceived(bool)), this, SLOT(onStompBOnOff(bool)));
+  connect(&mStompC, SIGNAL(onOffReceived(bool)), this, SLOT(onStompCOnOff(bool)));
+  connect(&mStompD, SIGNAL(onOffReceived(bool)), this, SLOT(onStompDOnOff(bool)));
+  connect(&mStompX, SIGNAL(onOffReceived(bool)), this, SLOT(onStompXOnOff(bool)));
+  connect(&mStompMod, SIGNAL(onOffReceived(bool)), this, SLOT(onStompModOnOff(bool)));
+  connect(&mDelay, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onStompDelayOnOff(bool)));
+  connect(&mDelay, SIGNAL(feedbackReceived(double)), this, SLOT(onStompDelayFeedback(double)));
+  connect(&mDelay, SIGNAL(mixReceived(double)), this, SLOT(onStompDelayMix(double)));
+  connect(&mReverb, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onStompReverbOnOff(bool)));
+  connect(&mReverb, SIGNAL(timeReceived(double)), this, SLOT(onStompReverbTime(double)));
+  connect(&mReverb, SIGNAL(mixReceived(double)), this, SLOT(onStompReverbMix(double)));
+  connect(&mStompA, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompAType(::FXType)));
+  connect(&mStompB, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompBType(::FXType)));
+  connect(&mStompC, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompCType(::FXType)));
+  connect(&mStompD, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompDType(::FXType)));
+  connect(&mStompX, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompXType(::FXType)));
+  connect(&mStompMod, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompModType(::FXType)));
+  // amp
+  connect(&mAmp, SIGNAL(onOffReceived(bool)), this, SLOT(onAmpOnOff(bool)));
+  connect(&mAmp, SIGNAL(gainReceived(double)), this, SLOT(onAmpGain(double)));
+  // eq
+  connect(&mEq, SIGNAL(onOffReceived(bool)), this, SLOT(onEqOnOff(bool)));
+  connect(&mEq, SIGNAL(bassReceived(double)), this, SLOT(onEqBass(double)));
+  connect(&mEq, SIGNAL(middleReceived(double)), this, SLOT(onEqMiddle(double)));
+  connect(&mEq, SIGNAL(trebleReceived(double)), this, SLOT(onEqTreble(double)));
+  connect(&mEq, SIGNAL(presenceReceived(double)), this, SLOT(onEqPresence(double)));
+  // cab
+  connect(&mCab, SIGNAL(onOffReceived(bool)), this, SLOT(onCabOnOff(bool)));
+  // rig
+  //connect(&mRig, SIGNAL(tempoReceived(double)), this, SLOT(onRigTempo(double)));
+  connect(&mRig, SIGNAL(volumeReceived(double)), this, SLOT(onRigVolume(double)));
+  //connect(&mRig, SIGNAL(tempoEnableReceived(bool)), this, SLOT(onRigTempoEnable(bool)));
+  connect(&mRig, SIGNAL(stompsEnableReceived(bool)), this, SLOT(onRigStompsEnable(bool)));
+  connect(&mRig, SIGNAL(stackEnableReceived(bool)), this, SLOT(onRigStackEnable(bool)));
+  connect(&mRig, SIGNAL(effectsEnableReceived(bool)), this, SLOT(onRigEffectsEnable(bool)));
+  // global
+  connect(&mGlobal, SIGNAL(operationModeReceived(unsigned short)), this, SLOT(onGlobalOperationMode(unsigned short)));
+  connect(&mGlobal, SIGNAL(mainOutputVolumeReceived(double)), this, SLOT(onGlobalMainVolume(double)));
+  connect(&mGlobal, SIGNAL(headphoneOutputVolumeReceived(double)), this, SLOT(onGlobalHeadphoneVolume(double)));
+  connect(&mGlobal, SIGNAL(monitorOutputVolumeReceived(double)), this, SLOT(onGlobalMonitorVolume(double)));
+  connect(&mGlobal, SIGNAL(directOutputVolumeReceived(double)), this, SLOT(onGlobalDirectVolume(double)));
+  // input
+  connect(&mInput, SIGNAL(noiseGateReceived(double)), this, SLOT(onInputNoiseGate(double)));
+  connect(&mInput, SIGNAL(distortionSenseReceived(double)), SLOT(onInputDistortionSense(double)));
+  connect(&mInput, SIGNAL(cleanSenseReceived(double)), SLOT(onInputCleanSense(double)));
+  // profile
+  connect(&mProfile, SIGNAL(rigNameReceived(const QString&)), this, SLOT(onRigName(const QString&)));
+  connect(&mProfile, SIGNAL(rigAuthorReceived(const QString&)), this, SLOT(onRigAuthor(const QString&)));
+  connect(&mProfile, SIGNAL(ampNameReceived(const QString&)), this, SLOT(onAmpName(const QString&)));
+  // extended parameter
+  connect(&mExtParam, SIGNAL(browserViewReceived(uint)), this, SLOT(onBrowserView(uint)));
+
+  ui->qStompAButton->setCtxMenuProvider(&mStompACtxMenu);
+  ui->qStompBButton->setCtxMenuProvider(&mStompBCtxMenu);
+  ui->qStompCButton->setCtxMenuProvider(&mStompCCtxMenu);
+  ui->qStompDButton->setCtxMenuProvider(&mStompDCtxMenu);
+  ui->qStompXButton->setCtxMenuProvider(&mStompXCtxMenu);
+  ui->qStompModButton->setCtxMenuProvider(&mStompModCtxMenu);
+
+  ui->qToasterEnumDial->setValues(ui->qLCDDisplay->getBrowserModeViews());
+
 }
 
 MainFrame::~MainFrame()
 {
     delete ui;
 }
+
+void MainFrame::connect2KPA(const QString& connectName)
+{
+  mGlobal.connect2KPA(connectName);
+}
+
+void MainFrame::disconnectFromKPA()
+{
+  mGlobal.disconnectFromKPA();
+}
+
 
 void MainFrame::requestValues()
 {
@@ -64,87 +113,99 @@ void MainFrame::requestValues()
   mStompD.requestAllValues();
   mStompX.requestAllValues();
   mStompMod.requestAllValues();
+  mDelay.requestAllValues();
+  mReverb.requestAllValues();
   mAmp.requestAllValues();
   mEq.requestAllValues();
   mCab.requestAllValues();
   mRig.requestAllValues();
   mGlobal.requestAllValues();
   mInput.requestAllValues();
+  mProfile.requestAllValues();
+  mExtParam.requestAllValues();
+
+  //DebugMidi::get().debugScanRequest(0x04, 0x00, 0x7F);
+  //DebugMidi::get().debugScanRequest(0x00, 0x0, 0x7F);
+  DebugMidi::get().debugScanRequest(0x01, 0x00, 0x7F);
 }
 
-void MainFrame::on_qGainDial_valueChanged(double gain)
+void MainFrame::handleStompButtonClick(Stomp& stomp, QToasterButton& stompBt, bool longClick)
 {
-  mAmp.applyGain(gain);
+  if(longClick)
+  {
+    toggleOperationMode(StompEdit, &stompBt);
+  }
+  else
+  {
+    stomp.applyOnOff(stompBt.toggleOnOff());
+  }
+  update();
 }
 
-
-void MainFrame::on_qAmplifierButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::toggleOperationMode(OperationMode opMode, QToasterButton* bt)
 {
-  if(state == QToasterButton::On)
-    mAmp.applyOnOff(true);
-  else if(state == QToasterButton::Off)
-    mAmp.applyOnOff(false);
-  // else ==> edit TODO
+  mOperationMode = opMode;
+  if(bt != NULL)
+  {
+    if(mEditModeButton != NULL && bt != mEditModeButton)
+      mEditModeButton->resetToOnOffState();
+
+    if(bt->state() == QToasterButton::Blinking)
+    {
+      bt->resetToOnOffState();
+      mEditModeButton = NULL;
+    }
+    else
+    {
+      bt->setState(QToasterButton::Blinking);
+      mEditModeButton = bt;
+    }
+  }
+  else if(mEditModeButton != NULL)
+  {
+    mEditModeButton->resetToOnOffState();
+    mEditModeButton = NULL;
+  }
 }
 
-void MainFrame::on_qStompAButton_valueChanged(const QToasterButton::State& state)
+/*
+ * stomps slots
+ */
+void MainFrame::on_qStompAButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mStompA.applyOnOff(true);
-  else if(state == QToasterButton::Off)
-    mStompA.applyOnOff(false);
-  // else ==> edit TODO
+  handleStompButtonClick(mStompA, bt, longClick);
 }
 
-void MainFrame::on_qStompBButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::on_qStompBButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mStompB.applyOnOff(true);
-  else if(state == QToasterButton::Off)
-    mStompB.applyOnOff(false);
-  // else ==> edit TODO
+  handleStompButtonClick(mStompB, bt, longClick);
 }
 
-void MainFrame::on_qStompCButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::on_qStompCButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mStompC.applyOnOff(true);
-  else if(state == QToasterButton::Off)
-    mStompC.applyOnOff(false);
-  // else ==> edit TODO
+  handleStompButtonClick(mStompC, bt, longClick);
 }
 
-void MainFrame::on_qStompDButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::on_qStompDButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mStompD.applyOnOff(true);
-  else if(state == QToasterButton::Off)
-    mStompD.applyOnOff(false);
-  // else ==> edit TODO
+  handleStompButtonClick(mStompD, bt, longClick);
 }
 
-void MainFrame::on_qStompXButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::on_qStompXButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mStompX.applyOnOff(true);
-  else if(state == QToasterButton::Off)
-    mStompX.applyOnOff(false);
-  // else ==> edit TODO
+  handleStompButtonClick(mStompX, bt, longClick);
 }
 
-void MainFrame::on_qStompModButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::on_qStompModButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mStompMod.applyOnOff(true);
-  else if(state == QToasterButton::Off)
-    mStompMod.applyOnOff(false);
-  // else ==> edit TODO
+  handleStompButtonClick(mStompMod, bt, longClick);
 }
 
 void MainFrame::onStompAOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompAButton->setState(state);
+  ui->qLCDDisplay->setStompAEnabled(onOff);
   update();
 }
 
@@ -152,6 +213,7 @@ void MainFrame::onStompBOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompBButton->setState(state);
+  ui->qLCDDisplay->setStompBEnabled(onOff);
   update();
 }
 
@@ -159,6 +221,7 @@ void MainFrame::onStompCOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompCButton->setState(state);
+  ui->qLCDDisplay->setStompCEnabled(onOff);
   update();
 }
 
@@ -166,6 +229,7 @@ void MainFrame::onStompDOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompDButton->setState(state);
+  ui->qLCDDisplay->setStompDEnabled(onOff);
   update();
 }
 
@@ -173,6 +237,7 @@ void MainFrame::onStompXOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompXButton->setState(state);
+  ui->qLCDDisplay->setStompXEnabled(onOff);
   update();
 }
 
@@ -180,6 +245,83 @@ void MainFrame::onStompModOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompModButton->setState(state);
+  ui->qLCDDisplay->setStompModEnabled(onOff);
+  update();
+}
+
+void MainFrame::onStompDelayOnOff(bool onOff)
+{
+  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+  ui->qStompDelayButton->setState(state);
+  ui->qLCDDisplay->setDelayEnabled(onOff);
+  update();
+}
+
+void MainFrame::onStompDelayFeedback(double feedback)
+{
+  ui->qDelayFeedbackDial->setValue(feedback);
+  update();
+}
+
+void MainFrame::onStompDelayMix(double mix)
+{
+  ui->qDelayMixDial->setValue(mix);
+  update();
+}
+
+void MainFrame::onStompReverbOnOff(bool onOff)
+{
+  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+  ui->qStompReverbButton->setState(state);
+  ui->qLCDDisplay->setReverbEnabled(onOff);
+  update();
+}
+
+void MainFrame::onStompAType(::FXType type)
+{
+  ui->qLCDDisplay->setStompAFXType(type);
+}
+
+void MainFrame::onStompBType(::FXType type)
+{
+  ui->qLCDDisplay->setStompBFXType(type);
+}
+
+void MainFrame::onStompCType(::FXType type)
+{
+  ui->qLCDDisplay->setStompCFXType(type);
+}
+
+void MainFrame::onStompDType(::FXType type)
+{
+  ui->qLCDDisplay->setStompDFXType(type);
+}
+
+void MainFrame::onStompXType(::FXType type)
+{
+  ui->qLCDDisplay->setStompXFXType(type);
+}
+
+void MainFrame::onStompModType(::FXType type)
+{
+  ui->qLCDDisplay->setStompModFXType(type);
+}
+
+
+/*
+ * amp slots
+ */
+void MainFrame::on_qGainDial_valueChanged(double gain)
+{
+  mAmp.applyGain(gain);
+}
+
+void MainFrame::on_qAmplifierButton_clicked(QToasterButton& bt, bool longClick)
+{
+  if(longClick)
+    toggleOperationMode(AmpEdit, &bt);
+  else
+    mAmp.applyOnOff(bt.toggleOnOff());
   update();
 }
 
@@ -205,45 +347,45 @@ void MainFrame::onEqOnOff(bool onOff)
 
 void MainFrame::onEqBass(double bass)
 {
-  ui->qBigMulti1Dial->setValue(bass);
+  ui->qEqBassDial->setValue(bass);
   update();
 }
 
 void MainFrame::onEqMiddle(double middle)
 {
-  ui->qBigMulti2Dial->setValue(middle);
+  ui->qEqMiddleDial->setValue(middle);
   update();
 }
 
 void MainFrame::onEqTreble(double treble)
 {
-  ui->qBigMulti3Dial->setValue(treble);
+  ui->qEqTrebleDial->setValue(treble);
   update();
 }
 
 void MainFrame::onEqPresence(double presence)
 {
-  ui->qBigMulti4Dial->setValue(presence);
+  ui->qEqPresenceDial->setValue(presence);
   update();
 }
 
 
-void MainFrame::on_qBigMulti1Dial_valueChanged(double physVal)
+void MainFrame::on_qEqBassDial_valueChanged(double physVal)
 {
   mEq.applyBassReceived(physVal);
 }
 
-void MainFrame::on_qBigMulti2Dial_valueChanged(double physVal)
+void MainFrame::on_qEqMiddleDial_valueChanged(double physVal)
 {
   mEq.applyMiddleReceived(physVal);
 }
 
-void MainFrame::on_qBigMulti3Dial_valueChanged(double physVal)
+void MainFrame::on_qEqTrebleDial_valueChanged(double physVal)
 {
   mEq.applyTrebleReceived(physVal);
 }
 
-void MainFrame::on_qBigMulti4Dial_valueChanged(double physVal)
+void MainFrame::on_qEqPresenceDial_valueChanged(double physVal)
 {
   mEq.applyPresenceReceived(physVal);
 }
@@ -292,40 +434,31 @@ void MainFrame::onGlobalOperationMode(unsigned short opMode)
   update();
 }
 
-void MainFrame::on_qStompsButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::on_qStompsButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mRig.applyStompsEnable(true);
-  else if(state == QToasterButton::Off)
-    mRig.applyStompsEnable(false);
-  // else ==> edit TODO
+  mRig.applyStompsEnable(bt.toggleOnOff());
+  update();
 }
 
-void MainFrame::on_qStackButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::on_qStackButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mRig.applyStackEnable(true);
-  else if(state == QToasterButton::Off)
-    mRig.applyStackEnable(false);
-  // else ==> edit TODO
+  mRig.applyStackEnable(bt.toggleOnOff());
+  update();
 }
 
-void MainFrame::on_qEffectsButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::on_qEffectsButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mRig.applyEffectsEnable(true);
-  else if(state == QToasterButton::Off)
-    mRig.applyEffectsEnable(false);
-  // else ==> edit TODO
+  mRig.applyEffectsEnable(bt.toggleOnOff());
+  update();
 }
 
-void MainFrame::on_qEQButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::on_qEQButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mEq.applyOnOff(true);
-  else if(state == QToasterButton::Off)
-    mEq.applyOnOff(false);
-  // else ==> edit TODO
+  if(longClick)
+    toggleOperationMode(EQEdit, &bt);
+  else
+    mEq.applyOnOff(bt.toggleOnOff());
+  update();
 }
 
 void MainFrame::onCabOnOff(bool onOff)
@@ -335,13 +468,13 @@ void MainFrame::onCabOnOff(bool onOff)
   update();
 }
 
-void MainFrame::on_qCabinetButton_valueChanged(const QToasterButton::State& state)
+void MainFrame::on_qCabinetButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(state == QToasterButton::On)
-    mCab.applyOnOff(true);
-  else if(state == QToasterButton::Off)
-    mCab.applyOnOff(false);
-  // else ==> edit TODO
+  if(longClick)
+    toggleOperationMode(CabEdit, &bt);
+  else
+    mCab.applyOnOff(bt.toggleOnOff());
+  update();
 }
 
 void MainFrame::on_qMonitorVolumeDial_valueChanged(double volume)
@@ -409,3 +542,124 @@ void MainFrame::onInputCleanSense(double cleanSense)
   update();
 }
 
+void MainFrame::on_qEqBassDial_valueChanged(const QString& value)
+{
+  // TODO:
+  // update
+  ui->qLCDDisplay->setBrowserModeBassValueText(value);
+}
+
+void MainFrame::on_qEqMiddleDial_valueChanged(const QString& value)
+{
+  ui->qLCDDisplay->setBrowserModeMiddleValueText(value);
+}
+
+void MainFrame::on_qEqTrebleDial_valueChanged(const QString& value)
+{
+  ui->qLCDDisplay->setBrowserModeTrebleValueText(value);
+}
+
+void MainFrame::on_qEqPresenceDial_valueChanged(const QString& value)
+{
+  ui->qLCDDisplay->setBrowserModePresenceValueText(value);
+}
+
+
+
+void MainFrame::on_qRigPrevButton_clicked(QToasterButton &bt, bool longClick)
+{
+  if(bt.state() == QToasterButton::On)
+  {
+    mProfile.applyRigPrev();
+    requestValues(); // todo: request just the required values
+  }
+}
+
+void MainFrame::on_qRigNextButton_clicked(QToasterButton &bt, bool longClick)
+{
+  if(bt.state() == QToasterButton::On)
+  {
+    mProfile.applyRigNext();
+    requestValues(); // todo: request just the required values
+  }
+}
+void MainFrame::onRigName(const QString& rigName)
+{
+  ui->qLCDDisplay->setBrowserModeRigName(rigName);
+}
+
+void MainFrame::onRigAuthor(const QString& rigAuthor)
+{
+  ui->qLCDDisplay->setBrowserModeRigAuthor(rigAuthor);
+}
+
+void MainFrame::onAmpName(const QString& ampName)
+{
+  ui->qLCDDisplay->setBrowserModeAmpName(ampName);
+}
+
+void MainFrame::on_qStompDelayButton_clicked(QToasterButton& bt, bool longClick)
+{
+  if(longClick)
+  {
+    toggleOperationMode(StompEdit, &bt);
+  }
+  else
+  {
+    mDelay.applyOnOffCutsTail(bt.toggleOnOff());
+  }
+  update();
+}
+
+void MainFrame::on_qStompReverbButton_clicked(QToasterButton& bt, bool longClick)
+{
+  if(longClick)
+  {
+    toggleOperationMode(StompEdit, &bt);
+  }
+  else
+  {
+    mReverb.applyOnOffCutsTail(bt.toggleOnOff());
+  }
+  update();
+}
+
+void MainFrame::on_qLCDDisplay_browserModeViewChanged(int view)
+{
+  mExtParam.applyBrowserView(view);
+}
+
+void MainFrame::onBrowserView(unsigned int view)
+{
+  ui->qLCDDisplay->setBrowserModeView(view);
+}
+
+void MainFrame::on_qDelayFeedbackDial_valueChanged(double arg1)
+{
+  mDelay.applyFeedback(arg1);
+}
+
+void MainFrame::on_qDelayMixDial_valueChanged(double arg1)
+{
+    mDelay.applyMix(arg1);
+}
+
+void MainFrame::on_qReverbTimeDial_valueChanged(double arg1)
+{
+  mReverb.applyTime(arg1);
+}
+
+void MainFrame::on_qReverbMixDial_valueChanged(double arg1)
+{
+  mReverb.applyMix(arg1);
+}
+
+void MainFrame::onStompReverbTime(double time)
+{
+  ui->qReverbTimeDial->setValue(time);
+}
+
+void MainFrame::onStompReverbMix(double mix)
+{
+  ui->qReverbMixDial->setValue(mix);
+}

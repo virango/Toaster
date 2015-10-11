@@ -17,11 +17,6 @@ InputMidi::~InputMidi()
 {
 }
 
-ByteArray InputMidi::getAddressPage()
-{
-  return sAddressPage;
-}
-
 void InputMidi::consumeSysExMsg(ByteArray* msg)
 {
   if(msg && msg->size() >= 12)
@@ -79,3 +74,9 @@ void InputMidi::midiApplyDistortionSense(unsigned short rawVal)
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDistortionSense, rawVal));
   Midi::get().sendCmd(createNRPNSingleParamSetCmd(getAddressPage(), sDistortionSense, packRawVal(rawVal)));
 }
+
+ByteArray InputMidi::getAddressPage()
+{
+  return sAddressPage;
+}
+

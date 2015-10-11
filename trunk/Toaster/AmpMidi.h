@@ -20,7 +20,6 @@ protected:
   BYTEARRAYDECL(TubeBias)
   BYTEARRAYDECL(DirectMix)
 
-protected:
   AmpMidi();
   ~AmpMidi();
 

@@ -14,7 +14,6 @@ protected:
   BYTEARRAYDECL(CleanSense)
   BYTEARRAYDECL(DistortionSense)
 
-public:
   InputMidi();
   ~InputMidi();
 
@@ -22,8 +21,6 @@ public:
   void consumeSysExMsg(ByteArray* msg);
   unsigned char getId();
 
-
-protected:
   // parameter
   // Noise Gate
   void midiRequestNoiseGate();

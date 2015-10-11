@@ -1,6 +1,3 @@
-#include <jack/jack.h>
-#include <jack/midiport.h>
-#include <jack/ringbuffer.h>
 #include "Midi.h"
 
 void cbProcessMidiInput(double , std::vector<unsigned char> *message, void*)
@@ -26,7 +23,7 @@ Midi& Midi::get()
   return singleton;
 }
 
-bool Midi::openMidiPorts(const string inPort, const string outPort)
+bool Midi::openPorts(const QString& inPort, const QString& outPort)
 {
   int inPortNo = -1;
   int outPortNo = -1;
@@ -64,8 +61,13 @@ bool Midi::openMidiPorts(const string inPort, const string outPort)
   else
     mMidiOut.openVirtualPort("out");
 
-
   return true;
+}
+
+void Midi::closePorts()
+{
+  mMidiIn.closePort();
+  mMidiOut.closePort();
 }
 
 void Midi::processMidiInput(ByteArray* msg)
@@ -81,22 +83,22 @@ void Midi::processMidiInput(ByteArray* msg)
   }
 }
 
-const vector<string> Midi::getInPorts()
+const QStringList Midi::getInPorts()
 {
   mInPorts.clear();
 
   for(unsigned int i = 0; i < mMidiIn.getPortCount(); ++i)
-    mInPorts.push_back(mMidiIn.getPortName(i));
+    mInPorts.append(QString(mMidiIn.getPortName(i).c_str()));
 
   return mInPorts;
 }
 
-const vector<string> Midi::getOutPorts()
+const QStringList Midi::getOutPorts()
 {
   mOutPorts.clear();
 
   for(unsigned int i = 0; i < mMidiOut.getPortCount(); ++i)
-    mOutPorts.push_back(mMidiOut.getPortName(i));
+    mOutPorts.append(QString(mMidiOut.getPortName(i).c_str()));
 
   return mOutPorts;
 }
