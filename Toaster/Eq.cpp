@@ -2,7 +2,7 @@
 
 Eq::Eq()
 {
-  SysExMsgDispatcher::get().addConsumer(this);
+
 }
 
 Eq::~Eq()

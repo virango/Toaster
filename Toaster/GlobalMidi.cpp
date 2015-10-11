@@ -19,6 +19,7 @@ BYTEARRAYDEF(GlobalMidi, MonitorOutputEQMiddle,   0x12)
 BYTEARRAYDEF(GlobalMidi, MonitorOutputEQTreble,   0x13)
 BYTEARRAYDEF(GlobalMidi, MonitorOutputEQPresence, 0x14)
 BYTEARRAYDEF(GlobalMidi, OperationMode,           0x7E)
+BYTEARRAYDEF(GlobalMidi, ConnectName,             0x7F)
 
 GlobalMidi::GlobalMidi()
 {
@@ -214,6 +215,46 @@ void GlobalMidi::midiRequestOperationMode()
 void GlobalMidi::midiApplyOperationMode(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sOperationMode, rawVal));
+  if(rawVal == 1)
+  {
+    ByteArray cc;
+    cc.push_back(0xB0);
+    cc.push_back(31);
+    cc.push_back(1);
+    Midi::get().sendCmd(cc);
+  }
+  else
+  {
+    ByteArray cc;
+    cc.push_back(0xB0);
+    cc.push_back(31);
+    cc.push_back(0);
+    Midi::get().sendCmd(cc);
+  }
+
+}
+
+
+void GlobalMidi::midiApplyConnectName(const QString& connectName)
+{
+  Midi::get().sendCmd(createStringParamSetCmd(getAddressPage(), sConnectName, connectName));
+}
+
+void GlobalMidi::midiSendBeacon()
+{
+  ByteArray ap;
+  ByteArray param;
+  ByteArray value;
+
+  // todo: move it to a better place (an extra class?)
+  // but first: find out what module ap==0x40 is (it's not in the public spec)
+  ap.push_back(0x40);
+  param.push_back(0x02);
+  value.push_back(0x6f); // todo: check ack  (fct==0x7e, ap==0x7f, param==counter)
+                         // 0x6f ==> ack received, 0x6e ack not received
+                         // with 0x6f the kpa periodically sends some info
+  value.push_back(0x5);
+  Midi::get().sendCmd(createReservedFct7E(ap, param, value));
 }
 
 ByteArray GlobalMidi::getAddressPage()

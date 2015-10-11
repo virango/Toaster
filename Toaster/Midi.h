@@ -4,6 +4,7 @@
 #include <list>
 #include <QString>
 #include <RtMidi.h>
+#include <QStringList>
 
 using namespace std;
 
@@ -27,12 +28,13 @@ private:
 public:
   static Midi& get();
 
-  bool openMidiPorts(const string inPort, const string outPort);
+  bool openPorts(const QString& inPort, const QString& outPort);
+  void closePorts();
 
   void processMidiInput(ByteArray* msg);
 
-  const vector<string> getInPorts();
-  const vector<string> getOutPorts();
+  const QStringList getInPorts();
+  const QStringList getOutPorts();
 
   void sendCmd(ByteArray cmd);
 
@@ -44,8 +46,8 @@ private:
   RtMidiIn        mMidiIn;
   RtMidiOut       mMidiOut;
 
-  vector<string>  mInPorts;
-  vector<string>  mOutPorts;
+  QList<QString>  mInPorts;
+  QList<QString>  mOutPorts;
 
   list<IMidiConsumer*> mConsumer;
 };

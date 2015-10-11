@@ -1,18 +1,19 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QMenu>
+#include "CtxMenuProvider.h"
 #include "qtoasterbutton.h"
-
 
 QToasterButton::QToasterButton(QWidget *parent)
   : QWidget(parent)
   , mType(Small)
-  , mTriState(false)
-  , mCurrState(Off)
-  , mPrevState(Off)
-  , mDblClick(false)
+  , mGlobalState(Off)
+  , mOnOffState(Off)
+  , mClickEmited(false)
   , mAnimLabel(this)
   , mMovie()
+  , mpCtxMenuProvider(NULL)
 {
   mAnimLabel.setMovie(&mMovie);
   mAnimLabel.hide();
@@ -23,8 +24,8 @@ QToasterButton::QToasterButton(QWidget *parent)
   MAP_INSERT(mAnims, Small,    ":/resources/SmallButtonAnim.gif");
   createSkin();
 
-  mSingleClickTimer.setSingleShot(true);
-  connect(&mSingleClickTimer, SIGNAL(timeout()), this, SLOT(singleClick()));
+  mLongClickTimer.setSingleShot(true);
+  connect(&mLongClickTimer, SIGNAL(timeout()), this, SLOT(longClick()));
 }
 
 void QToasterButton::createSkin()
@@ -63,31 +64,27 @@ void QToasterButton::setType(Type type)
   createSkin();
 }
 
-void QToasterButton::setTriState(bool triState)
-{
-  mTriState = triState;
-}
-
 void QToasterButton::setState(State state)
 {
-  mPrevState = mCurrState;
-  mCurrState = state;
+  mGlobalState = state;
+  if(state != Blinking)
+    mOnOffState = state;
+  update();
 }
 
-void QToasterButton::singleClick()
+void QToasterButton::longClick()
 {
-  toggleOnOff();
-  emit valueChanged(mCurrState);
-  update();
+  emit clicked(*this, true);
+  mClickEmited = true;
 }
 
 void QToasterButton::paintEvent(QPaintEvent* /* pe */)
 {
   QPainter painter(this);
-  if(mCurrState < Tri)
+  if(mGlobalState < Blinking)
   {
     mAnimLabel.hide();
-    QPixmap pm = mSkinPixmaps[mCurrState];
+    QPixmap pm = mSkinPixmaps[mGlobalState];
     painter.setWindow(0, 0, pm.width(), pm.height());
     painter.drawPixmap(0, 0, pm);
   }
@@ -103,6 +100,7 @@ void QToasterButton::mousePressEvent(QMouseEvent* me)
 {
   if(me->button() == Qt::LeftButton)
   {
+    mLongClickTimer.start(500);
     me->accept();
   }
   else
@@ -114,43 +112,43 @@ void QToasterButton::mouseReleaseEvent(QMouseEvent* me)
   if(me->button() == Qt::LeftButton)
   {
     me->accept();
-    if(mDblClick)
-    {
-      mCurrState = Tri;
-      emit valueChanged(mCurrState);
-      mDblClick = false;
-      update();
-    }
+    mLongClickTimer.stop();
+    if(mClickEmited)
+      mClickEmited = false;
     else
-    {
-      mSingleClickTimer.start(200);
-    }
+      emit clicked(*this, false);
   }
   else
     me->ignore();
 }
 
-void QToasterButton::mouseDoubleClickEvent(QMouseEvent* me)
+
+void QToasterButton::contextMenuEvent(QContextMenuEvent * cme)
 {
-  if((me->button() == Qt::LeftButton) && mTriState)
+  if(mpCtxMenuProvider)
   {
-    mSingleClickTimer.stop();
-    mDblClick = true;
-    me->accept();
+    QMenu ctxMenu;
+    QPoint globalPos = mapToGlobal(cme->pos());
+    mpCtxMenuProvider->createMenu(ctxMenu);
+    if(!ctxMenu.isEmpty())
+      ctxMenu.exec(globalPos);
   }
-  else
-    me->ignore();
 }
 
-void QToasterButton::toggleOnOff()
+void QToasterButton::resetToOnOffState()
 {
-  if(mCurrState != Tri)
-    mPrevState = mCurrState;
+  mGlobalState = mOnOffState;
+}
 
-  if(mCurrState == Off)
-    mCurrState = On;
-  else if(mCurrState == On)
-    mCurrState = Off;
+bool QToasterButton::toggleOnOff()
+{
+  if(mOnOffState == On)
+    mOnOffState = Off;
   else
-    mCurrState = mPrevState;
+    mOnOffState = On;
+
+  if(mGlobalState != Blinking)
+    mGlobalState = mOnOffState;
+
+  return mOnOffState == On;
 }

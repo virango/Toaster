@@ -36,11 +36,12 @@ void Reverb::applyType(Reverb::ReverbType type)
 void Reverb::applyOnOffCutsTail(bool onOff)
 {
   midiApplyOnOffCutsTail(bool2Raw(onOff));
+  midiRequestOnOffCutsTail();
 }
 
 void Reverb::applyMix(double mix)
 {
-  midiApplyMix(phys2Raw(mix, 100.0, 0.0));
+  midiApplyMix(phys2Raw(mix, 200.0, 0.0));
 }
 
 void Reverb::applyVolume(double volume)
@@ -103,7 +104,7 @@ void Reverb::midiOnOffCutsTailReceived(unsigned short rawVal)
 
 void Reverb::midiMixReceived(unsigned short rawVal)
 {
-  emit mixReceived(raw2Phys(rawVal, 100.0, 0.0));
+  emit mixReceived(raw2Phys(rawVal, 200.0, 0.0));
 }
 
 void Reverb::midiVolumeReceived(unsigned short rawVal)

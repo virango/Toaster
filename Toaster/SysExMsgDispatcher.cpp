@@ -25,7 +25,9 @@ void SysExMsgDispatcher::consume(ByteArray* msg)
       for(list<ISysExConsumer*>::iterator it = mConsumer.begin(); it != mConsumer.end(); ++it)
       {
         ISysExConsumer* consumer = (*it);
-        if(consumer && (consumer->getId() == (*msg)[8] || consumer->getId() == 0xFF))
+        if((sExtParamChange[0] == (*msg)[6] && consumer->getId() == (*msg)[6]))   // special handling for extended parameter function
+          consumer->consumeSysExMsg(msg);
+        else if(consumer && (consumer->getId() == (*msg)[8] || consumer->getId() == 0xFF))
           consumer->consumeSysExMsg(msg);
       }
     }

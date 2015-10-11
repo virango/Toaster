@@ -18,8 +18,13 @@ public:
 private slots:
   void on_actionRequest_triggered();
 
+  void on_actionSettings_triggered();
+
+  void on_actionCmd_triggered();
+
 private:
-    Ui::ToasterWindow *ui;
+  void showSettingsDialog();
+  Ui::ToasterWindow *ui;
 };
 
 #endif // TOASTERWINDOW_H

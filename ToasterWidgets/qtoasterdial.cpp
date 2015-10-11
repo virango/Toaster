@@ -2,6 +2,7 @@
 #include <QPaintEvent>
 #include <QWheelEvent>
 #include <QToolTip>
+#include <math.h>
 #include "qtoasterdial.h"
 
 #define DEFAULT_SKIN
@@ -17,6 +18,7 @@ QToasterDial::QToasterDial(QWidget *parent)
   , mMaxValue(100)
   , mStepWidth(1)
   , mCurrValue(0)
+  , mCurrValueText("<0.0>")
   , mUnit("")
 {
   MAP_INSERT(mKnobSkins, Big,   ":/resources/BigDial.png");
@@ -87,6 +89,7 @@ void QToasterDial::update(int deltaSteps)
 {
   // update value
   double newValue = mCurrValue + (deltaSteps * mStepWidth);
+  newValue = floor(newValue * 100 + 0.5) / 100.0;
 
   if (newValue < mMinValue)
     mCurrValue = mMinValue;
@@ -94,6 +97,8 @@ void QToasterDial::update(int deltaSteps)
     mCurrValue = mMaxValue;
   else
     mCurrValue = newValue;
+
+  updateValueText();
 
   // update knob
   int newKnobFrameNo = mCurrKnobFrameNo + deltaSteps;
@@ -114,6 +119,16 @@ void QToasterDial::update(int deltaSteps)
   emit valueChanged(mCurrValue);
 }
 
+void QToasterDial::updateValueText()
+{
+  mCurrValueText = "";
+  mCurrValueText += QString::number(mCurrValue, 'f', 1 ) + mUnit;
+  if(mCurrValueText.startsWith("0.0") && mMinValue < 0)
+    mCurrValueText = "<" + mCurrValueText + ">";
+
+  emit valueChanged(mCurrValueText);
+}
+
 void QToasterDial::setKnobSize(KnobSize knobSize)
 {
   mKnobSize = knobSize;
@@ -131,7 +146,6 @@ void QToasterDial::setMinValue(double minValue)
   if(minValue < mMaxValue)
   {
     mMinValue = minValue;
-    mCurrValue = minValue;
   }
   QWidget::update();
 }
@@ -147,7 +161,7 @@ void QToasterDial::setMaxValue(double maxValue)
 
 void QToasterDial::setStepWidth(double stepWidth)
 {
-  if(stepWidth < mMaxValue)
+  if(stepWidth < (mMaxValue - mMinValue))
     mStepWidth = stepWidth;
 }
 
@@ -156,6 +170,7 @@ void QToasterDial::setValue(double value)
   if(value >= mMinValue && value <= mMaxValue)
   {
     mCurrValue = value;
+    updateValueText();
     updateLEDRing();
   }
 }
@@ -220,9 +235,8 @@ void QToasterDial::leaveEvent(QEvent* event)
 
 void QToasterDial::showValueTooltip()
 {
-  QString strVal = "<" + QString::number(mCurrValue, 'f', 1 ) + mUnit + ">";
   QPoint pos = mapToGlobal(QPoint(this->width()/2, this->height()/2));
-  QToolTip::showText(pos, strVal, this);
+  QToolTip::showText(pos, mCurrValueText, this);
 }
 
 void QToasterDial::updateLEDRing()

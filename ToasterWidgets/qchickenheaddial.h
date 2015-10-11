@@ -2,8 +2,9 @@
 #define QCHICKENHEADDIAL_H
 #include <QWidget>
 #include <QPixmap>
+#include "ToasterWidgetsLib.h"
 
-class QChickenHeadDial : public QWidget
+class TOASTERWIDGETS_EXPORT QChickenHeadDial : public QWidget
 {
   Q_OBJECT
 

@@ -7,15 +7,19 @@
 #include <QMovie>
 #include <QTimer>
 
+#include "ToasterWidgetsLib.h"
+
 #define MAP_INSERT(x, y, z) x[y] = z
 
-class QToasterButton : public QWidget
+struct ICtxMenuProvider;
+
+class TOASTERWIDGETS_EXPORT QToasterButton : public QWidget
 {
   Q_OBJECT
   Q_ENUMS(Type)
   Q_ENUMS(State)
   Q_PROPERTY(Type type READ type WRITE setType)
-  Q_PROPERTY(bool triState READ triState WRITE setTriState)
+  Q_PROPERTY(State state READ state WRITE setState)
 
 public:
   QToasterButton(QWidget *parent = 0);
@@ -29,45 +33,46 @@ public:
   {
     Off = 0,
     On = 1,
-    Tri = 2
+    Blinking = 2
   };
 
   Type type() const { return mType; }
-  bool triState() const { return mTriState; }
+  State state() const { return mGlobalState; }
+  void setCtxMenuProvider(ICtxMenuProvider* ctxMenuProvider) { mpCtxMenuProvider = ctxMenuProvider; }
 
 signals:
-  void valueChanged(QToasterButton::State);
+  void clicked(QToasterButton& bt, bool longClick);
 
 public slots:
   void setType(Type type);
-  void setTriState(bool triState);
   void setState(State state);
+  void resetToOnOffState();
+  bool toggleOnOff();
 
 private slots:
-  void singleClick();
+  void longClick();
 
 protected:
   void createSkin();
   void paintEvent(QPaintEvent* pe);
   void mousePressEvent(QMouseEvent* me);
   void mouseReleaseEvent(QMouseEvent* me);
-  void mouseDoubleClickEvent(QMouseEvent* me);
-
-  void toggleOnOff();
+  void contextMenuEvent(QContextMenuEvent * cme);
 
 private:
   QList<QPixmap> mSkinPixmaps;
 
   Type    mType;
-  bool    mTriState;
-  State   mCurrState;
-  State   mPrevState;
+  State   mGlobalState;
+  State   mOnOffState;
 
-  bool    mDblClick;
-  QTimer  mSingleClickTimer;
+  bool    mClickEmited;
+  QTimer  mLongClickTimer;
 
   QLabel  mAnimLabel;
   QMovie  mMovie;
+
+  ICtxMenuProvider* mpCtxMenuProvider;
 
   QMap<Type, QString> mSkins;
   QMap<Type, QString> mAnims;
