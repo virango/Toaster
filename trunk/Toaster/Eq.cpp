@@ -25,22 +25,22 @@ void Eq::applyOnOff(bool onOff)
   midiApplyOnOff(bool2Raw(onOff));
 }
 
-void Eq::applyBassReceived(double bass)
+void Eq::applyBass(double bass)
 {
   midiApplyBass(phys2Raw(bass, 10.0, -5.0));
 }
 
-void Eq::applyMiddleReceived(double middle)
+void Eq::applyMiddle(double middle)
 {
   midiApplyMiddle(phys2Raw(middle, 10.0, -5.0));
 }
 
-void Eq::applyTrebleReceived(double treble)
+void Eq::applyTreble(double treble)
 {
   midiApplyTreble(phys2Raw(treble, 10.0, -5.0));
 }
 
-void Eq::applyPresenceReceived(double presence)
+void Eq::applyPresence(double presence)
 {
   midiApplyPresence(phys2Raw(presence, 10.0, -5.0));
 }

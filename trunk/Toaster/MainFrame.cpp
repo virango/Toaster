@@ -85,7 +85,7 @@ MainFrame::MainFrame(QWidget *parent)
   ui->qStompXButton->setCtxMenuProvider(&mStompXCtxMenu);
   ui->qStompModButton->setCtxMenuProvider(&mStompModCtxMenu);
 
-  ui->qToasterEnumDial->setValues(ui->qLCDDisplay->getBrowserModeViews());
+  //ui->qToasterEnumDial->setValues(ui->qLCDDisplay->getBrowserModeViews());
 
 }
 
@@ -205,7 +205,6 @@ void MainFrame::onStompAOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompAButton->setState(state);
-  ui->qLCDDisplay->setStompAEnabled(onOff);
   update();
 }
 
@@ -213,7 +212,6 @@ void MainFrame::onStompBOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompBButton->setState(state);
-  ui->qLCDDisplay->setStompBEnabled(onOff);
   update();
 }
 
@@ -221,7 +219,6 @@ void MainFrame::onStompCOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompCButton->setState(state);
-  ui->qLCDDisplay->setStompCEnabled(onOff);
   update();
 }
 
@@ -229,7 +226,6 @@ void MainFrame::onStompDOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompDButton->setState(state);
-  ui->qLCDDisplay->setStompDEnabled(onOff);
   update();
 }
 
@@ -237,7 +233,6 @@ void MainFrame::onStompXOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompXButton->setState(state);
-  ui->qLCDDisplay->setStompXEnabled(onOff);
   update();
 }
 
@@ -245,7 +240,6 @@ void MainFrame::onStompModOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompModButton->setState(state);
-  ui->qLCDDisplay->setStompModEnabled(onOff);
   update();
 }
 
@@ -253,7 +247,6 @@ void MainFrame::onStompDelayOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompDelayButton->setState(state);
-  ui->qLCDDisplay->setDelayEnabled(onOff);
   update();
 }
 
@@ -273,38 +266,37 @@ void MainFrame::onStompReverbOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->qStompReverbButton->setState(state);
-  ui->qLCDDisplay->setReverbEnabled(onOff);
   update();
 }
 
 void MainFrame::onStompAType(::FXType type)
 {
-  ui->qLCDDisplay->setStompAFXType(type);
+  //ui->qLCDDisplay->setStompAFXType(type);
 }
 
 void MainFrame::onStompBType(::FXType type)
 {
-  ui->qLCDDisplay->setStompBFXType(type);
+  //ui->qLCDDisplay->setStompBFXType(type);
 }
 
 void MainFrame::onStompCType(::FXType type)
 {
-  ui->qLCDDisplay->setStompCFXType(type);
+  //ui->qLCDDisplay->setStompCFXType(type);
 }
 
 void MainFrame::onStompDType(::FXType type)
 {
-  ui->qLCDDisplay->setStompDFXType(type);
+  //ui->qLCDDisplay->setStompDFXType(type);
 }
 
 void MainFrame::onStompXType(::FXType type)
 {
-  ui->qLCDDisplay->setStompXFXType(type);
+  //ui->qLCDDisplay->setStompXFXType(type);
 }
 
 void MainFrame::onStompModType(::FXType type)
 {
-  ui->qLCDDisplay->setStompModFXType(type);
+  //ui->qLCDDisplay->setStompModFXType(type);
 }
 
 
@@ -347,47 +339,47 @@ void MainFrame::onEqOnOff(bool onOff)
 
 void MainFrame::onEqBass(double bass)
 {
-  ui->qEqBassDial->setValue(bass);
+  //ui->qEqBassDial->setValue(bass);
   update();
 }
 
 void MainFrame::onEqMiddle(double middle)
 {
-  ui->qEqMiddleDial->setValue(middle);
+  //ui->qEqMiddleDial->setValue(middle);
   update();
 }
 
 void MainFrame::onEqTreble(double treble)
 {
-  ui->qEqTrebleDial->setValue(treble);
+  //ui->qEqTrebleDial->setValue(treble);
   update();
 }
 
 void MainFrame::onEqPresence(double presence)
 {
-  ui->qEqPresenceDial->setValue(presence);
+  //ui->qEqPresenceDial->setValue(presence);
   update();
 }
 
 
 void MainFrame::on_qEqBassDial_valueChanged(double physVal)
 {
-  mEq.applyBassReceived(physVal);
+  mEq.applyBass(physVal);
 }
 
 void MainFrame::on_qEqMiddleDial_valueChanged(double physVal)
 {
-  mEq.applyMiddleReceived(physVal);
+  mEq.applyMiddle(physVal);
 }
 
 void MainFrame::on_qEqTrebleDial_valueChanged(double physVal)
 {
-  mEq.applyTrebleReceived(physVal);
+  mEq.applyTreble(physVal);
 }
 
 void MainFrame::on_qEqPresenceDial_valueChanged(double physVal)
 {
-  mEq.applyPresenceReceived(physVal);
+  mEq.applyPresence(physVal);
 }
 
 void MainFrame::on_qVolumeDial_valueChanged(double physVal)
@@ -546,22 +538,22 @@ void MainFrame::on_qEqBassDial_valueChanged(const QString& value)
 {
   // TODO:
   // update
-  ui->qLCDDisplay->setBrowserModeBassValueText(value);
+  //ui->qLCDDisplay->setBrowserModeBassValueText(value);
 }
 
 void MainFrame::on_qEqMiddleDial_valueChanged(const QString& value)
 {
-  ui->qLCDDisplay->setBrowserModeMiddleValueText(value);
+  //ui->qLCDDisplay->setBrowserModeMiddleValueText(value);
 }
 
 void MainFrame::on_qEqTrebleDial_valueChanged(const QString& value)
 {
-  ui->qLCDDisplay->setBrowserModeTrebleValueText(value);
+  //ui->qLCDDisplay->setBrowserModeTrebleValueText(value);
 }
 
 void MainFrame::on_qEqPresenceDial_valueChanged(const QString& value)
 {
-  ui->qLCDDisplay->setBrowserModePresenceValueText(value);
+  //ui->qLCDDisplay->setBrowserModePresenceValueText(value);
 }
 
 
@@ -585,17 +577,17 @@ void MainFrame::on_qRigNextButton_clicked(QToasterButton &bt, bool longClick)
 }
 void MainFrame::onRigName(const QString& rigName)
 {
-  ui->qLCDDisplay->setBrowserModeRigName(rigName);
+  //ui->qLCDDisplay->setBrowserModeRigName(rigName);
 }
 
 void MainFrame::onRigAuthor(const QString& rigAuthor)
 {
-  ui->qLCDDisplay->setBrowserModeRigAuthor(rigAuthor);
+  //ui->qLCDDisplay->setBrowserModeRigAuthor(rigAuthor);
 }
 
 void MainFrame::onAmpName(const QString& ampName)
 {
-  ui->qLCDDisplay->setBrowserModeAmpName(ampName);
+  //ui->qLCDDisplay->setBrowserModeAmpName(ampName);
 }
 
 void MainFrame::on_qStompDelayButton_clicked(QToasterButton& bt, bool longClick)
@@ -631,7 +623,7 @@ void MainFrame::on_qLCDDisplay_browserModeViewChanged(int view)
 
 void MainFrame::onBrowserView(unsigned int view)
 {
-  ui->qLCDDisplay->setBrowserModeView(view);
+  //ui->qLCDDisplay->setBrowserModeView(view);
 }
 
 void MainFrame::on_qDelayFeedbackDial_valueChanged(double arg1)

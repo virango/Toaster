@@ -44,7 +44,7 @@
    <enum>QFrame::Plain</enum>
   </property>
   <property name="lineWidth">
-   <number>1</number>
+   <number>0</number>
   </property>
   <widget class="QToasterDial" name="qGainDial">
    <property name="geometry">
@@ -628,303 +628,22 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStackedWidget" name="smallDialStackedWidget">
+  <widget class="QStackedWidget" name="controlsStackedWidget">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>250</y>
-     <width>460</width>
-     <height>81</height>
+     <x>170</x>
+     <y>260</y>
+     <width>561</width>
+     <height>331</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">QStackedWidget#smallDialStackedWidget {color: transparent;}</string>
+   <property name="lineWidth">
+    <number>0</number>
    </property>
    <property name="currentIndex">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="browserPage">
-    <property name="styleSheet">
-     <string notr="true">QWidget#browserPage {
-background-color: transparent;}</string>
-    </property>
-    <widget class="QToasterDial" name="qToasterDial_2">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>10</y>
-       <width>70</width>
-       <height>70</height>
-      </rect>
-     </property>
-     <property name="knobSize">
-      <enum>QToasterDial::Small</enum>
-     </property>
-     <property name="ledRingType" stdset="0">
-      <enum>QToasterDial::None</enum>
-     </property>
-    </widget>
-    <widget class="QToasterDial" name="qToasterDial_3">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>10</y>
-       <width>70</width>
-       <height>70</height>
-      </rect>
-     </property>
-     <property name="knobSize">
-      <enum>QToasterDial::Small</enum>
-     </property>
-     <property name="ledRingType" stdset="0">
-      <enum>QToasterDial::None</enum>
-     </property>
-    </widget>
-    <widget class="QToasterDial" name="qToasterDial_4">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>10</y>
-       <width>70</width>
-       <height>70</height>
-      </rect>
-     </property>
-     <property name="knobSize">
-      <enum>QToasterDial::Small</enum>
-     </property>
-     <property name="ledRingType" stdset="0">
-      <enum>QToasterDial::None</enum>
-     </property>
-    </widget>
-    <widget class="QToasterEnumDial" name="qToasterEnumDial">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>10</y>
-       <width>70</width>
-       <height>70</height>
-      </rect>
-     </property>
-     <property name="knobSize">
-      <enum>QToasterEnumDial::Small</enum>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="stompEditorPage">
-    <widget class="QStackedWidget" name="stompStackedWidget">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>460</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <widget class="QWidget" name="wahWahPage"/>
-     <widget class="QWidget" name="waLowPassPage"/>
-    </widget>
-   </widget>
-  </widget>
-  <widget class="QToasterLCD" name="qLCDDisplay">
-   <property name="geometry">
-    <rect>
-     <x>240</x>
-     <y>335</y>
-     <width>420</width>
-     <height>115</height>
-    </rect>
-   </property>
-   <property name="currentIndex">
-    <number>0</number>
-   </property>
-   <property name="color">
-    <enum>QToasterLCD::Standard</enum>
-   </property>
-  </widget>
-  <widget class="QStackedWidget" name="bigDialsStackedWidget">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>480</y>
-     <width>460</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QStackedWidget#bigDialsStackedWidget{
-	background-color: transparent;
-}</string>
-   </property>
-   <widget class="QWidget" name="eqPage">
-    <property name="styleSheet">
-     <string notr="true">QWidget#eqPage{
-	background-color: transparent;
-}</string>
-    </property>
-    <widget class="QToasterDial" name="qEqBassDial">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>100</width>
-       <height>100</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="ledRingType" stdset="0">
-      <enum>QToasterDial::Bi</enum>
-     </property>
-     <property name="minValue">
-      <double>-5.000000000000000</double>
-     </property>
-     <property name="maxValue">
-      <double>5.000000000000000</double>
-     </property>
-     <property name="stepWidth">
-      <double>0.100000000000000</double>
-     </property>
-    </widget>
-    <widget class="QToasterDial" name="qEqMiddleDial">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>0</y>
-       <width>100</width>
-       <height>100</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="ledRingType" stdset="0">
-      <enum>QToasterDial::Bi</enum>
-     </property>
-     <property name="minValue">
-      <double>-5.000000000000000</double>
-     </property>
-     <property name="maxValue">
-      <double>5.000000000000000</double>
-     </property>
-     <property name="stepWidth">
-      <double>0.100000000000000</double>
-     </property>
-    </widget>
-    <widget class="QToasterDial" name="qEqTrebleDial">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>0</y>
-       <width>100</width>
-       <height>100</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="ledRingType" stdset="0">
-      <enum>QToasterDial::Bi</enum>
-     </property>
-     <property name="minValue">
-      <double>-5.000000000000000</double>
-     </property>
-     <property name="maxValue">
-      <double>5.000000000000000</double>
-     </property>
-     <property name="stepWidth">
-      <double>0.100000000000000</double>
-     </property>
-    </widget>
-    <widget class="QToasterDial" name="qEqPresenceDial">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>0</y>
-       <width>100</width>
-       <height>100</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="ledRingType" stdset="0">
-      <enum>QToasterDial::Bi</enum>
-     </property>
-     <property name="minValue">
-      <double>-5.000000000000000</double>
-     </property>
-     <property name="maxValue">
-      <double>5.000000000000000</double>
-     </property>
-     <property name="stepWidth">
-      <double>0.100000000000000</double>
-     </property>
-     <property name="unit">
-      <string/>
-     </property>
-    </widget>
-   </widget>
+   <widget class="MainControlFrame" name="mainControlFrame"/>
    <widget class="QWidget" name="page_2"/>
   </widget>
  </widget>
@@ -933,17 +652,6 @@ background-color: transparent;}</string>
    <class>QToasterDial</class>
    <extends>QWidget</extends>
    <header>qtoasterdial.h</header>
-  </customwidget>
-  <customwidget>
-   <class>QToasterEnumDial</class>
-   <extends>QWidget</extends>
-   <header>qtoasterenumdial.h</header>
-  </customwidget>
-  <customwidget>
-   <class>QToasterLCD</class>
-   <extends>QStackedWidget</extends>
-   <header>QToasterLCD.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>QToasterButton</class>
@@ -955,40 +663,13 @@ background-color: transparent;}</string>
    <extends>QWidget</extends>
    <header>qchickenheaddial.h</header>
   </customwidget>
+  <customwidget>
+   <class>MainControlFrame</class>
+   <extends>QWidget</extends>
+   <header>MainControlFrame.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>qToasterEnumDial</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>qLCDDisplay</receiver>
-   <slot>setBrowserModeView(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>293</x>
-     <y>284</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>417</x>
-     <y>356</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>qLCDDisplay</sender>
-   <signal>browserModeViewChanged(int)</signal>
-   <receiver>qToasterEnumDial</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>474</x>
-     <y>350</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>270</x>
-     <y>269</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

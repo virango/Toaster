@@ -148,23 +148,8 @@ protected:
     return val;
   }
 
-  double raw2Volume(unsigned short rawVal, double deltaMinMax, double min)
+  double raw2Volume(unsigned short rawVal)
   {
-    /*
-    double physVal = 0;
-    if(rawVal >= 0x2000)
-    {
-      double posMax = deltaMinMax + min;
-      physVal = (((rawVal - 0x2000) * posMax) / 0x2000);
-    }
-    else
-    {
-      physVal = (((rawVal - 0x1FFF) * min) / 0x1FFF);
-    }
-
-    return physVal;
-    */
-
     return VolumeTables::raw2dB(rawVal);
   }
 
