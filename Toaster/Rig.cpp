@@ -59,7 +59,7 @@ void Rig::midiTempoReceived(unsigned short rawVal)
 
 void Rig::midiVolumeReceived(unsigned short rawVal)
 {
-  emit volumeReceived(raw2Volume(rawVal, 108.0, -96.0));
+  emit volumeReceived(raw2Volume(rawVal));
 }
 
 void Rig::midiTempoEnableReceived(unsigned short rawVal)

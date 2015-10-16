@@ -153,9 +153,6 @@ private slots:
   void onAmpName(const QString& ampName);
 
 
-
-
-
   void on_qRigPrevButton_clicked(QToasterButton &bt, bool longClick);
 
   void on_qRigNextButton_clicked(QToasterButton &bt, bool longClick);

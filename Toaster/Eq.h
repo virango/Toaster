@@ -10,7 +10,6 @@ public:
   Eq();
   ~Eq();
 
-
   void requestAllValues();
 
 signals:
@@ -22,10 +21,10 @@ signals:
 
 public slots:
   void applyOnOff(bool onOff);
-  void applyBassReceived(double bass);
-  void applyMiddleReceived(double middle);
-  void applyTrebleReceived(double treble);
-  void applyPresenceReceived(double presence);
+  void applyBass(double bass);
+  void applyMiddle(double middle);
+  void applyTreble(double treble);
+  void applyPresence(double presence);
 
 protected:
   // EqMidi

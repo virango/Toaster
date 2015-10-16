@@ -62,7 +62,9 @@ SOURCES += main.cpp\
     ProfileMidi.cpp \
     Profile.cpp \
     ExtParamMidi.cpp \
-    ExtParam.cpp
+    ExtParam.cpp \
+    StompControlStackedWidget.cpp \
+    MainControlFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -96,12 +98,16 @@ HEADERS  += ToasterWindow.h \
     ProfileMidi.h \
     Profile.h \
     ExtParamMidi.h \
-    ExtParam.h
+    ExtParam.h \
+    StompControlStackedWidget.h \
+    MainControlFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
     MainFrame.ui \
-    SettingsDialog.ui
+    SettingsDialog.ui \
+    StompControlStackedWidget.ui \
+    MainControlFrame.ui
 
 RESOURCES += \
     resources.qrc
