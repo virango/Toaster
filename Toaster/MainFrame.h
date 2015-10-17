@@ -38,12 +38,12 @@ public slots:
 private slots:
   // stomps
   // ui => kpa
-  void on_qStompAButton_clicked(QToasterButton& bt, bool longClick);
-  void on_qStompBButton_clicked(QToasterButton& bt, bool longClick);
-  void on_qStompCButton_clicked(QToasterButton& bt, bool longClick);
-  void on_qStompDButton_clicked(QToasterButton& bt, bool longClick);
-  void on_qStompXButton_clicked(QToasterButton& bt, bool longClick);
-  void on_qStompModButton_clicked(QToasterButton& bt, bool longClick);
+  void on_stompAButton_clicked(QToasterButton& bt, bool longClick);
+  void on_stompBButton_clicked(QToasterButton& bt, bool longClick);
+  void on_stompCButton_clicked(QToasterButton& bt, bool longClick);
+  void on_stompDButton_clicked(QToasterButton& bt, bool longClick);
+  void on_stompXButton_clicked(QToasterButton& bt, bool longClick);
+  void on_stompModButton_clicked(QToasterButton& bt, bool longClick);
   // kpa => ui
   void onStompAOnOff(bool onOff);
   void onStompBOnOff(bool onOff);
@@ -60,50 +60,50 @@ private slots:
 
   // reverb
   // ui => kpa
-  void on_qStompReverbButton_clicked(QToasterButton &bt, bool longClick);
-  void on_qReverbTimeDial_valueChanged(double arg1);
-  void on_qReverbMixDial_valueChanged(double arg1);
+  void on_reverbButton_clicked(QToasterButton &bt, bool longClick);
+  void on_reverbTimeDial_valueChanged(double arg1);
+  void on_reverbMixDial_valueChanged(double arg1);
   // kpa => ui
-  void onStompReverbOnOff(bool onOff);
-  void onStompReverbTime(double time);
-  void onStompReverbMix(double mix);
+  void onReverbOnOff(bool onOff);
+  void onReverbTime(double time);
+  void onReverbMix(double mix);
 
   // delay
   // ui => kpa
-  void on_qStompDelayButton_clicked(QToasterButton &bt, bool longClick);
-  void on_qDelayFeedbackDial_valueChanged(double arg1);
-  void on_qDelayMixDial_valueChanged(double arg1);
+  void on_delayButton_clicked(QToasterButton &bt, bool longClick);
+  void on_delayFeedbackDial_valueChanged(double arg1);
+  void on_delayMixDial_valueChanged(double arg1);
   // kpa => ui
-  void onStompDelayOnOff(bool onOff);
-  void onStompDelayFeedback(double feedback);
-  void onStompDelayMix(double mix);
+  void onDelayOnOff(bool onOff);
+  void onDelayFeedback(double feedback);
+  void onDelayMix(double mix);
 
   // amp
   // ui => kpa
-  void on_qAmplifierButton_clicked(QToasterButton& bt, bool longClick);
-  void on_qGainDial_valueChanged(double value);
+  void on_amplifierButton_clicked(QToasterButton& bt, bool longClick);
+  void on_gainDial_valueChanged(double value);
   // kpa => ui
   void onAmpOnOff(bool onOff);
   void onAmpGain(double val);
 
   // eq
   // ui => kpa
-  void on_qEQButton_clicked(QToasterButton& bt, bool longClick);
+  void on_eqButton_clicked(QToasterButton& bt, bool longClick);
   // kpa => ui
   void onEqOnOff(bool onOff);
 
   // cab
   // ui => kpa
-  void on_qCabinetButton_clicked(QToasterButton& bt, bool longClick);
+  void on_cabinetButton_clicked(QToasterButton& bt, bool longClick);
   // kpa => ui
   void onCabOnOff(bool onOff);
 
   // rig
   // ui => kpa
-  void on_qVolumeDial_valueChanged(double volume);
-  void on_qStompsButton_clicked(QToasterButton& bt, bool longClick);
-  void on_qStackButton_clicked(QToasterButton& bt, bool longClick);
-  void on_qEffectsButton_clicked(QToasterButton& bt, bool longClick);
+  void on_volumeDial_valueChanged(double volume);
+  void on_stompsButton_clicked(QToasterButton& bt, bool longClick);
+  void on_stackButton_clicked(QToasterButton& bt, bool longClick);
+  void on_effectsButton_clicked(QToasterButton& bt, bool longClick);
   // kpa => ui
   void onRigVolume(double volume);
   void onRigStompsEnable(bool stompsEnable);
@@ -112,9 +112,9 @@ private slots:
 
   // global
   // ui => kpa
-  void on_qChickenHeadDial_valueChanged(const QChickenHeadDial::State& state);
-  void on_qMonitorVolumeDial_valueChanged(double volume);
-  void on_qHeadphoneVolumeDial_valueChanged(double volume);
+  void on_chickenHeadDial_valueChanged(const QChickenHeadDial::State& state);
+  void on_monitorVolumeDial_valueChanged(double volume);
+  void on_headphoneVolumeDial_valueChanged(double volume);
   // kpa => ui
   void onGlobalOperationMode(unsigned short opMode);
   void onGlobalMainVolume(double volume);
@@ -124,9 +124,9 @@ private slots:
 
   // input
   // ui => kpa
-  void on_qNoiseGateDial_valueChanged(double noiseGate);
-  void on_qDistortionSenseDial_valueChanged(double distortionSense);
-  void on_qCleanSenseDial_valueChanged(double cleanSense);
+  void on_noiseGateDial_valueChanged(double noiseGate);
+  void on_distortionSenseDial_valueChanged(double distortionSense);
+  void on_cleanSenseDial_valueChanged(double cleanSense);
   // kpa => ui
   void onInputNoiseGate(double noiseGate);
   void onInputDistortionSense(double distortionSense);
@@ -134,8 +134,8 @@ private slots:
 
   // profile
   // ui => kpa
-  void on_qRigPrevButton_clicked(QToasterButton &bt, bool longClick);
-  void on_qRigNextButton_clicked(QToasterButton &bt, bool longClick);
+  void on_rigPrevButton_clicked(QToasterButton &bt, bool longClick);
+  void on_rigNextButton_clicked(QToasterButton &bt, bool longClick);
   // kpa => ui
   // currently none, TODO tempo stuff
 

@@ -46,7 +46,7 @@
   <property name="lineWidth">
    <number>0</number>
   </property>
-  <widget class="QToasterDial" name="qGainDial">
+  <widget class="QToasterDial" name="gainDial">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -80,7 +80,7 @@
     <double>0.100000000000000</double>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qVolumeDial">
+  <widget class="QToasterDial" name="volumeDial">
    <property name="geometry">
     <rect>
      <x>730</x>
@@ -120,7 +120,7 @@
     <string>dB</string>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qNoiseGateDial">
+  <widget class="QToasterDial" name="noiseGateDial">
    <property name="geometry">
     <rect>
      <x>15</x>
@@ -139,7 +139,7 @@
     <double>0.100000000000000</double>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qMasterVolumeDial">
+  <widget class="QToasterDial" name="masterVolumeDial">
    <property name="geometry">
     <rect>
      <x>785</x>
@@ -161,7 +161,7 @@
     <double>0.100000000000000</double>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qModRateDial">
+  <widget class="QToasterDial" name="modRateDial">
    <property name="geometry">
     <rect>
      <x>165</x>
@@ -177,7 +177,7 @@
     <enum>QToasterDial::None</enum>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qModIntensityDial">
+  <widget class="QToasterDial" name="modIntensityDial">
    <property name="geometry">
     <rect>
      <x>265</x>
@@ -193,7 +193,7 @@
     <enum>QToasterDial::None</enum>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qDelayFeedbackDial">
+  <widget class="QToasterDial" name="delayFeedbackDial">
    <property name="geometry">
     <rect>
      <x>365</x>
@@ -218,7 +218,7 @@
     <string>%</string>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qDelayMixDial">
+  <widget class="QToasterDial" name="delayMixDial">
    <property name="geometry">
     <rect>
      <x>465</x>
@@ -243,7 +243,7 @@
     <string>%</string>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qReverbTimeDial">
+  <widget class="QToasterDial" name="reverbTimeDial">
    <property name="geometry">
     <rect>
      <x>565</x>
@@ -265,11 +265,11 @@
     <double>0.100000000000000</double>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qReverbMixDial">
+  <widget class="QToasterDial" name="reverbMixDial">
    <property name="geometry">
     <rect>
      <x>665</x>
-     <y>165</y>
+     <y>160</y>
      <width>70</width>
      <height>70</height>
     </rect>
@@ -290,7 +290,7 @@
     <string>%</string>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qCleanSenseDial">
+  <widget class="QToasterDial" name="cleanSenseDial">
    <property name="geometry">
     <rect>
      <x>27</x>
@@ -318,7 +318,7 @@
     <string>dB</string>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qDistortionSenseDial">
+  <widget class="QToasterDial" name="distortionSenseDial">
    <property name="geometry">
     <rect>
      <x>69</x>
@@ -346,7 +346,7 @@
     <string>dB</string>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qHeadphoneVolumeDial">
+  <widget class="QToasterDial" name="headphoneVolumeDial">
    <property name="geometry">
     <rect>
      <x>803</x>
@@ -374,7 +374,7 @@
     <string>dB</string>
    </property>
   </widget>
-  <widget class="QToasterDial" name="qMonitorVolumeDial">
+  <widget class="QToasterDial" name="monitorVolumeDial">
    <property name="geometry">
     <rect>
      <x>761</x>
@@ -402,7 +402,7 @@
     <string>dB</string>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qStompAButton">
+  <widget class="QToasterButton" name="stompAButton">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -412,7 +412,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qEQButton">
+  <widget class="QToasterButton" name="eqButton">
    <property name="geometry">
     <rect>
      <x>432</x>
@@ -425,7 +425,7 @@
     <enum>QToasterButton::Big</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qStompBButton">
+  <widget class="QToasterButton" name="stompBButton">
    <property name="geometry">
     <rect>
      <x>206</x>
@@ -435,7 +435,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qStompCButton">
+  <widget class="QToasterButton" name="stompCButton">
    <property name="geometry">
     <rect>
      <x>252</x>
@@ -445,7 +445,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qStompDButton">
+  <widget class="QToasterButton" name="stompDButton">
    <property name="geometry">
     <rect>
      <x>298</x>
@@ -455,7 +455,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qStompXButton">
+  <widget class="QToasterButton" name="stompXButton">
    <property name="geometry">
     <rect>
      <x>576</x>
@@ -465,7 +465,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qStompModButton">
+  <widget class="QToasterButton" name="stompModButton">
    <property name="geometry">
     <rect>
      <x>622</x>
@@ -475,7 +475,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qRigUpButton">
+  <widget class="QToasterButton" name="rigUpButton">
    <property name="geometry">
     <rect>
      <x>806</x>
@@ -488,7 +488,7 @@
     <enum>QToasterButton::Off</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qRigNextButton">
+  <widget class="QToasterButton" name="rigNextButton">
    <property name="geometry">
     <rect>
      <x>848</x>
@@ -501,7 +501,7 @@
     <enum>QToasterButton::On</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qRigDownButton">
+  <widget class="QToasterButton" name="rigDownButton">
    <property name="geometry">
     <rect>
      <x>806</x>
@@ -514,7 +514,7 @@
     <enum>QToasterButton::Off</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qRigPrevButton">
+  <widget class="QToasterButton" name="rigPrevButton">
    <property name="geometry">
     <rect>
      <x>764</x>
@@ -527,7 +527,7 @@
     <enum>QToasterButton::On</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qAmplifierButton">
+  <widget class="QToasterButton" name="amplifierButton">
    <property name="geometry">
     <rect>
      <x>379</x>
@@ -540,7 +540,7 @@
     <enum>QToasterButton::Big</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qCabinetButton">
+  <widget class="QToasterButton" name="cabinetButton">
    <property name="geometry">
     <rect>
      <x>485</x>
@@ -553,7 +553,7 @@
     <enum>QToasterButton::Big</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qStompDelayButton">
+  <widget class="QToasterButton" name="delayButton">
    <property name="geometry">
     <rect>
      <x>663</x>
@@ -566,7 +566,7 @@
     <enum>QToasterButton::Big</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qStompReverbButton">
+  <widget class="QToasterButton" name="reverbButton">
    <property name="geometry">
     <rect>
      <x>716</x>
@@ -579,7 +579,7 @@
     <enum>QToasterButton::Big</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qStompsButton">
+  <widget class="QToasterButton" name="stompsButton">
    <property name="geometry">
     <rect>
      <x>233</x>
@@ -592,7 +592,7 @@
     <enum>QToasterButton::Big</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qStackButton">
+  <widget class="QToasterButton" name="stackButton">
    <property name="geometry">
     <rect>
      <x>433</x>
@@ -605,7 +605,7 @@
     <enum>QToasterButton::Big</enum>
    </property>
   </widget>
-  <widget class="QToasterButton" name="qEffectsButton">
+  <widget class="QToasterButton" name="effectsButton">
    <property name="geometry">
     <rect>
      <x>633</x>
@@ -618,7 +618,7 @@
     <enum>QToasterButton::Big</enum>
    </property>
   </widget>
-  <widget class="QChickenHeadDial" name="qChickenHeadDial">
+  <widget class="QChickenHeadDial" name="chickenHeadDial">
    <property name="geometry">
     <rect>
      <x>6</x>
