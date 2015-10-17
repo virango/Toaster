@@ -89,7 +89,7 @@ public slots:
 
 protected:
   void createSkin();
-  void paintEvent(QPaintEvent* pe);
+  void paintEvent(QPaintEvent*);
   void contextMenuEvent(QContextMenuEvent * cme);
 
   void setEnabled(QWidget& w, bool enabled);

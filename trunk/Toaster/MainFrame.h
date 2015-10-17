@@ -14,7 +14,6 @@
 #include "Delay.h"
 #include "Reverb.h"
 #include "Profile.h"
-#include "ExtParam.h"
 #include "StompCtxMenu.h"
 
 namespace Ui {
@@ -90,20 +89,8 @@ private slots:
   // eq
   // ui => kpa
   void on_qEQButton_clicked(QToasterButton& bt, bool longClick);
-  void on_qEqBassDial_valueChanged(double physVal);
-  void on_qEqMiddleDial_valueChanged(double physVal);
-  void on_qEqTrebleDial_valueChanged(double physVal);
-  void on_qEqPresenceDial_valueChanged(double physVal);
-  void on_qEqBassDial_valueChanged(const QString& value);
-  void on_qEqMiddleDial_valueChanged(const QString& value);
-  void on_qEqTrebleDial_valueChanged(const QString& value);
-  void on_qEqPresenceDial_valueChanged(const QString& value);
   // kpa => ui
   void onEqOnOff(bool onOff);
-  void onEqBass(double bass);
-  void onEqMiddle(double middle);
-  void onEqTreble(double treble);
-  void onEqPresence(double presence);
 
   // cab
   // ui => kpa
@@ -147,22 +134,10 @@ private slots:
 
   // profile
   // ui => kpa
-  // kpa => ui
-  void onRigName(const QString& rigName);
-  void onRigAuthor(const QString& rigAuthor);
-  void onAmpName(const QString& ampName);
-
-
   void on_qRigPrevButton_clicked(QToasterButton &bt, bool longClick);
-
   void on_qRigNextButton_clicked(QToasterButton &bt, bool longClick);
-
-  // extended parameter
-  // ui => kpa
-  void on_qLCDDisplay_browserModeViewChanged(int view);
   // kpa => ui
-  void onBrowserView(unsigned int view);
-
+  // currently none, TODO tempo stuff
 
 private:
   enum OperationMode
@@ -201,7 +176,6 @@ private:
   Global        mGlobal;
   Input         mInput;
   Profile       mProfile;
-  ExtParam      mExtParam;
 
   StompCtxMenu  mStompACtxMenu;
   StompCtxMenu  mStompBCtxMenu;

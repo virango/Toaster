@@ -48,10 +48,6 @@ MainFrame::MainFrame(QWidget *parent)
   connect(&mAmp, SIGNAL(gainReceived(double)), this, SLOT(onAmpGain(double)));
   // eq
   connect(&mEq, SIGNAL(onOffReceived(bool)), this, SLOT(onEqOnOff(bool)));
-  connect(&mEq, SIGNAL(bassReceived(double)), this, SLOT(onEqBass(double)));
-  connect(&mEq, SIGNAL(middleReceived(double)), this, SLOT(onEqMiddle(double)));
-  connect(&mEq, SIGNAL(trebleReceived(double)), this, SLOT(onEqTreble(double)));
-  connect(&mEq, SIGNAL(presenceReceived(double)), this, SLOT(onEqPresence(double)));
   // cab
   connect(&mCab, SIGNAL(onOffReceived(bool)), this, SLOT(onCabOnOff(bool)));
   // rig
@@ -71,12 +67,6 @@ MainFrame::MainFrame(QWidget *parent)
   connect(&mInput, SIGNAL(noiseGateReceived(double)), this, SLOT(onInputNoiseGate(double)));
   connect(&mInput, SIGNAL(distortionSenseReceived(double)), SLOT(onInputDistortionSense(double)));
   connect(&mInput, SIGNAL(cleanSenseReceived(double)), SLOT(onInputCleanSense(double)));
-  // profile
-  connect(&mProfile, SIGNAL(rigNameReceived(const QString&)), this, SLOT(onRigName(const QString&)));
-  connect(&mProfile, SIGNAL(rigAuthorReceived(const QString&)), this, SLOT(onRigAuthor(const QString&)));
-  connect(&mProfile, SIGNAL(ampNameReceived(const QString&)), this, SLOT(onAmpName(const QString&)));
-  // extended parameter
-  connect(&mExtParam, SIGNAL(browserViewReceived(uint)), this, SLOT(onBrowserView(uint)));
 
   ui->qStompAButton->setCtxMenuProvider(&mStompACtxMenu);
   ui->qStompBButton->setCtxMenuProvider(&mStompBCtxMenu);
@@ -84,9 +74,6 @@ MainFrame::MainFrame(QWidget *parent)
   ui->qStompDButton->setCtxMenuProvider(&mStompDCtxMenu);
   ui->qStompXButton->setCtxMenuProvider(&mStompXCtxMenu);
   ui->qStompModButton->setCtxMenuProvider(&mStompModCtxMenu);
-
-  //ui->qToasterEnumDial->setValues(ui->qLCDDisplay->getBrowserModeViews());
-
 }
 
 MainFrame::~MainFrame()
@@ -103,7 +90,6 @@ void MainFrame::disconnectFromKPA()
 {
   mGlobal.disconnectFromKPA();
 }
-
 
 void MainFrame::requestValues()
 {
@@ -122,11 +108,10 @@ void MainFrame::requestValues()
   mGlobal.requestAllValues();
   mInput.requestAllValues();
   mProfile.requestAllValues();
-  mExtParam.requestAllValues();
 
   //DebugMidi::get().debugScanRequest(0x04, 0x00, 0x7F);
   //DebugMidi::get().debugScanRequest(0x00, 0x0, 0x7F);
-  DebugMidi::get().debugScanRequest(0x01, 0x00, 0x7F);
+  //DebugMidi::get().debugScanRequest(0x01, 0x00, 0x7F);
 }
 
 void MainFrame::handleStompButtonClick(Stomp& stomp, QToasterButton& stompBt, bool longClick)
@@ -271,32 +256,32 @@ void MainFrame::onStompReverbOnOff(bool onOff)
 
 void MainFrame::onStompAType(::FXType type)
 {
-  //ui->qLCDDisplay->setStompAFXType(type);
+  // TODO: set the LED color
 }
 
 void MainFrame::onStompBType(::FXType type)
 {
-  //ui->qLCDDisplay->setStompBFXType(type);
+  // TODO: set the LED color
 }
 
 void MainFrame::onStompCType(::FXType type)
 {
-  //ui->qLCDDisplay->setStompCFXType(type);
+  // TODO: set the LED color
 }
 
 void MainFrame::onStompDType(::FXType type)
 {
-  //ui->qLCDDisplay->setStompDFXType(type);
+  // TODO: set the LED color
 }
 
 void MainFrame::onStompXType(::FXType type)
 {
-  //ui->qLCDDisplay->setStompXFXType(type);
+  // TODO: set the LED color
 }
 
 void MainFrame::onStompModType(::FXType type)
 {
-  //ui->qLCDDisplay->setStompModFXType(type);
+  // TODO: set the LED color
 }
 
 
@@ -337,51 +322,6 @@ void MainFrame::onEqOnOff(bool onOff)
   update();
 }
 
-void MainFrame::onEqBass(double bass)
-{
-  //ui->qEqBassDial->setValue(bass);
-  update();
-}
-
-void MainFrame::onEqMiddle(double middle)
-{
-  //ui->qEqMiddleDial->setValue(middle);
-  update();
-}
-
-void MainFrame::onEqTreble(double treble)
-{
-  //ui->qEqTrebleDial->setValue(treble);
-  update();
-}
-
-void MainFrame::onEqPresence(double presence)
-{
-  //ui->qEqPresenceDial->setValue(presence);
-  update();
-}
-
-
-void MainFrame::on_qEqBassDial_valueChanged(double physVal)
-{
-  mEq.applyBass(physVal);
-}
-
-void MainFrame::on_qEqMiddleDial_valueChanged(double physVal)
-{
-  mEq.applyMiddle(physVal);
-}
-
-void MainFrame::on_qEqTrebleDial_valueChanged(double physVal)
-{
-  mEq.applyTreble(physVal);
-}
-
-void MainFrame::on_qEqPresenceDial_valueChanged(double physVal)
-{
-  mEq.applyPresence(physVal);
-}
-
 void MainFrame::on_qVolumeDial_valueChanged(double physVal)
 {
   mRig.applyVolume(physVal);
@@ -413,7 +353,6 @@ void MainFrame::onRigEffectsEnable(bool effectsEnable)
   ui->qEffectsButton->setState(state);
   update();
 }
-
 
 void MainFrame::on_qChickenHeadDial_valueChanged(const QChickenHeadDial::State& state)
 {
@@ -534,30 +473,6 @@ void MainFrame::onInputCleanSense(double cleanSense)
   update();
 }
 
-void MainFrame::on_qEqBassDial_valueChanged(const QString& value)
-{
-  // TODO:
-  // update
-  //ui->qLCDDisplay->setBrowserModeBassValueText(value);
-}
-
-void MainFrame::on_qEqMiddleDial_valueChanged(const QString& value)
-{
-  //ui->qLCDDisplay->setBrowserModeMiddleValueText(value);
-}
-
-void MainFrame::on_qEqTrebleDial_valueChanged(const QString& value)
-{
-  //ui->qLCDDisplay->setBrowserModeTrebleValueText(value);
-}
-
-void MainFrame::on_qEqPresenceDial_valueChanged(const QString& value)
-{
-  //ui->qLCDDisplay->setBrowserModePresenceValueText(value);
-}
-
-
-
 void MainFrame::on_qRigPrevButton_clicked(QToasterButton &bt, bool longClick)
 {
   if(bt.state() == QToasterButton::On)
@@ -574,20 +489,6 @@ void MainFrame::on_qRigNextButton_clicked(QToasterButton &bt, bool longClick)
     mProfile.applyRigNext();
     requestValues(); // todo: request just the required values
   }
-}
-void MainFrame::onRigName(const QString& rigName)
-{
-  //ui->qLCDDisplay->setBrowserModeRigName(rigName);
-}
-
-void MainFrame::onRigAuthor(const QString& rigAuthor)
-{
-  //ui->qLCDDisplay->setBrowserModeRigAuthor(rigAuthor);
-}
-
-void MainFrame::onAmpName(const QString& ampName)
-{
-  //ui->qLCDDisplay->setBrowserModeAmpName(ampName);
 }
 
 void MainFrame::on_qStompDelayButton_clicked(QToasterButton& bt, bool longClick)
@@ -614,16 +515,6 @@ void MainFrame::on_qStompReverbButton_clicked(QToasterButton& bt, bool longClick
     mReverb.applyOnOffCutsTail(bt.toggleOnOff());
   }
   update();
-}
-
-void MainFrame::on_qLCDDisplay_browserModeViewChanged(int view)
-{
-  mExtParam.applyBrowserView(view);
-}
-
-void MainFrame::onBrowserView(unsigned int view)
-{
-  //ui->qLCDDisplay->setBrowserModeView(view);
 }
 
 void MainFrame::on_qDelayFeedbackDial_valueChanged(double arg1)

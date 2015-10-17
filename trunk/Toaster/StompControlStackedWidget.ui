@@ -13,7 +13,10 @@
   <property name="windowTitle">
    <string>StackedWidget</string>
   </property>
-  <widget class="QWidget" name="page"/>
+  <property name="currentIndex">
+   <number>0</number>
+  </property>
+  <widget class="QWidget" name="WahWah"/>
   <widget class="QWidget" name="page"/>
  </widget>
  <resources/>
