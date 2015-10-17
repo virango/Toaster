@@ -78,7 +78,7 @@ void QToasterLCD::createSkin()
   }
 }
 
-void QToasterLCD::paintEvent(QPaintEvent* pe)
+void QToasterLCD::paintEvent(QPaintEvent* /*pe*/)
 {
   QPainter painter(this);
   if(mColor < NoOfColors)
