@@ -23,7 +23,7 @@ public:
 
 
 private slots:
-  // stomps&fx
+  // stomps
   // kpa => ui
   void onStompAOnOff(bool onOff);
   void onStompBOnOff(bool onOff);
@@ -31,14 +31,20 @@ private slots:
   void onStompDOnOff(bool onOff);
   void onStompXOnOff(bool onOff);
   void onStompModOnOff(bool onOff);
-  void onDelayOnOff(bool onOff);
-  void onReverbOnOff(bool onOff);
   void onStompAType(::FXType type);
   void onStompBType(::FXType type);
   void onStompCType(::FXType type);
   void onStompDType(::FXType type);
   void onStompXType(::FXType type);
   void onStompModType(::FXType type);
+
+  // delay
+  // kpa => ui
+  void onDelayOnOff(bool onOff);
+
+  // reverb
+  // kpa => ui
+  void onReverbOnOff(bool onOff);
 
   // eq
   // ui => kpa
@@ -69,7 +75,6 @@ private slots:
   //void on_lcdDisplay_browserModeViewChanged(int view);
   // kpa => ui
   void onBrowserView(unsigned int view);
-
 
 private:
   Ui::MainControlFrame *ui;
