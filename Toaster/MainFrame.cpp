@@ -31,18 +31,20 @@ MainFrame::MainFrame(QWidget *parent)
   connect(&mStompD, SIGNAL(onOffReceived(bool)), this, SLOT(onStompDOnOff(bool)));
   connect(&mStompX, SIGNAL(onOffReceived(bool)), this, SLOT(onStompXOnOff(bool)));
   connect(&mStompMod, SIGNAL(onOffReceived(bool)), this, SLOT(onStompModOnOff(bool)));
-  connect(&mDelay, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onDelayOnOff(bool)));
-  connect(&mDelay, SIGNAL(feedbackReceived(double)), this, SLOT(onDelayFeedback(double)));
-  connect(&mDelay, SIGNAL(mixReceived(double)), this, SLOT(onDelayMix(double)));
-  connect(&mReverb, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onReverbOnOff(bool)));
-  connect(&mReverb, SIGNAL(timeReceived(double)), this, SLOT(onReverbTime(double)));
-  connect(&mReverb, SIGNAL(mixReceived(double)), this, SLOT(onReverbMix(double)));
   connect(&mStompA, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompAType(::FXType)));
   connect(&mStompB, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompBType(::FXType)));
   connect(&mStompC, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompCType(::FXType)));
   connect(&mStompD, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompDType(::FXType)));
   connect(&mStompX, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompXType(::FXType)));
   connect(&mStompMod, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompModType(::FXType)));
+  // delay
+  connect(&mDelay, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onDelayOnOff(bool)));
+  connect(&mDelay, SIGNAL(feedbackReceived(double)), this, SLOT(onDelayFeedback(double)));
+  connect(&mDelay, SIGNAL(mixReceived(double)), this, SLOT(onDelayMix(double)));
+  // reverb
+  connect(&mReverb, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onReverbOnOff(bool)));
+  connect(&mReverb, SIGNAL(timeReceived(double)), this, SLOT(onReverbTime(double)));
+  connect(&mReverb, SIGNAL(mixReceived(double)), this, SLOT(onReverbMix(double)));
   // amp
   connect(&mAmp, SIGNAL(onOffReceived(bool)), this, SLOT(onAmpOnOff(bool)));
   connect(&mAmp, SIGNAL(gainReceived(double)), this, SLOT(onAmpGain(double)));
@@ -115,47 +117,6 @@ void MainFrame::requestValues()
   //DebugMidi::get().debugScanRequest(0x00, 0x0, 0x7F);
   //DebugMidi::get().debugScanRequest(0x01, 0x00, 0x7F);
 }
-
-// utilities
-void MainFrame::handleStompButtonClick(Stomp& stomp, QToasterButton& stompBt, bool longClick)
-{
-  if(longClick)
-  {
-    toggleOperationMode(StompEdit, &stompBt);
-  }
-  else
-  {
-    stomp.applyOnOff(stompBt.toggleOnOff());
-  }
-  update();
-}
-
-void MainFrame::toggleOperationMode(OperationMode opMode, QToasterButton* bt)
-{
-  mOperationMode = opMode;
-  if(bt != NULL)
-  {
-    if(mEditModeButton != NULL && bt != mEditModeButton)
-      mEditModeButton->resetToOnOffState();
-
-    if(bt->state() == QToasterButton::Blinking)
-    {
-      bt->resetToOnOffState();
-      mEditModeButton = NULL;
-    }
-    else
-    {
-      bt->setState(QToasterButton::Blinking);
-      mEditModeButton = bt;
-    }
-  }
-  else if(mEditModeButton != NULL)
-  {
-    mEditModeButton->resetToOnOffState();
-    mEditModeButton = NULL;
-  }
-}
-//------------------------------------------------------------------------------------------
 
 // stomps
 // ui => kpa
@@ -265,6 +226,28 @@ void MainFrame::onStompModType(::FXType type)
 
 // reverb
 // ui => kpa
+void MainFrame::on_reverbButton_clicked(QToasterButton& bt, bool longClick)
+{
+  if(longClick)
+  {
+    toggleOperationMode(StompEdit, &bt);
+  }
+  else
+  {
+    mReverb.applyOnOffCutsTail(bt.toggleOnOff());
+  }
+  update();
+}
+
+void MainFrame::on_reverbTimeDial_valueChanged(double arg1)
+{
+  mReverb.applyTime(arg1);
+}
+
+void MainFrame::on_reverbMixDial_valueChanged(double arg1)
+{
+  mReverb.applyMix(arg1);
+}
 
 // kpa => ui
 void MainFrame::onReverbOnOff(bool onOff)
@@ -274,8 +257,41 @@ void MainFrame::onReverbOnOff(bool onOff)
   update();
 }
 
+void MainFrame::onReverbTime(double time)
+{
+  ui->reverbTimeDial->setValue(time);
+}
+
+void MainFrame::onReverbMix(double mix)
+{
+  ui->reverbMixDial->setValue(mix);
+}
+//------------------------------------------------------------------------------------------
+
 // delay
 // ui => kpa
+void MainFrame::on_delayButton_clicked(QToasterButton& bt, bool longClick)
+{
+  if(longClick)
+  {
+    toggleOperationMode(StompEdit, &bt);
+  }
+  else
+  {
+    mDelay.applyOnOffCutsTail(bt.toggleOnOff());
+  }
+  update();
+}
+
+void MainFrame::on_delayFeedbackDial_valueChanged(double arg1)
+{
+  mDelay.applyFeedback(arg1);
+}
+
+void MainFrame::on_delayMixDial_valueChanged(double arg1)
+{
+    mDelay.applyMix(arg1);
+}
 
 // kpa => ui
 void MainFrame::onDelayOnOff(bool onOff)
@@ -296,17 +312,11 @@ void MainFrame::onDelayMix(double mix)
   ui->delayMixDial->setValue(mix);
   update();
 }
-
-
 //------------------------------------------------------------------------------------------
 
 
 // amp
-void MainFrame::on_gainDial_valueChanged(double gain)
-{
-  mAmp.applyGain(gain);
-}
-
+// ui => kpa
 void MainFrame::on_amplifierButton_clicked(QToasterButton& bt, bool longClick)
 {
   if(longClick)
@@ -316,6 +326,12 @@ void MainFrame::on_amplifierButton_clicked(QToasterButton& bt, bool longClick)
   update();
 }
 
+void MainFrame::on_gainDial_valueChanged(double gain)
+{
+  mAmp.applyGain(gain);
+}
+
+// kpa => ui
 void MainFrame::onAmpOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
@@ -331,20 +347,71 @@ void MainFrame::onAmpGain(double val)
 //------------------------------------------------------------------------------------------
 
 // eq
+// ui => kpa
+void MainFrame::on_eqButton_clicked(QToasterButton& bt, bool longClick)
+{
+  if(longClick)
+    toggleOperationMode(EQEdit, &bt);
+  else
+    mEq.applyOnOff(bt.toggleOnOff());
+  update();
+}
+
+// kpa => ui
 void MainFrame::onEqOnOff(bool onOff)
 {
   QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
   ui->eqButton->setState(state);
   update();
 }
+//------------------------------------------------------------------------------------------
 
+// cab
+// ui => kpa
+void MainFrame::on_cabinetButton_clicked(QToasterButton& bt, bool longClick)
+{
+  if(longClick)
+    toggleOperationMode(CabEdit, &bt);
+  else
+    mCab.applyOnOff(bt.toggleOnOff());
+  update();
+}
+
+// kpa => ui
+void MainFrame::onCabOnOff(bool onOff)
+{
+  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+  ui->cabinetButton->setState(state);
+  update();
+}
+//------------------------------------------------------------------------------------------
 
 // rig
+// ui => kpa
 void MainFrame::on_volumeDial_valueChanged(double physVal)
 {
   mRig.applyVolume(physVal);
 }
 
+void MainFrame::on_stompsButton_clicked(QToasterButton& bt, bool longClick)
+{
+  mRig.applyStompsEnable(bt.toggleOnOff());
+  update();
+}
+
+void MainFrame::on_stackButton_clicked(QToasterButton& bt, bool longClick)
+{
+  mRig.applyStackEnable(bt.toggleOnOff());
+  update();
+}
+
+void MainFrame::on_effectsButton_clicked(QToasterButton& bt, bool longClick)
+{
+  mRig.applyEffectsEnable(bt.toggleOnOff());
+  update();
+}
+
+// kpa => ui
 void MainFrame::onRigVolume(double volume)
 {
   ui->volumeDial->setValue(volume);
@@ -371,59 +438,13 @@ void MainFrame::onRigEffectsEnable(bool effectsEnable)
   ui->effectsButton->setState(state);
   update();
 }
+//------------------------------------------------------------------------------------------
 
+// global
+// ui => kpa
 void MainFrame::on_chickenHeadDial_valueChanged(const QChickenHeadDial::State& state)
 {
   mGlobal.applyOperationMode((Global::OperationMode) state);
-}
-
-void MainFrame::onGlobalOperationMode(unsigned short opMode)
-{
-  ui->chickenHeadDial->setState((QChickenHeadDial::State)opMode);
-  update();
-}
-
-void MainFrame::on_stompsButton_clicked(QToasterButton& bt, bool longClick)
-{
-  mRig.applyStompsEnable(bt.toggleOnOff());
-  update();
-}
-
-void MainFrame::on_stackButton_clicked(QToasterButton& bt, bool longClick)
-{
-  mRig.applyStackEnable(bt.toggleOnOff());
-  update();
-}
-
-void MainFrame::on_effectsButton_clicked(QToasterButton& bt, bool longClick)
-{
-  mRig.applyEffectsEnable(bt.toggleOnOff());
-  update();
-}
-
-void MainFrame::on_eqButton_clicked(QToasterButton& bt, bool longClick)
-{
-  if(longClick)
-    toggleOperationMode(EQEdit, &bt);
-  else
-    mEq.applyOnOff(bt.toggleOnOff());
-  update();
-}
-
-void MainFrame::onCabOnOff(bool onOff)
-{
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->cabinetButton->setState(state);
-  update();
-}
-
-void MainFrame::on_cabinetButton_clicked(QToasterButton& bt, bool longClick)
-{
-  if(longClick)
-    toggleOperationMode(CabEdit, &bt);
-  else
-    mCab.applyOnOff(bt.toggleOnOff());
-  update();
 }
 
 void MainFrame::on_monitorVolumeDial_valueChanged(double volume)
@@ -434,6 +455,13 @@ void MainFrame::on_monitorVolumeDial_valueChanged(double volume)
 void MainFrame::on_headphoneVolumeDial_valueChanged(double volume)
 {
   mGlobal.applyHeadphoneOutputVolume(volume);
+}
+
+// kpa => ui
+void MainFrame::onGlobalOperationMode(unsigned short opMode)
+{
+  ui->chickenHeadDial->setState((QChickenHeadDial::State)opMode);
+  update();
 }
 
 void MainFrame::onGlobalMainVolume(double volume)
@@ -457,7 +485,10 @@ void MainFrame::onGlobalDirectVolume(double volume)
 {
   update();
 }
+//------------------------------------------------------------------------------------------
 
+// input
+// ui => kpa
 void MainFrame::on_noiseGateDial_valueChanged(double noiseGate)
 {
   mInput.applyNoiseGate(noiseGate);
@@ -473,6 +504,7 @@ void MainFrame::on_cleanSenseDial_valueChanged(double cleanSense)
   mInput.applyCleanSense(cleanSense);
 }
 
+// kpa => ui
 void MainFrame::onInputNoiseGate(double noiseGate)
 {
   ui->noiseGateDial->setValue(noiseGate);
@@ -490,7 +522,10 @@ void MainFrame::onInputCleanSense(double cleanSense)
   ui->cleanSenseDial->setValue(cleanSense);
   update();
 }
+//------------------------------------------------------------------------------------------
 
+// profile
+// ui => kpa
 void MainFrame::on_rigPrevButton_clicked(QToasterButton &bt, bool longClick)
 {
   if(bt.state() == QToasterButton::On)
@@ -508,59 +543,47 @@ void MainFrame::on_rigNextButton_clicked(QToasterButton &bt, bool longClick)
     requestValues(); // todo: request just the required values
   }
 }
+// kpa => ui
+//------------------------------------------------------------------------------------------
 
-void MainFrame::on_delayButton_clicked(QToasterButton& bt, bool longClick)
+// utility methods
+void MainFrame::handleStompButtonClick(Stomp& stomp, QToasterButton& stompBt, bool longClick)
 {
   if(longClick)
   {
-    toggleOperationMode(StompEdit, &bt);
+    toggleOperationMode(StompEdit, &stompBt);
   }
   else
   {
-    mDelay.applyOnOffCutsTail(bt.toggleOnOff());
+    stomp.applyOnOff(stompBt.toggleOnOff());
   }
   update();
 }
 
-void MainFrame::on_reverbButton_clicked(QToasterButton& bt, bool longClick)
+void MainFrame::toggleOperationMode(OperationMode opMode, QToasterButton* bt)
 {
-  if(longClick)
+  mOperationMode = opMode;
+  if(bt != NULL)
   {
-    toggleOperationMode(StompEdit, &bt);
+    if(mEditModeButton != NULL && bt != mEditModeButton)
+      mEditModeButton->resetToOnOffState();
+
+    if(bt->state() == QToasterButton::Blinking)
+    {
+      bt->resetToOnOffState();
+      mEditModeButton = NULL;
+    }
+    else
+    {
+      bt->setState(QToasterButton::Blinking);
+      mEditModeButton = bt;
+    }
   }
-  else
+  else if(mEditModeButton != NULL)
   {
-    mReverb.applyOnOffCutsTail(bt.toggleOnOff());
+    mEditModeButton->resetToOnOffState();
+    mEditModeButton = NULL;
   }
-  update();
 }
+//------------------------------------------------------------------------------------------
 
-void MainFrame::on_delayFeedbackDial_valueChanged(double arg1)
-{
-  mDelay.applyFeedback(arg1);
-}
-
-void MainFrame::on_delayMixDial_valueChanged(double arg1)
-{
-    mDelay.applyMix(arg1);
-}
-
-void MainFrame::on_reverbTimeDial_valueChanged(double arg1)
-{
-  mReverb.applyTime(arg1);
-}
-
-void MainFrame::on_reverbMixDial_valueChanged(double arg1)
-{
-  mReverb.applyMix(arg1);
-}
-
-void MainFrame::onReverbTime(double time)
-{
-  ui->reverbTimeDial->setValue(time);
-}
-
-void MainFrame::onReverbMix(double mix)
-{
-  ui->reverbMixDial->setValue(mix);
-}
