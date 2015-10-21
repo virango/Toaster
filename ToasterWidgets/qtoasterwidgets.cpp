@@ -1,6 +1,7 @@
 #include "qtoasterdialplugin.h"
 #include "qtoasterenumdialplugin.h"
-#include "qtoasterlcdplugin.h"
+#include "QToasterBrowserLCDPlugin.h"
+#include "QToasterStompEditLCDPlugin.h"
 //#include "qbigdialplugin.h"
 //#include "qsmalldialplugin.h"
 #include "qmulticolorledplugin.h"
@@ -14,14 +15,14 @@ QToasterWidgets::QToasterWidgets(QObject *parent)
 {
   m_widgets.append(new QToasterDialPlugin(this));
   m_widgets.append(new QToasterEnumDialPlugin(this));
-  m_widgets.append(new QToasterLCDPlugin(this));
+  m_widgets.append(new QToasterBrowserLCDPlugin(this));
+  m_widgets.append(new QToasterStompEditLCDPlugin(this));
 //m_widgets.append(new QBigDialPlugin(this));
 //  m_widgets.append(new QSmallDialPlugin(this));
   m_widgets.append(new QMultiColorLedPlugin(this));
 //  m_widgets.append(new QSmallKnobPlugin(this));
   m_widgets.append(new QToasterButtonPlugin(this));
   m_widgets.append(new QChickenHeadDialPlugin(this));
-
 }
 
 QList<QDesignerCustomWidgetInterface*> QToasterWidgets::customWidgets() const

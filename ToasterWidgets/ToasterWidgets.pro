@@ -22,10 +22,11 @@ HEADERS     = \
     qtoasterdialplugin.h \
     qtoasterenumdialplugin.h \
     qtoasterbuttonplugin.h \
-    qtoasterlcdplugin.h \
     ../Toaster/Commons.h \
     ToasterWidgetsLib.h \
-    CtxMenuProvider.h
+    CtxMenuProvider.h \
+    QToasterBrowserLCDPlugin.h \
+    QToasterStompEditLCDPlugin.h
 SOURCES     = \
 #    qbigdialplugin.cpp \
 #    qsmalldialplugin.cpp \
@@ -36,7 +37,8 @@ SOURCES     = \
     qtoasterdialplugin.cpp \
     qtoasterenumdialplugin.cpp \
     qtoasterbuttonplugin.cpp \
-    qtoasterlcdplugin.cpp
+    QToasterBrowserLCDPlugin.cpp \
+    QToasterStompEditLCDPlugin.cpp
 RESOURCES   = icons.qrc \
     skins.qrc \
     fonts.qrc
@@ -64,3 +66,4 @@ include(qchickenheaddial.pri)
 #include(qsmallknob.pri)
 
 DISTFILES +=
+

@@ -1,15 +1,15 @@
-#ifndef QTOASTERLCDPLUGIN_H
-#define QTOASTERLCDPLUGIN_H
+#ifndef QTOASTERBROWSERLCDPLUGIN_H
+#define QTOASTERBROWSERLCDPLUGIN_H
 
 #include <QDesignerCustomWidgetInterface>
 
-class QToasterLCDPlugin : public QObject, public QDesignerCustomWidgetInterface
+class QToasterBrowserLCDPlugin : public QObject, public QDesignerCustomWidgetInterface
 {
   Q_OBJECT
   Q_INTERFACES(QDesignerCustomWidgetInterface)
 
 public:
-  QToasterLCDPlugin(QObject *parent = 0);
+  QToasterBrowserLCDPlugin(QObject *parent = 0);
 
   bool isContainer() const;
   bool isInitialized() const;
