@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainControlFrame</class>
- <widget class="QFrame" name="MainControlFrame">
+ <class>WahWahWidget</class>
+ <widget class="QWidget" name="WahWahWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,20 +11,24 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Frame</string>
+   <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame#MainControlFrame {color: transparent;}</string>
+   <string notr="true">QWidget#WahWahWidget {color: transparent;}</string>
   </property>
-  <property name="frameShape">
-   <enum>QFrame::NoFrame</enum>
-  </property>
-  <property name="frameShadow">
-   <enum>QFrame::Plain</enum>
-  </property>
-  <property name="lineWidth">
-   <number>0</number>
-  </property>
+  <widget class="QToasterStompEditLCD" name="lcdDisplay">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>75</y>
+     <width>420</width>
+     <height>115</height>
+    </rect>
+   </property>
+   <property name="color">
+    <enum>QToasterStompEditLCD::Orange</enum>
+   </property>
+  </widget>
   <widget class="QToasterDial" name="eqBassDial">
    <property name="geometry">
     <rect>
@@ -188,80 +192,6 @@
     <double>0.100000000000000</double>
    </property>
   </widget>
-  <widget class="QToasterEnumDial" name="browseModeDial">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>0</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterEnumDial::Small</enum>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="qToasterDial_2">
-   <property name="geometry">
-    <rect>
-     <x>410</x>
-     <y>0</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterDial::Small</enum>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::None</enum>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="qToasterDial_3">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>0</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterDial::Small</enum>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::None</enum>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="qToasterDial_4">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
-     <y>0</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterDial::Small</enum>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::None</enum>
-   </property>
-  </widget>
-  <widget class="QToasterBrowserLCD" name="lcdDisplay">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>75</y>
-     <width>420</width>
-     <height>115</height>
-    </rect>
-   </property>
-   <property name="color">
-    <enum>QToasterBrowserLCD::Standard</enum>
-   </property>
-  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -270,50 +200,12 @@
    <header>qtoasterdial.h</header>
   </customwidget>
   <customwidget>
-   <class>QToasterEnumDial</class>
+   <class>QToasterStompEditLCD</class>
    <extends>QWidget</extends>
-   <header>qtoasterenumdial.h</header>
-  </customwidget>
-  <customwidget>
-   <class>QToasterBrowserLCD</class>
-   <extends>QWidget</extends>
-   <header>QToasterBrowserLCD.h</header>
+   <header>QToasterStompEditLCD.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>browseModeDial</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lcdDisplay</receiver>
-   <slot>setBrowserModeView(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>109</x>
-     <y>34</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>115</x>
-     <y>94</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lcdDisplay</sender>
-   <signal>browserModeViewChanged(int)</signal>
-   <receiver>browseModeDial</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>152</x>
-     <y>91</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>135</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
