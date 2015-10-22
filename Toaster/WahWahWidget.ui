@@ -28,6 +28,63 @@
    <property name="color">
     <enum>QToasterStompEditLCD::Orange</enum>
    </property>
+   <property name="stompName">
+    <string>Wah Wah</string>
+   </property>
+   <property name="value1Title">
+    <string>Manual</string>
+   </property>
+   <property name="value2Title">
+    <string>Peak</string>
+   </property>
+   <property name="value3Title">
+    <string>Pedal Range</string>
+   </property>
+   <property name="value4Title">
+    <string>Peak Range</string>
+   </property>
+   <property name="value5Title">
+    <string>Pedal Mode</string>
+   </property>
+   <property name="value6Title">
+    <string>Mix</string>
+   </property>
+   <property name="value7Title">
+    <string>Ducking</string>
+   </property>
+   <property name="value8Title">
+    <string>Volume</string>
+   </property>
+   <property name="value9Title">
+    <string>Touch Attack</string>
+   </property>
+   <property name="value10Title">
+    <string>Touch Release</string>
+   </property>
+   <property name="value11Title">
+    <string/>
+   </property>
+   <property name="value12Title">
+    <string>Touch Boost</string>
+   </property>
+   <property name="value13Title">
+    <string/>
+   </property>
+   <property name="value14Title">
+    <string/>
+   </property>
+   <property name="value15Title">
+    <string/>
+   </property>
+   <property name="value16Title">
+    <string/>
+   </property>
+   <property name="currentPage">
+    <enum>QToasterStompEditLCD::Page1</enum>
+   </property>
+   <property name="maxPage">
+    <enum>QToasterStompEditLCD::Page2</enum>
+   </property>
   </widget>
   <widget class="QToasterDial" name="eqBassDial">
    <property name="geometry">

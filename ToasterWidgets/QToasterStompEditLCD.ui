@@ -161,7 +161,7 @@ border-radius: 3px;</string>
     <string>-</string>
    </property>
   </widget>
-  <widget class="Line" name="editorLine4">
+  <widget class="Line" name="line4">
    <property name="geometry">
     <rect>
      <x>3</x>
@@ -171,7 +171,7 @@ border-radius: 3px;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QFrame#editorLine4
+    <string notr="true">QFrame#line4
 {
 	color:  rgb(0, 0, 0);
 	background-color: rgb(0, 0, 0);
@@ -332,7 +332,7 @@ border-radius: 3px;</string>
     <string>-</string>
    </property>
   </widget>
-  <widget class="Line" name="editorLine2">
+  <widget class="Line" name="line2">
    <property name="geometry">
     <rect>
      <x>154</x>
@@ -342,7 +342,7 @@ border-radius: 3px;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QFrame#editorLine2
+    <string notr="true">QFrame#line2
 {
 	color:  rgb(0, 0, 0);
 	background-color: rgb(0, 0, 0);
@@ -423,7 +423,7 @@ border-color: rgb(0, 0, 0);</string>
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>70</width>
+      <width>90</width>
       <height>14</height>
      </rect>
     </property>
@@ -497,8 +497,47 @@ border-color: rgb(0, 0, 0);</string>
      <string/>
     </property>
    </widget>
+   <widget class="QLineEdit" name="pageInfo">
+    <property name="geometry">
+     <rect>
+      <x>98</x>
+      <y>0</y>
+      <width>50</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>7</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: transparent;
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>[Page 2/2]</string>
+    </property>
+    <property name="frame">
+     <bool>false</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>---</string>
+    </property>
+   </widget>
   </widget>
-  <widget class="Line" name="editorLine5">
+  <widget class="Line" name="line5">
    <property name="geometry">
     <rect>
      <x>265</x>
@@ -508,7 +547,7 @@ border-color: rgb(0, 0, 0);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QFrame#editorLine5
+    <string notr="true">QFrame#line5
 {
 	color:  rgb(0, 0, 0);
 	background-color: rgb(0, 0, 0);
@@ -521,7 +560,7 @@ border-color: rgb(0, 0, 0);</string>
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="Line" name="editorLine1">
+  <widget class="Line" name="line1">
    <property name="geometry">
     <rect>
      <x>154</x>
@@ -531,7 +570,7 @@ border-color: rgb(0, 0, 0);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QFrame#editorLine1
+    <string notr="true">QFrame#line1
 {
 	color:  rgb(0, 0, 0);
 	background-color: rgb(0, 0, 0);
@@ -600,7 +639,7 @@ border-radius: 3px;</string>
     <string>-</string>
    </property>
   </widget>
-  <widget class="QStackedWidget" name="stackedWidget">
+  <widget class="QStackedWidget" name="valWidget1">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -618,11 +657,11 @@ border-radius: 3px;</string>
    <property name="currentIndex">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="knobsPage">
+   <widget class="QWidget" name="valPage11">
     <property name="styleSheet">
      <string notr="true">background-color: transparent;</string>
     </property>
-    <widget class="QLabel" name="knob1Title">
+    <widget class="QLabel" name="val01Title">
      <property name="geometry">
       <rect>
        <x>5</x>
@@ -653,7 +692,7 @@ border-radius: 3px;</string>
       <number>0</number>
      </property>
     </widget>
-    <widget class="QLabel" name="knob2Title">
+    <widget class="QLabel" name="val02Title">
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -678,7 +717,7 @@ border-radius: 3px;</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="knob3Title">
+    <widget class="QLabel" name="val03Title">
      <property name="geometry">
       <rect>
        <x>215</x>
@@ -703,7 +742,7 @@ border-radius: 3px;</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="knob4Title">
+    <widget class="QLabel" name="val04Title">
      <property name="geometry">
       <rect>
        <x>320</x>
@@ -728,7 +767,7 @@ border-radius: 3px;</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="knob1Value">
+    <widget class="QLabel" name="val01">
      <property name="geometry">
       <rect>
        <x>5</x>
@@ -749,7 +788,7 @@ border-radius: 3px;</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="knob2Value">
+    <widget class="QLabel" name="val02">
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -770,7 +809,7 @@ border-radius: 3px;</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="knob3Value">
+    <widget class="QLabel" name="val03">
      <property name="geometry">
       <rect>
        <x>215</x>
@@ -791,10 +830,202 @@ border-radius: 3px;</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="knob4Value">
+    <widget class="QLabel" name="val04">
      <property name="geometry">
       <rect>
        <x>320</x>
+       <y>0</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="valPage12">
+    <widget class="QLabel" name="val09">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>0</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val12">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>0</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val10Title">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>12</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Middle</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val09Title">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>12</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val10">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>0</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val11Title">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
+       <y>12</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Treble</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val12Title">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>12</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Presence</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val11">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
        <y>0</y>
        <width>95</width>
        <height>15</height>
@@ -867,9 +1098,8 @@ QProgressBar#progressBar2::chunk
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="empty"/>
   </widget>
-  <widget class="Line" name="editorLine3">
+  <widget class="Line" name="line3">
    <property name="geometry">
     <rect>
      <x>154</x>
@@ -879,7 +1109,7 @@ QProgressBar#progressBar2::chunk
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QFrame#editorLine3
+    <string notr="true">QFrame#line3
 {
 	color:  rgb(0, 0, 0);
 	background-color: rgb(0, 0, 0);
@@ -942,238 +1172,456 @@ border-radius: 3px;</string>
     <string>-</string>
    </property>
   </widget>
-  <widget class="QLabel" name="knob5Title">
+  <widget class="QStackedWidget" name="valWidget2">
    <property name="geometry">
     <rect>
-     <x>5</x>
-     <y>4</y>
-     <width>95</width>
-     <height>15</height>
+     <x>0</x>
+     <y>0</y>
+     <width>420</width>
+     <height>30</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
-   </property>
-   <property name="text">
-    <string>Bass</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="margin">
+   <property name="currentIndex">
     <number>0</number>
    </property>
+   <widget class="QWidget" name="valPage21">
+    <widget class="QLabel" name="val05Title">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val05">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val06">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val07">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val08Title">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val06Title">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val07Title">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val08">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="valPage22">
+    <widget class="QLabel" name="val16">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val13Title">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val13">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val14">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val15">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val16Title">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val14Title">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val15Title">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+   </widget>
   </widget>
-  <widget class="QLabel" name="knob5Value">
-   <property name="geometry">
-    <rect>
-     <x>5</x>
-     <y>18</y>
-     <width>95</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>7</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>&lt;0.0&gt;</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="knob6Title">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>4</y>
-     <width>95</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
-   </property>
-   <property name="text">
-    <string>Bass</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="margin">
-    <number>0</number>
-   </property>
-  </widget>
-  <widget class="QLabel" name="knob7Title">
-   <property name="geometry">
-    <rect>
-     <x>215</x>
-     <y>4</y>
-     <width>95</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
-   </property>
-   <property name="text">
-    <string>Bass</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="margin">
-    <number>0</number>
-   </property>
-  </widget>
-  <widget class="QLabel" name="knob8Title">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>4</y>
-     <width>95</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
-   </property>
-   <property name="text">
-    <string>Bass</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="margin">
-    <number>0</number>
-   </property>
-  </widget>
-  <widget class="QLabel" name="knob6Value">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>18</y>
-     <width>95</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>7</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>&lt;0.0&gt;</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="knob7Value">
-   <property name="geometry">
-    <rect>
-     <x>215</x>
-     <y>19</y>
-     <width>95</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>7</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>&lt;0.0&gt;</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="knob8Value">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>18</y>
-     <width>95</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>7</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>&lt;0.0&gt;</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <zorder>editorLine4</zorder>
+  <zorder>line4</zorder>
   <zorder>stompAEdit</zorder>
   <zorder>frame</zorder>
-  <zorder>editorLine2</zorder>
+  <zorder>line2</zorder>
   <zorder>stompEditWidget</zorder>
-  <zorder>editorLine5</zorder>
-  <zorder>editorLine1</zorder>
+  <zorder>line5</zorder>
+  <zorder>line1</zorder>
   <zorder>stompDEdit</zorder>
-  <zorder>stackedWidget</zorder>
-  <zorder>editorLine3</zorder>
+  <zorder>valWidget1</zorder>
+  <zorder>line3</zorder>
   <zorder>stompBEdit</zorder>
   <zorder>stompCEdit</zorder>
   <zorder>stompModEdit</zorder>
   <zorder>stompXEdit</zorder>
   <zorder>delayEdit</zorder>
   <zorder>reverbEdit</zorder>
-  <zorder>knob5Title</zorder>
-  <zorder>knob5Value</zorder>
-  <zorder>knob6Title</zorder>
-  <zorder>knob7Title</zorder>
-  <zorder>knob8Title</zorder>
-  <zorder>knob6Value</zorder>
-  <zorder>knob7Value</zorder>
-  <zorder>knob8Value</zorder>
+  <zorder>valWidget2</zorder>
  </widget>
  <resources/>
  <connections/>
