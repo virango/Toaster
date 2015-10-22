@@ -10,6 +10,8 @@ QToasterStompEditLCD::QToasterStompEditLCD(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::QToasterStompEditLCD)
   , mColor(Standard)
+  , mMaxPage(Page2)
+  , mCurrentPage(Page1)
   , mpCtxMenuProvider(NULL)
 {
   ui->setupUi(this);
@@ -34,12 +36,121 @@ QToasterStompEditLCD::QToasterStompEditLCD(QWidget *parent)
   setStompModEnabled(false);
   setDelayEnabled(false);
   setReverbEnabled(false);
+  updatePageInfo();
 }
 
 QToasterStompEditLCD::~QToasterStompEditLCD()
 {
   delete ui;
 }
+
+QString QToasterStompEditLCD::stompInstance() const
+{
+  return ui->stompInstance->text();
+}
+
+QString QToasterStompEditLCD::stompName() const
+{
+  return ui->stompTypeName->text();
+}
+
+QString QToasterStompEditLCD::value1Title() const
+{
+  return ui->val01Title->text();
+}
+
+QString QToasterStompEditLCD::value2Title() const
+{
+  return ui->val02Title->text();
+}
+
+QString QToasterStompEditLCD::value3Title() const
+{
+  return ui->val03Title->text();
+}
+
+QString QToasterStompEditLCD::value4Title() const
+{
+  return ui->val04Title->text();
+}
+
+QString QToasterStompEditLCD::value5Title() const
+{
+  return ui->val05Title->text();
+}
+
+QString QToasterStompEditLCD::value6Title() const
+{
+  return ui->val06Title->text();
+}
+
+QString QToasterStompEditLCD::value7Title() const
+{
+  return ui->val07Title->text();
+}
+
+QString QToasterStompEditLCD::value8Title() const
+{
+  return ui->val08Title->text();
+}
+
+QString QToasterStompEditLCD::value9Title() const
+{
+  return ui->val09Title->text();
+}
+
+QString QToasterStompEditLCD::value10Title() const
+{
+  return ui->val10Title->text();
+}
+
+QString QToasterStompEditLCD::value11Title() const
+{
+  return ui->val11Title->text();
+}
+
+QString QToasterStompEditLCD::value12Title() const
+{
+  return ui->val12Title->text();
+}
+
+QString QToasterStompEditLCD::value13Title() const
+{
+  return ui->val13Title->text();
+}
+
+QString QToasterStompEditLCD::value14Title() const
+{
+  return ui->val14Title->text();
+}
+
+QString QToasterStompEditLCD::value15Title() const
+{
+  return ui->val15Title->text();
+}
+
+QString QToasterStompEditLCD::value16Title() const
+{
+  return ui->val16Title->text();
+}
+
+void QToasterStompEditLCD::setCurrentPage(Page page)
+{
+  if(page <= mMaxPage)
+  {
+    mCurrentPage = page;
+    ui->valWidget1->setCurrentIndex((int)page);
+    ui->valWidget2->setCurrentIndex((int)page);
+    updatePageInfo();
+  }
+}
+
+void QToasterStompEditLCD::setMaxPage(Page page)
+{
+  mMaxPage = page;
+  updatePageInfo();
+}
+
 
 void QToasterStompEditLCD::createSkin()
 {
@@ -90,6 +201,128 @@ void QToasterStompEditLCD::setColor(QToasterStompEditLCD::Color color)
 {
   mColor = color;
   update();
+}
+
+void QToasterStompEditLCD::setStompInstance(QString stompInstance)
+{
+  ui->stompInstance->setText(stompInstance);
+}
+
+void QToasterStompEditLCD::setStompName(QString stompName)
+{
+  ui->stompTypeName->setText(stompName);
+}
+
+void QToasterStompEditLCD::setValue1Title(QString title)
+{
+  ui->val01Title->setText(title);
+  if(title.isEmpty())
+    ui->val01->setText("");
+}
+
+void QToasterStompEditLCD::setValue2Title(QString title)
+{
+  ui->val02Title->setText(title);
+  if(title.isEmpty())
+    ui->val02->setText("");
+}
+
+void QToasterStompEditLCD::setValue3Title(QString title)
+{
+  ui->val03Title->setText(title);
+  if(title.isEmpty())
+    ui->val03->setText("");
+}
+
+void QToasterStompEditLCD::setValue4Title(QString title)
+{
+  ui->val04Title->setText(title);
+  if(title.isEmpty())
+    ui->val04->setText("");
+}
+
+void QToasterStompEditLCD::setValue5Title(QString title)
+{
+  ui->val05Title->setText(title);
+  if(title.isEmpty())
+    ui->val05->setText("");
+}
+
+void QToasterStompEditLCD::setValue6Title(QString title)
+{
+  ui->val06Title->setText(title);
+  if(title.isEmpty())
+    ui->val06->setText("");
+}
+
+void QToasterStompEditLCD::setValue7Title(QString title)
+{
+  ui->val07Title->setText(title);
+  if(title.isEmpty())
+    ui->val07->setText("");
+}
+
+void QToasterStompEditLCD::setValue8Title(QString title)
+{
+  ui->val08Title->setText(title);
+  if(title.isEmpty())
+    ui->val08->setText("");
+}
+
+void QToasterStompEditLCD::setValue9Title(QString title)
+{
+  ui->val09Title->setText(title);
+  if(title.isEmpty())
+    ui->val09->setText("");
+}
+
+void QToasterStompEditLCD::setValue10Title(QString title)
+{
+  ui->val10Title->setText(title);
+  if(title.isEmpty())
+    ui->val10->setText("");
+}
+
+void QToasterStompEditLCD::setValue11Title(QString title)
+{
+  ui->val11Title->setText(title);
+  if(title.isEmpty())
+    ui->val11->setText("");
+}
+
+void QToasterStompEditLCD::setValue12Title(QString title)
+{
+  ui->val12Title->setText(title);
+  if(title.isEmpty())
+    ui->val12->setText("");
+}
+
+void QToasterStompEditLCD::setValue13Title(QString title)
+{
+  ui->val13Title->setText(title);
+  if(title.isEmpty())
+    ui->val13->setText("");
+}
+
+void QToasterStompEditLCD::setValue14Title(QString title)
+{
+  ui->val14Title->setText(title);
+  if(title.isEmpty())
+    ui->val14->setText("");
+}
+
+void QToasterStompEditLCD::setValue15Title(QString title)
+{
+  ui->val15Title->setText(title);
+  if(title.isEmpty())
+    ui->val15->setText("");
+}
+
+void QToasterStompEditLCD::setValue16Title(QString title)
+{
+  ui->val16Title->setText(title);
+  if(title.isEmpty())
+    ui->val16->setText("");
 }
 
 void QToasterStompEditLCD::setStompAFXType(FXType fxType)
@@ -168,4 +401,10 @@ void QToasterStompEditLCD::setEnabled(QWidget& w, bool enabled)
     w.setStyleSheet(ENABLED);
   else
     w.setStyleSheet(DISABLED);
+}
+
+void QToasterStompEditLCD::updatePageInfo()
+{
+  QString text = QString("[Page %1/%2]").arg((int)mCurrentPage+1).arg((int)mMaxPage+1);
+  ui->pageInfo->setText(text);
 }
