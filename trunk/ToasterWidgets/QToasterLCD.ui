@@ -134,6 +134,9 @@ background-color: transparent;
 }
 </string>
     </property>
+    <property name="text">
+     <string/>
+    </property>
     <property name="frame">
      <bool>false</bool>
     </property>
@@ -657,6 +660,7 @@ border-radius: 3px;</string>
       </property>
       <property name="font">
        <font>
+        <family>Verdana</family>
         <weight>75</weight>
         <bold>true</bold>
        </font>
