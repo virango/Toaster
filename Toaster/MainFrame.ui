@@ -269,7 +269,7 @@
    <property name="geometry">
     <rect>
      <x>665</x>
-     <y>160</y>
+     <y>165</y>
      <width>70</width>
      <height>70</height>
     </rect>
@@ -628,7 +628,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStackedWidget" name="controlsStackedWidget">
+  <widget class="QStackedWidget" name="modeFrames">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -641,10 +641,18 @@
     <number>0</number>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
-   <widget class="MainControlFrame" name="mainControlFrame"/>
-   <widget class="QWidget" name="page_2"/>
+   <widget class="TunerFrame" name="tuner"/>
+   <widget class="BrowserFrame" name="browser"/>
+   <widget class="QWidget" name="perform"/>
+   <widget class="QWidget" name="profiler"/>
+   <widget class="StompEditorFrame" name="stompEditor"/>
+   <widget class="QWidget" name="ampEditor"/>
+   <widget class="QWidget" name="eqEditor"/>
+   <widget class="QWidget" name="cabEditor"/>
+   <widget class="QWidget" name="delayEditor"/>
+   <widget class="QWidget" name="reverbEditor"/>
   </widget>
  </widget>
  <customwidgets>
@@ -664,9 +672,21 @@
    <header>qchickenheaddial.h</header>
   </customwidget>
   <customwidget>
-   <class>MainControlFrame</class>
+   <class>BrowserFrame</class>
    <extends>QWidget</extends>
-   <header>MainControlFrame.h</header>
+   <header>BrowserFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TunerFrame</class>
+   <extends>QWidget</extends>
+   <header>TunerFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StompEditorFrame</class>
+   <extends>QWidget</extends>
+   <header>StompEditorFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

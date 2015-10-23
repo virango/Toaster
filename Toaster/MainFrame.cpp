@@ -461,6 +461,7 @@ void MainFrame::on_headphoneVolumeDial_valueChanged(double volume)
 void MainFrame::onGlobalOperationMode(unsigned short opMode)
 {
   ui->chickenHeadDial->setState((QChickenHeadDial::State)opMode);
+  ui->modeFrames->setCurrentIndex(opMode-1);
   update();
 }
 

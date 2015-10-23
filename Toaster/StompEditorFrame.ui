@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>StompControlStackedWidget</class>
- <widget class="QStackedWidget" name="StompControlStackedWidget">
+ <class>StompEditorFrame</class>
+ <widget class="QStackedWidget" name="StompEditorFrame">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -16,14 +16,14 @@
   <property name="currentIndex">
    <number>0</number>
   </property>
-  <widget class="WahWahWidget" name="wahWah"/>
+  <widget class="WahWahFrame" name="wahWah"/>
   <widget class="QWidget" name="page"/>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>WahWahWidget</class>
+   <class>WahWahFrame</class>
    <extends>QWidget</extends>
-   <header>WahWahWidget.h</header>
+   <header>WahWahFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

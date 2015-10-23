@@ -63,9 +63,10 @@ SOURCES += main.cpp\
     Profile.cpp \
     ExtParamMidi.cpp \
     ExtParam.cpp \
-    StompControlStackedWidget.cpp \
-    MainControlFrame.cpp \
-    WahWahWidget.cpp
+    StompEditorFrame.cpp \
+    BrowserFrame.cpp \
+    TunerFrame.cpp \
+    WahWahFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -100,17 +101,19 @@ HEADERS  += ToasterWindow.h \
     Profile.h \
     ExtParamMidi.h \
     ExtParam.h \
-    StompControlStackedWidget.h \
-    MainControlFrame.h \
-    WahWahWidget.h
+    StompEditorFrame.h \
+    BrowserFrame.h \
+    TunerFrame.h \
+    WahWahFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
     MainFrame.ui \
     SettingsDialog.ui \
-    StompControlStackedWidget.ui \
-    MainControlFrame.ui \
-    WahWahWidget.ui
+    BrowserFrame.ui \
+    StompEditorFrame.ui \
+    TunerFrame.ui \
+    WahWahFrame.ui
 
 RESOURCES += \
     resources.qrc

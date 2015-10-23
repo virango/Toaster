@@ -1,5 +1,5 @@
-#ifndef MAINCONTROLFRAME_H
-#define MAINCONTROLFRAME_H
+#ifndef BROWSERFRAME_H
+#define BROWSERFRAME_H
 
 #include <QFrame>
 #include "Eq.h"
@@ -10,16 +10,16 @@
 #include "Reverb.h"
 
 namespace Ui {
-  class MainControlFrame;
+  class BrowserFrame;
 }
 
-class MainControlFrame : public QFrame
+class BrowserFrame : public QFrame
 {
   Q_OBJECT
 
 public:
-  explicit MainControlFrame(QWidget *parent = 0);
-  ~MainControlFrame();
+  explicit BrowserFrame(QWidget *parent = 0);
+  ~BrowserFrame();
 
 
 private slots:
@@ -77,7 +77,7 @@ private slots:
   void onBrowserView(unsigned int view);
 
 private:
-  Ui::MainControlFrame *ui;
+  Ui::BrowserFrame *ui;
 
   Stomp         mStompA;
   Stomp         mStompB;
@@ -92,4 +92,4 @@ private:
   ExtParam      mExtParam;
 };
 
-#endif // MAINCONTROLFRAME_H
+#endif // BROWSERFRAME_H

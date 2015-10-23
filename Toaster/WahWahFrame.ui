@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WahWahWidget</class>
- <widget class="QWidget" name="WahWahWidget">
+ <class>WahWahFrame</class>
+ <widget class="QWidget" name="WahWahFrame">
   <property name="geometry">
    <rect>
     <x>0</x>
