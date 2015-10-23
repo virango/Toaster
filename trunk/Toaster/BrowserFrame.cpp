@@ -1,9 +1,9 @@
-#include "MainControlFrame.h"
-#include "ui_MainControlFrame.h"
+#include "BrowserFrame.h"
+#include "ui_BrowserFrame.h"
 
-MainControlFrame::MainControlFrame(QWidget *parent)
+BrowserFrame::BrowserFrame(QWidget *parent)
   : QFrame(parent)
-  , ui(new Ui::MainControlFrame)
+  , ui(new Ui::BrowserFrame)
   , mStompA(StompA)
   , mStompB(StompB)
   , mStompC(StompC)
@@ -44,7 +44,7 @@ MainControlFrame::MainControlFrame(QWidget *parent)
   connect(&mExtParam, SIGNAL(browserViewReceived(uint)), this, SLOT(onBrowserView(uint)));
 }
 
-MainControlFrame::~MainControlFrame()
+BrowserFrame::~BrowserFrame()
 {
   delete ui;
 }
@@ -53,62 +53,62 @@ MainControlFrame::~MainControlFrame()
 // stomps
 // ui => kpa
 // kpa => ui
-void MainControlFrame::onStompAOnOff(bool onOff)
+void BrowserFrame::onStompAOnOff(bool onOff)
 {
   ui->lcdDisplay->setStompAEnabled(onOff);
 }
 
-void MainControlFrame::onStompBOnOff(bool onOff)
+void BrowserFrame::onStompBOnOff(bool onOff)
 {
   ui->lcdDisplay->setStompBEnabled(onOff);
 }
 
-void MainControlFrame::onStompCOnOff(bool onOff)
+void BrowserFrame::onStompCOnOff(bool onOff)
 {
   ui->lcdDisplay->setStompCEnabled(onOff);
 }
 
-void MainControlFrame::onStompDOnOff(bool onOff)
+void BrowserFrame::onStompDOnOff(bool onOff)
 {
   ui->lcdDisplay->setStompDEnabled(onOff);
 }
 
-void MainControlFrame::onStompXOnOff(bool onOff)
+void BrowserFrame::onStompXOnOff(bool onOff)
 {
   ui->lcdDisplay->setStompXEnabled(onOff);
 }
 
-void MainControlFrame::onStompModOnOff(bool onOff)
+void BrowserFrame::onStompModOnOff(bool onOff)
 {
   ui->lcdDisplay->setStompModEnabled(onOff);
 }
 
-void MainControlFrame::onStompAType(::FXType type)
+void BrowserFrame::onStompAType(::FXType type)
 {
   ui->lcdDisplay->setStompAFXType(type);
 }
 
-void MainControlFrame::onStompBType(::FXType type)
+void BrowserFrame::onStompBType(::FXType type)
 {
   ui->lcdDisplay->setStompBFXType(type);
 }
 
-void MainControlFrame::onStompCType(::FXType type)
+void BrowserFrame::onStompCType(::FXType type)
 {
   ui->lcdDisplay->setStompCFXType(type);
 }
 
-void MainControlFrame::onStompDType(::FXType type)
+void BrowserFrame::onStompDType(::FXType type)
 {
   ui->lcdDisplay->setStompDFXType(type);
 }
 
-void MainControlFrame::onStompXType(::FXType type)
+void BrowserFrame::onStompXType(::FXType type)
 {
   ui->lcdDisplay->setStompXFXType(type);
 }
 
-void MainControlFrame::onStompModType(::FXType type)
+void BrowserFrame::onStompModType(::FXType type)
 {
   ui->lcdDisplay->setStompModFXType(type);
 }
@@ -117,7 +117,7 @@ void MainControlFrame::onStompModType(::FXType type)
 // delay
 // ui => kpa
 // kpa => ui
-void MainControlFrame::onDelayOnOff(bool onOff)
+void BrowserFrame::onDelayOnOff(bool onOff)
 {
   ui->lcdDisplay->setDelayEnabled(onOff);
 }
@@ -126,7 +126,7 @@ void MainControlFrame::onDelayOnOff(bool onOff)
 // reverb
 // ui => kpa
 // kpa => ui
-void MainControlFrame::onReverbOnOff(bool onOff)
+void BrowserFrame::onReverbOnOff(bool onOff)
 {
   ui->lcdDisplay->setReverbEnabled(onOff);
 }
@@ -134,66 +134,66 @@ void MainControlFrame::onReverbOnOff(bool onOff)
 
 // eq
 // ui => kpa
-void MainControlFrame::on_eqBassDial_valueChanged(double value)
+void BrowserFrame::on_eqBassDial_valueChanged(double value)
 {
   mEq.applyBass(value);
 }
 
-void MainControlFrame::on_eqBassDial_valueChanged(const QString &value)
+void BrowserFrame::on_eqBassDial_valueChanged(const QString &value)
 {
   ui->lcdDisplay->setBrowserModeBassValueText(value);
 }
 
-void MainControlFrame::on_eqMiddleDial_valueChanged(double value)
+void BrowserFrame::on_eqMiddleDial_valueChanged(double value)
 {
   mEq.applyMiddle(value);
 }
 
-void MainControlFrame::on_eqMiddleDial_valueChanged(const QString &value)
+void BrowserFrame::on_eqMiddleDial_valueChanged(const QString &value)
 {
   ui->lcdDisplay->setBrowserModeMiddleValueText(value);
 }
 
-void MainControlFrame::on_eqTrebleDial_valueChanged(double value)
+void BrowserFrame::on_eqTrebleDial_valueChanged(double value)
 {
   mEq.applyTreble(value);
 }
 
-void MainControlFrame::on_eqTrebleDial_valueChanged(const QString &value)
+void BrowserFrame::on_eqTrebleDial_valueChanged(const QString &value)
 {
   ui->lcdDisplay->setBrowserModeTrebleValueText(value);
 }
 
-void MainControlFrame::on_eqPresenceDial_valueChanged(double value)
+void BrowserFrame::on_eqPresenceDial_valueChanged(double value)
 {
   mEq.applyPresence(value);
 }
 
-void MainControlFrame::on_eqPresenceDial_valueChanged(const QString &value)
+void BrowserFrame::on_eqPresenceDial_valueChanged(const QString &value)
 {
   ui->lcdDisplay->setBrowserModePresenceValueText(value);
 }
 
 // kpa => ui
-void MainControlFrame::onEqBass(double bass)
+void BrowserFrame::onEqBass(double bass)
 {
   ui->eqBassDial->setValue(bass);
   update();
 }
 
-void MainControlFrame::onEqMiddle(double middle)
+void BrowserFrame::onEqMiddle(double middle)
 {
   ui->eqMiddleDial->setValue(middle);
   update();
 }
 
-void MainControlFrame::onEqTreble(double treble)
+void BrowserFrame::onEqTreble(double treble)
 {
   ui->eqTrebleDial->setValue(treble);
   update();
 }
 
-void MainControlFrame::onEqPresence(double presence)
+void BrowserFrame::onEqPresence(double presence)
 {
   ui->eqPresenceDial->setValue(presence);
   update();
@@ -203,17 +203,17 @@ void MainControlFrame::onEqPresence(double presence)
 // profile
 // ui => kpa
 // kpa => ui
-void MainControlFrame::onRigName(const QString& rigName)
+void BrowserFrame::onRigName(const QString& rigName)
 {
   ui->lcdDisplay->setBrowserModeRigName(rigName);
 }
 
-void MainControlFrame::onRigAuthor(const QString& rigAuthor)
+void BrowserFrame::onRigAuthor(const QString& rigAuthor)
 {
   ui->lcdDisplay->setBrowserModeRigAuthor(rigAuthor);
 }
 
-void MainControlFrame::onAmpName(const QString& ampName)
+void BrowserFrame::onAmpName(const QString& ampName)
 {
   ui->lcdDisplay->setBrowserModeAmpName(ampName);
 }
@@ -221,13 +221,13 @@ void MainControlFrame::onAmpName(const QString& ampName)
 
 // extParam
 // ui => kpa
-void MainControlFrame::on_browseModeDial_valueChanged(int view)
+void BrowserFrame::on_browseModeDial_valueChanged(int view)
 {
   mExtParam.applyBrowserView(view);
 }
 
 // kpa => ui
-void MainControlFrame::onBrowserView(unsigned int view)
+void BrowserFrame::onBrowserView(unsigned int view)
 {
   ui->lcdDisplay->setBrowserModeView(view);
 }

@@ -61,7 +61,7 @@ bool QToasterBrowserLCDPlugin::isContainer() const
 
 QString QToasterBrowserLCDPlugin::domXml() const
 {
-  return QLatin1String("<widget class=\"QToasterLCD\" name=\"toasterBrowserLCD\">\n</widget>\n");
+  return QLatin1String("<widget class=\"QToasterBrowserLCD\" name=\"toasterBrowserLCD\">\n</widget>\n");
 }
 
 QString QToasterBrowserLCDPlugin::includeFile() const

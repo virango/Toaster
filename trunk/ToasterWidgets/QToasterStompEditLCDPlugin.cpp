@@ -61,7 +61,7 @@ bool QToasterStompEditLCDPlugin::isContainer() const
 
 QString QToasterStompEditLCDPlugin::domXml() const
 {
-  return QLatin1String("<widget class=\"QToasterLCD\" name=\"toasterStompEditLCD\">\n</widget>\n");
+  return QLatin1String("<widget class=\"QToasterStompEditLCD\" name=\"toasterStompEditLCD\">\n</widget>\n");
 }
 
 QString QToasterStompEditLCDPlugin::includeFile() const

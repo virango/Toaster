@@ -2,6 +2,7 @@
 #include "qtoasterenumdialplugin.h"
 #include "QToasterBrowserLCDPlugin.h"
 #include "QToasterStompEditLCDPlugin.h"
+#include "QToasterTunerLCDPlugin.h"
 //#include "qbigdialplugin.h"
 //#include "qsmalldialplugin.h"
 #include "qmulticolorledplugin.h"
@@ -17,6 +18,7 @@ QToasterWidgets::QToasterWidgets(QObject *parent)
   m_widgets.append(new QToasterEnumDialPlugin(this));
   m_widgets.append(new QToasterBrowserLCDPlugin(this));
   m_widgets.append(new QToasterStompEditLCDPlugin(this));
+  m_widgets.append(new QToasterTunerLCDPlugin(this));
 //m_widgets.append(new QBigDialPlugin(this));
 //  m_widgets.append(new QSmallDialPlugin(this));
   m_widgets.append(new QMultiColorLedPlugin(this));

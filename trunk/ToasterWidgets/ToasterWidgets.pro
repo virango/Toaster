@@ -26,7 +26,8 @@ HEADERS     = \
     ToasterWidgetsLib.h \
     CtxMenuProvider.h \
     QToasterBrowserLCDPlugin.h \
-    QToasterStompEditLCDPlugin.h
+    QToasterStompEditLCDPlugin.h \
+    QToasterTunerLCDPlugin.h
 SOURCES     = \
 #    qbigdialplugin.cpp \
 #    qsmalldialplugin.cpp \
@@ -38,7 +39,8 @@ SOURCES     = \
     qtoasterenumdialplugin.cpp \
     qtoasterbuttonplugin.cpp \
     QToasterBrowserLCDPlugin.cpp \
-    QToasterStompEditLCDPlugin.cpp
+    QToasterStompEditLCDPlugin.cpp \
+    QToasterTunerLCDPlugin.cpp
 RESOURCES   = icons.qrc \
     skins.qrc \
     fonts.qrc
