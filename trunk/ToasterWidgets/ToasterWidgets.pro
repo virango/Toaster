@@ -22,7 +22,6 @@ HEADERS     = \
     qtoasterdialplugin.h \
     qtoasterenumdialplugin.h \
     qtoasterbuttonplugin.h \
-    ../Toaster/Commons.h \
     ToasterWidgetsLib.h \
     CtxMenuProvider.h \
     QToasterBrowserLCDPlugin.h \
