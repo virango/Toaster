@@ -18,6 +18,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = toaster
 TEMPLATE = app
 
+VERSION = 0.1
+QMAKE_TARGET_COMPANY = Thomas Langer
+QMAKE_TARGET_PRODUCT = Toaster
+QMAKE_TARGET_DESCRIPTION = Editor and remote control for Kemper profiling amplifier
+QMAKE_TARGET_COPYRIGHT = copyright@Thomas Langer
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
 CONFIG(debug, debug|release) {
     DESTDIR = $$OUT_PWD/debug
 } else {
