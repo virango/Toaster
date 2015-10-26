@@ -21,8 +21,8 @@ void DebugMidi::consumeSysExMsg(ByteArray* msg)
     unsigned int rawVal = -1;
     const char fct = msg->at(6);
 
-    //if(fct == 0x7e)
-    //  return;
+    if(fct == 0x7e)
+      return;
 
     unsigned short ap = msg->at(8);
     unsigned short param = msg->at(9);
