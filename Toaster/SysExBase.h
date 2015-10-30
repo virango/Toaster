@@ -1,7 +1,7 @@
 #ifndef SYSEXBASE_H
 #define SYSEXBASE_H
 #include "Commons.h"
-#include "VolumeTables.h"
+#include "LookUpTables.h"
 #include <QString>
 
 class SysExBase
@@ -150,12 +150,26 @@ protected:
 
   double raw2Volume(unsigned short rawVal)
   {
-    return VolumeTables::raw2dB(rawVal);
+    return LookUpTables::raw2dB(rawVal);
   }
 
   unsigned short volume2Raw(double val)
   {
-    return VolumeTables::dB2Raw(val);
+    return LookUpTables::dB2Raw(val);
+  }
+
+  QString raw2Note(unsigned short rawVal)
+  {
+    if(rawVal >= 12 )
+      return LookUpTables::raw2Note(rawVal%12);
+    return "_";
+  }
+
+  QString raw2Octave(unsigned short rawVal)
+  {
+    if(rawVal > 12)
+      return QString::number((rawVal/12) - 1);
+    return "";
   }
 };
 

@@ -40,9 +40,13 @@ public:
 
 public slots:
   void setColor(QToasterTunerLCD::Color color);
+  void setIndexPosition(int position);
+  void setNote(QString note);
+  void setOctave(QString octave);
 
 protected:
   void createSkin();
+  void createIndexSkin();
   void paintEvent(QPaintEvent*);
   void contextMenuEvent(QContextMenuEvent * cme);
 
@@ -51,6 +55,8 @@ private:
 
   QList<QPixmap> mSkinPixmaps;
   Color mColor;
+
+  QList<QPixmap> mIndexPixmaps;
 
   ICtxMenuProvider* mpCtxMenuProvider;
 };

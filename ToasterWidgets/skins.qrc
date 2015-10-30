@@ -12,5 +12,6 @@
         <file>resources/LEDRingBi.png</file>
         <file>resources/ChickenHeadBlack.png</file>
         <file>resources/LCD.png</file>
+        <file>resources/Tuner.png</file>
     </qresource>
 </RCC>

@@ -65,7 +65,6 @@ SOURCES += main.cpp\
     StompCtxMenu.cpp \
     SettingsDialog.cpp \
     Settings.cpp \
-    VolumeTables.cpp \
     ProfileMidi.cpp \
     Profile.cpp \
     ExtParamMidi.cpp \
@@ -73,7 +72,13 @@ SOURCES += main.cpp\
     StompEditorFrame.cpp \
     BrowserFrame.cpp \
     TunerFrame.cpp \
-    WahWahFrame.cpp
+    WahWahFrame.cpp \
+    DummyStompFrame.cpp \
+    TunerNoteMidi.cpp \
+    TunerNote.cpp \
+    LookUpTables.cpp \
+    TunerIndex.cpp \
+    TunerIndexMidi.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -103,7 +108,6 @@ HEADERS  += ToasterWindow.h \
     StompCtxMenu.h \
     SettingsDialog.h \
     Settings.h \
-    VolumeTables.h \
     ProfileMidi.h \
     Profile.h \
     ExtParamMidi.h \
@@ -111,7 +115,13 @@ HEADERS  += ToasterWindow.h \
     StompEditorFrame.h \
     BrowserFrame.h \
     TunerFrame.h \
-    WahWahFrame.h
+    WahWahFrame.h \
+    DummyStompFrame.h \
+    TunerNoteMidi.h \
+    TunerNote.h \
+    LookUpTables.h \
+    TunerIndex.h \
+    TunerIndexMidi.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -120,7 +130,8 @@ FORMS    += \
     BrowserFrame.ui \
     StompEditorFrame.ui \
     TunerFrame.ui \
-    WahWahFrame.ui
+    WahWahFrame.ui \
+    DummyStompFrame.ui
 
 RESOURCES += \
     resources.qrc

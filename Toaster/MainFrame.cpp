@@ -24,7 +24,7 @@ MainFrame::MainFrame(QWidget *parent)
 
   // notifications
   // stomps
-  qRegisterMetaType<::FXType>("::FXType");
+  //qRegisterMetaType<::FXType>("::FXType");
   connect(&mStompA, SIGNAL(onOffReceived(bool)), this, SLOT(onStompAOnOff(bool)));
   connect(&mStompB, SIGNAL(onOffReceived(bool)), this, SLOT(onStompBOnOff(bool)));
   connect(&mStompC, SIGNAL(onOffReceived(bool)), this, SLOT(onStompCOnOff(bool)));
@@ -160,9 +160,12 @@ void MainFrame::onStompAOnOff(bool onOff)
 
 void MainFrame::onStompBOnOff(bool onOff)
 {
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->stompBButton->setState(state);
-  update();
+  if(mOperationMode != StompEdit)
+  {
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+    ui->stompBButton->setState(state);
+    update();
+  }
 }
 
 void MainFrame::onStompCOnOff(bool onOff)
@@ -230,7 +233,7 @@ void MainFrame::on_reverbButton_clicked(QToasterButton& bt, bool longClick)
 {
   if(longClick)
   {
-    toggleOperationMode(StompEdit, &bt);
+    //toggleOperationMode(StompEdit, &bt);
   }
   else
   {
@@ -274,7 +277,7 @@ void MainFrame::on_delayButton_clicked(QToasterButton& bt, bool longClick)
 {
   if(longClick)
   {
-    toggleOperationMode(StompEdit, &bt);
+    //toggleOperationMode(StompEdit, &bt);
   }
   else
   {
@@ -319,9 +322,9 @@ void MainFrame::onDelayMix(double mix)
 // ui => kpa
 void MainFrame::on_amplifierButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(longClick)
-    toggleOperationMode(AmpEdit, &bt);
-  else
+  //if(longClick)
+  //  toggleOperationMode(AmpEdit, &bt);
+  //else
     mAmp.applyOnOff(bt.toggleOnOff());
   update();
 }
@@ -350,9 +353,9 @@ void MainFrame::onAmpGain(double val)
 // ui => kpa
 void MainFrame::on_eqButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(longClick)
-    toggleOperationMode(EQEdit, &bt);
-  else
+  //if(longClick)
+  //  toggleOperationMode(EQEdit, &bt);
+  //else
     mEq.applyOnOff(bt.toggleOnOff());
   update();
 }
@@ -370,9 +373,9 @@ void MainFrame::onEqOnOff(bool onOff)
 // ui => kpa
 void MainFrame::on_cabinetButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(longClick)
-    toggleOperationMode(CabEdit, &bt);
-  else
+  //if(longClick)
+    //toggleOperationMode(CabEdit, &bt);
+  //else
     mCab.applyOnOff(bt.toggleOnOff());
   update();
 }
@@ -461,7 +464,8 @@ void MainFrame::on_headphoneVolumeDial_valueChanged(double volume)
 void MainFrame::onGlobalOperationMode(unsigned short opMode)
 {
   ui->chickenHeadDial->setState((QChickenHeadDial::State)opMode);
-  ui->modeFrames->setCurrentIndex(opMode-1);
+  if(mOperationMode != StompEdit)
+    ui->modeFrames->setCurrentIndex(opMode-1);
   update();
 }
 
@@ -552,7 +556,7 @@ void MainFrame::handleStompButtonClick(Stomp& stomp, QToasterButton& stompBt, bo
 {
   if(longClick)
   {
-    toggleOperationMode(StompEdit, &stompBt);
+    toggleOperationMode(stomp, StompEdit, &stompBt);
   }
   else
   {
@@ -561,7 +565,7 @@ void MainFrame::handleStompButtonClick(Stomp& stomp, QToasterButton& stompBt, bo
   update();
 }
 
-void MainFrame::toggleOperationMode(OperationMode opMode, QToasterButton* bt)
+void MainFrame::toggleOperationMode(Stomp& stomp, OperationMode opMode, QToasterButton* bt)
 {
   mOperationMode = opMode;
   if(bt != NULL)
@@ -573,11 +577,15 @@ void MainFrame::toggleOperationMode(OperationMode opMode, QToasterButton* bt)
     {
       bt->resetToOnOffState();
       mEditModeButton = NULL;
+      ui->modeFrames->setCurrentIndex(1); // todo
+      ui->stompEditor->detach();
     }
     else
     {
       bt->setState(QToasterButton::Blinking);
       mEditModeButton = bt;
+      ui->modeFrames->setCurrentIndex(4);
+      ui->stompEditor->attach(stomp);
     }
   }
   else if(mEditModeButton != NULL)

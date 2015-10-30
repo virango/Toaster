@@ -325,6 +325,86 @@ void QToasterStompEditLCD::setValue16Title(QString title)
     ui->val16->setText("");
 }
 
+void QToasterStompEditLCD::setValue1(QString value)
+{
+  ui->val01->setText(value);
+}
+
+void QToasterStompEditLCD::setValue2(QString value)
+{
+  ui->val02->setText(value);
+}
+
+void QToasterStompEditLCD::setValue3(QString value)
+{
+  ui->val03->setText(value);
+}
+
+void QToasterStompEditLCD::setValue4(QString value)
+{
+  ui->val04->setText(value);
+}
+
+void QToasterStompEditLCD::setValue5(QString value)
+{
+  ui->val05->setText(value);
+}
+
+void QToasterStompEditLCD::setValue6(QString value)
+{
+  ui->val06->setText(value);
+}
+
+void QToasterStompEditLCD::setValue7(QString value)
+{
+  ui->val07->setText(value);
+}
+
+void QToasterStompEditLCD::setValue8(QString value)
+{
+  ui->val08->setText(value);
+}
+
+void QToasterStompEditLCD::setValue9(QString value)
+{
+  ui->val09->setText(value);
+}
+
+void QToasterStompEditLCD::setValue10(QString value)
+{
+  ui->val10->setText(value);
+}
+
+void QToasterStompEditLCD::setValue11(QString value)
+{
+  ui->val11->setText(value);
+}
+
+void QToasterStompEditLCD::setValue12(QString value)
+{
+  ui->val12->setText(value);
+}
+
+void QToasterStompEditLCD::setValue13(QString value)
+{
+  ui->val13->setText(value);
+}
+
+void QToasterStompEditLCD::setValue14(QString value)
+{
+  ui->val14->setText(value);
+}
+
+void QToasterStompEditLCD::setValue15(QString value)
+{
+  ui->val15->setText(value);
+}
+
+void QToasterStompEditLCD::setValue16(QString value)
+{
+  ui->val16->setText(value);
+}
+
 void QToasterStompEditLCD::setStompAFXType(FXType fxType)
 {
   ui->stompAEdit->setText(sFXType2ShortNameMap[fxType]);

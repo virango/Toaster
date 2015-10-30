@@ -16,14 +16,20 @@
   <property name="currentIndex">
    <number>0</number>
   </property>
+  <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
-  <widget class="QWidget" name="page"/>
  </widget>
  <customwidgets>
   <customwidget>
    <class>WahWahFrame</class>
    <extends>QWidget</extends>
    <header>WahWahFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DummyStompFrame</class>
+   <extends>QWidget</extends>
+   <header>DummyStompFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

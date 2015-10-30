@@ -89,6 +89,113 @@ void StompMidi::consumeSysExMsg(ByteArray* msg)
       midiOnOffReceived(rawVal);
     else if(param == sType[0])
       midiTypeReceived(rawVal);
+    else if(param == sMix[0])
+      midiMixReceived(rawVal);
+    else if(param == sVolume[0])
+      midiVolumeReceived(rawVal);
+    else if(param == sStereo[0])
+      midiStereoReceived(rawVal);
+    else if(param == sWahManual[0])
+      midiWahManualReceived(rawVal);
+    else if(param == sWahPeak[0])
+      midiWahPeakReceived(rawVal);
+    else if(param == sWahRange[0])
+      midiWahRangeReceived(rawVal);
+    else if(param == sWahPedalMode[0])
+      midiWahPedalModeReceived(rawVal);
+    else if(param == sWahTouchAttack[0])
+      midiWahTouchAttackReceived(rawVal);
+    else if(param == sWahTouchRelease[0])
+      midiWahTouchReleaseReceived(rawVal);
+    else if(param == sWahTouchBoost[0])
+      midiWahTouchBoostReceived(rawVal);
+    else if(param == sDistortionShaperDrive[0])
+      midiDistortionShaperDriveReceived(rawVal);
+    else if(param == sDistortionBoosterTone[0])
+      midiDistortionBoosterToneReceived(rawVal);
+    else if(param == sCompressorGateIntensity[0])
+      midiCompressorGateIntensityReceived(rawVal);
+    else if(param == sCompressorAttack[0])
+      midiCompressorAttackReceived(rawVal);
+    else if(param == sModulationRate[0])
+      midiModulationRateReceived(rawVal);
+    else if(param == sModulationDepth[0])
+      midiModulationDepthReceived(rawVal);
+    else if(param == sModulationFeedback[0])
+      midiModulationFeedbackReceived(rawVal);
+    else if(param == sModulationCrossover[0])
+      midiModulationCrossoverReceived(rawVal);
+    else if(param == sModulationHyperChorusAmount[0])
+      midiModulationHyperChorusAmountReceived(rawVal);
+    else if(param == sModulationManual[0])
+      midiModulationManualReceived(rawVal);
+    else if(param == sModulationPhaserPeakSpread[0])
+      midiModulationPhaserPeakSpreadReceived(rawVal);
+    else if(param == sModulationPhaserStages[0])
+      midiModulationPhaserStagesReceived(rawVal);
+    else if(param == sRotarySpeed[0])
+      midiRotarySpeedReceived(rawVal);
+    else if(param == sRotaryDistance[0])
+      midiRotaryDistanceReceived(rawVal);
+    else if(param == sRotaryBalance[0])
+      midiRotaryBalanceReceived(rawVal);
+    else if(param == sCompressorSquash[0])
+      midiCompressorSquashReceived(rawVal);
+    else if(param == sGraphicEQBand1[0])
+      midiGraphicEQBand1Received(rawVal);
+    else if(param == sGraphicEQBand2[0])
+      midiGraphicEQBand2Received(rawVal);
+    else if(param == sGraphicEQBand3[0])
+      midiGraphicEQBand3Received(rawVal);
+    else if(param == sGraphicEQBand4[0])
+      midiGraphicEQBand4Received(rawVal);
+    else if(param == sGraphicEQBand5[0])
+      midiGraphicEQBand5Received(rawVal);
+    else if(param == sGraphicEQBand6[0])
+      midiGraphicEQBand6Received(rawVal);
+    else if(param == sGraphicEQBand7[0])
+      midiGraphicEQBand7Received(rawVal);
+    else if(param == sGraphicEQBand8[0])
+      midiGraphicEQBand8Received(rawVal);
+    else if(param == sParametricEQLowGain[0])
+      midiParametricEQLowGainReceived(rawVal);
+    else if(param == sParametricEQLowFrequency[0])
+      midiParametricEQLowFrequencyReceived(rawVal);
+    else if(param == sParametricEQHighGain[0])
+      midiParametricEQHighGainReceived(rawVal);
+    else if(param == sParametricEQHighFrequency[0])
+      midiParametricEQHighFrequencyReceived(rawVal);
+    else if(param == sParametricEQPeakGain[0])
+      midiParametricEQPeakGainReceived(rawVal);
+    else if(param == sParametricEQPeakFrequency[0])
+      midiParametricEQPeakFrequencyReceived(rawVal);
+    else if(param == sParametricEQPeakQFactor[0])
+      midiParametricEQPeakQFactorReceived(rawVal);
+    else if(param == sParametricEQPeakGain2[0])
+      midiParametricEQPeakGain2Received(rawVal);
+    else if(param == sParametricEQPeakFrequency2[0])
+      midiParametricEQPeakFrequency2Received(rawVal);
+    else if(param == sParametricEQPeakQFactor2[0])
+      midiParametricEQPeakQFactor2Received(rawVal);
+    else if(param == sWahPeakRange[0])
+      midiWahPeakRangeReceived(rawVal);
+    else if(param == sDucking[0])
+      midiDuckingReceived(rawVal);
+    else if(param == sVoiceMix[0])
+      midiVoiceMixReceived(rawVal);
+    else if(param == sVoice1Pitch[0])
+      midiVoice1PitchReceived(rawVal);
+    else if(param == sVoice2Pitch[0])
+      midiVoice2PitchReceived(rawVal);
+    else if(param == sDetune[0])
+      midiDetuneReceived(rawVal);
+    else if(param == sSmoothChords[0])
+      midiSmoothChordsReceived(rawVal);
+    else if(param == sPureTuning[0])
+      midiPureTuningReceived(rawVal);
+    else if(param == sKey[0])
+      midiKeyReceived(rawVal);
+
   }
 }
 

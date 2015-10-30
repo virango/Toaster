@@ -156,7 +156,7 @@ private:
 
   // utility methods
   void handleStompButtonClick(Stomp& stomp, QToasterButton& stompBt, bool longClick);
-  void toggleOperationMode(OperationMode opMode, QToasterButton* bt);
+  void toggleOperationMode(Stomp& stomp, OperationMode opMode, QToasterButton* bt);
 
 private:
   Ui::MainFrame *ui;

@@ -5,7 +5,6 @@ Stomp::Stomp(StompInstance instance)
   , StompMidi(instance)
   , mFXType(None)
 {
-
 }
 
 Stomp::~Stomp()
@@ -33,12 +32,12 @@ void Stomp::applyType(FXType type)
 
 void Stomp::applyMix(double mix)
 {
-  //midiApplyMix(phys2Raw(mix, , ));
+  midiApplyMix(phys2Raw(mix, 100, 0));
 }
 
 void Stomp::applyVolume(double volume)
 {
-  //midiApplyVolume(phys2Raw(volume, , ));
+  midiApplyVolume(phys2Raw(volume, 10, -5));
 }
 
 void Stomp::applyStereo(double stereo)
@@ -48,37 +47,37 @@ void Stomp::applyStereo(double stereo)
 
 void Stomp::applyWahManual(double wahManual)
 {
-  //midiApplyWahManual(phys2Raw(wahManual, , ));
+  midiApplyWahManual(phys2Raw(wahManual, 10, 0));
 }
 
 void Stomp::applyWahPeak(double wahPeak)
 {
-  //midiApplyWahPeak(phys2Raw(wahPeak, , ));
+  midiApplyWahPeak(phys2Raw(wahPeak, 10, 0));
 }
 
 void Stomp::applyWahRange(double wahRange)
 {
-  //midiApplyWahRange(phys2Raw(wahRange, , ));
+  midiApplyWahRange(phys2Raw(wahRange, 200, -100));
 }
 
-void Stomp::applyWahPedalMode(WahPedalMode wahPedalMode)
+void Stomp::applyWahPedalMode(::WahPedalMode wahPedalMode)
 {
   midiApplyWahPedalMode((unsigned short)wahPedalMode);
 }
 
 void Stomp::applyWahTouchAttack(double wahTouchAttack)
 {
-  //midiApplyWahTouchAttack(phys2Raw(wahTouchAttack, , ));
+  midiApplyWahTouchAttack(phys2Raw(wahTouchAttack, 10, 0));
 }
 
 void Stomp::applyWahTouchRelease(double wahTouchRelease)
 {
-  //midiApplyWahTouchRelease(phys2Raw(wahTouchRelease, , ));
+  midiApplyWahTouchRelease(phys2Raw(wahTouchRelease, 10, 0));
 }
 
 void Stomp::applyWahTouchBoost(double wahTouchBoost)
 {
-  //midiApplyWahTouchBoost(phys2Raw(wahTouchBoost, , ));
+  midiApplyWahTouchBoost(phys2Raw(wahTouchBoost, 10, 0));
 }
 
 void Stomp::applyDistortionShaperDrive(double distortionShaperDrive)
@@ -253,12 +252,12 @@ void Stomp::applyParametricEQPeakQFactor2(double factor)
 
 void Stomp::applyWahPeakRange(double wahPeakRange)
 {
-  //midiApplyWahPeakRange(phys2Raw(wahPeakRange, , ));
+  midiApplyWahPeakRange(phys2Raw(wahPeakRange, 200, -100));
 }
 
 void Stomp::applyDucking(double ducking)
 {
-  //midiApplyDucking(phys2Raw(ducking, , ));
+  midiApplyDucking(phys2Raw(ducking, 10, -5));
 }
 
 void Stomp::applyVoiceMix(double voiceMix)
@@ -310,12 +309,12 @@ void Stomp::midiOnOffReceived(unsigned short rawVal)
 
 void Stomp::midiMixReceived(unsigned short rawVal)
 {
-  //emit mixReceived(raw2Phys(rawVal, , ));
+  emit mixReceived(raw2Phys(rawVal, 100, 0));
 }
 
 void Stomp::midiVolumeReceived(unsigned short rawVal)
 {
-  //emit volumeReceived(raw2Phys(rawVal, , ));
+  emit volumeReceived(raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiStereoReceived(unsigned short rawVal)
@@ -325,37 +324,37 @@ void Stomp::midiStereoReceived(unsigned short rawVal)
 
 void Stomp::midiWahManualReceived(unsigned short rawVal)
 {
-  //emit wahManualReceived(raw2Phys(rawVal, , ));
+  emit wahManualReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiWahPeakReceived(unsigned short rawVal)
 {
-  //emit wahPeakReceived(raw2Phys(rawVal, , ));
+  emit wahPeakReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiWahRangeReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit wahRangeReceived(raw2Phys(rawVal, 200, -100));
 }
 
 void Stomp::midiWahPedalModeReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit wahPedalModeReceived((WahPedalMode)rawVal);
 }
 
 void Stomp::midiWahTouchAttackReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit wahTouchAttackReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiWahTouchReleaseReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit wahTouchReleaseReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiWahTouchBoostReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit wahTouchBoostReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiDistortionShaperDriveReceived(unsigned short rawVal)
@@ -530,12 +529,12 @@ void Stomp::midiParametricEQPeakQFactor2Received(unsigned short rawVal)
 
 void Stomp::midiWahPeakRangeReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit wahPeakRangeReceived(raw2Phys(rawVal, 200, -100));
 }
 
 void Stomp::midiDuckingReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit duckingReceived(raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiVoiceMixReceived(unsigned short rawVal)
