@@ -214,7 +214,7 @@ void GlobalMidi::midiRequestOperationMode()
 
 void GlobalMidi::midiApplyOperationMode(unsigned short rawVal)
 {
-  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sOperationMode, rawVal));
+
   if(rawVal == 1)
   {
     ByteArray cc;
@@ -230,6 +230,7 @@ void GlobalMidi::midiApplyOperationMode(unsigned short rawVal)
     cc.push_back(31);
     cc.push_back(0);
     Midi::get().sendCmd(cc);
+    Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sOperationMode, rawVal));
   }
 
 }

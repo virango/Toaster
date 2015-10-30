@@ -28,6 +28,9 @@ ToasterWindow::ToasterWindow(QWidget *parent) :
     timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(on_actionRequest_triggered()));
     timer->start(20);
+
+    qRegisterMetaType<::FXType>("::FXType");
+    qRegisterMetaType<::WahPedalMode>("::WahPedalMode");
 }
 
 ToasterWindow::~ToasterWindow()

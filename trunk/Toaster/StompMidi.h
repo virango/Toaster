@@ -6,6 +6,9 @@
 
 class StompMidi : public SysExBase, public SysExMsgDispatcher::ISysExConsumer
 {
+public:
+  StompInstance getInstance() { return mInstance; }
+
 protected:
   // address pages
   BYTEARRAYDECL(AddressPageA)

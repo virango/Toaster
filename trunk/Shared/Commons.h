@@ -90,6 +90,24 @@ enum FXType
 
 Q_DECLARE_METATYPE(::FXType)
 
+enum WahPedalMode
+{
+  Off,
+  Touch,
+  On,
+  BypassAtStop,
+  BypassAtHeel,
+  BypassAtToe
+};
+
+Q_DECLARE_METATYPE(::WahPedalMode)
+
+enum RotarySpeed
+{
+  Slow,
+  Fast
+};
+
 
 enum StompInstance
 {

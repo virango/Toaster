@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "StompMidi.h"
+#include "Commons.h"
 
 class Stomp : public QObject, public StompMidi
 {
@@ -11,27 +12,122 @@ public:
   Stomp(StompInstance instance);
   ~Stomp();
 
-  enum WahPedalMode
-  {
-    Off,
-    Touch,
-    On,
-    BypassAtStop,
-    BypassAtHeel,
-    BypassAtToe
-  };
-
-  enum RotarySpeed
-  {
-    Slow,
-    Fast
-  };
 
   void requestAllValues();
+
+  void requestType() { midiRequestType(); }
+  void requestOnOff() { midiRequestOnOff(); }
+  void requestMix() { midiRequestMix(); }
+  void requestVolume() { midiRequestVolume(); }
+  void requestStereo() { midiRequestStereo(); }
+  void requestWahManual() { midiRequestWahManual(); }
+  void requestWahPeak() { midiRequestWahPeak(); }
+  void requestWahRange() { midiRequestWahRange(); }
+  void requestWahPedalMode() { midiRequestWahPedalMode(); }
+  void requestWahTouchAttack() { midiRequestWahTouchAttack(); }
+  void requestWahTouchRelease() { midiRequestWahTouchRelease(); }
+  void requestWahTouchBoost() { midiRequestWahTouchBoost(); }
+  void requestDistortionShaperDrive() { midiRequestDistortionShaperDrive(); }
+  void requestDistortionBoosterTone() { midiRequestDistortionBoosterTone(); }
+  void requestCompressorGateIntensity() { midiRequestCompressorGateIntensity(); }
+  void requestCompressorAttack() { midiRequestCompressorAttack(); }
+  void requestModulationRate() { midiRequestModulationRate(); }
+  void requestModulationDepth() { midiRequestModulationDepth(); }
+  void requestModulationFeedback() { midiRequestModulationFeedback(); }
+  void requestModulationCrossover() { midiRequestModulationCrossover(); }
+  void requestModulationHyperChorusAmount() { midiRequestModulationHyperChorusAmount(); }
+  void requestModulationManual() { midiRequestModulationManual(); }
+  void requestModulationPhaserPeakSpread() { midiRequestModulationPhaserPeakSpread(); }
+  void requestModulationPhaserStages() { midiRequestModulationPhaserStages(); }
+  void requestRotarySpeed() { midiRequestRotarySpeed(); }
+  void requestRotaryDistance() { midiRequestRotaryDistance(); }
+  void requestRotaryBalance() { midiRequestRotaryBalance(); }
+  void requestCompressorSquash() { midiRequestCompressorSquash(); }
+  void requestGraphicEQBand1() { midiRequestGraphicEQBand1(); }
+  void requestGraphicEQBand2() { midiRequestGraphicEQBand2(); }
+  void requestGraphicEQBand3() { midiRequestGraphicEQBand3(); }
+  void requestGraphicEQBand4() { midiRequestGraphicEQBand4(); }
+  void requestGraphicEQBand5() { midiRequestGraphicEQBand5(); }
+  void requestGraphicEQBand6() { midiRequestGraphicEQBand6(); }
+  void requestGraphicEQBand7() { midiRequestGraphicEQBand7(); }
+  void requestGraphicEQBand8() { midiRequestGraphicEQBand8(); }
+  void requestParametricEQLowGain() { midiRequestParametricEQLowGain(); }
+  void requestParametricEQLowFrequency() { midiRequestParametricEQLowFrequency(); }
+  void requestParametricEQHighGain() { midiRequestParametricEQHighGain(); }
+  void requestParametricEQHighFrequency() { midiRequestParametricEQHighFrequency(); }
+  void requestParametricEQPeakGain() { midiRequestParametricEQPeakGain(); }
+  void requestParametricEQPeakFrequency() { midiRequestParametricEQPeakFrequency(); }
+  void requestParametricEQPeakQFactor() { midiRequestParametricEQPeakQFactor(); }
+  void requestParametricEQPeakGain2() { midiRequestParametricEQPeakGain2(); }
+  void requestParametricEQPeakFrequency2() { midiRequestParametricEQPeakFrequency2(); }
+  void requestParametricEQPeakQFactor2() { midiRequestParametricEQPeakQFactor2(); }
+  void requestWahPeakRange() { midiRequestWahPeakRange(); }
+  void requestDucking() { midiRequestDucking(); }
+  void requestVoiceMix() { midiRequestVoiceMix(); }
+  void requestVoice1Pitch() { midiRequestVoice1Pitch(); }
+  void requestVoice2Pitch() { midiRequestVoice2Pitch(); }
+  void requestDetune() { midiRequestDetune(); }
+  void requestSmoothChords() { midiRequestSmoothChords(); }
+  void requestPureTuning() { midiRequestPureTuning(); }
+  void requestKey() { midiRequestKey(); }
 
 signals:
   void onOffReceived(bool onOff);
   void typeReceived(::FXType type);
+  void mixReceived(double mix);
+  void volumeReceived(double volume);
+  void stereoReceived(unsigned short rawVal);
+  void wahManualReceived(double wahManual);
+  void wahPeakReceived(double wahPeak);
+  void wahRangeReceived(double wahRange);
+  void wahPedalModeReceived(::WahPedalMode wahPedalMode);
+  void wahTouchAttackReceived(double wahTouchAttack);
+  void wahTouchReleaseReceived(double wahTouchRelease);
+  void wahTouchBoostReceived(double wahTouchBoost);
+  void distortionShaperDriveReceived(unsigned short rawVal);
+  void distortionBoosterToneReceived(unsigned short rawVal);
+  void compressorGateIntensityReceived(unsigned short rawVal);
+  void compressorAttackReceived(unsigned short rawVal);
+  void modulationRateReceived(unsigned short rawVal);
+  void modulationDepthReceived(unsigned short rawVal);
+  void modulationFeedbackReceived(unsigned short rawVal);
+  void modulationCrossoverReceived(unsigned short rawVal);
+  void modulationHyperChorusAmountReceived(unsigned short rawVal);
+  void modulationManualReceived(unsigned short rawVal);
+  void modulationPhaserPeakSpreadReceived(unsigned short rawVal);
+  void modulationPhaserStagesReceived(unsigned short rawVal);
+  void rotarySpeedReceived(unsigned short rawVal);
+  void rotaryDistanceReceived(unsigned short rawVal);
+  void rotaryBalanceReceived(unsigned short rawVal);
+  void compressorSquashReceived(unsigned short rawVal);
+  void graphicEQBand1Received(unsigned short rawVal);
+  void graphicEQBand2Received(unsigned short rawVal);
+  void graphicEQBand3Received(unsigned short rawVal);
+  void graphicEQBand4Received(unsigned short rawVal);
+  void graphicEQBand5Received(unsigned short rawVal);
+  void graphicEQBand6Received(unsigned short rawVal);
+  void graphicEQBand7Received(unsigned short rawVal);
+  void graphicEQBand8Received(unsigned short rawVal);
+  void parametricEQLowGainReceived(unsigned short rawVal);
+  void parametricEQLowFrequencyReceived(unsigned short rawVal);
+  void parametricEQHighGainReceived(unsigned short rawVal);
+  void parametricEQHighFrequencyReceived(unsigned short rawVal);
+  void parametricEQPeakGainReceived(unsigned short rawVal);
+  void parametricEQPeakFrequencyReceived(unsigned short rawVal);
+  void parametricEQPeakQFactorReceived(unsigned short rawVal);
+  void parametricEQPeakGain2Received(unsigned short rawVal);
+  void parametricEQPeakFrequency2Received(unsigned short rawVal);
+  void parametricEQPeakQFactor2Received(unsigned short rawVal);
+  void wahPeakRangeReceived(double wahPeakRange);
+  void duckingReceived(double ducking);
+  void voiceMixReceived(unsigned short rawVal);
+  void voice1PitchReceived(unsigned short rawVal);
+  void voice2PitchReceived(unsigned short rawVal);
+  void detuneReceived(unsigned short rawVal);
+  void smoothChordsReceived(unsigned short rawVal);
+  void pureTuningReceived(unsigned short rawVal);
+  void keyReceived(unsigned short rawVal);
+
   
 public slots:
   void applyOnOff(bool onOff);
@@ -42,7 +138,7 @@ public slots:
   void applyWahManual(double wahManual);
   void applyWahPeak(double wahPeak);
   void applyWahRange(double wahRange);
-  void applyWahPedalMode(WahPedalMode wahPedalMode);
+  void applyWahPedalMode(::WahPedalMode wahPedalMode);
   void applyWahTouchAttack(double wahTouchAttack);
   void applyWahTouchRelease(double wahTouchRelease);
   void applyWahTouchBoost(double wahTouchBoost);

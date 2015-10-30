@@ -13,6 +13,8 @@ QToasterTunerLCD::QToasterTunerLCD(QWidget *parent)
 {
   ui->setupUi(this);
   createSkin();
+  createIndexSkin();
+  setIndexPosition(100);
 }
 
 QToasterTunerLCD::~QToasterTunerLCD()
@@ -38,6 +40,25 @@ void QToasterTunerLCD::createSkin()
     {
       y = i * height;
       mSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+    }
+  }
+}
+
+void QToasterTunerLCD::createIndexSkin()
+{
+  QString skin = ":/resources/Tuner.png";
+  QPixmap masterPixmap(skin);
+  int width = masterPixmap.width();
+  int height = masterPixmap.height()/200;
+
+  if(!masterPixmap.isNull())
+  {
+    int x = 0;
+    int y = 0;
+    for(int i = 0; i < 200; i++)
+    {
+      y = i * height;
+      mIndexPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
     }
   }
 }
@@ -69,4 +90,23 @@ void QToasterTunerLCD::setColor(QToasterTunerLCD::Color color)
 {
   mColor = color;
   update();
+}
+
+void QToasterTunerLCD::setIndexPosition(int position)
+{
+  if(position >= 0 && position < 200)
+  {
+    ui->indexLabel->setPixmap(mIndexPixmaps[position]);
+    update();
+  }
+}
+
+void QToasterTunerLCD::setNote(QString note)
+{
+  ui->noteLabel->setText(note);
+}
+
+void QToasterTunerLCD::setOctave(QString octave)
+{
+  ui->octaveLabel->setText(octave);
 }

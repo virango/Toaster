@@ -107,6 +107,23 @@ public slots:
   void setValue14Title(QString title);
   void setValue15Title(QString title);
   void setValue16Title(QString title);
+  void setValue1(QString value);
+  void setValue2(QString value);
+  void setValue3(QString value);
+  void setValue4(QString value);
+  void setValue5(QString value);
+  void setValue6(QString value);
+  void setValue7(QString value);
+  void setValue8(QString value);
+  void setValue9(QString value);
+  void setValue10(QString value);
+  void setValue11(QString value);
+  void setValue12(QString value);
+  void setValue13(QString value);
+  void setValue14(QString value);
+  void setValue15(QString value);
+  void setValue16(QString value);
+
   void setCurrentPage(Page page);
   void setMaxPage(Page page);
 
