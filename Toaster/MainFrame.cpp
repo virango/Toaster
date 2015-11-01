@@ -18,6 +18,7 @@ MainFrame::MainFrame(QWidget *parent)
   , mStompXCtxMenu(mStompX)
   , mStompModCtxMenu(mStompMod)
   , mOperationMode(Browser)
+  , mPreviousOperationMode(Browser)
   , mEditModeButton(NULL)
 {
   ui->setupUi(this);
@@ -153,9 +154,12 @@ void MainFrame::on_stompModButton_clicked(QToasterButton& bt, bool longClick)
 // kpa => ui
 void MainFrame::onStompAOnOff(bool onOff)
 {
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->stompAButton->setState(state);
-  update();
+  if(mOperationMode != StompEdit)
+  {
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+    ui->stompAButton->setState(state);
+    update();
+  }
 }
 
 void MainFrame::onStompBOnOff(bool onOff)
@@ -170,30 +174,42 @@ void MainFrame::onStompBOnOff(bool onOff)
 
 void MainFrame::onStompCOnOff(bool onOff)
 {
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->stompCButton->setState(state);
-  update();
+  if(mOperationMode != StompEdit)
+  {
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+    ui->stompCButton->setState(state);
+    update();
+  }
 }
 
 void MainFrame::onStompDOnOff(bool onOff)
 {
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->stompDButton->setState(state);
-  update();
+  if(mOperationMode != StompEdit)
+  {
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+    ui->stompDButton->setState(state);
+    update();
+  }
 }
 
 void MainFrame::onStompXOnOff(bool onOff)
 {
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->stompXButton->setState(state);
-  update();
+  if(mOperationMode != StompEdit)
+  {
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+    ui->stompXButton->setState(state);
+    update();
+  }
 }
 
 void MainFrame::onStompModOnOff(bool onOff)
 {
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->stompModButton->setState(state);
-  update();
+  if(mOperationMode != StompEdit)
+  {
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+    ui->stompModButton->setState(state);
+    update();
+  }
 }
 
 void MainFrame::onStompAType(::FXType type)
@@ -561,13 +577,13 @@ void MainFrame::handleStompButtonClick(Stomp& stomp, QToasterButton& stompBt, bo
   else
   {
     stomp.applyOnOff(stompBt.toggleOnOff());
+    stomp.requestOnOff();
   }
   update();
 }
 
 void MainFrame::toggleOperationMode(Stomp& stomp, OperationMode opMode, QToasterButton* bt)
 {
-  mOperationMode = opMode;
   if(bt != NULL)
   {
     if(mEditModeButton != NULL && bt != mEditModeButton)
@@ -579,13 +595,15 @@ void MainFrame::toggleOperationMode(Stomp& stomp, OperationMode opMode, QToaster
       mEditModeButton = NULL;
       ui->modeFrames->setCurrentIndex(1); // todo
       ui->stompEditor->deactivate();
+      mOperationMode = mPreviousOperationMode;
     }
     else
     {
       bt->setState(QToasterButton::Blinking);
       mEditModeButton = bt;
       ui->modeFrames->setCurrentIndex(4);
-      ui->stompEditor->activate(stomp);
+      ui->stompEditor->activate(stomp.getInstance());
+      mOperationMode = opMode;
     }
   }
   else if(mEditModeButton != NULL)

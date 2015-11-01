@@ -3,6 +3,12 @@
 
 QMultiMap<int, unsigned short> LookUpTables::sDB2RawMap = {};
 LookUpTables LookUpTables::singleton;
+QMap<StompInstance, QString> LookUpTables::sStompInstanceNames = {{StompA, "Stomp A"},
+                                                                  {StompB, "Stomp B"},
+                                                                  {StompC, "Stomp C"},
+                                                                  {StompD, "Stomp D"},
+                                                                  {StompX, "Effect x"},
+                                                                  {StompMOD, "Modulation Effect"}};
 
 
 LookUpTables::LookUpTables()
@@ -284,3 +290,9 @@ QString LookUpTables::raw2Note(unsigned short rawVal)
   }
   return "_";
 }
+
+QString LookUpTables::stompInstanceName(StompInstance instance)
+{
+  return sStompInstanceNames[instance];
+}
+

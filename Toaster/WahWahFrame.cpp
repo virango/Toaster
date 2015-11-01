@@ -1,6 +1,7 @@
 #include "WahWahFrame.h"
 #include "ui_WahWahFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 WahWahFrame::WahWahFrame(QWidget *parent)
   : QWidget(parent)
@@ -44,6 +45,8 @@ void WahWahFrame::activate(Stomp& stomp)
   mpStomp->requestWahTouchAttack();
   mpStomp->requestWahTouchRelease();
   mpStomp->requestWahTouchBoost();
+
+  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
 }
 
 void WahWahFrame::deactivate()
@@ -75,9 +78,19 @@ void WahWahFrame::setStompEnabled(StompInstance stompInstance, bool enabled)
   ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
+void WahWahFrame::setDelayEnabled(bool enabled)
+{
+  ui->lcdDisplay->setDelayEnabled(enabled);
+}
+
+void WahWahFrame::setReverbEnabled(bool enabled)
+{
+  ui->lcdDisplay->setReverbEnabled(enabled);
+}
+
 void WahWahFrame::setAmpName(const QString&  ampName)
 {
-
+  ui->lcdDisplay->setAmpName(ampName);
 }
 
 void WahWahFrame::on_pageDial_valueChanged(int valueIndex)

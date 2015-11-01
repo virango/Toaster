@@ -104,7 +104,9 @@ void QToasterEnumDial::setValue(int value)
   if(value >= 0 && value < mValues.size())
   {
     mCurrValueIndex = value;
-    update(0);
+    updateValueText();
+    QWidget::update();
+    emit valueChanged(mCurrValueIndex);
   }
 }
 

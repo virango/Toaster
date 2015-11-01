@@ -526,6 +526,11 @@ void QToasterStompEditLCD::setReverbEnabled(bool enabled)
   setEnabled(*ui->reverbEdit, enabled);
 }
 
+void QToasterStompEditLCD::setAmpName(const QString &ampName)
+{
+  ui->ampNameEdit->setText(ampName);
+}
+
 void QToasterStompEditLCD::setEnabled(QWidget& w, bool enabled)
 {
   if(enabled)
