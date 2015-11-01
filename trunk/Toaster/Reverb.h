@@ -21,6 +21,18 @@ public:
   };
 
   void requestAllValues();
+  void requestType() { midiRequestType(); }
+  void requestOnOffCutsTail() { midiRequestOnOffCutsTail(); }
+  void requestMix() { midiRequestMix(); }
+  void requestVolume() {midiRequestVolume(); }
+  void requestDelRevBalance() { midiRequestDelRevBalance(); }
+  void requestTime() { midiRequestTime(); }
+  void requestDamping() { midiRequestDamping(); }
+  void requestBandwidth() { midiRequestBandwidth(); }
+  void requestCenterFrequency() { midiRequestCenterFrequency(); }
+  void requestPreDelay() { midiRequestPreDelay(); }
+  void requestOnOffKeepsTail() { midiRequestOnOffKeepsTail(); }
+  void requestDucking() { midiRequestDucking(); }
 
 signals:
   void typeReceived(Reverb::ReverbType type);

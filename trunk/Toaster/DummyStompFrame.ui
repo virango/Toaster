@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QToasterStompEditLCD" name="dummyLCD">
+  <widget class="QToasterStompEditLCD" name="lcdDisplay">
    <property name="geometry">
     <rect>
      <x>70</x>

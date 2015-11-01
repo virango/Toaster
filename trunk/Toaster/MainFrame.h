@@ -185,6 +185,7 @@ private:
   StompCtxMenu  mStompModCtxMenu;
 
   OperationMode mOperationMode;
+  OperationMode mPreviousOperationMode;
   QToasterButton* mEditModeButton;
 };
 

@@ -145,6 +145,8 @@ public slots:
   void setDelayEnabled(bool enabled);
   void setReverbEnabled(bool enabled);
 
+  void setAmpName(const QString& ampName);
+
 protected:
   void createSkin();
   void paintEvent(QPaintEvent*);

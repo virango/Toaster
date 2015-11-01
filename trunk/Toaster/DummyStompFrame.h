@@ -24,7 +24,10 @@ public:
   virtual bool isActive() { return mpStomp != nullptr; }
   virtual void setStompType(StompInstance stompInstance, FXType fxType);
   virtual void setStompEnabled(StompInstance stompInstance, bool enabled);
+  virtual void setDelayEnabled(bool enabled);
+  virtual void setReverbEnabled(bool enabled);
   virtual void setAmpName(const QString&  ampName);
+  virtual FXType getFXType() const { return None; }
 
 private:
   Ui::DummyStompFrame *ui;

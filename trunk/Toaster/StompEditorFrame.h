@@ -6,7 +6,7 @@
 #include "Stomp.h"
 #include "Delay.h"
 #include "Reverb.h"
-#include "Amp.h"
+#include "Profile.h"
 
 namespace Ui {
   class StompEditorFrame;
@@ -26,22 +26,49 @@ public:
   void deactivate();
 
 private slots:
-  void onStompType(::FXType type);
+  void onActiveStompType(::FXType type);
+
+  // stomps
+  // kpa => ui
+  void onStompAOnOff(bool onOff);
+  void onStompBOnOff(bool onOff);
+  void onStompCOnOff(bool onOff);
+  void onStompDOnOff(bool onOff);
+  void onStompXOnOff(bool onOff);
+  void onStompModOnOff(bool onOff);
+  void onStompAType(::FXType type);
+  void onStompBType(::FXType type);
+  void onStompCType(::FXType type);
+  void onStompDType(::FXType type);
+  void onStompXType(::FXType type);
+  void onStompModType(::FXType type);
+  // delay
+  // kpa => ui
+  void onDelayOnOff(bool onOff);
+  // reverb
+  // kpa => ui
+  void onReverbOnOff(bool onOff);
+  // profile
+  // kpa => ui
+  void onAmpName(const QString& ampName);
+
+private:
+  void requestValues();
 
 private:
   Ui::StompEditorFrame *ui;
 
-  Stomp         mStompA;
-  Stomp         mStompB;
-  Stomp         mStompC;
-  Stomp         mStompD;
-  Stomp         mStompX;
-  Stomp         mStompMod;
-  Delay         mDelay;
-  Reverb        mReverb;
-  Amp           mAmp;
+  Stomp             mStompA;
+  Stomp             mStompB;
+  Stomp             mStompC;
+  Stomp             mStompD;
+  Stomp             mStompX;
+  Stomp             mStompMod;
+  Delay             mDelay;
+  Reverb            mReverb;
+  Profile           mProfile;
 
-  Stomp*        mpActiveStomp;
+  Stomp*            mpActiveStomp;
   IStompEditorPage* mpActivePage;
 };
 

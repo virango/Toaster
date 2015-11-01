@@ -11,6 +11,20 @@ public:
   ~Delay();
 
   void requestAllValues();
+  void requestType() { midiRequestType(); }
+  void requestOnOffCutsTail() { midiRequestOnOffCutsTail(); }
+  void requestMix() { midiRequestMix(); }
+  void requestVolume() { midiRequestVolume(); }
+  void requestTime() { midiRequestTime(); }
+  void requestRatio() { midiRequestRatio(); }
+  void requestClockLeft() { midiRequestClockLeft(); }
+  void requestClockRight() { midiRequestClockRight(); }
+  void requestFeedback() { midiRequestFeedback(); }
+  void requestBandwidth() { midiRequestBandwidth(); }
+  void requestCenterFrequency() { midiRequestCenterFrequency(); }
+  void requestModulation() { midiRequestModulation(); }
+  void requestOnOffKeepsTail() { midiRequestOnOffKeepsTail(); }
+  void requestDucking() { midiRequestDucking(); }
   
   enum DelayType
   {
