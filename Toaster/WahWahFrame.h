@@ -1,8 +1,7 @@
 #ifndef WahWahFrame_H
 #define WahWahFrame_H
-
 #include <QWidget>
-#include "Commons.h"
+#include "StompEditorPage.h"
 
 namespace Ui {
   class WahWahFrame;
@@ -10,7 +9,7 @@ namespace Ui {
 
 class Stomp;
 
-class WahWahFrame : public QWidget
+class WahWahFrame : public QWidget, public IStompEditorPage
 {
   Q_OBJECT
 
@@ -18,9 +17,13 @@ public:
   explicit WahWahFrame(QWidget *parent = 0);
   ~WahWahFrame();
 
-  void attach(Stomp& stomp);
-  void detach();
-  bool isConnected() { return mpStomp != nullptr; }
+  // IStompEditorPage
+  virtual void activate(Stomp& stomp);
+  virtual void deactivate();
+  virtual bool isActive() { return mpStomp != nullptr; }
+  virtual void setStompType(StompInstance stompInstance, FXType fxType);
+  virtual void setStompEnabled(StompInstance stompInstance, bool enabled);
+  virtual void setAmpName(const QString&  ampName);
 
 private slots:
   void on_pageDial_valueChanged(int valueIndex);

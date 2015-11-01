@@ -127,6 +127,7 @@ public slots:
   void setCurrentPage(Page page);
   void setMaxPage(Page page);
 
+  void setStompFXType(StompInstance stompInstance, FXType fxType);
   void setStompAFXType(FXType fxType);
   void setStompBFXType(FXType fxType);
   void setStompCFXType(FXType fxType);
@@ -134,6 +135,7 @@ public slots:
   void setStompXFXType(FXType fxType);
   void setStompModFXType(FXType fxType);
 
+  void setStompEnabled(StompInstance stompInstance, bool enabled);
   void setStompAEnabled(bool enabled);
   void setStompBEnabled(bool enabled);
   void setStompCEnabled(bool enabled);

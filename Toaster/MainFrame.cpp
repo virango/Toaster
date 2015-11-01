@@ -578,14 +578,14 @@ void MainFrame::toggleOperationMode(Stomp& stomp, OperationMode opMode, QToaster
       bt->resetToOnOffState();
       mEditModeButton = NULL;
       ui->modeFrames->setCurrentIndex(1); // todo
-      ui->stompEditor->detach();
+      ui->stompEditor->deactivate();
     }
     else
     {
       bt->setState(QToasterButton::Blinking);
       mEditModeButton = bt;
       ui->modeFrames->setCurrentIndex(4);
-      ui->stompEditor->attach(stomp);
+      ui->stompEditor->activate(stomp);
     }
   }
   else if(mEditModeButton != NULL)
