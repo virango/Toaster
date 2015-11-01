@@ -3,12 +3,16 @@
 
 #include <QStackedWidget>
 #include "Commons.h"
+#include "Stomp.h"
+#include "Delay.h"
+#include "Reverb.h"
+#include "Amp.h"
 
 namespace Ui {
   class StompEditorFrame;
 }
 
-class Stomp;
+struct IStompEditorPage;
 
 class StompEditorFrame : public QStackedWidget
 {
@@ -18,8 +22,8 @@ public:
   explicit StompEditorFrame(QWidget *parent = 0);
   ~StompEditorFrame();
 
-  void attach(Stomp& stomp);
-  void detach();
+  void activate(StompInstance stompInstance);
+  void deactivate();
 
 private slots:
   void onStompType(::FXType type);
@@ -27,7 +31,18 @@ private slots:
 private:
   Ui::StompEditorFrame *ui;
 
-  Stomp* mpStomp;
+  Stomp         mStompA;
+  Stomp         mStompB;
+  Stomp         mStompC;
+  Stomp         mStompD;
+  Stomp         mStompX;
+  Stomp         mStompMod;
+  Delay         mDelay;
+  Reverb        mReverb;
+  Amp           mAmp;
+
+  Stomp*        mpActiveStomp;
+  IStompEditorPage* mpActivePage;
 };
 
 #endif // STOMPEDITORFRAME_H

@@ -121,7 +121,8 @@ HEADERS  += ToasterWindow.h \
     TunerNote.h \
     LookUpTables.h \
     TunerIndex.h \
-    TunerIndexMidi.h
+    TunerIndexMidi.h \
+    StompEditorPage.h
 
 FORMS    += \
     ToasterWindow.ui \

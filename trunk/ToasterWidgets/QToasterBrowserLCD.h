@@ -46,6 +46,7 @@ signals:
 public slots:
   void setColor(QToasterBrowserLCD::Color color);
 
+  void setStompFXType(StompInstance stompInstance, FXType fxType);
   void setStompAFXType(FXType fxType);
   void setStompBFXType(FXType fxType);
   void setStompCFXType(FXType fxType);
@@ -53,6 +54,7 @@ public slots:
   void setStompXFXType(FXType fxType);
   void setStompModFXType(FXType fxType);
 
+  void setStompEnabled(StompInstance stompInstance, bool enabled);
   void setStompAEnabled(bool enabled);
   void setStompBEnabled(bool enabled);
   void setStompCEnabled(bool enabled);

@@ -405,6 +405,31 @@ void QToasterStompEditLCD::setValue16(QString value)
   ui->val16->setText(value);
 }
 
+void QToasterStompEditLCD::setStompFXType(StompInstance stompInstance, FXType fxType)
+{
+  switch(stompInstance)
+  {
+  case StompA:
+    setStompAFXType(fxType);
+    break;
+  case StompB:
+    setStompBFXType(fxType);
+    break;
+  case StompC:
+    setStompCFXType(fxType);
+    break;
+  case StompD:
+    setStompDFXType(fxType);
+    break;
+  case StompX:
+    setStompXFXType(fxType);
+    break;
+  case StompMOD:
+    setStompModFXType(fxType);
+    break;
+  }
+}
+
 void QToasterStompEditLCD::setStompAFXType(FXType fxType)
 {
   ui->stompAEdit->setText(sFXType2ShortNameMap[fxType]);
@@ -434,6 +459,32 @@ void QToasterStompEditLCD::setStompModFXType(FXType fxType)
 {
   ui->stompModEdit->setText(sFXType2ShortNameMap[fxType]);
 }
+
+void QToasterStompEditLCD::setStompEnabled(StompInstance stompInstance, bool enabled)
+{
+  switch(stompInstance)
+  {
+  case StompA:
+    setStompAEnabled(enabled);
+    break;
+  case StompB:
+    setStompBEnabled(enabled);
+    break;
+  case StompC:
+    setStompCEnabled(enabled);
+    break;
+  case StompD:
+    setStompDEnabled(enabled);
+    break;
+  case StompX:
+    setStompXEnabled(enabled);
+    break;
+  case StompMOD:
+    setStompModEnabled(enabled);
+    break;
+  }
+}
+
 
 void QToasterStompEditLCD::setStompAEnabled(bool enabled)
 {

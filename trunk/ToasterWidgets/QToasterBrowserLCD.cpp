@@ -138,6 +138,31 @@ void QToasterBrowserLCD::setBrowserModeView(int view)
   ui->browserViewComboBox->setCurrentIndex(view);
 }
 
+void QToasterBrowserLCD::setStompFXType(StompInstance stompInstance, FXType fxType)
+{
+  switch(stompInstance)
+  {
+  case StompA:
+    setStompAFXType(fxType);
+    break;
+  case StompB:
+    setStompBFXType(fxType);
+    break;
+  case StompC:
+    setStompCFXType(fxType);
+    break;
+  case StompD:
+    setStompDFXType(fxType);
+    break;
+  case StompX:
+    setStompXFXType(fxType);
+    break;
+  case StompMOD:
+    setStompModFXType(fxType);
+    break;
+  }
+}
+
 void QToasterBrowserLCD::setStompAFXType(FXType fxType)
 {
   ui->stompAEdit->setText(sFXType2ShortNameMap[fxType]);
@@ -166,6 +191,31 @@ void QToasterBrowserLCD::setStompXFXType(FXType fxType)
 void QToasterBrowserLCD::setStompModFXType(FXType fxType)
 {
   ui->stompModEdit->setText(sFXType2ShortNameMap[fxType]);
+}
+
+void QToasterBrowserLCD::setStompEnabled(StompInstance stompInstance, bool enabled)
+{
+  switch(stompInstance)
+  {
+  case StompA:
+    setStompAEnabled(enabled);
+    break;
+  case StompB:
+    setStompBEnabled(enabled);
+    break;
+  case StompC:
+    setStompCEnabled(enabled);
+    break;
+  case StompD:
+    setStompDEnabled(enabled);
+    break;
+  case StompX:
+    setStompXEnabled(enabled);
+    break;
+  case StompMOD:
+    setStompModEnabled(enabled);
+    break;
+  }
 }
 
 void QToasterBrowserLCD::setStompAEnabled(bool enabled)

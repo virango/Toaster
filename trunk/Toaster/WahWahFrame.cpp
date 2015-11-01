@@ -17,7 +17,7 @@ WahWahFrame::~WahWahFrame()
   delete ui;
 }
 
-void WahWahFrame::attach(Stomp& stomp)
+void WahWahFrame::activate(Stomp& stomp)
 {
   mpStomp = &stomp;
 
@@ -46,7 +46,7 @@ void WahWahFrame::attach(Stomp& stomp)
   mpStomp->requestWahTouchBoost();
 }
 
-void WahWahFrame::detach()
+void WahWahFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
@@ -63,6 +63,21 @@ void WahWahFrame::detach()
     disconnect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
   }
   mpStomp = nullptr;
+}
+
+void WahWahFrame::setStompType(StompInstance stompInstance, FXType fxType)
+{
+  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+}
+
+void WahWahFrame::setStompEnabled(StompInstance stompInstance, bool enabled)
+{
+  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+}
+
+void WahWahFrame::setAmpName(const QString&  ampName)
+{
+
 }
 
 void WahWahFrame::on_pageDial_valueChanged(int valueIndex)
