@@ -13,6 +13,7 @@ class TOASTERWIDGETS_EXPORT QToasterEnumDial : public QWidget
   Q_ENUMS(KnobSize)
   Q_PROPERTY(KnobSize knobSize READ knobSize WRITE setKnobSize)
   Q_PROPERTY(QStringList values READ values WRITE setValues)
+  Q_PROPERTY(bool isActive READ isActive WRITE setIsActive)
 public:
   QToasterEnumDial(QWidget *parent = 0);
 
@@ -23,6 +24,8 @@ public:
 
   KnobSize knobSize() const { return mKnobSize; }
   QStringList values() const { return mValues; }
+  bool isActive() const { return mIsActive; }
+
   unsigned int valueIndex() const { return mCurrValueIndex; }
 
 signals:
@@ -32,6 +35,7 @@ signals:
 public slots:
   void setKnobSize(KnobSize knobSize);
   void setValues(QStringList values);
+  void setIsActive(bool enabled) { mIsActive = enabled; }
   //void setValue(const QString& value);
   void setValue(int value);
 
@@ -59,6 +63,8 @@ private:
 
   int               mCurrValueIndex;
   QString           mCurrValueText;
+
+  bool              mIsActive;
 
   QStringList mValues;
 

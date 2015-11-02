@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>1</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>

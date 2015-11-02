@@ -78,7 +78,14 @@ SOURCES += main.cpp\
     TunerNote.cpp \
     LookUpTables.cpp \
     TunerIndex.cpp \
-    TunerIndexMidi.cpp
+    TunerIndexMidi.cpp \
+    RectiShaperFrame.cpp \
+    PureBoosterFrame.cpp \
+    WahPedalBoosterFrame.cpp \
+    DriveAndToneDSFrame.cpp \
+    DriveDSFrame.cpp \
+    ToneAndDuckingDSFrame.cpp \
+    MetalDSFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -122,7 +129,14 @@ HEADERS  += ToasterWindow.h \
     LookUpTables.h \
     TunerIndex.h \
     TunerIndexMidi.h \
-    StompEditorPage.h
+    StompEditorPage.h \
+    RectiShaperFrame.h \
+    PureBoosterFrame.h \
+    WahPedalBoosterFrame.h \
+    DriveAndToneDSFrame.h \
+    DriveDSFrame.h \
+    ToneAndDuckingDSFrame.h \
+    MetalDSFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -132,7 +146,14 @@ FORMS    += \
     StompEditorFrame.ui \
     TunerFrame.ui \
     WahWahFrame.ui \
-    DummyStompFrame.ui
+    DummyStompFrame.ui \
+    RectiShaperFrame.ui \
+    PureBoosterFrame.ui \
+    WahPedalBoosterFrame.ui \
+    DriveAndToneDSFrame.ui \
+    DriveDSFrame.ui \
+    ToneAndDuckingDSFrame.ui \
+    MetalDSFrame.ui
 
 RESOURCES += \
     resources.qrc
