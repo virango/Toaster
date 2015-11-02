@@ -19,6 +19,7 @@ class TOASTERWIDGETS_EXPORT QToasterDial : public QWidget
   Q_PROPERTY(double value READ value WRITE setValue)
   Q_PROPERTY(double stepWidth READ stepWidth WRITE setStepWidth)
   Q_PROPERTY(QString unit READ unit WRITE setUnit)
+  Q_PROPERTY(bool isActive READ isActive WRITE setIsActive)
 
 public:
   QToasterDial(QWidget *parent = 0);
@@ -40,6 +41,7 @@ public:
   double value() const { return mCurrValue; }
   double stepWidth() const { return mStepWidth; }
   QString unit() const { return mUnit; }
+  bool isActive() const { return mIsActive; }
 
 signals:
   void valueChanged(double);
@@ -53,6 +55,7 @@ public slots:
   void setStepWidth(double stepWidth);
   void setValue(double value);
   void setUnit(QString unit);
+  void setIsActive(bool active) { mIsActive = active; }
 
 protected:
   void createKnobSkin();
@@ -88,7 +91,9 @@ private:
   double   mCurrValue;
   QString  mCurrValueText;
 
-  QString mUnit;
+  QString  mUnit;
+
+  bool     mIsActive;
 
   QMap<KnobSize, QString> mKnobSkins;
   QMap<LEDRingType, QString> mLEDRingSkins;

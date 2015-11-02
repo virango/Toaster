@@ -456,6 +456,9 @@
      <property name="stepWidth">
       <double>0.100000000000000</double>
      </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
     </widget>
     <widget class="QToasterDial" name="volumeDial">
      <property name="geometry">
@@ -536,6 +539,9 @@
      <property name="stepWidth">
       <double>0.100000000000000</double>
      </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
     </widget>
     <widget class="QToasterDial" name="dummy4Dial">
      <property name="geometry">
@@ -578,6 +584,9 @@
      </property>
      <property name="unit">
       <string/>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
      </property>
     </widget>
    </widget>

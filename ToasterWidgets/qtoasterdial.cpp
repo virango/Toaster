@@ -20,6 +20,7 @@ QToasterDial::QToasterDial(QWidget *parent)
   , mCurrValue(0)
   , mCurrValueText("<0.0>")
   , mUnit("")
+  , mIsActive(true)
 {
   MAP_INSERT(mKnobSkins, Big,   ":/resources/BigDial.png");
   MAP_INSERT(mKnobSkins, Small, ":/resources/SmallDial.png");
@@ -116,7 +117,8 @@ void QToasterDial::update(int deltaSteps)
   QWidget::update();
   showValueTooltip();
   // notify value changed
-  emit valueChanged(mCurrValue);
+  if(mIsActive)
+    emit valueChanged(mCurrValue);
 }
 
 void QToasterDial::updateValueText()
@@ -126,7 +128,8 @@ void QToasterDial::updateValueText()
   if(mCurrValueText.startsWith("0.0") && mMinValue < 0)
     mCurrValueText = "<" + mCurrValueText + ">";
 
-  emit valueChanged(mCurrValueText);
+  if(mIsActive)
+    emit valueChanged(mCurrValueText);
 }
 
 void QToasterDial::setKnobSize(KnobSize knobSize)
@@ -167,7 +170,7 @@ void QToasterDial::setStepWidth(double stepWidth)
 
 void QToasterDial::setValue(double value)
 {
-  if(value >= mMinValue && value <= mMaxValue)
+  if(value >= mMinValue && value <= mMaxValue && mIsActive)
   {
     mCurrValue = value;
     updateValueText();
@@ -235,13 +238,16 @@ void QToasterDial::leaveEvent(QEvent* event)
 
 void QToasterDial::showValueTooltip()
 {
-  QPoint pos = mapToGlobal(QPoint(this->width()/2, this->height()/2));
-  QToolTip::showText(pos, mCurrValueText, this);
+  if(mIsActive)
+  {
+    QPoint pos = mapToGlobal(QPoint(this->width()/2, this->height()/2));
+    QToolTip::showText(pos, mCurrValueText, this);
+  }
 }
 
 void QToasterDial::updateLEDRing()
 {
-  if(mLEDRingType != None)
+  if(mLEDRingType != None && mIsActive)
   {
     double step = (mMaxValue - mMinValue) / (mLEDRingSkinNoOfFrames - 1);
     double offset = mMinValue * (-1);

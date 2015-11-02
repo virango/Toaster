@@ -14,6 +14,7 @@ QToasterEnumDial::QToasterEnumDial(QWidget *parent)
   , mMouseY(0)
   , mCurrValueIndex(0)
   , mCurrValueText("")
+  , mIsActive(true)
 {
   MAP_INSERT(mKnobSkins, Big,   ":/resources/BigDial.png");
   MAP_INSERT(mKnobSkins, Small, ":/resources/SmallDial.png");
@@ -75,7 +76,8 @@ void QToasterEnumDial::update(int deltaSteps)
   QWidget::update();
   showValueTooltip();
   // notify value changed
-  emit valueChanged(mCurrValueIndex);
+  if(mIsActive)
+    emit valueChanged(mCurrValueIndex);
 }
 
 void QToasterEnumDial::updateValueText()
@@ -101,7 +103,7 @@ void QToasterEnumDial::setValues(QStringList values)
 
 void QToasterEnumDial::setValue(int value)
 {
-  if(value >= 0 && value < mValues.size())
+  if(value >= 0 && value < mValues.size() && mIsActive)
   {
     mCurrValueIndex = value;
     updateValueText();
@@ -163,7 +165,10 @@ void QToasterEnumDial::leaveEvent(QEvent* event)
 
 void QToasterEnumDial::showValueTooltip()
 {
-  QPoint pos = mapToGlobal(QPoint(this->width()/2, this->height()/2));
-  QToolTip::showText(pos, mCurrValueText, this);
+  if(mIsActive)
+  {
+    QPoint pos = mapToGlobal(QPoint(this->width()/2, this->height()/2));
+    QToolTip::showText(pos, mCurrValueText, this);
+  }
 }
 
