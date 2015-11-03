@@ -82,12 +82,12 @@ void Stomp::applyWahTouchBoost(double wahTouchBoost)
 
 void Stomp::applyDistortionShaperDrive(double distortionShaperDrive)
 {
-  //midiApplyDistortionShaperDrive(phys2Raw(distortionShaperDrive, , ));
+  midiApplyDistortionShaperDrive(phys2Raw(distortionShaperDrive, 10, 0));
 }
 
 void Stomp::applyDistortionBoosterTone(double distortionBoosterTone)
 {
-  //midiApplyDistortionBoosterTone(phys2Raw(distortionBoosterTone, , ));
+  midiApplyDistortionBoosterTone(phys2Raw(distortionBoosterTone, 10, -5));
 }
 
 void Stomp::applyCompressorGateIntensity(double compressorGateIntensity)
@@ -359,12 +359,12 @@ void Stomp::midiWahTouchBoostReceived(unsigned short rawVal)
 
 void Stomp::midiDistortionShaperDriveReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit distortionShaperDriveReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiDistortionBoosterToneReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit distortionBoosterToneReceived(raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiCompressorGateIntensityReceived(unsigned short rawVal)

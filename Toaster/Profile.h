@@ -12,6 +12,15 @@ public:
   ~Profile();
 
   void requestAllValues();
+  void requestRigName() { midiRequestRigName(); }
+  void requestRigAuthor() { midiRequestRigAuthor(); }
+  void requestRigDateTime() { midiRequestRigDateTime(); }
+  void requestRigComment() { midiRequestRigComment(); }
+  void requestAmpName() { midiRequestAmpName(); }
+  void requestAmpAuthor() { midiRequestAmpAuthor(); }
+  void requestAmpDate() { midiRequestAmpDate(); }
+  void requestAmpTime() { midiRequestAmpTime(); }
+  void requestCabName() { midiRequestCabName(); }
 
 signals:
   void rigNameReceived(const QString& rigName);

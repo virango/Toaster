@@ -22,17 +22,22 @@ public:
   virtual void activate(Stomp& stomp);
   virtual void deactivate();
   virtual bool isActive() { return mpStomp != nullptr; }
-  virtual void setStompType(StompInstance stompInstance, FXType fxType);
-  virtual void setStompEnabled(StompInstance stompInstance, bool enabled);
-  virtual void setDelayEnabled(bool enabled);
-  virtual void setReverbEnabled(bool enabled);
-  virtual void setAmpName(const QString&  ampName);
-  virtual FXType getFXType() const { return None; }
+  virtual FXType getFXType() const { return mFXType; }
+  virtual void setFXType(FXType fxType) { mFXType = fxType; }
+
+  virtual void displayStompType(StompInstance stompInstance, FXType fxType);
+  virtual void displayStompEnabled(StompInstance stompInstance, bool enabled);
+  virtual void displayDelayEnabled(bool enabled);
+  virtual void displayReverbEnabled(bool enabled);
+  virtual void displayAmpName(const QString&  ampName);
+
 
 private:
   Ui::DummyStompFrame *ui;
 
   Stomp* mpStomp;
+
+  FXType mFXType;
 };
 
 #endif // DUMMYSTOMPFRAME_H

@@ -27,27 +27,27 @@ void DummyStompFrame::deactivate()
   mpStomp = nullptr;
 }
 
-void DummyStompFrame::setStompType(StompInstance stompInstance, FXType fxType)
+void DummyStompFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
-void DummyStompFrame::setStompEnabled(StompInstance stompInstance, bool enabled)
+void DummyStompFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
   ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
-void DummyStompFrame::setDelayEnabled(bool enabled)
+void DummyStompFrame::displayDelayEnabled(bool enabled)
 {
   ui->lcdDisplay->setDelayEnabled(enabled);
 }
 
-void DummyStompFrame::setReverbEnabled(bool enabled)
+void DummyStompFrame::displayReverbEnabled(bool enabled)
 {
   ui->lcdDisplay->setReverbEnabled(enabled);
 }
 
-void DummyStompFrame::setAmpName(const QString&  ampName)
+void DummyStompFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
 }

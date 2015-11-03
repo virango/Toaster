@@ -195,7 +195,6 @@ void StompMidi::consumeSysExMsg(ByteArray* msg)
       midiPureTuningReceived(rawVal);
     else if(param == sKey[0])
       midiKeyReceived(rawVal);
-
   }
 }
 

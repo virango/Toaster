@@ -26,7 +26,7 @@ public:
   void deactivate();
 
 private slots:
-  void onActiveStompType(::FXType type);
+  void onActiveStompType(::FXType fxType);
 
   // stomps
   // kpa => ui

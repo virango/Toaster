@@ -84,8 +84,8 @@ signals:
   void wahTouchAttackReceived(double wahTouchAttack);
   void wahTouchReleaseReceived(double wahTouchRelease);
   void wahTouchBoostReceived(double wahTouchBoost);
-  void distortionShaperDriveReceived(unsigned short rawVal);
-  void distortionBoosterToneReceived(unsigned short rawVal);
+  void distortionShaperDriveReceived(double drive);
+  void distortionBoosterToneReceived(double tone);
   void compressorGateIntensityReceived(unsigned short rawVal);
   void compressorAttackReceived(unsigned short rawVal);
   void modulationRateReceived(unsigned short rawVal);
