@@ -91,31 +91,45 @@ void StompEditorFrame::deactivate()
   }
 }
 
-void StompEditorFrame::onActiveStompType(FXType type)
+void StompEditorFrame::onActiveStompType(FXType fxType)
 {
-  if(mpActivePage != nullptr && type != mpActivePage->getFXType())
+  if(mpActivePage != nullptr && fxType != mpActivePage->getFXType())
   {
     mpActivePage->deactivate();
     mpActivePage = nullptr;
   }
 
-  switch(type)
+  if(mpActiveStomp != nullptr)
   {
-  case WahWah:
-    if(mpActiveStomp != nullptr && !ui->wahWah->isActive())
+    switch(fxType)
     {
-      ui->wahWah->activate(*mpActiveStomp);
-      setCurrentIndex(1);
-      mpActivePage = ui->wahWah;
-      requestValues();
+      case WahWah:
+        mpActivePage = ui->wahWah;
+        break;
+      case PureBooster:
+        mpActivePage = ui->pureBooster;
+        break;
+      case SoftShaper:
+      case HardShaper:
+      case WaveShaper:
+      case PlusDS:
+      case FuzzDS:
+        mpActivePage = ui->driveDS;
+        break;
+      default:
+         mpActivePage = ui->dummyStomp;
+         break;
     }
-    break;
-  default:
-    if(mpActiveStomp != nullptr && !ui->dummyStomp->isActive())
+
+    if(mpActivePage != nullptr && !mpActivePage->isActive())
     {
-      ui->dummyStomp->activate(*mpActiveStomp);
-      setCurrentIndex(0);
-      mpActivePage = ui->dummyStomp;
+      int index = 0; // dummy page => default
+      QWidget* pTmp = dynamic_cast<QWidget*>(mpActivePage);
+      if(pTmp != nullptr)
+        index = indexOf(pTmp);
+      setCurrentIndex(index);
+      mpActivePage->activate(*mpActiveStomp);
+      mpActivePage->setFXType(fxType);
       requestValues();
     }
   }
@@ -124,73 +138,73 @@ void StompEditorFrame::onActiveStompType(FXType type)
 void StompEditorFrame::onStompAOnOff(bool onOff)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompEnabled(StompA, onOff);
+    mpActivePage->displayStompEnabled(StompA, onOff);
 }
 
 void StompEditorFrame::onStompBOnOff(bool onOff)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompEnabled(StompB, onOff);
+    mpActivePage->displayStompEnabled(StompB, onOff);
 }
 
 void StompEditorFrame::onStompCOnOff(bool onOff)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompEnabled(StompC, onOff);
+    mpActivePage->displayStompEnabled(StompC, onOff);
 }
 
 void StompEditorFrame::onStompDOnOff(bool onOff)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompEnabled(StompD, onOff);
+    mpActivePage->displayStompEnabled(StompD, onOff);
 }
 
 void StompEditorFrame::onStompXOnOff(bool onOff)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompEnabled(StompX, onOff);
+    mpActivePage->displayStompEnabled(StompX, onOff);
 }
 
 void StompEditorFrame::onStompModOnOff(bool onOff)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompEnabled(StompMOD, onOff);
+    mpActivePage->displayStompEnabled(StompMOD, onOff);
 }
 
 void StompEditorFrame::onStompAType(::FXType type)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompType(StompA, type);
+    mpActivePage->displayStompType(StompA, type);
 }
 
 void StompEditorFrame::onStompBType(::FXType type)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompType(StompB, type);
+    mpActivePage->displayStompType(StompB, type);
 }
 
 void StompEditorFrame::onStompCType(::FXType type)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompType(StompC, type);
+    mpActivePage->displayStompType(StompC, type);
 }
 
 void StompEditorFrame::onStompDType(::FXType type)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompType(StompD, type);
+    mpActivePage->displayStompType(StompD, type);
 }
 
 void StompEditorFrame::onStompXType(::FXType type)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompType(StompX, type);
+    mpActivePage->displayStompType(StompX, type);
 }
 
 void StompEditorFrame::onStompModType(::FXType type)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setStompType(StompMOD, type);
+    mpActivePage->displayStompType(StompMOD, type);
 }
 
 // delay
@@ -198,7 +212,7 @@ void StompEditorFrame::onStompModType(::FXType type)
 void StompEditorFrame::onDelayOnOff(bool onOff)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setDelayEnabled(onOff);
+    mpActivePage->displayDelayEnabled(onOff);
 }
 //------------------------------------------------------------------------------------------
 
@@ -207,7 +221,7 @@ void StompEditorFrame::onDelayOnOff(bool onOff)
 void StompEditorFrame::onReverbOnOff(bool onOff)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setReverbEnabled(onOff);
+    mpActivePage->displayReverbEnabled(onOff);
 }
 //------------------------------------------------------------------------------------------
 
@@ -216,7 +230,7 @@ void StompEditorFrame::onReverbOnOff(bool onOff)
 void StompEditorFrame::onAmpName(const QString& ampName)
 {
   if(mpActivePage != nullptr)
-    mpActivePage->setAmpName(ampName);
+    mpActivePage->displayAmpName(ampName);
 }
 //------------------------------------------------------------------------------------------
 
@@ -238,5 +252,5 @@ void StompEditorFrame::requestValues()
 
   mDelay.requestOnOffCutsTail();
   mReverb.requestOnOffCutsTail();
-
+  mProfile.requestAmpName();
 }

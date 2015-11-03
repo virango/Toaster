@@ -14,10 +14,12 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>1</number>
+   <number>3</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
+  <widget class="PureBoosterFrame" name="pureBooster"/>
+  <widget class="DriveDSFrame" name="driveDS"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -30,6 +32,18 @@
    <class>DummyStompFrame</class>
    <extends>QWidget</extends>
    <header>DummyStompFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PureBoosterFrame</class>
+   <extends>QWidget</extends>
+   <header>PureBoosterFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DriveDSFrame</class>
+   <extends>QWidget</extends>
+   <header>DriveDSFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

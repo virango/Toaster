@@ -7,8 +7,6 @@ namespace Ui {
   class WahWahFrame;
 }
 
-class Stomp;
-
 class WahWahFrame : public QWidget, public IStompEditorPage
 {
   Q_OBJECT
@@ -21,12 +19,14 @@ public:
   virtual void activate(Stomp& stomp);
   virtual void deactivate();
   virtual bool isActive() { return mpStomp != nullptr; }
-  virtual void setStompType(StompInstance stompInstance, FXType fxType);
-  virtual void setStompEnabled(StompInstance stompInstance, bool enabled);
-  virtual void setDelayEnabled(bool enabled);
-  virtual void setReverbEnabled(bool enabled);
-  virtual void setAmpName(const QString&  ampName);
-  virtual FXType getFXType() const { return WahWah; }
+  virtual FXType getFXType() const { return mFXType; }
+  virtual void setFXType(FXType fxType) { mFXType = fxType; }
+
+  virtual void displayStompType(StompInstance stompInstance, FXType fxType);
+  virtual void displayStompEnabled(StompInstance stompInstance, bool enabled);
+  virtual void displayDelayEnabled(bool enabled);
+  virtual void displayReverbEnabled(bool enabled);
+  virtual void displayAmpName(const QString&  ampName);
 
 private slots:
   void on_pageDial_valueChanged(int valueIndex);
@@ -60,6 +60,7 @@ private:
   Ui::WahWahFrame *ui;
 
   Stomp* mpStomp;
+  FXType mFXType;
 };
 
 #endif // WahWahFrame_H

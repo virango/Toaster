@@ -7,6 +7,7 @@ WahWahFrame::WahWahFrame(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::WahWahFrame)
   , mpStomp(nullptr)
+  , mFXType(None)
 {
   ui->setupUi(this);
 
@@ -68,27 +69,27 @@ void WahWahFrame::deactivate()
   mpStomp = nullptr;
 }
 
-void WahWahFrame::setStompType(StompInstance stompInstance, FXType fxType)
+void WahWahFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
-void WahWahFrame::setStompEnabled(StompInstance stompInstance, bool enabled)
+void WahWahFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
   ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
-void WahWahFrame::setDelayEnabled(bool enabled)
+void WahWahFrame::displayDelayEnabled(bool enabled)
 {
   ui->lcdDisplay->setDelayEnabled(enabled);
 }
 
-void WahWahFrame::setReverbEnabled(bool enabled)
+void WahWahFrame::displayReverbEnabled(bool enabled)
 {
   ui->lcdDisplay->setReverbEnabled(enabled);
 }
 
-void WahWahFrame::setAmpName(const QString&  ampName)
+void WahWahFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
 }
