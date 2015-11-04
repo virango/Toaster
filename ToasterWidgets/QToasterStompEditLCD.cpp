@@ -541,6 +541,13 @@ void QToasterStompEditLCD::setEnabled(QWidget& w, bool enabled)
 
 void QToasterStompEditLCD::updatePageInfo()
 {
-  QString text = QString("[Page %1/%2]").arg((int)mCurrentPage+1).arg((int)mMaxPage+1);
-  ui->pageInfo->setText(text);
+  if(mMaxPage != Page1)
+  {
+    QString text = QString("[Page %1/%2]").arg((int)mCurrentPage+1).arg((int)mMaxPage+1);
+    ui->pageInfo->setText(text);
+  }
+  else
+  {
+    ui->pageInfo->setText(" ");
+  }
 }

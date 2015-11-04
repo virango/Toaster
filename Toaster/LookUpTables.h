@@ -13,6 +13,7 @@ public:
   static unsigned short dB2Raw(double dB);
   static QString raw2Note(unsigned short rawVal);
   static QString stompInstanceName(StompInstance instance);
+  static QString stompFXName(FXType fxType);
 
 private:
   LookUpTables();
@@ -22,6 +23,7 @@ private:
   static QMultiMap<int, unsigned short> sDB2RawMap;
   static QVector<QString> sNotes;
   static QMap<StompInstance, QString> sStompInstanceNames;
+  static QMap<FXType, QString> sStompFXNames;
 };
 
 #endif // VOLUMETABLES_H

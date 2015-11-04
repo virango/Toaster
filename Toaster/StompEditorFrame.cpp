@@ -116,6 +116,23 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case FuzzDS:
         mpActivePage = ui->driveDS;
         break;
+      case BitShaper:
+      case GreenScream:
+      case OneDS:
+      case Muffin:
+      case MouseDS:
+        mpActivePage = ui->driveAndToneDS;
+        break;
+      case RectiShaper:
+        mpActivePage = ui->rectiShaper;
+        break;
+      case TrebleBooster:
+      case LeadBooster:
+        mpActivePage = ui->toneAndDuckingDS;
+        break;
+      case WahPedalBooster:
+        mpActivePage = ui->wahPedalBooster;
+        break;
       default:
          mpActivePage = ui->dummyStomp;
          break;
