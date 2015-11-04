@@ -69,6 +69,13 @@ void WahWahFrame::deactivate()
   mpStomp = nullptr;
 }
 
+void WahWahFrame::setFXType(FXType fxType)
+{
+  mFXType = fxType;
+  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
+}
+
+
 void WahWahFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

@@ -39,6 +39,12 @@ void DriveDSFrame::deactivate()
   mpStomp = nullptr;
 }
 
+void DriveDSFrame::setFXType(FXType fxType)
+{
+  mFXType = fxType;
+  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
+}
+
 void DriveDSFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

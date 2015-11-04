@@ -20,7 +20,7 @@ public:
   virtual void deactivate();
   virtual bool isActive() { return mpStomp != nullptr; }
   virtual FXType getFXType() const { return mFXType; }
-  virtual void setFXType(FXType fxType) { mFXType = fxType; }
+  virtual void setFXType(FXType fxType);
 
   virtual void displayStompType(StompInstance stompInstance, FXType fxType);
   virtual void displayStompEnabled(StompInstance stompInstance, bool enabled);

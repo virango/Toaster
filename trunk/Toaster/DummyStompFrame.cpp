@@ -27,6 +27,12 @@ void DummyStompFrame::deactivate()
   mpStomp = nullptr;
 }
 
+void DummyStompFrame::setFXType(FXType fxType)
+{
+  mFXType = fxType;
+  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
+}
+
 void DummyStompFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

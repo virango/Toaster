@@ -9,6 +9,62 @@ QMap<StompInstance, QString> LookUpTables::sStompInstanceNames = {{StompA, "Stom
                                                                   {StompD, "Stomp D"},
                                                                   {StompX, "Effect x"},
                                                                   {StompMOD, "Modulation Effect"}};
+QMap<FXType, QString> LookUpTables::sStompFXNames = {{None, "None"},
+                                                     {WahWah, "Wah Wah"},
+                                                     {WahLowPass, "Wah Low Pass"},
+                                                     {WahHighPass, "Wah High Pass"},
+                                                     {WahVowelFilter, "Wah Vowel Filter"},
+                                                     {WahPhaser, "Wah Phaser"},
+                                                     {WahFlanger, "Wah Flanger"},
+                                                     {WahRateReducer, "Wah Rate Reducer"},
+                                                     {WahRingModulator, "Wah Ring Modulator"},
+                                                     {WahFrequencyShifter, "Wah Freq Shifter"},
+                                                     {WahFormantShifter, "Wah Formant Shifter"},
+                                                     {BitShaper, "Bit Shaper"},
+                                                     {RectiShaper, "Recti Shaper"},
+                                                     {SoftShaper, "Soft Shaper"},
+                                                     {HardShaper, "Hard Shaper"},
+                                                     {WaveShaper, "Wave Shaper"},
+                                                     {GreenScream, "Green Scream"},
+                                                     {PlusDS, "Plus DS"},
+                                                     {OneDS, "One DS"},
+                                                     {Muffin, "Muffin"},
+                                                     {MouseDS, "Mouse DS"},
+                                                     {FuzzDS, "Fuzz DS"},
+                                                     {MetalDS, "Metal DS"},
+                                                     {TrebleBooster, "Treble Booster"},
+                                                     {LeadBooster, "Lead Booster"},
+                                                     {PureBooster, "Pure Booster"},
+                                                     {WahPedalBooster, "Wah Pedal Booster"},
+                                                     {GraphicEqualizer, "Graphic Equalizer"},
+                                                     {StudioEqualizer, "Studio Equalizer"},
+                                                     {MetalEqualizer, "Metal Equalizer"},
+                                                     {StereoWeidener, "Stereo Weidener"},
+                                                     {Compressor, "Compressor"},
+                                                     {NoiseGate21, "Noise Gate 2:1"},
+                                                     {NoiseGate41, "Noise Gate 4:1"},
+                                                     {VintageChorus, "Vintage Chorus"},
+                                                     {HyperChorus, "Hyper Chorus"},
+                                                     {AirChorus, "Air Chorus"},
+                                                     {MicroPitch, "Micro Pitch"},
+                                                     {Vibrato, "Vibrato"},
+                                                     {RotarySpeaker, "Rotary Speaker"},
+                                                     {Tremolo, "Tremolo"},
+                                                     {Phaser, "Phaser"},
+                                                     {PhaserVibe, "Phaser Vibe"},
+                                                     {PhaserOneway, "Phaser Oneway"},
+                                                     {Flanger, "Flanger"},
+                                                     {FlangerOneway, "Flanger Oneway"},
+                                                     {Space, "Space"},
+                                                     {Transpose, "Transpose"},
+                                                     {PedalPitch, "Pedal Pitch"},
+                                                     {PedalVinylStop, "Pedal Vinyl Stop"},
+                                                     {ChromaticPitch, "Chromatic Pitch"},
+                                                     {HarmonicPitch, "Harmonic Pitch"},
+                                                     {AnalogOctaver, "Analog Octaver"},
+                                                     {LoopMono, "Loop Mono"},
+                                                     {LoopStereo, "Loop Stereo"},
+                                                     {LoopDistortion, "Loop Distortion"}};
 
 
 LookUpTables::LookUpTables()
@@ -47,9 +103,6 @@ LookUpTables::LookUpTables()
     int dbVal = sRaw2dB[i] * 10;
     sDB2RawMap.insert(dbVal, i);
   }
-
-
-
 }
 
 double LookUpTables::sRaw2dB[] =
@@ -294,5 +347,10 @@ QString LookUpTables::raw2Note(unsigned short rawVal)
 QString LookUpTables::stompInstanceName(StompInstance instance)
 {
   return sStompInstanceNames[instance];
+}
+
+QString LookUpTables::stompFXName(FXType fxType)
+{
+  return sStompFXNames[fxType];
 }
 

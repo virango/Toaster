@@ -14,12 +14,16 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>3</number>
+   <number>7</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
   <widget class="PureBoosterFrame" name="pureBooster"/>
   <widget class="DriveDSFrame" name="driveDS"/>
+  <widget class="DriveAndToneDSFrame" name="driveAndToneDS"/>
+  <widget class="RectiShaperFrame" name="rectiShaper"/>
+  <widget class="ToneAndDuckingDSFrame" name="toneAndDuckingDS"/>
+  <widget class="WahPedalBoosterFrame" name="wahPedalBooster"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -44,6 +48,30 @@
    <class>DriveDSFrame</class>
    <extends>QWidget</extends>
    <header>DriveDSFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DriveAndToneDSFrame</class>
+   <extends>QWidget</extends>
+   <header>DriveAndToneDSFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RectiShaperFrame</class>
+   <extends>QWidget</extends>
+   <header>RectiShaperFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ToneAndDuckingDSFrame</class>
+   <extends>QWidget</extends>
+   <header>ToneAndDuckingDSFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WahPedalBoosterFrame</class>
+   <extends>QWidget</extends>
+   <header>WahPedalBoosterFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
