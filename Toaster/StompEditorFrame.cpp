@@ -133,6 +133,9 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case WahPedalBooster:
         mpActivePage = ui->wahPedalBooster;
         break;
+      case MetalDS:
+        mpActivePage = ui->metalDS;
+        break;
       default:
          mpActivePage = ui->dummyStomp;
          break;

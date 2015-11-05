@@ -9,10 +9,6 @@
 QToasterStompEditLCD::QToasterStompEditLCD(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::QToasterStompEditLCD)
-  , mColor(Standard)
-  , mMaxPage(Page2)
-  , mCurrentPage(Page1)
-  , mpCtxMenuProvider(NULL)
 {
   ui->setupUi(this);
   createSkin();
@@ -152,27 +148,7 @@ void QToasterStompEditLCD::setMaxPage(Page page)
 }
 
 
-void QToasterStompEditLCD::createSkin()
-{
-  QString skin = ":/resources/LCD.png";
 
-  QPixmap masterPixmap(skin);
-
-  int width = masterPixmap.width();
-  int height = masterPixmap.height() / (NoOfColors + 1); // to compansate a bug in JKnobMan:
-                                                         // as JKnobMan doesn't create the last frame properly
-                                                         // there must be an additional one
-  if(!masterPixmap.isNull())
-  {
-    int x = 0;
-    int y = 0;
-    for(int i = 0; i < NoOfColors; i++)
-    {
-      y = i * height;
-      mSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
-    }
-  }
-}
 
 void QToasterStompEditLCD::paintEvent(QPaintEvent* /*pe*/)
 {
@@ -197,9 +173,23 @@ void QToasterStompEditLCD::contextMenuEvent(QContextMenuEvent * cme)
   }
 }
 
-void QToasterStompEditLCD::setColor(QToasterStompEditLCD::Color color)
+void QToasterStompEditLCD::setColor(Color color)
 {
   mColor = color;
+  QString colorStyleSheet = sColor2StyleSheetsMap[color];
+  /*
+  ui->stompAEdit->setStyleSheet(colorStyleSheet);
+  ui->stompBEdit->setStyleSheet(colorStyleSheet);
+  ui->stompCEdit->setStyleSheet(colorStyleSheet);
+  ui->stompDEdit->setStyleSheet(colorStyleSheet);
+  ui->stompXEdit->setStyleSheet(colorStyleSheet);
+  ui->stompModEdit->setStyleSheet(colorStyleSheet);
+  ui->delayEdit->setStyleSheet(colorStyleSheet);
+  ui->reverbEdit->setStyleSheet(colorStyleSheet);
+  */
+  ui->pageInfo->setStyleSheet(colorStyleSheet);
+  ui->stompInstance->setStyleSheet(colorStyleSheet);
+  ui->stompTypeName->setStyleSheet(colorStyleSheet);
   update();
 }
 
@@ -488,55 +478,47 @@ void QToasterStompEditLCD::setStompEnabled(StompInstance stompInstance, bool ena
 
 void QToasterStompEditLCD::setStompAEnabled(bool enabled)
 {
-  setEnabled(*ui->stompAEdit, enabled);
+  displayStompEnabled(*ui->stompAEdit, enabled);
 }
 
 void QToasterStompEditLCD::setStompBEnabled(bool enabled)
 {
-  setEnabled(*ui->stompBEdit, enabled);
+  displayStompEnabled(*ui->stompBEdit, enabled);
 }
 
 void QToasterStompEditLCD::setStompCEnabled(bool enabled)
 {
-  setEnabled(*ui->stompCEdit, enabled);
+  displayStompEnabled(*ui->stompCEdit, enabled);
 }
 
 void QToasterStompEditLCD::setStompDEnabled(bool enabled)
 {
-  setEnabled(*ui->stompDEdit, enabled);
+  displayStompEnabled(*ui->stompDEdit, enabled);
 }
 
 void QToasterStompEditLCD::setStompXEnabled(bool enabled)
 {
-  setEnabled(*ui->stompXEdit, enabled);
+  displayStompEnabled(*ui->stompXEdit, enabled);
 }
 
 void QToasterStompEditLCD::setStompModEnabled(bool enabled)
 {
-  setEnabled(*ui->stompModEdit, enabled);
+  displayStompEnabled(*ui->stompModEdit, enabled);
 }
 
 void QToasterStompEditLCD::setDelayEnabled(bool enabled)
 {
-  setEnabled(*ui->delayEdit, enabled);
+  displayStompEnabled(*ui->delayEdit, enabled);
 }
 
 void QToasterStompEditLCD::setReverbEnabled(bool enabled)
 {
-  setEnabled(*ui->reverbEdit, enabled);
+  displayStompEnabled(*ui->reverbEdit, enabled);
 }
 
 void QToasterStompEditLCD::setAmpName(const QString &ampName)
 {
   ui->ampNameEdit->setText(ampName);
-}
-
-void QToasterStompEditLCD::setEnabled(QWidget& w, bool enabled)
-{
-  if(enabled)
-    w.setStyleSheet(ENABLED);
-  else
-    w.setStyleSheet(DISABLED);
 }
 
 void QToasterStompEditLCD::updatePageInfo()

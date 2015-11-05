@@ -2,6 +2,7 @@ CONFIG      += plugin debug_and_release
 TARGET      = $$qtLibraryTarget(qtoasterwidgetsplugin)
 TEMPLATE    = lib
 QT         += core gui widgets designer
+unix:QMAKE_CXXFLAGS += -std=c++11
 
 CONFIG(debug, debug|release) {
     DESTDIR = $$OUT_PWD/debug

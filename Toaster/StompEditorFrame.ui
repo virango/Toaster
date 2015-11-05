@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>7</number>
+   <number>8</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
@@ -24,6 +24,7 @@
   <widget class="RectiShaperFrame" name="rectiShaper"/>
   <widget class="ToneAndDuckingDSFrame" name="toneAndDuckingDS"/>
   <widget class="WahPedalBoosterFrame" name="wahPedalBooster"/>
+  <widget class="MetalDSFrame" name="metalDS"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -72,6 +73,12 @@
    <class>WahPedalBoosterFrame</class>
    <extends>QWidget</extends>
    <header>WahPedalBoosterFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MetalDSFrame</class>
+   <extends>QWidget</extends>
+   <header>MetalDSFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

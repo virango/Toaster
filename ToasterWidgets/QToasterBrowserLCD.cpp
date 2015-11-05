@@ -6,11 +6,21 @@
 #include "QToasterLCD.h"
 #include "CtxMenuProvider.h"
 
+#define BROWSER_VIEW_STYLESHEETS "QComboBox#browserViewComboBox\
+{\
+%1; \
+background-color: rgb(50,50,50);\
+border-color: rgb(0, 0, 0);\
+border-radius: 3px;\
+padding-left:7px;\
+}\
+QComboBox::drop-down {width: 0px; border-style: none}"
+
+
+
 QToasterBrowserLCD::QToasterBrowserLCD(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::QToasterBrowserLCD)
-  , mColor(Standard)
-  , mpCtxMenuProvider(NULL)
 {
   ui->setupUi(this);
   createSkin();
@@ -37,33 +47,13 @@ QToasterBrowserLCD::QToasterBrowserLCD(QWidget *parent)
   setStompModEnabled(false);
   setDelayEnabled(false);
   setReverbEnabled(false);
+
+  setColor(mColor);
 }
 
 QToasterBrowserLCD::~QToasterBrowserLCD()
 {
   delete ui;
-}
-
-void QToasterBrowserLCD::createSkin()
-{
-  QString skin = ":/resources/LCD.png";
-
-  QPixmap masterPixmap(skin);
-
-  int width = masterPixmap.width();
-  int height = masterPixmap.height() / (NoOfColors + 1); // to compansate a bug in JKnobMan:
-                                                         // as JKnobMan doesn't create the last frame properly
-                                                         // there must be an additional one
-  if(!masterPixmap.isNull())
-  {
-    int x = 0;
-    int y = 0;
-    for(int i = 0; i < NoOfColors; i++)
-    {
-      y = i * height;
-      mSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
-    }
-  }
 }
 
 void QToasterBrowserLCD::paintEvent(QPaintEvent* /*pe*/)
@@ -89,9 +79,23 @@ void QToasterBrowserLCD::contextMenuEvent(QContextMenuEvent * cme)
   }
 }
 
-void QToasterBrowserLCD::setColor(QToasterBrowserLCD::Color color)
+void QToasterBrowserLCD::setColor(Color color)
 {
   mColor = color;
+  QString colorStyleSheet = sColor2StyleSheetsMap[color];
+  ui->browserViewComboBox->setStyleSheet(QString(BROWSER_VIEW_STYLESHEETS).arg(colorStyleSheet));
+  /*
+  ui->stompAEdit->setStyleSheet(colorStyleSheet);
+  ui->stompBEdit->setStyleSheet(colorStyleSheet);
+  ui->stompCEdit->setStyleSheet(colorStyleSheet);
+  ui->stompDEdit->setStyleSheet(colorStyleSheet);
+  ui->stompXEdit->setStyleSheet(colorStyleSheet);
+  ui->stompModEdit->setStyleSheet(colorStyleSheet);
+  ui->delayEdit->setStyleSheet(colorStyleSheet);
+  ui->reverbEdit->setStyleSheet(colorStyleSheet);
+  */
+  ui->rigAuthorEdit->setStyleSheet(colorStyleSheet);
+  ui->rigTypeEdit->setStyleSheet(colorStyleSheet);
   update();
 }
 
@@ -220,50 +224,42 @@ void QToasterBrowserLCD::setStompEnabled(StompInstance stompInstance, bool enabl
 
 void QToasterBrowserLCD::setStompAEnabled(bool enabled)
 {
-  setEnabled(*ui->stompAEdit, enabled);
+  displayStompEnabled(*ui->stompAEdit, enabled);
 }
 
 void QToasterBrowserLCD::setStompBEnabled(bool enabled)
 {
-  setEnabled(*ui->stompBEdit, enabled);
+  displayStompEnabled(*ui->stompBEdit, enabled);
 }
 
 void QToasterBrowserLCD::setStompCEnabled(bool enabled)
 {
-  setEnabled(*ui->stompCEdit, enabled);
+  displayStompEnabled(*ui->stompCEdit, enabled);
 }
 
 void QToasterBrowserLCD::setStompDEnabled(bool enabled)
 {
-  setEnabled(*ui->stompDEdit, enabled);
+  displayStompEnabled(*ui->stompDEdit, enabled);
 }
 
 void QToasterBrowserLCD::setStompXEnabled(bool enabled)
 {
-  setEnabled(*ui->stompXEdit, enabled);
+  displayStompEnabled(*ui->stompXEdit, enabled);
 }
 
 void QToasterBrowserLCD::setStompModEnabled(bool enabled)
 {
-  setEnabled(*ui->stompModEdit, enabled);
+  displayStompEnabled(*ui->stompModEdit, enabled);
 }
 
 void QToasterBrowserLCD::setDelayEnabled(bool enabled)
 {
-  setEnabled(*ui->delayEdit, enabled);
+  displayStompEnabled(*ui->delayEdit, enabled);
 }
 
 void QToasterBrowserLCD::setReverbEnabled(bool enabled)
 {
-  setEnabled(*ui->reverbEdit, enabled);
-}
-
-void QToasterBrowserLCD::setEnabled(QWidget& w, bool enabled)
-{
-  if(enabled)
-    w.setStyleSheet(ENABLED);
-  else
-    w.setStyleSheet(DISABLED);
+  displayStompEnabled(*ui->reverbEdit, enabled);
 }
 
 void QToasterBrowserLCD::on_browserViewComboBox_currentIndexChanged(int index)
