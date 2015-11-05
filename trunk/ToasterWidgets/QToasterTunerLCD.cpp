@@ -8,8 +8,6 @@
 QToasterTunerLCD::QToasterTunerLCD(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::QToasterTunerLCD)
-  , mColor(Standard)
-  , mpCtxMenuProvider(NULL)
 {
   ui->setupUi(this);
   createSkin();
@@ -20,28 +18,6 @@ QToasterTunerLCD::QToasterTunerLCD(QWidget *parent)
 QToasterTunerLCD::~QToasterTunerLCD()
 {
   delete ui;
-}
-
-void QToasterTunerLCD::createSkin()
-{
-  QString skin = ":/resources/LCD.png";
-
-  QPixmap masterPixmap(skin);
-
-  int width = masterPixmap.width();
-  int height = masterPixmap.height() / (NoOfColors + 1); // to compansate a bug in JKnobMan:
-                                                         // as JKnobMan doesn't create the last frame properly
-                                                         // there must be an additional one
-  if(!masterPixmap.isNull())
-  {
-    int x = 0;
-    int y = 0;
-    for(int i = 0; i < NoOfColors; i++)
-    {
-      y = i * height;
-      mSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
-    }
-  }
 }
 
 void QToasterTunerLCD::createIndexSkin()
@@ -86,7 +62,7 @@ void QToasterTunerLCD::contextMenuEvent(QContextMenuEvent * cme)
   }
 }
 
-void QToasterTunerLCD::setColor(QToasterTunerLCD::Color color)
+void QToasterTunerLCD::setColor(Color color)
 {
   mColor = color;
   update();

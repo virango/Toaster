@@ -34,7 +34,7 @@ void DriveDSFrame::deactivate()
   if(mpStomp != nullptr)
   {
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(driveReceived(double)), this, SLOT(onDrive(double)));
+    disconnect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
   }
   mpStomp = nullptr;
 }

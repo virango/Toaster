@@ -9,6 +9,7 @@ QMap<StompInstance, QString> LookUpTables::sStompInstanceNames = {{StompA, "Stom
                                                                   {StompD, "Stomp D"},
                                                                   {StompX, "Effect x"},
                                                                   {StompMOD, "Modulation Effect"}};
+
 QMap<FXType, QString> LookUpTables::sStompFXNames = {{None, "None"},
                                                      {WahWah, "Wah Wah"},
                                                      {WahLowPass, "Wah Low Pass"},

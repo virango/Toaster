@@ -906,7 +906,7 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: transparent;
-color: rgb(255, 255, 255);
+color: rgb(167, 179, 175);
 border-color: rgb(0, 0, 0);</string>
     </property>
     <property name="frame">
@@ -992,9 +992,10 @@ color: rgb(0, 0, 0);
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="styleSheet">
-    <string notr="true">QComboBox{
+    <string notr="true">QComboBox#browserViewComboBox
+{
 background-color: rgb(50,50,50);
-color: rgb(255, 255, 255);
+color: rgb(167, 179, 175);
 border-color: rgb(0, 0, 0);
 border-radius: 3px;
 padding-left:7px;

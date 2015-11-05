@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "Commons.h"
 #include "ToasterWidgetsLib.h"
+#include "QToasterLCD.h"
 
 namespace Ui {
   class QToasterStompEditLCD;
@@ -11,7 +12,7 @@ namespace Ui {
 
 struct ICtxMenuProvider;
 
-class TOASTERWIDGETS_EXPORT QToasterStompEditLCD : public QWidget
+class TOASTERWIDGETS_EXPORT QToasterStompEditLCD : public QWidget, public QToasterLCD
 {
   Q_OBJECT
   Q_ENUMS(Color)
@@ -42,26 +43,6 @@ public:
   explicit QToasterStompEditLCD(QWidget *parent = 0);
   ~QToasterStompEditLCD();
 
-  enum Page
-  {
-    Page1 = 0,
-    Page2 = 1
-  };
-
-  enum Color
-  {
-    Standard    = 0,
-    Orange      = 1,
-    Red         = 2,
-    Yellow      = 3,
-    Cyan        = 4,
-    Blue        = 5,
-    Purple      = 6,
-    White       = 7,
-    Green       = 8,
-    NoOfColors  = 9      // must be always last
-  };
-
   Color color() const { return mColor; }
   QString stompInstance() const;
   QString stompName() const;
@@ -88,7 +69,7 @@ public:
 
 
 public slots:
-  void setColor(QToasterStompEditLCD::Color color);
+  void setColor(Color color);
   void setStompInstance(QString stompInstance);
   void setStompName(QString stompName);
   void setValue1Title(QString title);
@@ -148,23 +129,12 @@ public slots:
   void setAmpName(const QString& ampName);
 
 protected:
-  void createSkin();
   void paintEvent(QPaintEvent*);
   void contextMenuEvent(QContextMenuEvent * cme);
-
-  void setEnabled(QWidget& w, bool enabled);
-
   void updatePageInfo();
 
 private:
   Ui::QToasterStompEditLCD *ui;
-
-  QList<QPixmap> mSkinPixmaps;
-  Color mColor;
-  Page  mMaxPage;
-  Page  mCurrentPage;
-
-  ICtxMenuProvider* mpCtxMenuProvider;
 };
 
 #endif // QTOASTERSTOMPEDITLCD_H

@@ -46,12 +46,12 @@ BYTEARRAYDEF(StompMidi, GraphicEQBand5,                       0x26)
 BYTEARRAYDEF(StompMidi, GraphicEQBand6,                       0x27)
 BYTEARRAYDEF(StompMidi, GraphicEQBand7,                       0x28)
 BYTEARRAYDEF(StompMidi, GraphicEQBand8,                       0x29)
-BYTEARRAYDEF(StompMidi, ParametricEQLowGain,                  0x2A)
+BYTEARRAYDEF(StompMidi, ParametricEQLowGain,                  0x2A)  // also for metal ds low
 BYTEARRAYDEF(StompMidi, ParametricEQLowFrequency,             0x2B)
-BYTEARRAYDEF(StompMidi, ParametricEQHighGain,                 0x2C)
+BYTEARRAYDEF(StompMidi, ParametricEQHighGain,                 0x2C)  // also for metal ds high
 BYTEARRAYDEF(StompMidi, ParametricEQHighFrequency,            0x2D)
-BYTEARRAYDEF(StompMidi, ParametricEQPeakGain,                 0x2E)
-BYTEARRAYDEF(StompMidi, ParametricEQPeakFrequency,            0x2F)
+BYTEARRAYDEF(StompMidi, ParametricEQPeakGain,                 0x2E)  // also for metal ds middle
+BYTEARRAYDEF(StompMidi, ParametricEQPeakFrequency,            0x2F)  // also for metal ds mid freq
 BYTEARRAYDEF(StompMidi, ParametricEQPeakQFactor,              0x30)
 BYTEARRAYDEF(StompMidi, ParametricEQPeakGain2,                0x31)
 BYTEARRAYDEF(StompMidi, ParametricEQPeakFrequency2,           0x32)
