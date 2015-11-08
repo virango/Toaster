@@ -1,5 +1,6 @@
 #ifndef DEBUGMIDI_H
 #define DEBUGMIDI_H
+#include <QString>
 #include "SysExBase.h"
 #include "SysExMsgDispatcher.h"
 
@@ -12,7 +13,7 @@ public:
 
   static DebugMidi& get() { return mSingleton; }
 
-  void debugVolumeParam(unsigned short val);
+  void debugRequestStringParam(unsigned char addressPage, unsigned char parameter, unsigned short val);
 
   void debugScanRequest(unsigned char adddressPage, unsigned char minParam, unsigned char maxParam);
 
@@ -27,6 +28,16 @@ public:
   void debugSendExtParam(unsigned int param, unsigned int value);
 
   void debugSendReserveFct7E(ByteArray addressPage, ByteArray param, ByteArray value);
+
+  void debugWriteStringValues(ByteArray* msg);
+
+  void debugPrintValues(ByteArray* msg);
+
+  bool mPrintValues;
+
+  bool mWriteStringValues;
+
+  QString mWriteFileName;
 protected:
   DebugMidi();
   ~DebugMidi();

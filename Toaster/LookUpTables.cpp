@@ -324,7 +324,7 @@ unsigned short LookUpTables::dB2Raw(double dB)
   if(tmp < -960)
     return 0;
 
-  if(tmp > 1200)
+  if(tmp > 120)
     return 0x3FFF;
 
   QMultiMap<int, unsigned short>::iterator lb = sDB2RawMap.lowerBound(tmp);

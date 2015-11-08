@@ -23,6 +23,7 @@ private slots:
   void on_actionCmd_triggered();
 
 private:
+  QTimer* timer;
   void showSettingsDialog();
   Ui::ToasterWindow *ui;
 };

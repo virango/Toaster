@@ -147,6 +147,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionRequest"/>
+   <addaction name="actionConnect"/>
    <addaction name="actionSettings"/>
    <addaction name="actionCmd"/>
   </widget>
@@ -170,6 +171,14 @@
   <action name="actionCmd">
    <property name="text">
     <string>Cmd</string>
+   </property>
+  </action>
+  <action name="actionConnect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Connect</string>
    </property>
   </action>
  </widget>
