@@ -24,8 +24,8 @@ ToasterWindow::ToasterWindow(QWidget *parent) :
 
     Midi::get().openPorts(inPort, outPort);
 
-    QTimer* timer = new QTimer(this);
-    timer->setSingleShot(true);
+    timer = new QTimer(this);
+    timer->setSingleShot(false);
     connect(timer, SIGNAL(timeout()), this, SLOT(on_actionRequest_triggered()));
     timer->start(20);
 
@@ -43,16 +43,17 @@ ToasterWindow::~ToasterWindow()
 
 void ToasterWindow::on_actionRequest_triggered()
 {
-#if 0
-  static unsigned short val = 0;
-  DebugMidi::get().DebugVolumeParam(val);
+#if 1
+  static int val = 0;
+  DebugMidi::get().debugRequestStringParam((unsigned short)val, 0x32, 0x2F);
   val++;
-  if(val == 0x3FFF)
+  if(val == 0x4000)
     timer->stop();
-#endif
+#else
   QString connectName("Toaster ");
   ui->mainFrame->connect2KPA(connectName);
   ui->mainFrame->requestValues();
+#endif
 }
 
 void ToasterWindow::on_actionSettings_triggered()

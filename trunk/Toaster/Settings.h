@@ -16,6 +16,15 @@ public:
   QString getMidiOutPort();
   void setMidiOutPort(const QString& outPort);
 
+  QString getDebugWriteStringValuesFileName();
+  void setDebugWriteStringValuesFileName(const QString& fileName);
+
+  bool getDebugPrintValues();
+  void setDebugPrintValues(bool printValues);
+
+  bool getDebugWriteStringValues();
+  void setDebugWriteStringValues(bool writeStringValues);
+
 };
 
 #endif // SETTINGS_H

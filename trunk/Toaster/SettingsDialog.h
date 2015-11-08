@@ -20,6 +20,15 @@ public:
 private slots:
   void on_buttonBox_accepted();
 
+
+  void on_printValuesCheckBox_clicked(bool checked);
+
+  void on_createValueMapCheckBox_clicked(bool checked);
+
+  void on_fileEdit_textChanged(const QString &fileName);
+
+  void on_fileButton_clicked();
+
 private:
   Ui::SettingsDialog *ui;
 };

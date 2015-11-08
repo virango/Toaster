@@ -31,3 +31,32 @@ void Settings::setMidiOutPort(const QString& outPort)
   setValue("MIDI/OutPort", QVariant(outPort));
 }
 
+QString Settings::getDebugWriteStringValuesFileName()
+{
+  return value("Debug/WriteStringValuesFileName", QVariant("")).toString();
+}
+
+void Settings::setDebugWriteStringValuesFileName(const QString& fileName)
+{
+  setValue("Debug/WriteStringValuesFileName", QVariant(fileName));
+}
+
+bool Settings::getDebugPrintValues()
+{
+  return value("Debug/PrintValues", QVariant(true)).toBool();
+}
+
+void Settings::setDebugPrintValues(bool printValues)
+{
+  setValue("Debug/PrintValues", QVariant(printValues));
+}
+
+bool Settings::getDebugWriteStringValues()
+{
+  return value("Debug/WriteStringValues", QVariant(true)).toBool();
+}
+
+void Settings::setDebugWriteStringValues(bool writeStringValues)
+{
+  setValue("Debug/WriteStringValues", QVariant(writeStringValues));
+}
