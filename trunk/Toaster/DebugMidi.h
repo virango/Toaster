@@ -37,7 +37,8 @@ public:
 
   bool mWriteStringValues;
 
-  QString mWriteFileName;
+  QString mRaw2ValFileName;
+  QString mVal2RawFileName;
 protected:
   DebugMidi();
   ~DebugMidi();

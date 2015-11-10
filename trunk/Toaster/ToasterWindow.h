@@ -16,14 +16,30 @@ public:
     ~ToasterWindow();
 
 private slots:
-  void on_actionRequest_triggered();
-
-  void on_actionSettings_triggered();
+  void on_actionRequestValues_triggered();
 
   void on_actionCmd_triggered();
 
+  void on_actionConfigure_triggered();
+
+  void on_actionOpenMIDIPorts_triggered();
+
+  void on_actionConnectToKPA_triggered();
+
+  void on_actionDisconnectFromKPA_triggered();
+
+  void on_actionUploadKIPRFile_triggered();
+
+  void on_actionExit_triggered();
+
+  void on_actionClose_MIDI_Ports_triggered();
+
+  void on_actionCreateStringValuesTable_triggered();
+
+  void on_actionSendSySex_triggered();
+
 private:
-  QTimer* timer;
+  //QTimer* timer;
   void showSettingsDialog();
   Ui::ToasterWindow *ui;
 };
