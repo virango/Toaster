@@ -12,12 +12,9 @@ namespace Ui {
 
 struct ICtxMenuProvider;
 
-class TOASTERWIDGETS_EXPORT QToasterStompEditLCD : public QWidget, public QToasterLCD
+class TOASTERWIDGETS_EXPORT QToasterStompEditLCD : public QToasterLCD
 {
   Q_OBJECT
-  Q_ENUMS(Color)
-  Q_ENUMS(Page)
-  Q_PROPERTY(Color color READ color WRITE setColor)
   Q_PROPERTY(QString stompInstance READ stompInstance WRITE setStompInstance)
   Q_PROPERTY(QString stompName READ stompName WRITE setStompName)
   Q_PROPERTY(QString value1Title READ value1Title WRITE setValue1Title)
@@ -36,14 +33,12 @@ class TOASTERWIDGETS_EXPORT QToasterStompEditLCD : public QWidget, public QToast
   Q_PROPERTY(QString value14Title READ value14Title WRITE setValue14Title)
   Q_PROPERTY(QString value15Title READ value15Title WRITE setValue15Title)
   Q_PROPERTY(QString value16Title READ value16Title WRITE setValue16Title)
-  Q_PROPERTY(Page currentPage READ currentPage WRITE setCurrentPage)
-  Q_PROPERTY(Page maxPage READ maxPage WRITE setMaxPage)
+
 
 public:
   explicit QToasterStompEditLCD(QWidget *parent = 0);
   ~QToasterStompEditLCD();
 
-  Color color() const { return mColor; }
   QString stompInstance() const;
   QString stompName() const;
   QString value1Title() const;
@@ -62,8 +57,7 @@ public:
   QString value14Title() const;
   QString value15Title() const;
   QString value16Title() const;
-  Page currentPage() const { return mCurrentPage; }
-  Page maxPage() const { return mMaxPage; }
+
 
   void setCtxMenuProvider(ICtxMenuProvider* ctxMenuProvider) { mpCtxMenuProvider = ctxMenuProvider; }
 
@@ -105,8 +99,8 @@ public slots:
   void setValue15(QString value);
   void setValue16(QString value);
 
-  void setCurrentPage(Page page);
-  void setMaxPage(Page page);
+  virtual void setCurrentPage(Page page);
+  virtual void setMaxPage(Page page);
 
   void setStompFXType(StompInstance stompInstance, FXType fxType);
   void setStompAFXType(FXType fxType);

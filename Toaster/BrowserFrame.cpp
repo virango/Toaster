@@ -31,7 +31,6 @@ BrowserFrame::BrowserFrame(QWidget *parent)
   // reverb
   connect(&mReverb, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onReverbOnOff(bool)));
   // eq
-  connect(&mEq, SIGNAL(onOffReceived(bool)), this, SLOT(onEqOnOff(bool)));
   connect(&mEq, SIGNAL(bassReceived(double)), this, SLOT(onEqBass(double)));
   connect(&mEq, SIGNAL(middleReceived(double)), this, SLOT(onEqMiddle(double)));
   connect(&mEq, SIGNAL(trebleReceived(double)), this, SLOT(onEqTreble(double)));

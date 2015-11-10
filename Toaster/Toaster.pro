@@ -86,7 +86,10 @@ SOURCES += main.cpp\
     DriveDSFrame.cpp \
     ToneAndDuckingDSFrame.cpp \
     MetalDSFrame.cpp \
-    DebugCreateStringValuesDialog.cpp
+    DebugCreateStringValuesDialog.cpp \
+    WahPhaserFrame.cpp \
+    WahNoPeakFrame.cpp \
+    WahFormantShiftFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -138,7 +141,10 @@ HEADERS  += ToasterWindow.h \
     DriveDSFrame.h \
     ToneAndDuckingDSFrame.h \
     MetalDSFrame.h \
-    DebugCreateStringValuesDialog.h
+    DebugCreateStringValuesDialog.h \
+    WahPhaserFrame.h \
+    WahNoPeakFrame.h \
+    WahFormantShiftFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -156,7 +162,10 @@ FORMS    += \
     DriveDSFrame.ui \
     ToneAndDuckingDSFrame.ui \
     MetalDSFrame.ui \
-    DebugCreateStringValuesDialog.ui
+    DebugCreateStringValuesDialog.ui \
+    WahPhaserFrame.ui \
+    WahNoPeakFrame.ui \
+    WahFormantShiftFrame.ui
 
 RESOURCES += \
     resources.qrc

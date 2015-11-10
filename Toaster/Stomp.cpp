@@ -267,12 +267,12 @@ void Stomp::applyVoiceMix(double voiceMix)
 
 void Stomp::applyVoice1Pitch(double voice1Pitch)
 {
-  //midiApplyVoice1Pitch(phys2Raw(voice1Pitch, , ));
+  midiApplyVoice1Pitch(64 + (unsigned short)voice1Pitch);
 }
 
 void Stomp::applyVoice2Pitch(double voice2Pitch)
 {
-  //midiApplyVoice2Pitch(phys2Raw(voice2Pitch, , ));
+  midiApplyVoice2Pitch(64 + (unsigned short)voice2Pitch);
 }
 
 void Stomp::applyDetune(double detune)
@@ -544,12 +544,12 @@ void Stomp::midiVoiceMixReceived(unsigned short rawVal)
 
 void Stomp::midiVoice1PitchReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit voice1PitchReceived(rawVal - 64);
 }
 
 void Stomp::midiVoice2PitchReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit voice2PitchReceived(rawVal - 64);
 }
 
 void Stomp::midiDetuneReceived(unsigned short rawVal)

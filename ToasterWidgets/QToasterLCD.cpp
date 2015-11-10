@@ -70,8 +70,9 @@ QMap<QToasterLCD::Color, QString> QToasterLCD::sColor2StyleSheetsMap = {{Standar
                                                                         {Green       , COLOR_GREEN}};
 
 
-QToasterLCD::QToasterLCD()
-  : mColor(Standard)
+QToasterLCD::QToasterLCD(QWidget* parent)
+  : QWidget(parent)
+  , mColor(Standard)
   , mMaxPage(Page2)
   , mCurrentPage(Page1)
   , mpCtxMenuProvider(NULL)
@@ -111,4 +112,21 @@ void QToasterLCD::displayStompEnabled(QWidget& w, bool enabled)
     w.setStyleSheet(QString(ENABLED).arg(textColor));
   else
     w.setStyleSheet(QString(DISABLED).arg(textColor));
+}
+
+void QToasterLCD::setColor(Color color)
+{
+  mColor = color;
+  update();
+}
+
+void QToasterLCD::setCurrentPage(Page page)
+{
+  if(page <= mMaxPage)
+    mCurrentPage = page;
+}
+
+void QToasterLCD::setMaxPage(Page page)
+{
+  mMaxPage = page;
 }

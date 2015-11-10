@@ -1,5 +1,6 @@
 #ifndef QTOASTERLCD_H
 #define QTOASTERLCD_H
+#include <QWidget>
 #include <QMap>
 #include "Commons.h"
 
@@ -18,8 +19,14 @@
 
 struct ICtxMenuProvider;
 
-class QToasterLCD
+class QToasterLCD : public QWidget
 {
+  Q_OBJECT
+  Q_ENUMS(Color)
+  Q_ENUMS(Page)
+  Q_PROPERTY(Color color READ color WRITE setColor)
+  Q_PROPERTY(Page currentPage READ currentPage WRITE setCurrentPage)
+  Q_PROPERTY(Page maxPage READ maxPage WRITE setMaxPage)
 public:
   enum Color
   {
@@ -41,12 +48,23 @@ public:
     Page2 = 1
   };
 
-protected:
-  explicit QToasterLCD();
+
+  explicit QToasterLCD(QWidget *parent);
   ~QToasterLCD();
 
-  void createSkin();
+  Color color() const { return mColor; }
+  Page currentPage() const { return mCurrentPage; }
+  Page maxPage() const { return mMaxPage; }
 
+  void setCtxMenuProvider(ICtxMenuProvider* ctxMenuProvider) { mpCtxMenuProvider = ctxMenuProvider; }
+
+public slots:
+  virtual void setColor(Color color);
+  virtual void setCurrentPage(Page page);
+  virtual void setMaxPage(Page page);
+
+protected:
+  void createSkin();
   void displayStompEnabled(QWidget& w, bool enabled);
 
   QList<QPixmap> mSkinPixmaps;
