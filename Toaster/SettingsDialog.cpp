@@ -43,11 +43,6 @@ void SettingsDialog::on_createValueMapCheckBox_clicked(bool checked)
 }
 
 
-void SettingsDialog::on_fileEdit_textChanged(const QString& fileName)
-{
-  DebugMidi::get().mWriteFileName = fileName;
-}
-
 void SettingsDialog::on_fileButton_clicked()
 {
    QString fileName = QFileDialog::getSaveFileName(this);

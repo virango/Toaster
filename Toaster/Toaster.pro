@@ -85,7 +85,8 @@ SOURCES += main.cpp\
     DriveAndToneDSFrame.cpp \
     DriveDSFrame.cpp \
     ToneAndDuckingDSFrame.cpp \
-    MetalDSFrame.cpp
+    MetalDSFrame.cpp \
+    DebugCreateStringValuesDialog.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -136,7 +137,8 @@ HEADERS  += ToasterWindow.h \
     DriveAndToneDSFrame.h \
     DriveDSFrame.h \
     ToneAndDuckingDSFrame.h \
-    MetalDSFrame.h
+    MetalDSFrame.h \
+    DebugCreateStringValuesDialog.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -153,7 +155,8 @@ FORMS    += \
     DriveAndToneDSFrame.ui \
     DriveDSFrame.ui \
     ToneAndDuckingDSFrame.ui \
-    MetalDSFrame.ui
+    MetalDSFrame.ui \
+    DebugCreateStringValuesDialog.ui
 
 RESOURCES += \
     resources.qrc

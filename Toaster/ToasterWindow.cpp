@@ -5,6 +5,7 @@
 #include "SettingsDialog.h"
 #include "Settings.h"
 #include "DebugMidi.h"
+#include "DebugCreateStringValuesDialog.h"
 
 ToasterWindow::ToasterWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,9 +25,9 @@ ToasterWindow::ToasterWindow(QWidget *parent) :
 
     Midi::get().openPorts(inPort, outPort);
 
-    timer = new QTimer(this);
-    timer->setSingleShot(false);
-    connect(timer, SIGNAL(timeout()), this, SLOT(on_actionRequest_triggered()));
+    QTimer* timer = new QTimer(this);
+    timer->setSingleShot(true);
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_actionRequestValues_triggered()));
     timer->start(20);
 
     qRegisterMetaType<::FXType>("::FXType");
@@ -41,9 +42,9 @@ ToasterWindow::~ToasterWindow()
 }
 
 
-void ToasterWindow::on_actionRequest_triggered()
+void ToasterWindow::on_actionRequestValues_triggered()
 {
-#if 1
+#if 0
   static int val = 0;
   DebugMidi::get().debugRequestStringParam((unsigned short)val, 0x32, 0x2F);
   val++;
@@ -56,7 +57,7 @@ void ToasterWindow::on_actionRequest_triggered()
 #endif
 }
 
-void ToasterWindow::on_actionSettings_triggered()
+void ToasterWindow::on_actionConfigure_triggered()
 {
   showSettingsDialog();
 }
@@ -117,4 +118,50 @@ void ToasterWindow::on_actionCmd_triggered()
   DebugMidi::get().debugRequestExtStringParam(0x4000);
   DebugMidi::get().debugRequestExtParam(0x4000);
 */
+}
+
+void ToasterWindow::on_actionUploadKIPRFile_triggered()
+{
+
+}
+
+void ToasterWindow::on_actionOpenMIDIPorts_triggered()
+{
+
+}
+
+void ToasterWindow::on_actionClose_MIDI_Ports_triggered()
+{
+
+}
+
+void ToasterWindow::on_actionConnectToKPA_triggered()
+{
+  QString connectName("Toaster ");
+  ui->mainFrame->connect2KPA(connectName);
+}
+
+void ToasterWindow::on_actionDisconnectFromKPA_triggered()
+{
+  ui->mainFrame->disconnectFromKPA();
+}
+
+
+void ToasterWindow::on_actionExit_triggered()
+{
+  QApplication::quit();
+}
+
+
+void ToasterWindow::on_actionCreateStringValuesTable_triggered()
+{
+  on_actionDisconnectFromKPA_triggered();
+  DebugCreateStringValuesDialog d;
+  d.exec();
+  on_actionConnectToKPA_triggered();
+}
+
+void ToasterWindow::on_actionSendSySex_triggered()
+{
+
 }

@@ -25,8 +25,6 @@ private slots:
 
   void on_createValueMapCheckBox_clicked(bool checked);
 
-  void on_fileEdit_textChanged(const QString &fileName);
-
   void on_fileButton_clicked();
 
 private:

@@ -18,13 +18,17 @@ void DebugMidi::consumeSysExMsg(ByteArray* msg)
 {
   if(msg && msg->size() >= 10)  // set to 10 to receive ack msgs (fct==0x7e, ap==0x7f)
   {
+    if(mPrintValues)
+      debugPrintValues(msg);
 
-
+    if(mWriteStringValues)
+      debugWriteStringValues(msg);
   }
 }
 
 void DebugMidi::debugWriteStringValues(ByteArray* msg)
 {
+#if 0
   QString strVal;
   static unsigned short val1 = 0;
   static unsigned short val2 = 0;
@@ -34,8 +38,8 @@ void DebugMidi::debugWriteStringValues(ByteArray* msg)
     strVal.append(msg->at(i));
   qDebug() << QString::number(val2) << strVal;
 
-  QFile outFile1("raw2dB.log");
-  QFile outFile2("dB2raw.log");
+  QFile outFile1(mRaw2ValFileName);
+  QFile outFile2(mVal2RawFileName);
   outFile1.open(QIODevice::WriteOnly | QIODevice::Append);
   outFile2.open(QIODevice::WriteOnly | QIODevice::Append);
 
@@ -63,6 +67,33 @@ void DebugMidi::debugWriteStringValues(ByteArray* msg)
     textStream1 << endl;
     val1 = 0;
   }
+#else
+  QString strVal;
+  unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
+
+  for(int i = 12; (i < msg->size() && msg->at(i) != 0); ++i)
+    strVal.append(msg->at(i));
+  qDebug() << QString::number(rawVal) << strVal;
+
+  QFile outFile1(mRaw2ValFileName);
+  QFile outFile2(mVal2RawFileName);
+  outFile1.open(QIODevice::WriteOnly | QIODevice::Append);
+  outFile2.open(QIODevice::WriteOnly | QIODevice::Append);
+
+  QTextStream textStream1(&outFile1);
+  QTextStream textStream2(&outFile2);
+  textStream1 << "\"" << strVal  << "\",";
+  textStream2 << "{\"" << strVal << "\"," << rawVal  << "},";
+
+  static unsigned long long cnt = 0;
+  cnt++;
+  if(cnt%100 == 0)
+  {
+    textStream1 << endl;
+    textStream2 << endl;
+  }
+
+#endif
 }
 
 void DebugMidi::debugPrintValues(ByteArray* msg)
