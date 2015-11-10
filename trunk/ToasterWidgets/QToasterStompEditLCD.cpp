@@ -7,7 +7,7 @@
 #include "CtxMenuProvider.h"
 
 QToasterStompEditLCD::QToasterStompEditLCD(QWidget *parent)
-  : QWidget(parent)
+  : QToasterLCD(parent)
   , ui(new Ui::QToasterStompEditLCD)
 {
   ui->setupUi(this);
@@ -130,26 +130,6 @@ QString QToasterStompEditLCD::value16Title() const
   return ui->val16Title->text();
 }
 
-void QToasterStompEditLCD::setCurrentPage(Page page)
-{
-  if(page <= mMaxPage)
-  {
-    mCurrentPage = page;
-    ui->valWidget1->setCurrentIndex((int)page);
-    ui->valWidget2->setCurrentIndex((int)page);
-    updatePageInfo();
-  }
-}
-
-void QToasterStompEditLCD::setMaxPage(Page page)
-{
-  mMaxPage = page;
-  updatePageInfo();
-}
-
-
-
-
 void QToasterStompEditLCD::paintEvent(QPaintEvent* /*pe*/)
 {
   QPainter painter(this);
@@ -175,7 +155,7 @@ void QToasterStompEditLCD::contextMenuEvent(QContextMenuEvent * cme)
 
 void QToasterStompEditLCD::setColor(Color color)
 {
-  mColor = color;
+  QToasterLCD::setColor(color);
   QString colorStyleSheet = sColor2StyleSheetsMap[color];
   /*
   ui->stompAEdit->setStyleSheet(colorStyleSheet);
@@ -192,6 +172,21 @@ void QToasterStompEditLCD::setColor(Color color)
   ui->stompTypeName->setStyleSheet(colorStyleSheet);
   update();
 }
+
+void QToasterStompEditLCD::setCurrentPage(Page page)
+{
+  QToasterLCD::setCurrentPage(page);
+  ui->valWidget1->setCurrentIndex((int)mCurrentPage);
+  ui->valWidget2->setCurrentIndex((int)mCurrentPage);
+  updatePageInfo();
+}
+
+void QToasterStompEditLCD::setMaxPage(Page page)
+{
+  QToasterLCD::setMaxPage(page);
+  updatePageInfo();
+}
+
 
 void QToasterStompEditLCD::setStompInstance(QString stompInstance)
 {

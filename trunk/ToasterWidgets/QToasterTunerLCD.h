@@ -12,21 +12,17 @@ namespace Ui {
 
 struct ICtxMenuProvider;
 
-class TOASTERWIDGETS_EXPORT QToasterTunerLCD : public QWidget, public QToasterLCD
+class TOASTERWIDGETS_EXPORT QToasterTunerLCD : public QToasterLCD
 {
   Q_OBJECT
-  Q_ENUMS(Color)
-  Q_PROPERTY(Color color READ color WRITE setColor)
+
 
 public:
   explicit QToasterTunerLCD(QWidget *parent = 0);
   ~QToasterTunerLCD();
 
-  Color color() const { return mColor; }
-  void setCtxMenuProvider(ICtxMenuProvider* ctxMenuProvider) { mpCtxMenuProvider = ctxMenuProvider; }
 
 public slots:
-  void setColor(Color color);
   void setIndexPosition(int position);
   void setNote(QString note);
   void setOctave(QString octave);

@@ -6,7 +6,7 @@
 #include "CtxMenuProvider.h"
 
 QToasterTunerLCD::QToasterTunerLCD(QWidget *parent)
-  : QWidget(parent)
+  : QToasterLCD(parent)
   , ui(new Ui::QToasterTunerLCD)
 {
   ui->setupUi(this);
@@ -62,11 +62,7 @@ void QToasterTunerLCD::contextMenuEvent(QContextMenuEvent * cme)
   }
 }
 
-void QToasterTunerLCD::setColor(Color color)
-{
-  mColor = color;
-  update();
-}
+
 
 void QToasterTunerLCD::setIndexPosition(int position)
 {

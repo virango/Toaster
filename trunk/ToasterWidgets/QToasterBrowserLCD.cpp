@@ -19,7 +19,7 @@ QComboBox::drop-down {width: 0px; border-style: none}"
 
 
 QToasterBrowserLCD::QToasterBrowserLCD(QWidget *parent)
-  : QWidget(parent)
+  : QToasterLCD(parent)
   , ui(new Ui::QToasterBrowserLCD)
 {
   ui->setupUi(this);
@@ -79,7 +79,7 @@ void QToasterBrowserLCD::contextMenuEvent(QContextMenuEvent * cme)
   }
 }
 
-void QToasterBrowserLCD::setColor(Color color)
+void QToasterBrowserLCD::setColor(QToasterLCD::Color color)
 {
   mColor = color;
   QString colorStyleSheet = sColor2StyleSheetsMap[color];

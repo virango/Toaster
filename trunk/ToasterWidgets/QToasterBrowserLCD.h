@@ -9,18 +9,13 @@ namespace Ui {
   class QToasterBrowserLCD;
 }
 
-class TOASTERWIDGETS_EXPORT QToasterBrowserLCD : public QWidget, public QToasterLCD
+class TOASTERWIDGETS_EXPORT QToasterBrowserLCD : public QToasterLCD
 {
   Q_OBJECT
-  Q_ENUMS(Color)
-  Q_PROPERTY(Color color READ color WRITE setColor)
-
 public:
   explicit QToasterBrowserLCD(QWidget *parent = 0);
   ~QToasterBrowserLCD();
 
-  Color color() const { return mColor; }
-  void setCtxMenuProvider(ICtxMenuProvider* ctxMenuProvider) { mpCtxMenuProvider = ctxMenuProvider; }
 
   QStringList getBrowserModeViews();
 

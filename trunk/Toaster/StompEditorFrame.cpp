@@ -104,7 +104,19 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
     switch(fxType)
     {
       case WahWah:
+      case WahHighPass:
+      case WahLowPass:
+      case WahVowelFilter:
+      case WahFlanger:
+      case WahRateReducer:
         mpActivePage = ui->wahWah;
+        break;
+      case WahRingModulator:
+      case WahFrequencyShifter:
+        mpActivePage = ui->wahNoPeak;
+        break;
+      case WahFormantShifter:
+        mpActivePage = ui->wahFormantShift;
         break;
       case PureBooster:
         mpActivePage = ui->pureBooster;

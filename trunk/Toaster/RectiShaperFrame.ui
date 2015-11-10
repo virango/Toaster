@@ -277,7 +277,13 @@
     </rect>
    </property>
    <property name="color">
-    <enum>QToasterStompEditLCD::Red</enum>
+    <enum>QToasterLCD::Red</enum>
+   </property>
+   <property name="currentPage">
+    <enum>QToasterLCD::Page1</enum>
+   </property>
+   <property name="maxPage">
+    <enum>QToasterLCD::Page1</enum>
    </property>
    <property name="stompName">
     <string/>
@@ -329,12 +335,6 @@
    </property>
    <property name="value16Title">
     <string/>
-   </property>
-   <property name="currentPage">
-    <enum>QToasterStompEditLCD::Page1</enum>
-   </property>
-   <property name="maxPage">
-    <enum>QToasterStompEditLCD::Page1</enum>
    </property>
   </widget>
  </widget>
