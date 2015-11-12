@@ -145,7 +145,7 @@ void DebugMidi::debugPrintValues(ByteArray* msg)
     }
   }
 
-  if(ap == 0x7C || ap != 0x33)
+  if(ap == 0x7C || ap != 0x38)
       return;
 
   //if(mod == 0x00)

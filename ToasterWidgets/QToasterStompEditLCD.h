@@ -15,6 +15,7 @@ struct ICtxMenuProvider;
 class TOASTERWIDGETS_EXPORT QToasterStompEditLCD : public QToasterLCD
 {
   Q_OBJECT
+  Q_ENUMS(ScaleView)
   Q_PROPERTY(QString stompInstance READ stompInstance WRITE setStompInstance)
   Q_PROPERTY(QString stompName READ stompName WRITE setStompName)
   Q_PROPERTY(QString value1Title READ value1Title WRITE setValue1Title)
@@ -33,11 +34,26 @@ class TOASTERWIDGETS_EXPORT QToasterStompEditLCD : public QToasterLCD
   Q_PROPERTY(QString value14Title READ value14Title WRITE setValue14Title)
   Q_PROPERTY(QString value15Title READ value15Title WRITE setValue15Title)
   Q_PROPERTY(QString value16Title READ value16Title WRITE setValue16Title)
-
+  Q_PROPERTY(double eqBand1Value READ eqBand1Value WRITE setEqBand1Value)
+  Q_PROPERTY(double eqBand2Value READ eqBand2Value WRITE setEqBand2Value)
+  Q_PROPERTY(double eqBand3Value READ eqBand3Value WRITE setEqBand3Value)
+  Q_PROPERTY(double eqBand4Value READ eqBand4Value WRITE setEqBand4Value)
+  Q_PROPERTY(double eqBand5Value READ eqBand5Value WRITE setEqBand5Value)
+  Q_PROPERTY(double eqBand6Value READ eqBand6Value WRITE setEqBand6Value)
+  Q_PROPERTY(double eqBand7Value READ eqBand7Value WRITE setEqBand7Value)
+  Q_PROPERTY(double eqBand8Value READ eqBand8Value WRITE setEqBand8Value)
+  Q_PROPERTY(ScaleView scaleView READ scaleView WRITE setScaleView)
 
 public:
   explicit QToasterStompEditLCD(QWidget *parent = 0);
   ~QToasterStompEditLCD();
+
+  enum ScaleView
+  {
+    Empty = 0,
+    GraphicEq = 1,
+    StompValue = 2
+  };
 
   QString stompInstance() const;
   QString stompName() const;
@@ -58,12 +74,21 @@ public:
   QString value15Title() const;
   QString value16Title() const;
 
+  double eqBand1Value() const;
+  double eqBand2Value() const;
+  double eqBand3Value() const;
+  double eqBand4Value() const;
+  double eqBand5Value() const;
+  double eqBand6Value() const;
+  double eqBand7Value() const;
+  double eqBand8Value() const;
+
+  ScaleView scaleView() const;
 
   void setCtxMenuProvider(ICtxMenuProvider* ctxMenuProvider) { mpCtxMenuProvider = ctxMenuProvider; }
 
-
 public slots:
-  void setColor(Color color);
+  virtual void setColor(Color color);
   void setStompInstance(QString stompInstance);
   void setStompName(QString stompName);
   void setValue1Title(QString title);
@@ -99,6 +124,17 @@ public slots:
   void setValue15(QString value);
   void setValue16(QString value);
 
+  void setEqBand1Value(double value);
+  void setEqBand2Value(double value);
+  void setEqBand3Value(double value);
+  void setEqBand4Value(double value);
+  void setEqBand5Value(double value);
+  void setEqBand6Value(double value);
+  void setEqBand7Value(double value);
+  void setEqBand8Value(double value);
+
+  void setScaleView(ScaleView scaleView);
+
   virtual void setCurrentPage(Page page);
   virtual void setMaxPage(Page page);
 
@@ -126,6 +162,9 @@ protected:
   void paintEvent(QPaintEvent*);
   void contextMenuEvent(QContextMenuEvent * cme);
   void updatePageInfo();
+
+  void setEqBandValue(QWidget* widget, int value);
+  double getEqBandValue(QWidget* widget) const;
 
 private:
   Ui::QToasterStompEditLCD *ui;

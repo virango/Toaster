@@ -73,6 +73,8 @@ protected:
   BYTEARRAYDECL(SmoothChords)
   BYTEARRAYDECL(PureTuning)
   BYTEARRAYDECL(Key)
+  BYTEARRAYDECL(LowCut)
+  BYTEARRAYDECL(HighCut)
 
   StompMidi(StompInstance instance);
   ~StompMidi();
@@ -247,6 +249,13 @@ protected:
   // Key
   void midiRequestKey();
   void midiApplyKey(unsigned short rawVal);
+  // LowCut
+  void midiRequestLowCut();
+  void midiApplyLowCut(unsigned short rawVal);
+  // HighCut
+  void midiRequestHighCut();
+  void midiApplyHighCut(unsigned short rawVal);
+
 
   // receive callbacks for derived class
   virtual void midiTypeReceived(unsigned short rawVal) = 0;
@@ -304,6 +313,8 @@ protected:
   virtual void midiSmoothChordsReceived(unsigned short rawVal) = 0;
   virtual void midiPureTuningReceived(unsigned short rawVal) = 0;
   virtual void midiKeyReceived(unsigned short rawVal) = 0;
+  virtual void midiLowCutReceived(unsigned short rawVal) = 0;
+  virtual void midiHighCutReceived(unsigned short rawVal) = 0;
 
   StompInstance mInstance;
 

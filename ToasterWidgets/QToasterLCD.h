@@ -45,7 +45,8 @@ public:
   enum Page
   {
     Page1 = 0,
-    Page2 = 1
+    Page2 = 1,
+    Page3 = 2
   };
 
 

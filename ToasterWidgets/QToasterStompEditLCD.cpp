@@ -12,6 +12,7 @@ QToasterStompEditLCD::QToasterStompEditLCD(QWidget *parent)
 {
   ui->setupUi(this);
   createSkin();
+
   ui->stompAEdit->setText("-");
   ui->stompBEdit->setText("-");
   ui->stompCEdit->setText("-");
@@ -128,6 +129,51 @@ QString QToasterStompEditLCD::value15Title() const
 QString QToasterStompEditLCD::value16Title() const
 {
   return ui->val16Title->text();
+}
+
+double QToasterStompEditLCD::eqBand1Value() const
+{
+  return getEqBandValue(ui->eqBand1Widget);
+}
+
+double QToasterStompEditLCD::eqBand2Value() const
+{
+  return getEqBandValue(ui->eqBand2Widget);
+}
+
+double QToasterStompEditLCD::eqBand3Value() const
+{
+  return getEqBandValue(ui->eqBand3Widget);
+}
+
+double QToasterStompEditLCD::eqBand4Value() const
+{
+  return getEqBandValue(ui->eqBand4Widget);
+}
+
+double QToasterStompEditLCD::eqBand5Value() const
+{
+  return getEqBandValue(ui->eqBand5Widget);
+}
+
+double QToasterStompEditLCD::eqBand6Value() const
+{
+  return getEqBandValue(ui->eqBand6Widget);
+}
+
+double QToasterStompEditLCD::eqBand7Value() const
+{
+  return getEqBandValue(ui->eqBand7Widget);
+}
+
+double QToasterStompEditLCD::eqBand8Value() const
+{
+  return getEqBandValue(ui->eqBand8Widget);
+}
+
+QToasterStompEditLCD::ScaleView QToasterStompEditLCD::scaleView() const
+{
+  return (ScaleView) ui->scaleWidget->currentIndex();
 }
 
 void QToasterStompEditLCD::paintEvent(QPaintEvent* /*pe*/)
@@ -390,6 +436,51 @@ void QToasterStompEditLCD::setValue16(QString value)
   ui->val16->setText(value);
 }
 
+void QToasterStompEditLCD::setEqBand1Value(double value)
+{
+  setEqBandValue(ui->eqBand1Widget, (int)value);
+}
+
+void QToasterStompEditLCD::setEqBand2Value(double value)
+{
+  setEqBandValue(ui->eqBand2Widget, (int)value);
+}
+
+void QToasterStompEditLCD::setEqBand3Value(double value)
+{
+  setEqBandValue(ui->eqBand3Widget, (int)value);
+}
+
+void QToasterStompEditLCD::setEqBand4Value(double value)
+{
+  setEqBandValue(ui->eqBand4Widget, (int)value);
+}
+
+void QToasterStompEditLCD::setEqBand5Value(double value)
+{
+  setEqBandValue(ui->eqBand5Widget, (int)value);
+}
+
+void QToasterStompEditLCD::setEqBand6Value(double value)
+{
+  setEqBandValue(ui->eqBand6Widget, (int)value);
+}
+
+void QToasterStompEditLCD::setEqBand7Value(double value)
+{
+  setEqBandValue(ui->eqBand7Widget, (int)value);
+}
+
+void QToasterStompEditLCD::setEqBand8Value(double value)
+{
+  setEqBandValue(ui->eqBand8Widget, (int)value);
+}
+
+void QToasterStompEditLCD::setScaleView(ScaleView scaleView)
+{
+  ui->scaleWidget->setCurrentIndex((int)scaleView);
+}
+
 void QToasterStompEditLCD::setStompFXType(StompInstance stompInstance, FXType fxType)
 {
   switch(stompInstance)
@@ -528,3 +619,38 @@ void QToasterStompEditLCD::updatePageInfo()
     ui->pageInfo->setText(" ");
   }
 }
+
+void QToasterStompEditLCD::setEqBandValue(QWidget* widget, int value)
+{
+  if(value >= -12 && value <= 12 && widget != nullptr)
+  {
+    QRect rect = widget->geometry();
+    if(value <= 0)
+    {
+      rect.setY(14);
+      rect.setHeight(((-1) * value) + 1);
+    }
+    else
+    {
+      rect.setY(14-value);
+      rect.setHeight(value + 1);
+    }
+    widget->setGeometry(rect);
+    update();
+  }
+}
+
+double QToasterStompEditLCD::getEqBandValue(QWidget* widget) const
+{
+  int val = 0;
+  if(widget != nullptr)
+  {
+    const QRect& rect = widget->geometry();
+    val = rect.height() - 1;
+
+    if(rect.y() == 14)
+      val *= (-1);
+  }
+  return (double)val;
+}
+

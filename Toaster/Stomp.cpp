@@ -162,42 +162,42 @@ void Stomp::applyCompressorSquash(double compressorSquash)
 
 void Stomp::applyGraphicEQBand1(double graphicEQBand)
 {
-  //midiApplyGraphicEQBand1(phys2Raw(graphicEQBand, , ));
+  midiApplyGraphicEQBand1(phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand2(double graphicEQBand)
 {
-  //midiApplyGraphicEQBand2(phys2Raw(graphicEQBand, , ));
+  midiApplyGraphicEQBand2(phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand3(double graphicEQBand)
 {
-  //midiApplyGraphicEQBand3(phys2Raw(graphicEQBand, , ));
+  midiApplyGraphicEQBand3(phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand4(double graphicEQBand)
 {
-  //midiApplyGraphicEQBand4(phys2Raw(graphicEQBand, , ));
+  midiApplyGraphicEQBand4(phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand5(double graphicEQBand)
 {
-  //midiApplyGraphicEQBand5(phys2Raw(graphicEQBand, , ));
+  midiApplyGraphicEQBand5(phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand6(double graphicEQBand)
 {
-  //midiApplyGraphicEQBand6(phys2Raw(graphicEQBand, , ));
+  midiApplyGraphicEQBand6(phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand7(double graphicEQBand)
 {
-  //midiApplyGraphicEQBand7(phys2Raw(graphicEQBand, , ));
+  midiApplyGraphicEQBand7(phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand8(double graphicEQBand)
 {
-  //midiApplyGraphicEQBand8(phys2Raw(graphicEQBand, , ));
+  midiApplyGraphicEQBand8(phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyParametricEQLowGain(double gain)
@@ -295,6 +295,15 @@ void Stomp::applyKey(double key)
   //midiApplyKey(phys2Raw(key, , ));
 }
 
+void Stomp::applyLowCut(double lowCut)
+{
+  midiApplyLowCut((unsigned int)lowCut);
+}
+
+void Stomp::applyHighCut(double highCut)
+{
+  midiApplyHighCut((unsigned short)highCut);
+}
 
 // StompMidi callbacks
 void Stomp::midiTypeReceived(unsigned short rawVal)
@@ -414,7 +423,7 @@ void Stomp::midiModulationPhaserPeakSpreadReceived(unsigned short rawVal)
 
 void Stomp::midiModulationPhaserStagesReceived(unsigned short rawVal)
 {
-  emit modulationPhaserStagesReceived((double)(2*rawVal)+2);
+  emit modulationPhaserStagesReceived((double)(2 * rawVal) + 2);
 }
 
 void Stomp::midiRotarySpeedReceived(unsigned short rawVal)
@@ -439,42 +448,42 @@ void Stomp::midiCompressorSquashReceived(unsigned short rawVal)
 
 void Stomp::midiGraphicEQBand1Received(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit graphicEQBand1Received(raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand2Received(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit graphicEQBand2Received(raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand3Received(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit graphicEQBand3Received(raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand4Received(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit graphicEQBand4Received(raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand5Received(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit graphicEQBand5Received(raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand6Received(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit graphicEQBand6Received(raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand7Received(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit graphicEQBand7Received(raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand8Received(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit graphicEQBand8Received(raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiParametricEQLowGainReceived(unsigned short rawVal)
@@ -570,6 +579,16 @@ void Stomp::midiPureTuningReceived(unsigned short rawVal)
 void Stomp::midiKeyReceived(unsigned short rawVal)
 {
   //emit Received(raw2Phys(rawVal, , ));
+}
+
+void Stomp::midiLowCutReceived(unsigned short rawVal)
+{
+  emit lowCutReceived((double)rawVal);
+}
+
+void Stomp::midiHighCutReceived(unsigned short rawVal)
+{
+  emit highCutReceived((double)rawVal);
 }
 
 

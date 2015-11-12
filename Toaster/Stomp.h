@@ -70,6 +70,8 @@ public:
   void requestSmoothChords() { midiRequestSmoothChords(); }
   void requestPureTuning() { midiRequestPureTuning(); }
   void requestKey() { midiRequestKey(); }
+  void requestLowCut() { midiRequestLowCut(); }
+  void requestHighCut() { midiRequestHighCut(); }
 
 signals:
   void onOffReceived(bool onOff);
@@ -100,14 +102,14 @@ signals:
   void rotaryDistanceReceived(unsigned short rawVal);
   void rotaryBalanceReceived(unsigned short rawVal);
   void compressorSquashReceived(unsigned short rawVal);
-  void graphicEQBand1Received(unsigned short rawVal);
-  void graphicEQBand2Received(unsigned short rawVal);
-  void graphicEQBand3Received(unsigned short rawVal);
-  void graphicEQBand4Received(unsigned short rawVal);
-  void graphicEQBand5Received(unsigned short rawVal);
-  void graphicEQBand6Received(unsigned short rawVal);
-  void graphicEQBand7Received(unsigned short rawVal);
-  void graphicEQBand8Received(unsigned short rawVal);
+  void graphicEQBand1Received(double graphicEQBand1);
+  void graphicEQBand2Received(double graphicEQBand2);
+  void graphicEQBand3Received(double graphicEQBand3);
+  void graphicEQBand4Received(double graphicEQBand4);
+  void graphicEQBand5Received(double graphicEQBand5);
+  void graphicEQBand6Received(double graphicEQBand6);
+  void graphicEQBand7Received(double graphicEQBand7);
+  void graphicEQBand8Received(double graphicEQBand8);
   void parametricEQLowGainReceived(double lowGain);
   void parametricEQLowFrequencyReceived(double lowFreq);
   void parametricEQHighGainReceived(double highGain);
@@ -127,7 +129,8 @@ signals:
   void smoothChordsReceived(unsigned short rawVal);
   void pureTuningReceived(unsigned short rawVal);
   void keyReceived(unsigned short rawVal);
-
+  void lowCutReceived(double lowCut);
+  void highCutReceived(double highCut);
   
 public slots:
   void applyOnOff(bool onOff);
@@ -185,6 +188,8 @@ public slots:
   void applySmoothChords(double smoothChords);
   void applyPureTuning(double pureTuning);
   void applyKey(double key);
+  void applyLowCut(double lowCut);
+  void applyHighCut(double highCut);
   
 protected:
   // StompMidi
@@ -243,6 +248,8 @@ protected:
   virtual void midiSmoothChordsReceived(unsigned short rawVal);
   virtual void midiPureTuningReceived(unsigned short rawVal);
   virtual void midiKeyReceived(unsigned short rawVal);
+  virtual void midiLowCutReceived(unsigned short rawVal);
+  virtual void midiHighCutReceived(unsigned short rawVal);
 
   FXType mFXType;
 
