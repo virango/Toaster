@@ -132,12 +132,12 @@ void Stomp::applyModulationManual(double modulationManual)
 
 void Stomp::applyModulationPhaserPeakSpread(double modulationPhaserPeakSpread)
 {
-  //midiApplyModulationPhaserPeakSpread(phys2Raw(modulationPhaserPeakSpread, , ));
+  midiApplyModulationPhaserPeakSpread(phys2Raw(modulationPhaserPeakSpread, 10, -5));
 }
 
 void Stomp::applyModulationPhaserStages(double modulationPhaserStages)
 {
-  //midiApplyModulationPhaserStages(phys2Raw(modulationPhaserStages, , ));
+  midiApplyModulationPhaserStages((unsigned short)(modulationPhaserStages-2)/2);
 }
 
 void Stomp::applyRotarySpeed(RotarySpeed rotarySpeed)
@@ -409,12 +409,12 @@ void Stomp::midiModulationManualReceived(unsigned short rawVal)
 
 void Stomp::midiModulationPhaserPeakSpreadReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit modulationPhaserPeakSpreadReceived(raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiModulationPhaserStagesReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit modulationPhaserStagesReceived((double)(2*rawVal)+2);
 }
 
 void Stomp::midiRotarySpeedReceived(unsigned short rawVal)

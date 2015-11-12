@@ -94,8 +94,8 @@ signals:
   void modulationCrossoverReceived(unsigned short rawVal);
   void modulationHyperChorusAmountReceived(unsigned short rawVal);
   void modulationManualReceived(unsigned short rawVal);
-  void modulationPhaserPeakSpreadReceived(unsigned short rawVal);
-  void modulationPhaserStagesReceived(unsigned short rawVal);
+  void modulationPhaserPeakSpreadReceived(double peakSpread);
+  void modulationPhaserStagesReceived(double stages);
   void rotarySpeedReceived(unsigned short rawVal);
   void rotaryDistanceReceived(unsigned short rawVal);
   void rotaryBalanceReceived(unsigned short rawVal);
