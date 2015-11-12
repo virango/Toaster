@@ -82,6 +82,12 @@
    <property name="value16Title">
     <string>Page</string>
    </property>
+   <property name="eqBand1Value">
+    <number>0</number>
+   </property>
+   <property name="scaleView">
+    <enum>QToasterStompEditLCD::Empty</enum>
+   </property>
   </widget>
   <widget class="QStackedWidget" name="smallDials">
    <property name="geometry">

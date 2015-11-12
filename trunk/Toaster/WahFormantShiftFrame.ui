@@ -229,6 +229,9 @@
    <property name="value16Title">
     <string>Page</string>
    </property>
+   <property name="scaleView">
+    <enum>QToasterStompEditLCD::Empty</enum>
+   </property>
   </widget>
   <widget class="QStackedWidget" name="bigDials">
    <property name="geometry">

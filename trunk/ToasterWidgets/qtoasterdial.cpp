@@ -172,7 +172,10 @@ void QToasterDial::setValue(double value)
 {
   if(value >= mMinValue && value <= mMaxValue && mIsActive)
   {
-    mCurrValue = value;
+    if(mStepWidth >= 1.0)
+      mCurrValue = static_cast<double>(static_cast<int>(value+0.5));
+    else
+      mCurrValue = static_cast<double>(static_cast<int>(value*10+0.5))/10.0;
     updateValueText();
     updateLEDRing();
   }

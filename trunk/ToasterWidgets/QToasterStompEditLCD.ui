@@ -1605,6 +1605,225 @@ border-radius: 3px;</string>
     </widget>
    </widget>
   </widget>
+  <widget class="QStackedWidget" name="scaleWidget">
+   <property name="geometry">
+    <rect>
+     <x>155</x>
+     <y>54</y>
+     <width>260</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>1</number>
+   </property>
+   <widget class="QWidget" name="emptyPage"/>
+   <widget class="QWidget" name="graphicEqPage">
+    <widget class="Line" name="middleHLine">
+     <property name="geometry">
+      <rect>
+       <x>47</x>
+       <y>14</y>
+       <width>167</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#middleHLine
+{
+	color:  rgb(0, 0, 0);
+	background-color: rgb(0, 0, 0);
+}</string>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QWidget" name="eqBand1Widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>53</x>
+       <y>14</y>
+       <width>15</width>
+       <height>12</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="eqBand2Widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>73</x>
+       <y>14</y>
+       <width>15</width>
+       <height>12</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="eqBand4Widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>113</x>
+       <y>14</y>
+       <width>15</width>
+       <height>12</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="eqBand3Widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>93</x>
+       <y>14</y>
+       <width>15</width>
+       <height>12</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
+     </property>
+    </widget>
+    <widget class="Line" name="middleVLine">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>1</y>
+       <width>1</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#middleVLine
+{
+	color:  rgb(110, 110, 110);
+	background-color: rgb(110, 110, 110);
+}</string>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="QWidget" name="eqBand8Widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>193</x>
+       <y>14</y>
+       <width>15</width>
+       <height>12</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="eqBand6Widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>153</x>
+       <y>14</y>
+       <width>15</width>
+       <height>12</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="eqBand7Widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>173</x>
+       <y>14</y>
+       <width>15</width>
+       <height>12</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="eqBand5Widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>133</x>
+       <y>14</y>
+       <width>15</width>
+       <height>12</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
+     </property>
+    </widget>
+    <widget class="Line" name="startVLine">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>1</y>
+       <width>1</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#startVLine
+{
+	color:  rgb(50, 50, 50);
+	background-color: rgb(50, 50, 50);
+}</string>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="endVLine">
+     <property name="geometry">
+      <rect>
+       <x>211</x>
+       <y>1</y>
+       <width>1</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#endVLine
+{
+	color:  rgb(50, 50, 50);
+	background-color: rgb(50, 50, 50);
+}</string>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="stompScalePage"/>
+  </widget>
   <zorder>line4</zorder>
   <zorder>stompAEdit</zorder>
   <zorder>frame</zorder>
@@ -1622,6 +1841,7 @@ border-radius: 3px;</string>
   <zorder>delayEdit</zorder>
   <zorder>reverbEdit</zorder>
   <zorder>valWidget2</zorder>
+  <zorder>scaleWidget</zorder>
  </widget>
  <resources/>
  <connections/>

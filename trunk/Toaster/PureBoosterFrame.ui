@@ -82,6 +82,9 @@
    <property name="value16Title">
     <string/>
    </property>
+   <property name="scaleView">
+    <enum>QToasterStompEditLCD::Empty</enum>
+   </property>
   </widget>
   <widget class="QToasterDial" name="dummy1Dial">
    <property name="geometry">

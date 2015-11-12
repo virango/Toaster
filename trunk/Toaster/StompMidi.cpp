@@ -65,6 +65,8 @@ BYTEARRAYDEF(StompMidi, Detune,                               0x3A)
 BYTEARRAYDEF(StompMidi, SmoothChords,                         0x3C)
 BYTEARRAYDEF(StompMidi, PureTuning,                           0x3D)
 BYTEARRAYDEF(StompMidi, Key,                                  0x40)
+BYTEARRAYDEF(StompMidi, LowCut,                               0x43)
+BYTEARRAYDEF(StompMidi, HighCut,                              0x44)
 
 StompMidi::FXType2MidiRawValMap StompMidi::sFXType2MidiRawValMap;
 StompMidi::MidiRawValMap2FXType StompMidi::sMidiRawValMap2FXType;
@@ -195,6 +197,10 @@ void StompMidi::consumeSysExMsg(ByteArray* msg)
       midiPureTuningReceived(rawVal);
     else if(param == sKey[0])
       midiKeyReceived(rawVal);
+    else if(param == sLowCut[0])
+      midiLowCutReceived(rawVal);
+    else if(param == sHighCut[0])
+      midiHighCutReceived(rawVal);
   }
 }
 
@@ -504,7 +510,7 @@ void StompMidi::midiRequestGraphicEQBand2()
 
 void StompMidi::midiApplyGraphicEQBand2(unsigned short rawVal)
 {
-  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sGraphicEQBand3, rawVal));
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sGraphicEQBand2, rawVal));
 }
 
 void StompMidi::midiRequestGraphicEQBand3()
@@ -755,6 +761,26 @@ void StompMidi::midiRequestKey()
 void StompMidi::midiApplyKey(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sKey, rawVal));
+}
+
+void StompMidi::midiRequestLowCut()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sLowCut));
+}
+
+void StompMidi::midiApplyLowCut(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sLowCut, rawVal));
+}
+
+void StompMidi::midiRequestHighCut()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sHighCut));
+}
+
+void StompMidi::midiApplyHighCut(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sHighCut, rawVal));
 }
 
 ByteArray StompMidi::getAddressPage()

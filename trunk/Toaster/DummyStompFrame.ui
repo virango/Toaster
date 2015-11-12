@@ -22,6 +22,9 @@
      <height>115</height>
     </rect>
    </property>
+   <property name="maxPage">
+    <enum>QToasterLCD::Page1</enum>
+   </property>
    <property name="stompName">
     <string>Unknown</string>
    </property>
@@ -73,8 +76,8 @@
    <property name="value16Title">
     <string/>
    </property>
-   <property name="maxPage">
-    <enum>QToasterStompEditLCD::Page1</enum>
+   <property name="scaleView">
+    <enum>QToasterStompEditLCD::Empty</enum>
    </property>
   </widget>
   <widget class="QToasterDial" name="dummy7Dial">

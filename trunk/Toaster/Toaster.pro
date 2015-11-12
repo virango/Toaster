@@ -89,7 +89,8 @@ SOURCES += main.cpp\
     DebugCreateStringValuesDialog.cpp \
     WahPhaserFrame.cpp \
     WahNoPeakFrame.cpp \
-    WahFormantShiftFrame.cpp
+    WahFormantShiftFrame.cpp \
+    GraphicEqualizerFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -144,7 +145,8 @@ HEADERS  += ToasterWindow.h \
     DebugCreateStringValuesDialog.h \
     WahPhaserFrame.h \
     WahNoPeakFrame.h \
-    WahFormantShiftFrame.h
+    WahFormantShiftFrame.h \
+    GraphicEqualizerFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -165,7 +167,8 @@ FORMS    += \
     DebugCreateStringValuesDialog.ui \
     WahPhaserFrame.ui \
     WahNoPeakFrame.ui \
-    WahFormantShiftFrame.ui
+    WahFormantShiftFrame.ui \
+    GraphicEqualizerFrame.ui
 
 RESOURCES += \
     resources.qrc

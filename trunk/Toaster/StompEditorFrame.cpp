@@ -151,6 +151,9 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case MetalDS:
         mpActivePage = ui->metalDS;
         break;
+      case GraphicEqualizer:
+        mpActivePage = ui->graphicEqualizer;
+        break;
       default:
          mpActivePage = ui->dummyStomp;
          break;
