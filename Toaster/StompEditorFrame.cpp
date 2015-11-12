@@ -118,6 +118,9 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case WahFormantShifter:
         mpActivePage = ui->wahFormantShift;
         break;
+      case WahPhaser:
+        mpActivePage = ui->wahPhaser;
+        break;
       case PureBooster:
         mpActivePage = ui->pureBooster;
         break;
