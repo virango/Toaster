@@ -90,7 +90,10 @@ SOURCES += main.cpp\
     WahPhaserFrame.cpp \
     WahNoPeakFrame.cpp \
     WahFormantShiftFrame.cpp \
-    GraphicEqualizerFrame.cpp
+    GraphicEqualizerFrame.cpp \
+    StudioEqualizerFrame.cpp \
+    MetalEqualizerFrame.cpp \
+    StereoWeidenerFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -146,7 +149,10 @@ HEADERS  += ToasterWindow.h \
     WahPhaserFrame.h \
     WahNoPeakFrame.h \
     WahFormantShiftFrame.h \
-    GraphicEqualizerFrame.h
+    GraphicEqualizerFrame.h \
+    StudioEqualizerFrame.h \
+    MetalEqualizerFrame.h \
+    StereoWeidenerFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -168,7 +174,10 @@ FORMS    += \
     WahPhaserFrame.ui \
     WahNoPeakFrame.ui \
     WahFormantShiftFrame.ui \
-    GraphicEqualizerFrame.ui
+    GraphicEqualizerFrame.ui \
+    StudioEqualizerFrame.ui \
+    MetalEqualizerFrame.ui \
+    StereoWeidenerFrame.ui
 
 RESOURCES += \
     resources.qrc

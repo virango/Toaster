@@ -18,6 +18,7 @@ class TOASTERWIDGETS_EXPORT QToasterDial : public QWidget
   Q_PROPERTY(double maxValue READ maxValue WRITE setMaxValue)
   Q_PROPERTY(double value READ value WRITE setValue)
   Q_PROPERTY(double stepWidth READ stepWidth WRITE setStepWidth)
+  Q_PROPERTY(unsigned int precision READ precision WRITE setPrecision)
   Q_PROPERTY(QString unit READ unit WRITE setUnit)
   Q_PROPERTY(bool isActive READ isActive WRITE setIsActive)
 
@@ -40,6 +41,7 @@ public:
   double maxValue() const { return mMaxValue; }
   double value() const { return mCurrValue; }
   double stepWidth() const { return mStepWidth; }
+  int precision() const { return mPrecision; }
   QString unit() const { return mUnit; }
   bool isActive() const { return mIsActive; }
 
@@ -53,6 +55,7 @@ public slots:
   void setMinValue(double minValue);
   void setMaxValue(double maxValue);
   void setStepWidth(double stepWidth);
+  void setPrecision(unsigned int precision) { mPrecision = precision; }
   void setValue(double value);
   void setUnit(QString unit);
   void setIsActive(bool active) { mIsActive = active; }
@@ -88,6 +91,7 @@ private:
   double   mMinValue;
   double   mMaxValue;
   double   mStepWidth;
+  int      mPrecision;
   double   mCurrValue;
   QString  mCurrValueText;
 

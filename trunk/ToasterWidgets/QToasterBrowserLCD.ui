@@ -599,7 +599,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -630,7 +630,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -655,7 +655,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>215</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -680,7 +680,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>320</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -705,7 +705,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -726,7 +726,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -747,7 +747,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>215</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -768,7 +768,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>320</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>

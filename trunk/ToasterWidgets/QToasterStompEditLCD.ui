@@ -655,7 +655,7 @@ border-radius: 3px;</string>
     <string notr="true">QStackedWidget {background-color: transparent;}</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="valPage11">
     <property name="styleSheet">
@@ -665,7 +665,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -696,7 +696,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -721,7 +721,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>215</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -746,7 +746,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>320</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -771,7 +771,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -792,7 +792,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -813,7 +813,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>215</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -834,7 +834,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>320</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -857,7 +857,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -878,7 +878,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>320</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -899,7 +899,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -924,7 +924,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -955,7 +955,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -976,7 +976,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>215</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -1001,7 +1001,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>320</x>
-       <y>12</y>
+       <y>9</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -1026,7 +1026,7 @@ border-radius: 3px;</string>
      <property name="geometry">
       <rect>
        <x>215</x>
-       <y>0</y>
+       <y>-3</y>
        <width>95</width>
        <height>15</height>
       </rect>
@@ -1038,6 +1038,198 @@ border-radius: 3px;</string>
      </property>
      <property name="text">
       <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="valPage13">
+    <widget class="QLabel" name="val20">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>-3</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val19">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
+       <y>-3</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val17">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>-3</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val17Title">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>9</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val18Title">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>9</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Middle</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val19Title">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
+       <y>9</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Treble</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val18">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>-3</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val20Title">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>9</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Presence</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -1604,6 +1796,216 @@ border-radius: 3px;</string>
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="valPage23">
+    <widget class="QLabel" name="val22">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val24Title">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val21">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val23Title">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val22Title">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val21Title">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>4</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="text">
+      <string>Bass</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val23">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="val24">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>18</y>
+       <width>95</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>7</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;0.0&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QStackedWidget" name="scaleWidget">
    <property name="geometry">
@@ -1615,7 +2017,7 @@ border-radius: 3px;</string>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="emptyPage"/>
    <widget class="QWidget" name="graphicEqPage">

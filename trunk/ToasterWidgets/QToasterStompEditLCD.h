@@ -34,6 +34,14 @@ class TOASTERWIDGETS_EXPORT QToasterStompEditLCD : public QToasterLCD
   Q_PROPERTY(QString value14Title READ value14Title WRITE setValue14Title)
   Q_PROPERTY(QString value15Title READ value15Title WRITE setValue15Title)
   Q_PROPERTY(QString value16Title READ value16Title WRITE setValue16Title)
+  Q_PROPERTY(QString value17Title READ value17Title WRITE setValue17Title)
+  Q_PROPERTY(QString value18Title READ value18Title WRITE setValue18Title)
+  Q_PROPERTY(QString value19Title READ value19Title WRITE setValue19Title)
+  Q_PROPERTY(QString value20Title READ value20Title WRITE setValue20Title)
+  Q_PROPERTY(QString value21Title READ value21Title WRITE setValue21Title)
+  Q_PROPERTY(QString value22Title READ value22Title WRITE setValue22Title)
+  Q_PROPERTY(QString value23Title READ value23Title WRITE setValue23Title)
+  Q_PROPERTY(QString value24Title READ value24Title WRITE setValue24Title)
   Q_PROPERTY(double eqBand1Value READ eqBand1Value WRITE setEqBand1Value)
   Q_PROPERTY(double eqBand2Value READ eqBand2Value WRITE setEqBand2Value)
   Q_PROPERTY(double eqBand3Value READ eqBand3Value WRITE setEqBand3Value)
@@ -73,6 +81,14 @@ public:
   QString value14Title() const;
   QString value15Title() const;
   QString value16Title() const;
+  QString value17Title() const;
+  QString value18Title() const;
+  QString value19Title() const;
+  QString value20Title() const;
+  QString value21Title() const;
+  QString value22Title() const;
+  QString value23Title() const;
+  QString value24Title() const;
 
   double eqBand1Value() const;
   double eqBand2Value() const;
@@ -107,6 +123,14 @@ public slots:
   void setValue14Title(QString title);
   void setValue15Title(QString title);
   void setValue16Title(QString title);
+  void setValue17Title(QString title);
+  void setValue18Title(QString title);
+  void setValue19Title(QString title);
+  void setValue20Title(QString title);
+  void setValue21Title(QString title);
+  void setValue22Title(QString title);
+  void setValue23Title(QString title);
+  void setValue24Title(QString title);
   void setValue1(QString value);
   void setValue2(QString value);
   void setValue3(QString value);
@@ -123,6 +147,14 @@ public slots:
   void setValue14(QString value);
   void setValue15(QString value);
   void setValue16(QString value);
+  void setValue17(QString value);
+  void setValue18(QString value);
+  void setValue19(QString value);
+  void setValue20(QString value);
+  void setValue21(QString value);
+  void setValue22(QString value);
+  void setValue23(QString value);
+  void setValue24(QString value);
 
   void setEqBand1Value(double value);
   void setEqBand2Value(double value);
