@@ -154,6 +154,15 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case GraphicEqualizer:
         mpActivePage = ui->graphicEqualizer;
         break;
+      case StudioEqualizer:
+        mpActivePage = ui->studioEqualizer;
+        break;
+      case MetalEqualizer:
+        mpActivePage = ui->metalEqualizer;
+        break;
+      case StereoWeidener:
+        mpActivePage = ui->stereoWeidener;
+        break;
       default:
          mpActivePage = ui->dummyStomp;
          break;

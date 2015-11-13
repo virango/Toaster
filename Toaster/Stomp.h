@@ -90,8 +90,8 @@ signals:
   void distortionBoosterToneReceived(double tone);
   void compressorGateIntensityReceived(unsigned short rawVal);
   void compressorAttackReceived(unsigned short rawVal);
-  void modulationRateReceived(unsigned short rawVal);
-  void modulationDepthReceived(unsigned short rawVal);
+  void modulationRateReceived(double modulationRate);
+  void modulationDepthReceived(double modulationDepth);
   void modulationFeedbackReceived(unsigned short rawVal);
   void modulationCrossoverReceived(unsigned short rawVal);
   void modulationHyperChorusAmountReceived(unsigned short rawVal);

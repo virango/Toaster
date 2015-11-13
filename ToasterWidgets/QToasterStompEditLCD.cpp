@@ -131,6 +131,46 @@ QString QToasterStompEditLCD::value16Title() const
   return ui->val16Title->text();
 }
 
+QString QToasterStompEditLCD::value17Title() const
+{
+  return ui->val17Title->text();
+}
+
+QString QToasterStompEditLCD::value18Title() const
+{
+  return ui->val18Title->text();
+}
+
+QString QToasterStompEditLCD::value19Title() const
+{
+  return ui->val19Title->text();
+}
+
+QString QToasterStompEditLCD::value20Title() const
+{
+  return ui->val20Title->text();
+}
+
+QString QToasterStompEditLCD::value21Title() const
+{
+  return ui->val21Title->text();
+}
+
+QString QToasterStompEditLCD::value22Title() const
+{
+  return ui->val22Title->text();
+}
+
+QString QToasterStompEditLCD::value23Title() const
+{
+  return ui->val23Title->text();
+}
+
+QString QToasterStompEditLCD::value24Title() const
+{
+  return ui->val24Title->text();
+}
+
 double QToasterStompEditLCD::eqBand1Value() const
 {
   return getEqBandValue(ui->eqBand1Widget);
@@ -356,6 +396,62 @@ void QToasterStompEditLCD::setValue16Title(QString title)
     ui->val16->setText("");
 }
 
+void QToasterStompEditLCD::setValue17Title(QString title)
+{
+  ui->val17Title->setText(title);
+  if(title.isEmpty())
+    ui->val17->setText("");
+}
+
+void QToasterStompEditLCD::setValue18Title(QString title)
+{
+  ui->val18Title->setText(title);
+  if(title.isEmpty())
+    ui->val18->setText("");
+}
+
+void QToasterStompEditLCD::setValue19Title(QString title)
+{
+  ui->val19Title->setText(title);
+  if(title.isEmpty())
+    ui->val19->setText("");
+}
+
+void QToasterStompEditLCD::setValue20Title(QString title)
+{
+  ui->val20Title->setText(title);
+  if(title.isEmpty())
+    ui->val20->setText("");
+}
+
+void QToasterStompEditLCD::setValue21Title(QString title)
+{
+  ui->val21Title->setText(title);
+  if(title.isEmpty())
+    ui->val21->setText("");
+}
+
+void QToasterStompEditLCD::setValue22Title(QString title)
+{
+  ui->val22Title->setText(title);
+  if(title.isEmpty())
+    ui->val22->setText("");
+}
+
+void QToasterStompEditLCD::setValue23Title(QString title)
+{
+  ui->val23Title->setText(title);
+  if(title.isEmpty())
+    ui->val23->setText("");
+}
+
+void QToasterStompEditLCD::setValue24Title(QString title)
+{
+  ui->val24Title->setText(title);
+  if(title.isEmpty())
+    ui->val24->setText("");
+}
+
 void QToasterStompEditLCD::setValue1(QString value)
 {
   ui->val01->setText(value);
@@ -434,6 +530,46 @@ void QToasterStompEditLCD::setValue15(QString value)
 void QToasterStompEditLCD::setValue16(QString value)
 {
   ui->val16->setText(value);
+}
+
+void QToasterStompEditLCD::setValue17(QString value)
+{
+  ui->val17->setText(value);
+}
+
+void QToasterStompEditLCD::setValue18(QString value)
+{
+  ui->val18->setText(value);
+}
+
+void QToasterStompEditLCD::setValue19(QString value)
+{
+  ui->val19->setText(value);
+}
+
+void QToasterStompEditLCD::setValue20(QString value)
+{
+  ui->val20->setText(value);
+}
+
+void QToasterStompEditLCD::setValue21(QString value)
+{
+  ui->val21->setText(value);
+}
+
+void QToasterStompEditLCD::setValue22(QString value)
+{
+  ui->val22->setText(value);
+}
+
+void QToasterStompEditLCD::setValue23(QString value)
+{
+  ui->val23->setText(value);
+}
+
+void QToasterStompEditLCD::setValue24(QString value)
+{
+  ui->val24->setText(value);
 }
 
 void QToasterStompEditLCD::setEqBand1Value(double value)

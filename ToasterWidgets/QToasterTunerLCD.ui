@@ -204,7 +204,7 @@
    <property name="geometry">
     <rect>
      <x>5</x>
-     <y>97</y>
+     <y>94</y>
      <width>95</width>
      <height>15</height>
     </rect>
@@ -235,7 +235,7 @@
    <property name="geometry">
     <rect>
      <x>5</x>
-     <y>85</y>
+     <y>82</y>
      <width>95</width>
      <height>15</height>
     </rect>
@@ -338,10 +338,6 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <zorder>indexLabel</zorder>
-   <zorder>indexLabel</zorder>
-   <zorder>line1</zorder>
-   <zorder>line2</zorder>
   </widget>
  </widget>
  <resources/>

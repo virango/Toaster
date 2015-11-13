@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>12</number>
+   <number>15</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
@@ -29,6 +29,9 @@
   <widget class="WahPedalBoosterFrame" name="wahPedalBooster"/>
   <widget class="MetalDSFrame" name="metalDS"/>
   <widget class="GraphicEqualizerFrame" name="graphicEqualizer"/>
+  <widget class="StudioEqualizerFrame" name="studioEqualizer"/>
+  <widget class="MetalEqualizerFrame" name="metalEqualizer"/>
+  <widget class="StereoWeidenerFrame" name="stereoWeidener"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -107,6 +110,24 @@
    <class>GraphicEqualizerFrame</class>
    <extends>QWidget</extends>
    <header>GraphicEqualizerFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StudioEqualizerFrame</class>
+   <extends>QWidget</extends>
+   <header>StudioEqualizerFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MetalEqualizerFrame</class>
+   <extends>QWidget</extends>
+   <header>MetalEqualizerFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StereoWeidenerFrame</class>
+   <extends>QWidget</extends>
+   <header>StereoWeidenerFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

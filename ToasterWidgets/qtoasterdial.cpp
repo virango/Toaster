@@ -17,6 +17,7 @@ QToasterDial::QToasterDial(QWidget *parent)
   , mMinValue(0)
   , mMaxValue(100)
   , mStepWidth(1)
+  , mPrecision(0)
   , mCurrValue(0)
   , mCurrValueText("<0.0>")
   , mUnit("")
@@ -90,7 +91,8 @@ void QToasterDial::update(int deltaSteps)
 {
   // update value
   double newValue = mCurrValue + (deltaSteps * mStepWidth);
-  newValue = floor(newValue * 100 + 0.5) / 100.0;
+  double tmp = pow(10, (double)mPrecision);
+  newValue = floor(newValue * tmp + 0.5) / tmp;
 
   if (newValue < mMinValue)
     mCurrValue = mMinValue;
@@ -124,7 +126,7 @@ void QToasterDial::update(int deltaSteps)
 void QToasterDial::updateValueText()
 {
   mCurrValueText = "";
-  mCurrValueText += QString::number(mCurrValue, 'f', 1 ) + mUnit;
+  mCurrValueText += QString::number(mCurrValue, 'f', mPrecision) + " " + mUnit;
   if(mCurrValueText.startsWith("0.0") && mMinValue < 0)
     mCurrValueText = "<" + mCurrValueText + ">";
 
@@ -165,17 +167,19 @@ void QToasterDial::setMaxValue(double maxValue)
 void QToasterDial::setStepWidth(double stepWidth)
 {
   if(stepWidth < (mMaxValue - mMinValue))
+  {
     mStepWidth = stepWidth;
+    if(mStepWidth < 1.0 && mPrecision == 0)
+      mPrecision = 1;
+  }
 }
 
 void QToasterDial::setValue(double value)
 {
   if(value >= mMinValue && value <= mMaxValue && mIsActive)
   {
-    if(mStepWidth >= 1.0)
-      mCurrValue = static_cast<double>(static_cast<int>(value+0.5));
-    else
-      mCurrValue = static_cast<double>(static_cast<int>(value*10+0.5))/10.0;
+    double tmp = pow(10, (double)mPrecision);
+    mCurrValue = floor(value * tmp + 0.5) / tmp;
     updateValueText();
     updateLEDRing();
   }
