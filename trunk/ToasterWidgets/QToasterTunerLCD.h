@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include "Commons.h"
-#include "ToasterWidgetsLib.h"
 #include "QToasterLCD.h"
 
 namespace Ui {

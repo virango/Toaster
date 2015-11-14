@@ -2,6 +2,7 @@
 #define QTOASTERLCD_H
 #include <QWidget>
 #include <QMap>
+#include "ToasterWidgetsLib.h"
 #include "Commons.h"
 
 #define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;"
@@ -19,7 +20,7 @@
 
 struct ICtxMenuProvider;
 
-class QToasterLCD : public QWidget
+class TOASTERWIDGETS_EXPORT QToasterLCD : public QWidget
 {
   Q_OBJECT
   Q_ENUMS(Color)
