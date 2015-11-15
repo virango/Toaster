@@ -408,9 +408,9 @@ border-radius: 3px;</string>
   <widget class="QWidget" name="stompEditWidget" native="true">
    <property name="geometry">
     <rect>
-     <x>3</x>
+     <x>4</x>
      <y>53</y>
-     <width>148</width>
+     <width>147</width>
      <height>31</height>
     </rect>
    </property>
@@ -461,9 +461,9 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>14</y>
-      <width>148</width>
-      <height>16</height>
+      <y>13</y>
+      <width>147</width>
+      <height>17</height>
      </rect>
     </property>
     <property name="font">
