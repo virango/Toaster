@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>15</number>
+   <number>20</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
@@ -32,6 +32,11 @@
   <widget class="StudioEqualizerFrame" name="studioEqualizer"/>
   <widget class="MetalEqualizerFrame" name="metalEqualizer"/>
   <widget class="StereoWeidenerFrame" name="stereoWeidener"/>
+  <widget class="CompressorFrame" name="compressorFrame"/>
+  <widget class="GateFrame" name="gateFrame"/>
+  <widget class="VintageChorusFrame" name="vintageChorusFrame"/>
+  <widget class="HyperChorusFrame" name="hyperChorusFrame"/>
+  <widget class="AirChorusFrame" name="airChorusFrame"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -128,6 +133,36 @@
    <class>StereoWeidenerFrame</class>
    <extends>QWidget</extends>
    <header>StereoWeidenerFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CompressorFrame</class>
+   <extends>QWidget</extends>
+   <header>CompressorFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GateFrame</class>
+   <extends>QWidget</extends>
+   <header>GateFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VintageChorusFrame</class>
+   <extends>QWidget</extends>
+   <header>VintageChorusFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HyperChorusFrame</class>
+   <extends>QWidget</extends>
+   <header>HyperChorusFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AirChorusFrame</class>
+   <extends>QWidget</extends>
+   <header>AirChorusFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -15,6 +15,7 @@ StereoWeidenerFrame::~StereoWeidenerFrame()
 {
   delete ui;
 }
+
 void StereoWeidenerFrame::activate(Stomp& stomp)
 {
   mpStomp = &stomp;
@@ -29,11 +30,14 @@ void StereoWeidenerFrame::activate(Stomp& stomp)
 
   ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
 }
+
 void StereoWeidenerFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onIntensity(double)));
+    disconnect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onTune(double)));
+    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
   }
   mpStomp = nullptr;
 }

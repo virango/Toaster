@@ -163,6 +163,22 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case StereoWeidener:
         mpActivePage = ui->stereoWeidener;
         break;
+      case Compressor:
+        mpActivePage = ui->compressorFrame;
+        break;
+      case NoiseGate21:
+      case NoiseGate41:
+        mpActivePage = ui->gateFrame;
+        break;
+      case VintageChorus:
+        mpActivePage = ui->vintageChorusFrame;
+        break;
+      case HyperChorus:
+        mpActivePage = ui->hyperChorusFrame;
+        break;
+      case AirChorus:
+        mpActivePage = ui->airChorusFrame;
+        break;
       default:
          mpActivePage = ui->dummyStomp;
          break;

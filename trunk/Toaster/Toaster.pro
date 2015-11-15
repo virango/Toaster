@@ -93,7 +93,12 @@ SOURCES += main.cpp\
     GraphicEqualizerFrame.cpp \
     StudioEqualizerFrame.cpp \
     MetalEqualizerFrame.cpp \
-    StereoWeidenerFrame.cpp
+    StereoWeidenerFrame.cpp \
+    CompressorFrame.cpp \
+    GateFrame.cpp \
+    VintageChorusFrame.cpp \
+    HyperChorusFrame.cpp \
+    AirChorusFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -152,7 +157,12 @@ HEADERS  += ToasterWindow.h \
     GraphicEqualizerFrame.h \
     StudioEqualizerFrame.h \
     MetalEqualizerFrame.h \
-    StereoWeidenerFrame.h
+    StereoWeidenerFrame.h \
+    CompressorFrame.h \
+    GateFrame.h \
+    VintageChorusFrame.h \
+    HyperChorusFrame.h \
+    AirChorusFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -177,7 +187,12 @@ FORMS    += \
     GraphicEqualizerFrame.ui \
     StudioEqualizerFrame.ui \
     MetalEqualizerFrame.ui \
-    StereoWeidenerFrame.ui
+    StereoWeidenerFrame.ui \
+    CompressorFrame.ui \
+    GateFrame.ui \
+    VintageChorusFrame.ui \
+    HyperChorusFrame.ui \
+    AirChorusFrame.ui
 
 RESOURCES += \
     resources.qrc

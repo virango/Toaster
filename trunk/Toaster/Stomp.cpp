@@ -92,12 +92,12 @@ void Stomp::applyDistortionBoosterTone(double distortionBoosterTone)
 
 void Stomp::applyCompressorGateIntensity(double compressorGateIntensity)
 {
-  //midiApplyCompressorGateIntensity(phys2Raw(compressorGateIntensity, , ));
+  midiApplyCompressorGateIntensity(phys2Raw(compressorGateIntensity, 10, 0));
 }
 
 void Stomp::applyCompressorAttack(double compressorAttack)
 {
-  //midiApplyCompressorAttack(phys2Raw(compressorAttack, , ));
+  midiApplyCompressorAttack(phys2Raw(compressorAttack, 10 , 0));
 }
 
 void Stomp::applyModulationRate(double modulationRate)
@@ -117,12 +117,12 @@ void Stomp::applyModulationFeedback(double modulationFeedback)
 
 void Stomp::applyModulationCrossover(double modulationCrossover)
 {
-  //midiApplyModulationCrossover(phys2Raw(modulationCrossover, , ));
+  midiApplyModulationCrossover((unsigned short)modulationCrossover);
 }
 
 void Stomp::applyModulationHyperChorusAmount(double modulationHyperChorusAmount)
 {
-  //midiApplyModulationHyperChorusAmount(phys2Raw(modulationHyperChorusAmount, , ));
+  midiApplyModulationHyperChorusAmount(phys2Raw(modulationHyperChorusAmount, 2, 1));
 }
 
 void Stomp::applyModulationManual(double modulationManual)
@@ -157,7 +157,7 @@ void Stomp::applyRotaryBalance(double rotaryBalance)
 
 void Stomp::applyCompressorSquash(double compressorSquash)
 {
-  //midiApplyCompressorSquash(phys2Raw(compressorSquash, , ));
+  midiApplyCompressorSquash(phys2Raw(compressorSquash, 10, -5));
 }
 
 void Stomp::applyGraphicEQBand1(double graphicEQBand)
@@ -378,12 +378,12 @@ void Stomp::midiDistortionBoosterToneReceived(unsigned short rawVal)
 
 void Stomp::midiCompressorGateIntensityReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit compressorGateIntensityReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiCompressorAttackReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit compressorAttackReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiModulationRateReceived(unsigned short rawVal)
@@ -404,12 +404,12 @@ void Stomp::midiModulationFeedbackReceived(unsigned short rawVal)
 
 void Stomp::midiModulationCrossoverReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit modulationCrossoverReceived((double)rawVal);
 }
 
 void Stomp::midiModulationHyperChorusAmountReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit modulationHyperChorusAmountReceived(raw2Phys(rawVal, 2, 1));
 }
 
 void Stomp::midiModulationManualReceived(unsigned short rawVal)
@@ -444,7 +444,7 @@ void Stomp::midiRotaryBalanceReceived(unsigned short rawVal)
 
 void Stomp::midiCompressorSquashReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit compressorSquashReceived(raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiGraphicEQBand1Received(unsigned short rawVal)

@@ -28,6 +28,7 @@ public:
   virtual void displayAmpName(const QString&  ampName);
 
 private slots:
+  // ui => kpa
   void on_volumeDial_valueChanged(double value);
   void on_driveDial_valueChanged(double value);
   // kpa => ui
