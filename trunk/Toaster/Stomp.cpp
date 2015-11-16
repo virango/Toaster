@@ -277,7 +277,7 @@ void Stomp::applyVoice2Pitch(double voice2Pitch)
 
 void Stomp::applyDetune(double detune)
 {
-  //midiApplyDetune(phys2Raw(detune, , ));
+  midiApplyDetune(phys2Raw(detune, 10, 0));
 }
 
 void Stomp::applySmoothChords(double smoothChords)
@@ -388,7 +388,8 @@ void Stomp::midiCompressorAttackReceived(unsigned short rawVal)
 
 void Stomp::midiModulationRateReceived(unsigned short rawVal)
 {
-  double physVal = ((rawVal * 10) / 127);
+  // there seems to be a bug in the kpa: it sends values between 0..127
+  double physVal = ((rawVal * 10.0) / 127.0);
   emit modulationRateReceived(physVal);
 }
 
@@ -564,7 +565,7 @@ void Stomp::midiVoice2PitchReceived(unsigned short rawVal)
 
 void Stomp::midiDetuneReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit detuneReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiSmoothChordsReceived(unsigned short rawVal)

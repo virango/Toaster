@@ -179,6 +179,12 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case AirChorus:
         mpActivePage = ui->airChorusFrame;
         break;
+      case MicroPitch:
+        mpActivePage = ui->microPitch;
+        break;
+      case Vibrato:
+        mpActivePage = ui->vibrato;
+        break;
       default:
          mpActivePage = ui->dummyStomp;
          break;
