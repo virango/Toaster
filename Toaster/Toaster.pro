@@ -98,7 +98,9 @@ SOURCES += main.cpp\
     GateFrame.cpp \
     VintageChorusFrame.cpp \
     HyperChorusFrame.cpp \
-    AirChorusFrame.cpp
+    AirChorusFrame.cpp \
+    MicroPitchFrame.cpp \
+    VibratoFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -162,7 +164,9 @@ HEADERS  += ToasterWindow.h \
     GateFrame.h \
     VintageChorusFrame.h \
     HyperChorusFrame.h \
-    AirChorusFrame.h
+    AirChorusFrame.h \
+    MicroPitchFrame.h \
+    VibratoFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -192,7 +196,9 @@ FORMS    += \
     GateFrame.ui \
     VintageChorusFrame.ui \
     HyperChorusFrame.ui \
-    AirChorusFrame.ui
+    AirChorusFrame.ui \
+    MicroPitchFrame.ui \
+    VibratoFrame.ui
 
 RESOURCES += \
     resources.qrc

@@ -27,7 +27,7 @@ BYTEARRAYDEF(StompMidi, DistortionBoosterTone,                0x11)
 BYTEARRAYDEF(StompMidi, CompressorGateIntensity,              0x12)
 BYTEARRAYDEF(StompMidi, CompressorAttack,                     0x13)
 BYTEARRAYDEF(StompMidi, ModulationRate,                       0x14) // also for stereo widener tune
-BYTEARRAYDEF(StompMidi, ModulationDepth,                      0x15) // also for stereo widener intensity
+BYTEARRAYDEF(StompMidi, ModulationDepth,                      0x15) // also for stereo widener intensity and micro pitch detune
 BYTEARRAYDEF(StompMidi, ModulationFeedback,                   0x16)
 BYTEARRAYDEF(StompMidi, ModulationCrossover,                  0x17)
 BYTEARRAYDEF(StompMidi, ModulationHyperChorusAmount,          0x18)

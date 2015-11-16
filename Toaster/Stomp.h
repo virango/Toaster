@@ -125,7 +125,7 @@ signals:
   void voiceMixReceived(unsigned short rawVal);
   void voice1PitchReceived(double voice1Pitch);
   void voice2PitchReceived(double voice2Pitch);
-  void detuneReceived(unsigned short rawVal);
+  void detuneReceived(double detune);
   void smoothChordsReceived(unsigned short rawVal);
   void pureTuningReceived(unsigned short rawVal);
   void keyReceived(unsigned short rawVal);
