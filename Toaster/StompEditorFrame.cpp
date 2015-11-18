@@ -185,6 +185,12 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case Vibrato:
         mpActivePage = ui->vibrato;
         break;
+      case RotarySpeaker:
+        mpActivePage = ui->rotarySpeaker;
+        break;
+      case Tremolo:
+        mpActivePage = ui->tremolo;
+        break;
       default:
          mpActivePage = ui->dummyStomp;
          break;

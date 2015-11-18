@@ -105,6 +105,11 @@ void Stomp::applyModulationRate(double modulationRate)
   midiApplyModulationRate(phys2Raw(modulationRate, 10, 0));
 }
 
+void Stomp::applyModulationRate(unsigned short modulationRate)
+{
+  midiApplyModulationRate(modulationRate);
+}
+
 void Stomp::applyModulationDepth(double modulationDepth)
 {
   midiApplyModulationDepth(phys2Raw(modulationDepth, 10, 0));
@@ -140,19 +145,19 @@ void Stomp::applyModulationPhaserStages(double modulationPhaserStages)
   midiApplyModulationPhaserStages((unsigned short)(modulationPhaserStages-2)/2);
 }
 
-void Stomp::applyRotarySpeed(RotarySpeed rotarySpeed)
+void Stomp::applyRotarySpeed(::RotarySpeed rotarySpeed)
 {
   midiApplyRotarySpeed((unsigned short)rotarySpeed);
 }
 
 void Stomp::applyRotaryDistance(double rotaryDistance)
 {
-  //midiApplyRotaryDistance(phys2Raw(rotaryDistance, , ));
+  midiApplyRotaryDistance(phys2Raw(rotaryDistance, 46, 4));
 }
 
 void Stomp::applyRotaryBalance(double rotaryBalance)
 {
-  //midiApplyRotaryBalance(phys2Raw(rotaryBalance, , ));
+  midiApplyRotaryBalance(phys2Raw(rotaryBalance, 200, -100));
 }
 
 void Stomp::applyCompressorSquash(double compressorSquash)
@@ -391,6 +396,7 @@ void Stomp::midiModulationRateReceived(unsigned short rawVal)
   // there seems to be a bug in the kpa: it sends values between 0..127
   double physVal = ((rawVal * 10.0) / 127.0);
   emit modulationRateReceived(physVal);
+  emit modulationRateReceived(rawVal);
 }
 
 void Stomp::midiModulationDepthReceived(unsigned short rawVal)
@@ -430,17 +436,17 @@ void Stomp::midiModulationPhaserStagesReceived(unsigned short rawVal)
 
 void Stomp::midiRotarySpeedReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit rotarySpeedReceived((::RotarySpeed)rawVal);
 }
 
 void Stomp::midiRotaryDistanceReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit rotaryDistanceReceived(raw2Phys(rawVal, 46, 4));
 }
 
 void Stomp::midiRotaryBalanceReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit rotaryBalanceReceived(raw2Phys(rawVal, 200, -100));
 }
 
 void Stomp::midiCompressorSquashReceived(unsigned short rawVal)
