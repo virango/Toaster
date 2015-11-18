@@ -91,6 +91,7 @@ signals:
   void compressorGateIntensityReceived(double intensity);
   void compressorAttackReceived(double attack);
   void modulationRateReceived(double modulationRate);
+  void modulationRateReceived(unsigned short modulationRate);
   void modulationDepthReceived(double modulationDepth);
   void modulationFeedbackReceived(unsigned short rawVal);
   void modulationCrossoverReceived(double crossover);
@@ -98,9 +99,9 @@ signals:
   void modulationManualReceived(unsigned short rawVal);
   void modulationPhaserPeakSpreadReceived(double peakSpread);
   void modulationPhaserStagesReceived(double stages);
-  void rotarySpeedReceived(unsigned short rawVal);
-  void rotaryDistanceReceived(unsigned short rawVal);
-  void rotaryBalanceReceived(unsigned short rawVal);
+  void rotarySpeedReceived(::RotarySpeed speed);
+  void rotaryDistanceReceived(double distance);
+  void rotaryBalanceReceived(double balance);
   void compressorSquashReceived(double squash);
   void graphicEQBand1Received(double graphicEQBand1);
   void graphicEQBand2Received(double graphicEQBand2);
@@ -150,6 +151,7 @@ public slots:
   void applyCompressorGateIntensity(double compressorGateIntensity);
   void applyCompressorAttack(double compressorAttack);
   void applyModulationRate(double modulationRate);
+  void applyModulationRate(unsigned short modulationRate);
   void applyModulationDepth(double modulationDepth);
   void applyModulationFeedback(double modulationFeedback);
   void applyModulationCrossover(double modulationCrossover);

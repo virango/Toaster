@@ -32,6 +32,7 @@ ToasterWindow::ToasterWindow(QWidget *parent) :
 
     qRegisterMetaType<::FXType>("::FXType");
     qRegisterMetaType<::WahPedalMode>("::WahPedalMode");
+    qRegisterMetaType<::RotarySpeed>("::RotarySpeed");
 }
 
 ToasterWindow::~ToasterWindow()

@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>22</number>
+   <number>23</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
@@ -39,6 +39,8 @@
   <widget class="AirChorusFrame" name="airChorusFrame"/>
   <widget class="MicroPitchFrame" name="microPitch"/>
   <widget class="VibratoFrame" name="vibrato"/>
+  <widget class="RotarySpeakerFrame" name="rotarySpeaker"/>
+  <widget class="TremoloFrame" name="tremolo"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -177,6 +179,18 @@
    <class>VibratoFrame</class>
    <extends>QWidget</extends>
    <header>VibratoFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TremoloFrame</class>
+   <extends>QWidget</extends>
+   <header>TremoloFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>RotarySpeakerFrame</class>
+   <extends>QWidget</extends>
+   <header>RotarySpeakerFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
