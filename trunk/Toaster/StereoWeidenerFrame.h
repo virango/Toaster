@@ -34,7 +34,7 @@ private slots:
   void on_duckingDial_valueChanged(double value);
   // kpa => ui
   void onIntensity(double value);
-  void onTune(double value);
+  void onTune(double value, unsigned short);
   void onDucking(double value);
 
 private:

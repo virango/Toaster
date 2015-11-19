@@ -7,9 +7,9 @@ Vibrato:*        Rate(0..10), Depth(0..10), Crossover(20,6..33488,1Hz), Volume(-
 RotarySpeaker*:  Distance(4..50cm), Low-High-Bal.(-100..100%), Mix(0..100%), Ducking(-5..5), Volume(-5..5)
 Tremolo:*        Rate(1..38,4Hz), Depth(0..10), Crossover(20,6..33488,1Hz), Ducking(-5..5), Volume(-5..5)
 ================ Phaser/Flanger =====
-Phaser:          Rate(64..0,042s), Depth(0..10), Manual(0..10), Feedback(0..100%), Peak Spread(-5..5), Stages(2..12)
-PhaserVibe:      Rate(64..0,042s), Depth(0..10), Manual(0..10), Feedback(0..100%), Peak Spread(-5..5), Stages(2..12)
-PhaserOneway:    Rate(-5..5), Depth(0..10), Manual(-5..5), Feedback(0..100%), Peak Spread(-5..5), Stages(2..12), Mix(0..100%), Ducking(-5..5), Volume(-5..5)
+Phaser*:         Rate(64..0,042s), Depth(0..10), Manual(0..10), Feedback(0..100%), Peak Spread(-5..5), Stages(2..12), Mix(0..100%), Ducking(-5..5), Volume(-5..5)
+PhaserVibe*:     Rate(64..0,042s), Depth(0..10), Manual(0..10), Feedback(0..100%), Peak Spread(-5..5), Stages(2..12), Mix(0..100%), Ducking(-5..5), Volume(-5..5)
+PhaserOneway*:   Rate(-5..5), Depth(0..10), Manual(-5..5), Feedback(0..100%), Peak Spread(-5..5), Stages(2..12), Mix(0..100%), Ducking(-5..5), Volume(-5..5)
 Flanger:         Rate(64..0,042s), Depth(0..10), Manual(0..10), Feedback(0..100%), Mix(0..100%), Ducking(-5..5), Volume(-5..5)
 FlangerOneway:   Rate(-5..5), Depth(0..10), Manual(-5..5), Feedback(0..100%), Mix(0..100%), Ducking(-5..5), Volume(-5..5)
 ================ Pitch Shifter =====

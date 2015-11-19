@@ -90,13 +90,12 @@ signals:
   void distortionBoosterToneReceived(double tone);
   void compressorGateIntensityReceived(double intensity);
   void compressorAttackReceived(double attack);
-  void modulationRateReceived(double modulationRate);
-  void modulationRateReceived(unsigned short modulationRate);
+  void modulationRateReceived(double modulationRate, unsigned short rawVal);
   void modulationDepthReceived(double modulationDepth);
-  void modulationFeedbackReceived(unsigned short rawVal);
+  void modulationFeedbackReceived(double feedback);
   void modulationCrossoverReceived(double crossover);
   void modulationHyperChorusAmountReceived(double amount);
-  void modulationManualReceived(unsigned short rawVal);
+  void modulationManualReceived(double manual);
   void modulationPhaserPeakSpreadReceived(double peakSpread);
   void modulationPhaserStagesReceived(double stages);
   void rotarySpeedReceived(::RotarySpeed speed);

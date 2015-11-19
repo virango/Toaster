@@ -191,6 +191,11 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case Tremolo:
         mpActivePage = ui->tremolo;
         break;
+      case Phaser:
+      case PhaserVibe:
+      case PhaserOneway:
+        mpActivePage = ui->phaser;
+        break;
       default:
          mpActivePage = ui->dummyStomp;
          break;
@@ -203,8 +208,8 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       if(pTmp != nullptr)
         index = indexOf(pTmp);
       setCurrentIndex(index);
-      mpActivePage->activate(*mpActiveStomp);
       mpActivePage->setFXType(fxType);
+      mpActivePage->activate(*mpActiveStomp);
       requestValues();
     }
   }
