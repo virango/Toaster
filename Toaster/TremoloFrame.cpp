@@ -20,7 +20,7 @@ void TremoloFrame::activate(Stomp& stomp)
 {
   mpStomp = &stomp;
 
-  connect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
+  connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
   connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
   connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
   connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
@@ -109,7 +109,7 @@ void TremoloFrame::on_duckingDial_valueChanged(double value)
     mpStomp->applyDucking(value);
 }
 
-void TremoloFrame::onRate(double value)
+void TremoloFrame::onRate(double , unsigned short value)
 {
   ui->rateDial->setValue(value);
   update();

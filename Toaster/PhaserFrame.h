@@ -1,19 +1,19 @@
-#ifndef TREMOLOFRAME_H
-#define TREMOLOFRAME_H
+#ifndef PHASERFRAME_H
+#define PHASERFRAME_H
 #include <QWidget>
 #include "StompEditorPage.h"
 
 namespace Ui {
-class TremoloFrame;
+class PhaserFrame;
 }
 
-class TremoloFrame : public QWidget, public IStompEditorPage
+class PhaserFrame : public QWidget, public IStompEditorPage
 {
   Q_OBJECT
 
 public:
-  explicit TremoloFrame(QWidget *parent = 0);
-  ~TremoloFrame();
+  explicit PhaserFrame(QWidget *parent = 0);
+  ~PhaserFrame();
   // IStompEditorPage
   virtual void activate(Stomp& stomp);
   virtual void deactivate();
@@ -27,24 +27,35 @@ public:
   virtual void displayReverbEnabled(bool enabled);
   virtual void displayAmpName(const QString&  ampName);
 private slots:
+  void on_pageDial_valueChanged(int valueIndex);
+
   // ui => kpa
   void on_rateDial_valueChanged(double value);
   void on_depthDial_valueChanged(double value);
-  void on_crossoverDial_valueChanged(double value);
-  void on_volumeDial_valueChanged(double value);
+  void on_manualDial_valueChanged(double value);
+  void on_feedbackDial_valueChanged(double value);
+  void on_peakSpreadDial_valueChanged(double value);
+  void on_stagesDial_valueChanged(double value);
+  void on_mixDial_valueChanged(double value);
   void on_duckingDial_valueChanged(double value);
+  void on_volumeDial_valueChanged(double value);
   // kpa => ui
-  void onRate(double, unsigned short value);
+  void onRate(double value, unsigned short rawVal);
   void onDepth(double value);
-  void onCrossover(double value);
-  void onVolume(double value);
+  void onManual(double value);
+  void onFeedback(double value);
+  void onPeakSpread(double value);
+  void onStages(double value);
+  void onMix(double value);
   void onDucking(double value);
+  void onVolume(double value);
+
 private:
-  Ui::TremoloFrame *ui;
+  Ui::PhaserFrame *ui;
 
   Stomp* mpStomp;
 
   FXType mFXType;
 };
 
-#endif // TREMOLOFRAME_H
+#endif // PHASERFRAME_H

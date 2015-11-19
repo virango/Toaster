@@ -20,7 +20,7 @@ void VintageChorusFrame::activate(Stomp& stomp)
 {
   mpStomp = &stomp;
 
-  connect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
+  connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
   connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
   connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
   connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
@@ -118,7 +118,7 @@ void VintageChorusFrame::on_duckingDial_valueChanged(double value)
     mpStomp->applyDucking(value);
 }
 
-void VintageChorusFrame::onRate(double value)
+void VintageChorusFrame::onRate(double value, unsigned short)
 {
   ui->rateDial->setValue(value);
   update();

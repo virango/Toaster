@@ -102,7 +102,9 @@ SOURCES += main.cpp\
     MicroPitchFrame.cpp \
     VibratoFrame.cpp \
     TremoloFrame.cpp \
-    RotarySpeakerFrame.cpp
+    RotarySpeakerFrame.cpp \
+    PhaserFrame.cpp \
+    FlangerFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -170,7 +172,9 @@ HEADERS  += ToasterWindow.h \
     MicroPitchFrame.h \
     VibratoFrame.h \
     TremoloFrame.h \
-    RotarySpeakerFrame.h
+    RotarySpeakerFrame.h \
+    PhaserFrame.h \
+    FlangerFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -204,7 +208,9 @@ FORMS    += \
     MicroPitchFrame.ui \
     VibratoFrame.ui \
     TremoloFrame.ui \
-    RotarySpeakerFrame.ui
+    RotarySpeakerFrame.ui \
+    PhaserFrame.ui \
+    FlangerFrame.ui
 
 RESOURCES += \
     resources.qrc
