@@ -126,7 +126,7 @@ signals:
   void voice1PitchReceived(double voice1Pitch);
   void voice2PitchReceived(double voice2Pitch);
   void detuneReceived(double detune);
-  void smoothChordsReceived(unsigned short rawVal);
+  void smoothChordsReceived(bool onOff);
   void pureTuningReceived(unsigned short rawVal);
   void keyReceived(unsigned short rawVal);
   void lowCutReceived(double lowCut);
@@ -186,7 +186,7 @@ public slots:
   void applyVoice1Pitch(double voice1Pitch);
   void applyVoice2Pitch(double voice2Pitch);
   void applyDetune(double detune);
-  void applySmoothChords(double smoothChords);
+  void applySmoothChords(bool onOff);
   void applyPureTuning(double pureTuning);
   void applyKey(double key);
   void applyLowCut(double lowCut);

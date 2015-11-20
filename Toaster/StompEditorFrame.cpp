@@ -196,6 +196,13 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case PhaserOneway:
         mpActivePage = ui->phaser;
         break;
+      case Flanger:
+      case FlangerOneway:
+        mpActivePage = ui->flanger;
+        break;
+      case Transpose:
+        mpActivePage = ui->transpose;
+        break;
       default:
          mpActivePage = ui->dummyStomp;
          break;

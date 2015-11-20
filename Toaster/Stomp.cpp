@@ -285,9 +285,9 @@ void Stomp::applyDetune(double detune)
   midiApplyDetune(phys2Raw(detune, 10, 0));
 }
 
-void Stomp::applySmoothChords(double smoothChords)
+void Stomp::applySmoothChords(bool onOff)
 {
-  //midiApplySmoothChords(phys2Raw(smoothChords, , ));
+  midiApplySmoothChords(bool2Raw(onOff));
 }
 
 void Stomp::applyPureTuning(double pureTuning)
@@ -575,7 +575,7 @@ void Stomp::midiDetuneReceived(unsigned short rawVal)
 
 void Stomp::midiSmoothChordsReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit smoothChordsReceived(raw2Bool(rawVal));
 }
 
 void Stomp::midiPureTuningReceived(unsigned short rawVal)
