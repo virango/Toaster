@@ -18,6 +18,7 @@ BYTEARRAYDEF(GlobalMidi, MonitorOutputEQBass,     0x11)
 BYTEARRAYDEF(GlobalMidi, MonitorOutputEQMiddle,   0x12)
 BYTEARRAYDEF(GlobalMidi, MonitorOutputEQTreble,   0x13)
 BYTEARRAYDEF(GlobalMidi, MonitorOutputEQPresence, 0x14)
+BYTEARRAYDEF(GlobalMidi, WahPedalToPitch,         0x27)
 BYTEARRAYDEF(GlobalMidi, OperationMode,           0x7E)
 BYTEARRAYDEF(GlobalMidi, ConnectName,             0x7F)
 
@@ -72,6 +73,8 @@ void GlobalMidi::consumeSysExMsg(ByteArray* msg)
       midiMonitorOutputEQTrebleReceived(rawVal);
     else if(param == sMonitorOutputEQPresence[0])
       midiMonitorOutputEQPresenceReceived(rawVal);
+    else if(param == sWahPedalToPitch[0])
+      midiWahPedalToPitchReceived(rawVal);
     else if(param == sOperationMode[0])
       midiOperationModeReceived(rawVal);
   }
@@ -205,6 +208,16 @@ void GlobalMidi::midiRequestMonitorOutputEQPresence()
 void GlobalMidi::midiApplyMonitorOutputEQPresence(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sMonitorOutputEQPresence, rawVal));
+}
+
+void GlobalMidi::midiRequestWahPedalToPitch()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sWahPedalToPitch));
+}
+
+void GlobalMidi::midiApplyWahPedalToPitch(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sWahPedalToPitch, rawVal));
 }
 
 void GlobalMidi::midiRequestOperationMode()

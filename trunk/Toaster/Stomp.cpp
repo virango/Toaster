@@ -290,14 +290,24 @@ void Stomp::applySmoothChords(bool onOff)
   midiApplySmoothChords(bool2Raw(onOff));
 }
 
-void Stomp::applyPureTuning(double pureTuning)
+void Stomp::applyPureTuning(bool onOff)
 {
-  //midiApplyPureTuning(phys2Raw(pureTuning, , ));
+  midiApplyPureTuning(bool2Raw(onOff));
 }
 
 void Stomp::applyKey(double key)
 {
   //midiApplyKey(phys2Raw(key, , ));
+}
+
+void Stomp::applyFormantShiftOnOff(bool onOff)
+{
+  midiApplyFormantShiftOnOff(bool2Raw(onOff));
+}
+
+void Stomp::applyFormantShift(double shift)
+{
+  midiApplyFormantShift(phys2Raw(shift, 10, -5));
 }
 
 void Stomp::applyLowCut(double lowCut)
@@ -580,12 +590,22 @@ void Stomp::midiSmoothChordsReceived(unsigned short rawVal)
 
 void Stomp::midiPureTuningReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit pureTuningReceived(raw2Bool(rawVal));
 }
 
 void Stomp::midiKeyReceived(unsigned short rawVal)
 {
   //emit Received(raw2Phys(rawVal, , ));
+}
+
+void Stomp::midiFormantShiftOnOffReceived(unsigned short rawVal)
+{
+  emit formantShiftOnOffReceived(raw2Bool(rawVal));
+}
+
+void Stomp::midiFormantShiftReceived(unsigned short rawVal)
+{
+  emit formantShiftReceived(raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiLowCutReceived(unsigned short rawVal)

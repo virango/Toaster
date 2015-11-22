@@ -70,6 +70,8 @@ public:
   void requestSmoothChords() { midiRequestSmoothChords(); }
   void requestPureTuning() { midiRequestPureTuning(); }
   void requestKey() { midiRequestKey(); }
+  void requestFormantShiftOnOff() { midiRequestFormantShiftOnOff(); }
+  void requestFormantShift() { midiRequestFormantShift(); }
   void requestLowCut() { midiRequestLowCut(); }
   void requestHighCut() { midiRequestHighCut(); }
 
@@ -127,8 +129,10 @@ signals:
   void voice2PitchReceived(double voice2Pitch);
   void detuneReceived(double detune);
   void smoothChordsReceived(bool onOff);
-  void pureTuningReceived(unsigned short rawVal);
+  void pureTuningReceived(bool onOff);
   void keyReceived(unsigned short rawVal);
+  void formantShiftOnOffReceived(bool onOff);
+  void formantShiftReceived(double shift);
   void lowCutReceived(double lowCut);
   void highCutReceived(double highCut);
   
@@ -187,8 +191,10 @@ public slots:
   void applyVoice2Pitch(double voice2Pitch);
   void applyDetune(double detune);
   void applySmoothChords(bool onOff);
-  void applyPureTuning(double pureTuning);
+  void applyPureTuning(bool onOff);
   void applyKey(double key);
+  void applyFormantShiftOnOff(bool onOff);
+  void applyFormantShift(double shift);
   void applyLowCut(double lowCut);
   void applyHighCut(double highCut);
   
@@ -249,6 +255,8 @@ protected:
   virtual void midiSmoothChordsReceived(unsigned short rawVal);
   virtual void midiPureTuningReceived(unsigned short rawVal);
   virtual void midiKeyReceived(unsigned short rawVal);
+  virtual void midiFormantShiftOnOffReceived(unsigned short rawVal);
+  virtual void midiFormantShiftReceived(unsigned short rawVal);
   virtual void midiLowCutReceived(unsigned short rawVal);
   virtual void midiHighCutReceived(unsigned short rawVal);
 

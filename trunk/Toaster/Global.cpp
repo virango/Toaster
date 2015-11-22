@@ -2,8 +2,8 @@
 #include "Global.h"
 
 Global::Global()
+  : mBeaconTimer(nullptr)
 {
-  mBeaconTimer = new QTimer(this);
 }
 
 Global::~Global()
@@ -84,6 +84,11 @@ void Global::applyMonitorOutputEQPresence(double presence)
   midiApplyMonitorOutputEQPresence(phys2Raw(presence, 10.0, -5.0));
 }
 
+void Global::applyWahPedalToPitchReceived(bool onOff)
+{
+  midiApplyWahPedalToPitch(bool2Raw(onOff));
+}
+
 void Global::applyOperationMode(Global::OperationMode opMode)
 {
   midiApplyOperationMode((unsigned short) opMode);
@@ -91,6 +96,9 @@ void Global::applyOperationMode(Global::OperationMode opMode)
 
 void Global::connect2KPA(const QString& connectName)
 {
+  if(mBeaconTimer == nullptr)
+    mBeaconTimer = new QTimer(this);
+
   midiApplyConnectName(connectName);
   launchBeacon();
 }
@@ -180,7 +188,12 @@ void Global::midiMonitorOutputEQTrebleReceived(unsigned short rawVal)
 
 void Global::midiMonitorOutputEQPresenceReceived(unsigned short rawVal)
 {
-    emit monitorOutputEQPresenceReceived(raw2Phys(rawVal, 10.0, -5.0));
+  emit monitorOutputEQPresenceReceived(raw2Phys(rawVal, 10.0, -5.0));
+}
+
+void Global::midiWahPedalToPitchReceived(unsigned short rawVal)
+{
+  emit wahPedalToPitchReceived(raw2Bool(rawVal));
 }
 
 void Global::midiOperationModeReceived(unsigned short rawVal)

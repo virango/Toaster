@@ -106,7 +106,10 @@ SOURCES += main.cpp\
     PhaserFrame.cpp \
     FlangerFrame.cpp \
     TransposeFrame.cpp \
-    PedalPitchFrame.cpp
+    PedalPitchFrame.cpp \
+    PedalVinylStopFrame.cpp \
+    LoopDistortionFrame.cpp \
+    LoopFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -178,7 +181,10 @@ HEADERS  += ToasterWindow.h \
     PhaserFrame.h \
     FlangerFrame.h \
     TransposeFrame.h \
-    PedalPitchFrame.h
+    PedalPitchFrame.h \
+    PedalVinylStopFrame.h \
+    LoopDistortionFrame.h \
+    LoopFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -216,7 +222,10 @@ FORMS    += \
     PhaserFrame.ui \
     FlangerFrame.ui \
     TransposeFrame.ui \
-    PedalPitchFrame.ui
+    PedalPitchFrame.ui \
+    PedalVinylStopFrame.ui \
+    LoopDistortionFrame.ui \
+    LoopFrame.ui
 
 RESOURCES += \
     resources.qrc
