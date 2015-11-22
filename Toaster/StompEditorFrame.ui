@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>27</number>
+   <number>30</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
@@ -44,6 +44,10 @@
   <widget class="PhaserFrame" name="phaser"/>
   <widget class="FlangerFrame" name="flanger"/>
   <widget class="TransposeFrame" name="transpose"/>
+  <widget class="PedalPitchFrame" name="pedalPitch"/>
+  <widget class="PedalVinylStopFrame" name="pedalVinylStop"/>
+  <widget class="LoopFrame" name="loop"/>
+  <widget class="LoopDistortionFrame" name="loopDistortion"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -212,6 +216,30 @@
    <class>TransposeFrame</class>
    <extends>QWidget</extends>
    <header>TransposeFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PedalPitchFrame</class>
+   <extends>QWidget</extends>
+   <header>PedalPitchFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PedalVinylStopFrame</class>
+   <extends>QWidget</extends>
+   <header>PedalVinylStopFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LoopDistortionFrame</class>
+   <extends>QWidget</extends>
+   <header>LoopDistortionFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LoopFrame</class>
+   <extends>QWidget</extends>
+   <header>LoopFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

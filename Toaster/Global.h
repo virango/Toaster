@@ -23,6 +23,7 @@ public:
   };
 
   void requestAllValues();
+  void requestWahPedalToPitch() { midiRequestWahPedalToPitch(); }
 
 signals:
   void mainOutputVolumeReceived(double volume);
@@ -38,6 +39,7 @@ signals:
   void monitorOutputEQMiddleReceived(double middle);
   void monitorOutputEQTrebleReceived(double treble);
   void monitorOutputEQPresenceReceived(double presence);
+  void wahPedalToPitchReceived(bool onOff);
   void operationModeReceived(unsigned short);
 
 public slots:
@@ -54,6 +56,7 @@ public slots:
   void applyMonitorOutputEQMiddle(double middle);
   void applyMonitorOutputEQTreble(double treble);
   void applyMonitorOutputEQPresence(double presence);
+  void applyWahPedalToPitchReceived(bool onOff);
   void applyOperationMode(Global::OperationMode opMode);
 
   void connect2KPA(const QString& connectName);
@@ -74,6 +77,7 @@ protected:
   virtual void midiMonitorOutputEQMiddleReceived(unsigned short rawVal);
   virtual void midiMonitorOutputEQTrebleReceived(unsigned short rawVal);
   virtual void midiMonitorOutputEQPresenceReceived(unsigned short rawVal);
+  virtual void midiWahPedalToPitchReceived(unsigned short rawVal);
   virtual void midiOperationModeReceived(unsigned short rawVal);
 
   void launchBeacon();

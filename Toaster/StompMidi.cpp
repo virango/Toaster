@@ -65,6 +65,8 @@ BYTEARRAYDEF(StompMidi, Detune,                               0x3A)
 BYTEARRAYDEF(StompMidi, SmoothChords,                         0x3C)
 BYTEARRAYDEF(StompMidi, PureTuning,                           0x3D)
 BYTEARRAYDEF(StompMidi, Key,                                  0x40)
+BYTEARRAYDEF(StompMidi, FormantShiftOnOff,                    0x41)
+BYTEARRAYDEF(StompMidi, FormantShift,                         0x42)
 BYTEARRAYDEF(StompMidi, LowCut,                               0x43)
 BYTEARRAYDEF(StompMidi, HighCut,                              0x44)
 
@@ -197,6 +199,10 @@ void StompMidi::consumeSysExMsg(ByteArray* msg)
       midiPureTuningReceived(rawVal);
     else if(param == sKey[0])
       midiKeyReceived(rawVal);
+    else if(param == sFormantShiftOnOff[0])
+      midiFormantShiftOnOffReceived(rawVal);
+    else if(param == sFormantShift[0])
+      midiFormantShiftReceived(rawVal);
     else if(param == sLowCut[0])
       midiLowCutReceived(rawVal);
     else if(param == sHighCut[0])
@@ -761,6 +767,26 @@ void StompMidi::midiRequestKey()
 void StompMidi::midiApplyKey(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sKey, rawVal));
+}
+
+void StompMidi::midiRequestFormantShiftOnOff()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sFormantShiftOnOff));
+}
+
+void StompMidi::midiApplyFormantShiftOnOff(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sFormantShiftOnOff, rawVal));
+}
+
+void StompMidi::midiRequestFormantShift()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sFormantShift));
+}
+
+void StompMidi::midiApplyFormantShift(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sFormantShift, rawVal));
 }
 
 void StompMidi::midiRequestLowCut()

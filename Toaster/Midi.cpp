@@ -105,7 +105,7 @@ const QStringList Midi::getOutPorts()
 
 void Midi::sendCmd(ByteArray cmd)
 {
-  if(cmd.size() > 0)
+  if(cmd.size() > 0 && mMidiOut.isPortOpen())
   {
     if(cmd[0] != 0xB0)
       mMidiOut.sendMessage(&cmd);

@@ -203,6 +203,19 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case Transpose:
         mpActivePage = ui->transpose;
         break;
+      case PedalPitch:
+        mpActivePage = ui->pedalPitch;
+        break;
+      case PedalVinylStop:
+        mpActivePage = ui->pedalVinylStop;
+        break;
+      case LoopMono:
+      case LoopStereo:
+        mpActivePage = ui->loop;
+        break;
+      case LoopDistortion:
+        mpActivePage = ui->loopDistortion;
+        break;
       default:
          mpActivePage = ui->dummyStomp;
          break;

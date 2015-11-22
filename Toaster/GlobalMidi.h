@@ -22,6 +22,7 @@ protected:
   BYTEARRAYDECL(MonitorOutputEQMiddle)
   BYTEARRAYDECL(MonitorOutputEQTreble)
   BYTEARRAYDECL(MonitorOutputEQPresence)
+  BYTEARRAYDECL(WahPedalToPitch)
   BYTEARRAYDECL(OperationMode)
   BYTEARRAYDECL(ConnectName)
 
@@ -74,6 +75,9 @@ protected:
   // MonitorOutputEQPresence
   void midiRequestMonitorOutputEQPresence();
   void midiApplyMonitorOutputEQPresence(unsigned short rawVal);
+  // WahPedalToPitch
+  void midiRequestWahPedalToPitch();
+  void midiApplyWahPedalToPitch(unsigned short rawVal);
   // OperationMode
   void midiRequestOperationMode();
   void midiApplyOperationMode(unsigned short rawVal);
@@ -96,6 +100,7 @@ protected:
   virtual void midiMonitorOutputEQMiddleReceived(unsigned short rawVal) = 0;
   virtual void midiMonitorOutputEQTrebleReceived(unsigned short rawVal) = 0;
   virtual void midiMonitorOutputEQPresenceReceived(unsigned short rawVal) = 0;
+  virtual void midiWahPedalToPitchReceived(unsigned short rawVal) = 0;
   virtual void midiOperationModeReceived(unsigned short rawVal) = 0;
 
   ByteArray getAddressPage();

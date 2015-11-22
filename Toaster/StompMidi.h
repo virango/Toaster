@@ -73,6 +73,8 @@ protected:
   BYTEARRAYDECL(SmoothChords)
   BYTEARRAYDECL(PureTuning)
   BYTEARRAYDECL(Key)
+  BYTEARRAYDECL(FormantShiftOnOff)
+  BYTEARRAYDECL(FormantShift)
   BYTEARRAYDECL(LowCut)
   BYTEARRAYDECL(HighCut)
 
@@ -249,6 +251,12 @@ protected:
   // Key
   void midiRequestKey();
   void midiApplyKey(unsigned short rawVal);
+  // FormantShiftOnOff
+  void midiRequestFormantShiftOnOff();
+  void midiApplyFormantShiftOnOff(unsigned short rawVal);
+  // FormantShift
+  void midiRequestFormantShift();
+  void midiApplyFormantShift(unsigned short rawVal);
   // LowCut
   void midiRequestLowCut();
   void midiApplyLowCut(unsigned short rawVal);
@@ -313,6 +321,8 @@ protected:
   virtual void midiSmoothChordsReceived(unsigned short rawVal) = 0;
   virtual void midiPureTuningReceived(unsigned short rawVal) = 0;
   virtual void midiKeyReceived(unsigned short rawVal) = 0;
+  virtual void midiFormantShiftOnOffReceived(unsigned short rawVal) = 0;
+  virtual void midiFormantShiftReceived(unsigned short rawVal) = 0;
   virtual void midiLowCutReceived(unsigned short rawVal) = 0;
   virtual void midiHighCutReceived(unsigned short rawVal) = 0;
 
