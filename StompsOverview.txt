@@ -14,12 +14,14 @@ Flanger:*        Rate(64..0,042s), Depth(0..10), Manual(0..10), Feedback(0..100%
 FlangerOneway:*  Rate(-5..5), Depth(0..10), Manual(-5..5), Feedback(0..100%), Mix(0..100%), Ducking(-5..5), Volume(-5..5)
 ================ Pitch Shifter =====
 Transpose:*      Pitch(-36..36), Smooth Chords(0..1[bool])
-PedalPitch:      Heel Pitch(-36..36), Toe Pitch(-36..36), Formant Shift(-5..5), Mix(0..100%), Ducking(-5..5), Volume(-5..5)
-PedalVinylStop:  Mix(0..100%), Volume(-5..5), WahPedal to Pitch(0..1[bool])
+PedalPitch:*     Heel Pitch(-36..36), Toe Pitch(-36..36), Formant Shift(-5..5), Mix(0..100%), Ducking(-5..5), Volume(-5..5), Smooth Chords(0..1[bool]), Pure Tuning(0..1[bool]), Formant Shift(0..1[bool])
+PedalVinylStop:* Mix(0..100%), Volume(-5..5), WahPedal to Pitch(0..1[bool])
 ChromaticPitch:  Voice1 Pich(-36..36), Voice2 Pich(-36..36), Detune(0..10), Formant Shift(-5..5), Voice Mix(-5..5), Mix(0..100%), Ducking(-5..5), Volume(-5..5), Smooth Chords(0..1[bool]), Pure Tuning(0..1[bool]), Formant Shift(0..1[bool])
 HarmonicPitch:   Voice1 Interval(), Voice2Interval(), Key(), Formant Shift(-5..5), Voice Mix(-5..5), Mix(0..100%), Ducking(-5..5), Volume(-5..5), Pure Tuning(0..1[bool]), Formant Shift(0..1[bool])
-AnalogOctaver:   Voice Mix(-5..5), Mix(0..100%), Low Cut(0..10), Ducking(-5..5), Volume(-5..5)
-LoopMono:        Mix(0..100%), Ducking(-5..5), Volume(-5..5)
-LoopStereo:      Mix(0..100%), Ducking(-5..5), Volume(-5..5)
-LoopDistortion:  Volume(-5..5)
+AnalogOctaver:*  Voice Mix(-5..5), Mix(0..100%), Low Cut(0..10), Ducking(-5..5), Volume(-5..5)
+================ Loop =============
+LoopMono:*       Mix(0..100%), Ducking(-5..5), Volume(-5..5)
+LoopStereo:*     Mix(0..100%), Ducking(-5..5), Volume(-5..5)
+LoopDistortion:* Volume(-5..5)
 ================ Delay/Reverb =====
+Space:*          Intensity(0..10)

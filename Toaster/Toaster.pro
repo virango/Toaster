@@ -109,7 +109,9 @@ SOURCES += main.cpp\
     PedalPitchFrame.cpp \
     PedalVinylStopFrame.cpp \
     LoopDistortionFrame.cpp \
-    LoopFrame.cpp
+    LoopFrame.cpp \
+    AnalogOctaverFrame.cpp \
+    SpaceFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -184,7 +186,9 @@ HEADERS  += ToasterWindow.h \
     PedalPitchFrame.h \
     PedalVinylStopFrame.h \
     LoopDistortionFrame.h \
-    LoopFrame.h
+    LoopFrame.h \
+    AnalogOctaverFrame.h \
+    SpaceFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -225,7 +229,9 @@ FORMS    += \
     PedalPitchFrame.ui \
     PedalVinylStopFrame.ui \
     LoopDistortionFrame.ui \
-    LoopFrame.ui
+    LoopFrame.ui \
+    AnalogOctaverFrame.ui \
+    SpaceFrame.ui
 
 RESOURCES += \
     resources.qrc

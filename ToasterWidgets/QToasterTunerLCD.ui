@@ -135,6 +135,7 @@
     </property>
     <property name="font">
      <font>
+      <family>Ubuntu</family>
       <pointsize>8</pointsize>
       <weight>75</weight>
       <bold>true</bold>
@@ -161,6 +162,7 @@
     </property>
     <property name="font">
      <font>
+      <family>Ubuntu</family>
       <pointsize>15</pointsize>
       <weight>75</weight>
       <bold>true</bold>
@@ -189,6 +191,13 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true">QLabel#octaveLabel
 {
@@ -211,6 +220,7 @@
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -242,6 +252,7 @@
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <pointsize>7</pointsize>
     </font>
    </property>

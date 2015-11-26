@@ -63,6 +63,7 @@ public:
   void requestParametricEQPeakQFactor2() { midiRequestParametricEQPeakQFactor2(); }
   void requestWahPeakRange() { midiRequestWahPeakRange(); }
   void requestDucking() { midiRequestDucking(); }
+  void requestIntensity() { midiRequestIntensity(); }
   void requestVoiceMix() { midiRequestVoiceMix(); }
   void requestVoice1Pitch() { midiRequestVoice1Pitch(); }
   void requestVoice2Pitch() { midiRequestVoice2Pitch(); }
@@ -124,7 +125,8 @@ signals:
   void parametricEQPeakQFactor2Received(double peakQFactor);
   void wahPeakRangeReceived(double wahPeakRange);
   void duckingReceived(double ducking);
-  void voiceMixReceived(unsigned short rawVal);
+  void intensityReceived(double mix);
+  void voiceMixReceived(double voiceMix);
   void voice1PitchReceived(double voice1Pitch);
   void voice2PitchReceived(double voice2Pitch);
   void detuneReceived(double detune);
@@ -186,6 +188,7 @@ public slots:
   void applyParametricEQPeakQFactor2(double parametricEQPeakQFactor2);
   void applyWahPeakRange(double wahPeakRange);
   void applyDucking(double ducking);
+  void applyIntensity(double mix);
   void applyVoiceMix(double voiceMix);
   void applyVoice1Pitch(double voice1Pitch);
   void applyVoice2Pitch(double voice2Pitch);
@@ -248,6 +251,7 @@ protected:
   virtual void midiParametricEQPeakQFactor2Received(unsigned short rawVal);
   virtual void midiWahPeakRangeReceived(unsigned short rawVal);
   virtual void midiDuckingReceived(unsigned short rawVal);
+  virtual void midiIntensityReceived(unsigned short rawVal);
   virtual void midiVoiceMixReceived(unsigned short rawVal);
   virtual void midiVoice1PitchReceived(unsigned short rawVal);
   virtual void midiVoice2PitchReceived(unsigned short rawVal);

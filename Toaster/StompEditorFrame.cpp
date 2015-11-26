@@ -200,6 +200,9 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case FlangerOneway:
         mpActivePage = ui->flanger;
         break;
+      case Space:
+        mpActivePage = ui->space;
+        break;
       case Transpose:
         mpActivePage = ui->transpose;
         break;
@@ -208,6 +211,9 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
         break;
       case PedalVinylStop:
         mpActivePage = ui->pedalVinylStop;
+        break;
+      case AnalogOctaver:
+        mpActivePage = ui->analogOctaver;
         break;
       case LoopMono:
       case LoopStereo:

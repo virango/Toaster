@@ -265,9 +265,14 @@ void Stomp::applyDucking(double ducking)
   midiApplyDucking(phys2Raw(ducking, 10, -5));
 }
 
+void Stomp::applyIntensity(double mix)
+{
+  midiApplyIntensity(phys2Raw(mix, 100, 0));
+}
+
 void Stomp::applyVoiceMix(double voiceMix)
 {
-  //midiApplyVoiceMix(phys2Raw(voiceMix, , ));
+  midiApplyVoiceMix(phys2Raw(voiceMix, 10, -5));
 }
 
 void Stomp::applyVoice1Pitch(double voice1Pitch)
@@ -563,9 +568,14 @@ void Stomp::midiDuckingReceived(unsigned short rawVal)
   emit duckingReceived(raw2Phys(rawVal, 10, -5));
 }
 
+void Stomp::midiIntensityReceived(unsigned short rawVal)
+{
+  emit intensityReceived(raw2Phys(rawVal, 100, 0));
+}
+
 void Stomp::midiVoiceMixReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit voiceMixReceived(raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiVoice1PitchReceived(unsigned short rawVal)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DriveDSFrame</class>
- <widget class="QWidget" name="DriveDSFrame">
+ <class>SpaceFrame</class>
+ <widget class="QWidget" name="SpaceFrame">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -126,7 +126,7 @@
     </rect>
    </property>
    <property name="color">
-    <enum>QToasterLCD::Red</enum>
+    <enum>QToasterLCD::Green</enum>
    </property>
    <property name="currentPage">
     <enum>QToasterLCD::Page1</enum>
@@ -138,7 +138,7 @@
     <string/>
    </property>
    <property name="value1Title">
-    <string>Drive</string>
+    <string>Intensity</string>
    </property>
    <property name="value2Title">
     <string/>
@@ -147,7 +147,7 @@
     <string/>
    </property>
    <property name="value4Title">
-    <string>Volume</string>
+    <string/>
    </property>
    <property name="value5Title">
     <string/>
@@ -232,7 +232,7 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QToasterDial" name="volumeDial">
+  <widget class="QToasterDial" name="dummy4Dial">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -260,7 +260,7 @@
     </size>
    </property>
    <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Bi</enum>
+    <enum>QToasterDial::Uni</enum>
    </property>
    <property name="minValue">
     <double>-5.000000000000000</double>
@@ -276,6 +276,9 @@
    </property>
    <property name="unit">
     <string/>
+   </property>
+   <property name="isActive">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QToasterDial" name="dummy6Dial">
@@ -297,7 +300,7 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QToasterDial" name="driveDial">
+  <widget class="QToasterDial" name="intensityDial">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -357,23 +360,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>volumeDial</sender>
-   <signal>valueChanged(QString)</signal>
-   <receiver>lcdDisplay</receiver>
-   <slot>setValue4(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>481</x>
-     <y>284</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>443</x>
-     <y>158</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>driveDial</sender>
+   <sender>intensityDial</sender>
    <signal>valueChanged(QString)</signal>
    <receiver>lcdDisplay</receiver>
    <slot>setValue1(QString)</slot>

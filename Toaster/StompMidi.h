@@ -66,6 +66,7 @@ protected:
   BYTEARRAYDECL(ParametricEQPeakQFactor2)
   BYTEARRAYDECL(WahPeakRange)
   BYTEARRAYDECL(Ducking)
+  BYTEARRAYDECL(Intensity)
   BYTEARRAYDECL(VoiceMix)
   BYTEARRAYDECL(Voice1Pitch)
   BYTEARRAYDECL(Voice2Pitch)
@@ -230,6 +231,9 @@ protected:
   // Ducking
   void midiRequestDucking();
   void midiApplyDucking(unsigned short rawVal);
+  // Intensity
+  void midiRequestIntensity();
+  void midiApplyIntensity(unsigned short rawVal);
   // VoiceMix
   void midiRequestVoiceMix();
   void midiApplyVoiceMix(unsigned short rawVal);
@@ -314,6 +318,7 @@ protected:
   virtual void midiParametricEQPeakQFactor2Received(unsigned short rawVal) = 0;
   virtual void midiWahPeakRangeReceived(unsigned short rawVal) = 0;
   virtual void midiDuckingReceived(unsigned short rawVal) = 0;
+  virtual void midiIntensityReceived(unsigned short rawVal) = 0;
   virtual void midiVoiceMixReceived(unsigned short rawVal) = 0;
   virtual void midiVoice1PitchReceived(unsigned short rawVal) = 0;
   virtual void midiVoice2PitchReceived(unsigned short rawVal) = 0;
