@@ -1,19 +1,19 @@
-#ifndef METALDSFRAME_H
-#define METALDSFRAME_H
+#ifndef SPACEFRAME_H
+#define SPACEFRAME_H
 #include <QWidget>
 #include "StompEditorPage.h"
 
 namespace Ui {
-class MetalDSFrame;
+class SpaceFrame;
 }
 
-class MetalDSFrame : public QWidget, public IStompEditorPage
+class SpaceFrame : public QWidget, public IStompEditorPage
 {
   Q_OBJECT
 
 public:
-  explicit MetalDSFrame(QWidget *parent = 0);
-  ~MetalDSFrame();
+  explicit SpaceFrame(QWidget *parent = 0);
+  ~SpaceFrame();
   // IStompEditorPage
   virtual void activate(Stomp& stomp);
   virtual void deactivate();
@@ -28,26 +28,17 @@ public:
   virtual void displayAmpName(const QString&  ampName);
 
 private slots:
-  void on_volumeDial_valueChanged(double value);
-  void on_driveDial_valueChanged(double value);
-  void on_lowDial_valueChanged(double value);
-  void on_middleDial_valueChanged(double value);
-  void on_midFreqDial_valueChanged(double value);
-  void on_highDial_valueChanged(double value);
+  // ui => kpa
+  void on_intensityDial_valueChanged(double value);
   // kpa => ui
-  void onVolume(double value);
-  void onDrive(double value);
-  void onLow(double value);
-  void onMiddle(double value);
-  void onMidFreq(double value);
-  void onHigh(double value);
+  void onIntensity(double value);
 
 private:
-  Ui::MetalDSFrame *ui;
+  Ui::SpaceFrame *ui;
 
   Stomp* mpStomp;
 
   FXType mFXType;
 };
 
-#endif // METALDSFRAME_H
+#endif // SPACEFRAME_H

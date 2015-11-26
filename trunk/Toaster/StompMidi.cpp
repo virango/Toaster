@@ -29,7 +29,7 @@ BYTEARRAYDEF(StompMidi, CompressorAttack,                     0x13)
 BYTEARRAYDEF(StompMidi, ModulationRate,                       0x14) // also for stereo widener tune
 BYTEARRAYDEF(StompMidi, ModulationDepth,                      0x15) // also for stereo widener intensity and micro pitch detune
 BYTEARRAYDEF(StompMidi, ModulationFeedback,                   0x16)
-BYTEARRAYDEF(StompMidi, ModulationCrossover,                  0x17)
+BYTEARRAYDEF(StompMidi, ModulationCrossover,                  0x17) // also for analog octaver low cut
 BYTEARRAYDEF(StompMidi, ModulationHyperChorusAmount,          0x18)
 BYTEARRAYDEF(StompMidi, ModulationManual,                     0x19)
 BYTEARRAYDEF(StompMidi, ModulationPhaserPeakSpread,           0x1A)
@@ -58,6 +58,7 @@ BYTEARRAYDEF(StompMidi, ParametricEQPeakFrequency2,           0x32)
 BYTEARRAYDEF(StompMidi, ParametricEQPeakQFactor2,             0x33)
 BYTEARRAYDEF(StompMidi, WahPeakRange,                         0x34)
 BYTEARRAYDEF(StompMidi, Ducking,                              0x35)
+BYTEARRAYDEF(StompMidi, Intensity,                            0x36) // also for analog octaver mix
 BYTEARRAYDEF(StompMidi, VoiceMix,                             0x37)
 BYTEARRAYDEF(StompMidi, Voice1Pitch,                          0x38)
 BYTEARRAYDEF(StompMidi, Voice2Pitch,                          0x39)
@@ -185,6 +186,8 @@ void StompMidi::consumeSysExMsg(ByteArray* msg)
       midiWahPeakRangeReceived(rawVal);
     else if(param == sDucking[0])
       midiDuckingReceived(rawVal);
+    else if(param == sIntensity[0])
+      midiIntensityReceived(rawVal);
     else if(param == sVoiceMix[0])
       midiVoiceMixReceived(rawVal);
     else if(param == sVoice1Pitch[0])
@@ -697,6 +700,16 @@ void StompMidi::midiRequestDucking()
 void StompMidi::midiApplyDucking(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDucking, rawVal));
+}
+
+void StompMidi::midiRequestIntensity()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sIntensity));
+}
+
+void StompMidi::midiApplyIntensity(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sIntensity, rawVal));
 }
 
 void StompMidi::midiRequestVoiceMix()

@@ -1,19 +1,19 @@
-#ifndef METALDSFRAME_H
-#define METALDSFRAME_H
+#ifndef ANALOGOCTAVERFRAME_H
+#define ANALOGOCTAVERFRAME_H
 #include <QWidget>
 #include "StompEditorPage.h"
 
 namespace Ui {
-class MetalDSFrame;
+class AnalogOctaverFrame;
 }
 
-class MetalDSFrame : public QWidget, public IStompEditorPage
+class AnalogOctaverFrame : public QWidget, public IStompEditorPage
 {
   Q_OBJECT
 
 public:
-  explicit MetalDSFrame(QWidget *parent = 0);
-  ~MetalDSFrame();
+  explicit AnalogOctaverFrame(QWidget *parent = 0);
+  ~AnalogOctaverFrame();
   // IStompEditorPage
   virtual void activate(Stomp& stomp);
   virtual void deactivate();
@@ -29,25 +29,22 @@ public:
 
 private slots:
   void on_volumeDial_valueChanged(double value);
-  void on_driveDial_valueChanged(double value);
-  void on_lowDial_valueChanged(double value);
-  void on_middleDial_valueChanged(double value);
-  void on_midFreqDial_valueChanged(double value);
-  void on_highDial_valueChanged(double value);
+  void on_duckingDial_valueChanged(double value);
+  void on_voiceMixDial_valueChanged(double value);
+  void on_mixDial_valueChanged(double value);
+  void on_lowCutDial_valueChanged(double value);
   // kpa => ui
   void onVolume(double value);
-  void onDrive(double value);
-  void onLow(double value);
-  void onMiddle(double value);
-  void onMidFreq(double value);
-  void onHigh(double value);
-
+  void onDucking(double value);
+  void onVoiceMix(double value);
+  void onMix(double value);
+  void onLowCut(double value);
 private:
-  Ui::MetalDSFrame *ui;
+  Ui::AnalogOctaverFrame *ui;
 
   Stomp* mpStomp;
 
   FXType mFXType;
 };
 
-#endif // METALDSFRAME_H
+#endif // ANALOGOCTAVERFRAME_H

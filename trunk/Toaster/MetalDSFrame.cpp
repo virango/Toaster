@@ -22,10 +22,10 @@ void MetalDSFrame::activate(Stomp& stomp)
 
   connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
   connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
-  connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowDial(double)));
-  connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddleDial(double)));
-  connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMidFreqDial(double)));
-  connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighDial(double)));
+  connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLow(double)));
+  connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddle(double)));
+  connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMidFreq(double)));
+  connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHigh(double)));
 
   mpStomp->requestVolume();
   mpStomp->requestDistortionShaperDrive();
@@ -130,25 +130,25 @@ void MetalDSFrame::onDrive(double value)
   update();
 }
 
-void MetalDSFrame::onLowDial(double value)
+void MetalDSFrame::onLow(double value)
 {
   ui->lowDial->setValue(value);
   update();
 }
 
-void MetalDSFrame::onMiddleDial(double value)
+void MetalDSFrame::onMiddle(double value)
 {
   ui->middleDial->setValue(value);
   update();
 }
 
-void MetalDSFrame::onMidFreqDial(double value)
+void MetalDSFrame::onMidFreq(double value)
 {
   ui->midFreqDial->setValue(value);
   update();
 }
 
-void MetalDSFrame::onHighDial(double value)
+void MetalDSFrame::onHigh(double value)
 {
   ui->highDial->setValue(value);
   update();
