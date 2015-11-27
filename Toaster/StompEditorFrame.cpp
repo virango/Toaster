@@ -212,6 +212,9 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case PedalVinylStop:
         mpActivePage = ui->pedalVinylStop;
         break;
+      case ChromaticPitch:
+        mpActivePage = ui->chromaticPitch;
+        break;
       case AnalogOctaver:
         mpActivePage = ui->analogOctaver;
         break;

@@ -216,6 +216,9 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="isActive">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QToasterDial" name="qToasterDial_3">
    <property name="geometry">
@@ -231,6 +234,9 @@
    </property>
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
+   </property>
+   <property name="isActive">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QToasterDial" name="qToasterDial_4">
@@ -248,6 +254,9 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="isActive">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QToasterBrowserLCD" name="lcdDisplay">
    <property name="geometry">
@@ -259,7 +268,7 @@
     </rect>
    </property>
    <property name="color">
-    <enum>QToasterBrowserLCD::Standard</enum>
+    <enum>QToasterLCD::Standard</enum>
    </property>
   </widget>
  </widget>

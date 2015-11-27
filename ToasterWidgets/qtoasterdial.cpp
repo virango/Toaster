@@ -258,6 +258,7 @@ void QToasterDial::updateLEDRing()
   {
     double step = (mMaxValue - mMinValue) / (mLEDRingSkinNoOfFrames - 1);
     double offset = mMinValue * (-1);
-    mCurrLEDRingFrameNo = (int) ((mCurrValue + offset) / step);
+    double value =  (mCurrValue + offset) / step;
+    mCurrLEDRingFrameNo = (int) floor(value + 0.5);
   }
 }
