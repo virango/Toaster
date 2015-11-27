@@ -645,31 +645,37 @@ void QToasterStompEditLCD::setStompFXType(StompInstance stompInstance, FXType fx
 void QToasterStompEditLCD::setStompAFXType(FXType fxType)
 {
   ui->stompAEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompAEdit->setCursorPosition(0);
 }
 
 void QToasterStompEditLCD::setStompBFXType(FXType fxType)
 {
   ui->stompBEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompBEdit->setCursorPosition(0);
 }
 
 void QToasterStompEditLCD::setStompCFXType(FXType fxType)
 {
   ui->stompCEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompCEdit->setCursorPosition(0);
 }
 
 void QToasterStompEditLCD::setStompDFXType(FXType fxType)
 {
   ui->stompDEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompDEdit->setCursorPosition(0);
 }
 
 void QToasterStompEditLCD::setStompXFXType(FXType fxType)
 {
   ui->stompXEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompXEdit->setCursorPosition(0);
 }
 
 void QToasterStompEditLCD::setStompModFXType(FXType fxType)
 {
   ui->stompModEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompModEdit->setCursorPosition(0);
 }
 
 void QToasterStompEditLCD::setStompEnabled(StompInstance stompInstance, bool enabled)

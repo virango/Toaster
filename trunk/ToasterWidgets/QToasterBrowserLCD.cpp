@@ -170,31 +170,37 @@ void QToasterBrowserLCD::setStompFXType(StompInstance stompInstance, FXType fxTy
 void QToasterBrowserLCD::setStompAFXType(FXType fxType)
 {
   ui->stompAEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompAEdit->setCursorPosition(0);
 }
 
 void QToasterBrowserLCD::setStompBFXType(FXType fxType)
 {
   ui->stompBEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompBEdit->setCursorPosition(0);
 }
 
 void QToasterBrowserLCD::setStompCFXType(FXType fxType)
 {
   ui->stompCEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompCEdit->setCursorPosition(0);
 }
 
 void QToasterBrowserLCD::setStompDFXType(FXType fxType)
 {
   ui->stompDEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompDEdit->setCursorPosition(0);
 }
 
 void QToasterBrowserLCD::setStompXFXType(FXType fxType)
 {
   ui->stompXEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompXEdit->setCursorPosition(0);
 }
 
 void QToasterBrowserLCD::setStompModFXType(FXType fxType)
 {
   ui->stompModEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->stompModEdit->setCursorPosition(0);
 }
 
 void QToasterBrowserLCD::setStompEnabled(StompInstance stompInstance, bool enabled)

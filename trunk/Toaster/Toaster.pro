@@ -111,7 +111,8 @@ SOURCES += main.cpp\
     LoopDistortionFrame.cpp \
     LoopFrame.cpp \
     AnalogOctaverFrame.cpp \
-    SpaceFrame.cpp
+    SpaceFrame.cpp \
+    ChromaticPitchFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -188,7 +189,8 @@ HEADERS  += ToasterWindow.h \
     LoopDistortionFrame.h \
     LoopFrame.h \
     AnalogOctaverFrame.h \
-    SpaceFrame.h
+    SpaceFrame.h \
+    ChromaticPitchFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -231,7 +233,8 @@ FORMS    += \
     LoopDistortionFrame.ui \
     LoopFrame.ui \
     AnalogOctaverFrame.ui \
-    SpaceFrame.ui
+    SpaceFrame.ui \
+    ChromaticPitchFrame.ui
 
 RESOURCES += \
     resources.qrc

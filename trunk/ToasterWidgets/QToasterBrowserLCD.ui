@@ -35,6 +35,7 @@ background-color: transparent;
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -198,6 +199,7 @@ background-color: transparent;
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -227,6 +229,9 @@ border-radius: 3px;</string>
    <property name="frame">
     <bool>true</bool>
    </property>
+   <property name="cursorPosition">
+    <number>0</number>
+   </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
@@ -251,6 +256,7 @@ border-radius: 3px;</string>
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -301,6 +307,7 @@ border-radius: 3px;</string>
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -330,6 +337,9 @@ border-radius: 3px;</string>
    <property name="frame">
     <bool>true</bool>
    </property>
+   <property name="cursorPosition">
+    <number>0</number>
+   </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
@@ -354,6 +364,7 @@ border-radius: 3px;</string>
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -404,6 +415,7 @@ border-radius: 3px;</string>
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -454,6 +466,7 @@ border-radius: 3px;</string>
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -504,6 +517,7 @@ border-radius: 3px;</string>
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
@@ -981,7 +995,9 @@ border-color: rgb(0, 0, 0);</string>
     </property>
     <property name="font">
      <font>
+      <family>Ubuntu</family>
       <pointsize>7</pointsize>
+      <stylestrategy>PreferAntialias</stylestrategy>
      </font>
     </property>
     <property name="styleSheet">
