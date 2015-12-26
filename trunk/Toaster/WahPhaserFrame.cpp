@@ -18,39 +18,44 @@ WahPhaserFrame::~WahPhaserFrame()
   delete ui;
 }
 
-void WahPhaserFrame::activate(Stomp& stomp)
+void WahPhaserFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(wahManualReceived(double)), this, SLOT(onManual(double)));
-  connect(mpStomp, SIGNAL(wahPeakReceived(double)), this, SLOT(onPeak(double)));
-  connect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
-  connect(mpStomp, SIGNAL(wahPeakRangeReceived(double)), this, SLOT(onPeakRange(double)));
-  connect(mpStomp, SIGNAL(wahPedalModeReceived(::WahPedalMode)), this, SLOT(onPedalMode(::WahPedalMode)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(wahTouchAttackReceived(double)), this, SLOT(onTouchAttack(double)));
-  connect(mpStomp, SIGNAL(wahTouchReleaseReceived(double)), this, SLOT(onTouchRelease(double)));
-  connect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
-  connect(mpStomp, SIGNAL(modulationPhaserPeakSpreadReceived(double)), this, SLOT(onSpread(double)));
-  connect(mpStomp, SIGNAL(modulationPhaserStagesReceived(double)), this, SLOT(onStages(double)));
 
-  mpStomp->requestWahManual();
-  mpStomp->requestWahPeak();
-  mpStomp->requestWahRange();
-  mpStomp->requestWahPeakRange();
-  mpStomp->requestWahPedalMode();
-  mpStomp->requestMix();
-  mpStomp->requestDucking();
-  mpStomp->requestVolume();
-  mpStomp->requestWahTouchAttack();
-  mpStomp->requestWahTouchRelease();
-  mpStomp->requestWahTouchBoost();
-  mpStomp->requestModulationPhaserPeakSpread();
-  mpStomp->requestModulationPhaserStages();
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(wahManualReceived(double)), this, SLOT(onManual(double)));
+    connect(mpStomp, SIGNAL(wahPeakReceived(double)), this, SLOT(onPeak(double)));
+    connect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
+    connect(mpStomp, SIGNAL(wahPeakRangeReceived(double)), this, SLOT(onPeakRange(double)));
+    connect(mpStomp, SIGNAL(wahPedalModeReceived(::WahPedalMode)), this, SLOT(onPedalMode(::WahPedalMode)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(wahTouchAttackReceived(double)), this, SLOT(onTouchAttack(double)));
+    connect(mpStomp, SIGNAL(wahTouchReleaseReceived(double)), this, SLOT(onTouchRelease(double)));
+    connect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
+    connect(mpStomp, SIGNAL(modulationPhaserPeakSpreadReceived(double)), this, SLOT(onSpread(double)));
+    connect(mpStomp, SIGNAL(modulationPhaserStagesReceived(double)), this, SLOT(onStages(double)));
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    mpStomp->requestWahManual();
+    mpStomp->requestWahPeak();
+    mpStomp->requestWahRange();
+    mpStomp->requestWahPeakRange();
+    mpStomp->requestWahPedalMode();
+    mpStomp->requestMix();
+    mpStomp->requestDucking();
+    mpStomp->requestVolume();
+    mpStomp->requestWahTouchAttack();
+    mpStomp->requestWahTouchRelease();
+    mpStomp->requestWahTouchBoost();
+    mpStomp->requestModulationPhaserPeakSpread();
+    mpStomp->requestModulationPhaserStages();
+
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void WahPhaserFrame::deactivate()
@@ -73,13 +78,6 @@ void WahPhaserFrame::deactivate()
   }
   mpStomp = nullptr;
 }
-
-void WahPhaserFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
-}
-
 
 void WahPhaserFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {

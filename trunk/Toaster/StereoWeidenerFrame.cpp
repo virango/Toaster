@@ -16,19 +16,23 @@ StereoWeidenerFrame::~StereoWeidenerFrame()
   delete ui;
 }
 
-void StereoWeidenerFrame::activate(Stomp& stomp)
+void StereoWeidenerFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onIntensity(double)));
-  connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onTune(double, unsigned short)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onIntensity(double)));
+    connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onTune(double, unsigned short)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
 
-  mpStomp->requestModulationDepth();
-  mpStomp->requestModulationRate();
-  mpStomp->requestDucking();
+    mpStomp->requestModulationDepth();
+    mpStomp->requestModulationRate();
+    mpStomp->requestDucking();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void StereoWeidenerFrame::deactivate()
@@ -40,12 +44,6 @@ void StereoWeidenerFrame::deactivate()
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
   }
   mpStomp = nullptr;
-}
-
-void StereoWeidenerFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void StereoWeidenerFrame::displayStompType(StompInstance stompInstance, FXType fxType)

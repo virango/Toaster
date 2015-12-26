@@ -17,31 +17,62 @@ PhaserFrame::~PhaserFrame()
   delete ui;
 }
 
-void PhaserFrame::activate(Stomp& stomp)
+void PhaserFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
-  connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-  connect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
-  connect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
-  connect(mpStomp, SIGNAL(modulationPhaserPeakSpreadReceived(double)), this, SLOT(onPeakSpread(double)));
-  connect(mpStomp, SIGNAL(modulationPhaserStagesReceived(double)), this, SLOT(onStages(double)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
+    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
+    connect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
+    connect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
+    connect(mpStomp, SIGNAL(modulationPhaserPeakSpreadReceived(double)), this, SLOT(onPeakSpread(double)));
+    connect(mpStomp, SIGNAL(modulationPhaserStagesReceived(double)), this, SLOT(onStages(double)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
 
-  mpStomp->requestModulationRate();
-  mpStomp->requestModulationDepth();
-  mpStomp->requestModulationManual();
-  mpStomp->requestModulationFeedback();
-  mpStomp->requestModulationPhaserPeakSpread();
-  mpStomp->requestModulationPhaserStages();
-  mpStomp->requestMix();
-  mpStomp->requestDucking();
-  mpStomp->requestVolume();
+    mFXType = mpStomp->getFXType();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mFXType));
+
+    if(mFXType == PhaserOneway)
+    {
+      ui->rateDial->setLEDRingType(QToasterDial::Bi);
+      ui->rateDial->setMinValue(-5.0);
+      ui->rateDial->setMaxValue(5.0);
+      ui->rateDial->setStepWidth(0.1);
+      ui->rateDial->setPrecision(1);
+
+      ui->manualDial->setLEDRingType(QToasterDial::Bi);
+      ui->manualDial->setMinValue(-5.0);
+      ui->manualDial->setMaxValue(5);
+    }
+    else
+    {
+      ui->rateDial->setLEDRingType(QToasterDial::Uni);
+      ui->rateDial->setMinValue(0.0);
+      ui->rateDial->setMaxValue(16383.0);
+      ui->rateDial->setStepWidth(1.0);
+      ui->rateDial->setPrecision(0);
+
+      ui->manualDial->setLEDRingType(QToasterDial::Uni);
+      ui->manualDial->setMinValue(0);
+      ui->manualDial->setMaxValue(10);
+    }
+
+    mpStomp->requestModulationRate();
+    mpStomp->requestModulationDepth();
+    mpStomp->requestModulationManual();
+    mpStomp->requestModulationFeedback();
+    mpStomp->requestModulationPhaserPeakSpread();
+    mpStomp->requestModulationPhaserStages();
+    mpStomp->requestMix();
+    mpStomp->requestDucking();
+    mpStomp->requestVolume();
+  }
 }
 
 void PhaserFrame::deactivate()
@@ -59,37 +90,6 @@ void PhaserFrame::deactivate()
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
   }
   mpStomp = nullptr;
-}
-
-void PhaserFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
-
-  if(mFXType == PhaserOneway)
-  {
-    ui->rateDial->setLEDRingType(QToasterDial::Bi);
-    ui->rateDial->setMinValue(-5.0);
-    ui->rateDial->setMaxValue(5.0);
-    ui->rateDial->setStepWidth(0.1);
-    ui->rateDial->setPrecision(1);
-
-    ui->manualDial->setLEDRingType(QToasterDial::Bi);
-    ui->manualDial->setMinValue(-5.0);
-    ui->manualDial->setMaxValue(5);
-  }
-  else
-  {
-    ui->rateDial->setLEDRingType(QToasterDial::Uni);
-    ui->rateDial->setMinValue(0.0);
-    ui->rateDial->setMaxValue(16383.0);
-    ui->rateDial->setStepWidth(1.0);
-    ui->rateDial->setPrecision(0);
-
-    ui->manualDial->setLEDRingType(QToasterDial::Uni);
-    ui->manualDial->setMinValue(0);
-    ui->manualDial->setMaxValue(10);
-  }
 }
 
 void PhaserFrame::displayStompType(StompInstance stompInstance, FXType fxType)

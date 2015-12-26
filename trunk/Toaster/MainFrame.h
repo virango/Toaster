@@ -15,6 +15,8 @@
 #include "Reverb.h"
 #include "Profile.h"
 #include "StompCtxMenu.h"
+#include "DelayCtxMenu.h"
+#include "ReverbCtxMenu.h"
 
 namespace Ui {
 class MainFrame;
@@ -155,8 +157,8 @@ private:
   };
 
   // utility methods
-  void handleStompButtonClick(Stomp& stomp, QToasterButton& stompBt, bool longClick);
-  void toggleOperationMode(Stomp& stomp, OperationMode opMode, QToasterButton* bt);
+  void handleStompButtonClick(QObject& module, QToasterButton& stompBt, bool longClick);
+  void toggleOperationMode(QObject& module, OperationMode opMode, QToasterButton* bt);
 
 private:
   Ui::MainFrame *ui;
@@ -183,6 +185,8 @@ private:
   StompCtxMenu  mStompDCtxMenu;
   StompCtxMenu  mStompXCtxMenu;
   StompCtxMenu  mStompModCtxMenu;
+  DelayCtxMenu  mDelayCtxMenu;
+  ReverbCtxMenu mReverbCtxMenu;
 
   OperationMode mOperationMode;
   OperationMode mPreviousOperationMode;

@@ -16,25 +16,29 @@ MetalDSFrame::~MetalDSFrame()
   delete ui;
 }
 
-void MetalDSFrame::activate(Stomp& stomp)
+void MetalDSFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
-  connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLow(double)));
-  connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddle(double)));
-  connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMidFreq(double)));
-  connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHigh(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
+    connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLow(double)));
+    connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddle(double)));
+    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMidFreq(double)));
+    connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHigh(double)));
 
-  mpStomp->requestVolume();
-  mpStomp->requestDistortionShaperDrive();
-  mpStomp->requestParametricEQLowGain();
-  mpStomp->requestParametricEQPeakGain();
-  mpStomp->requestParametricEQPeakFrequency();
-  mpStomp->requestParametricEQHighGain();
+    mpStomp->requestVolume();
+    mpStomp->requestDistortionShaperDrive();
+    mpStomp->requestParametricEQLowGain();
+    mpStomp->requestParametricEQPeakGain();
+    mpStomp->requestParametricEQPeakFrequency();
+    mpStomp->requestParametricEQHighGain();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void MetalDSFrame::deactivate()
@@ -49,12 +53,6 @@ void MetalDSFrame::deactivate()
     disconnect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighDial(double)));
   }
   mpStomp = nullptr;
-}
-
-void MetalDSFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void MetalDSFrame::displayStompType(StompInstance stompInstance, FXType fxType)

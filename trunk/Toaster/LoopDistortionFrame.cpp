@@ -16,15 +16,19 @@ LoopDistortionFrame::~LoopDistortionFrame()
   delete ui;
 }
 
-void LoopDistortionFrame::activate(Stomp& stomp)
+void LoopDistortionFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
 
-  mpStomp->requestVolume();
+    mpStomp->requestVolume();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void LoopDistortionFrame::deactivate()
@@ -34,12 +38,6 @@ void LoopDistortionFrame::deactivate()
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
   }
   mpStomp = nullptr;
-}
-
-void LoopDistortionFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void LoopDistortionFrame::displayStompType(StompInstance stompInstance, FXType fxType)

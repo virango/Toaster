@@ -28,7 +28,7 @@ void Reverb::requestAllValues()
 }
 
 // slots
-void Reverb::applyType(Reverb::ReverbType type)
+void Reverb::applyType(::ReverbType type)
 {
   midiApplyType((unsigned short) type);
 }
@@ -89,12 +89,10 @@ void Reverb::applyDucking(double ducking)
   midiApplyDucking(phys2Raw(ducking, 10.0, -5.0));
 }
 
-
-
 // ReverbMidi
 void Reverb::midiTypeReceived(unsigned short rawVal)
 {
-  emit typeReceived((Reverb::ReverbType) rawVal);
+  emit typeReceived((::ReverbType) rawVal);
 }
 
 void Reverb::midiOnOffCutsTailReceived(unsigned short rawVal)

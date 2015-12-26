@@ -22,11 +22,23 @@ public:
   explicit StompEditorFrame(QWidget *parent = 0);
   ~StompEditorFrame();
 
-  void activate(StompInstance stompInstance);
+  void init(Stomp& stompA,
+            Stomp& stompB,
+            Stomp& stompC,
+            Stomp& stompD,
+            Stomp& stompX,
+            Stomp& stompMod,
+            Delay& delay,
+            Reverb& reverb,
+            Profile& profile);
+
+  void activate(QObject& stomp);
   void deactivate();
 
 private slots:
   void onActiveStompType(::FXType fxType);
+  void onDelayType(::DelayType delayType);
+  void onReverbType(::ReverbType reverbType);
 
   // stomps
   // kpa => ui
@@ -58,17 +70,18 @@ private:
 private:
   Ui::StompEditorFrame *ui;
 
-  Stomp             mStompA;
-  Stomp             mStompB;
-  Stomp             mStompC;
-  Stomp             mStompD;
-  Stomp             mStompX;
-  Stomp             mStompMod;
-  Delay             mDelay;
-  Reverb            mReverb;
-  Profile           mProfile;
+  Stomp*            mpStompA;
+  Stomp*            mpStompB;
+  Stomp*            mpStompC;
+  Stomp*            mpStompD;
+  Stomp*            mpStompX;
+  Stomp*            mpStompMod;
+  Delay*            mpDelay;
+  Reverb*           mpReverb;
+  Profile*          mpProfile;
 
-  Stomp*            mpActiveStomp;
+  QObject*          mpActiveStomp;
+  int               mActiveStompType;
   IStompEditorPage* mpActivePage;
 };
 

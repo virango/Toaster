@@ -2,6 +2,7 @@
 #define PUREBOOSTERFRAME_H
 #include <QWidget>
 #include "StompEditorPage.h"
+#include "Stomp.h"
 
 namespace Ui {
 class PureBoosterFrame;
@@ -16,11 +17,10 @@ public:
   ~PureBoosterFrame();
 
   // IStompEditorPage
-  virtual void activate(Stomp& stomp);
+  virtual void activate(QObject& stomp);
   virtual void deactivate();
   virtual bool isActive() { return mpStomp != nullptr; }
-  virtual FXType getFXType() const { return PureBooster; }
-  virtual void setFXType(FXType fxType) { mFXType = fxType; }
+  virtual QObject* getStomp()  { return mpStomp; }
 
   virtual void displayStompType(StompInstance stompInstance, FXType fxType);
   virtual void displayStompEnabled(StompInstance stompInstance, bool enabled);

@@ -15,19 +15,25 @@ AirChorusFrame::~AirChorusFrame()
 {
   delete ui;
 }
-void AirChorusFrame::activate(Stomp& stomp)
+
+void AirChorusFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-  connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
+    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
 
-  mpStomp->requestModulationDepth();
-  mpStomp->requestModulationCrossover();
-  mpStomp->requestVolume();
+    mpStomp->requestModulationDepth();
+    mpStomp->requestModulationCrossover();
+    mpStomp->requestVolume();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
+
 }
 
 void AirChorusFrame::deactivate()
@@ -39,12 +45,6 @@ void AirChorusFrame::deactivate()
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
   }
   mpStomp = nullptr;
-}
-
-void AirChorusFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void AirChorusFrame::displayStompType(StompInstance stompInstance, FXType fxType)

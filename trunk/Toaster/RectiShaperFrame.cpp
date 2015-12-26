@@ -16,9 +16,9 @@ RectiShaperFrame::~RectiShaperFrame()
   delete ui;
 }
 
-void RectiShaperFrame::activate(Stomp& stomp)
+void RectiShaperFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
   connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
   connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
@@ -28,7 +28,8 @@ void RectiShaperFrame::activate(Stomp& stomp)
   mpStomp->requestDistortionShaperDrive();
   mpStomp->requestDucking();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 }
 
 void RectiShaperFrame::deactivate()
@@ -40,12 +41,6 @@ void RectiShaperFrame::deactivate()
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
   }
   mpStomp = nullptr;
-}
-
-void RectiShaperFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void RectiShaperFrame::displayStompType(StompInstance stompInstance, FXType fxType)

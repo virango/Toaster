@@ -16,25 +16,29 @@ RotarySpeakerFrame::~RotarySpeakerFrame()
   delete ui;
 }
 
-void RotarySpeakerFrame::activate(Stomp& stomp)
+void RotarySpeakerFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(rotaryDistanceReceived(double)), this, SLOT(onDistance(double)));
-  connect(mpStomp, SIGNAL(rotaryBalanceReceived(double)), this, SLOT(onLowHighBalance(double)));
-  connect(mpStomp, SIGNAL(rotarySpeedReceived(::RotarySpeed)), this, SLOT(onRotarySpeed(::RotarySpeed)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(rotaryDistanceReceived(double)), this, SLOT(onDistance(double)));
+    connect(mpStomp, SIGNAL(rotaryBalanceReceived(double)), this, SLOT(onLowHighBalance(double)));
+    connect(mpStomp, SIGNAL(rotarySpeedReceived(::RotarySpeed)), this, SLOT(onRotarySpeed(::RotarySpeed)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
 
-  mpStomp->requestRotaryDistance();
-  mpStomp->requestRotaryBalance();
-  mpStomp->requestRotarySpeed();
-  mpStomp->requestVolume();
-  mpStomp->requestMix();
-  mpStomp->requestDucking();
+    mpStomp->requestRotaryDistance();
+    mpStomp->requestRotaryBalance();
+    mpStomp->requestRotarySpeed();
+    mpStomp->requestVolume();
+    mpStomp->requestMix();
+    mpStomp->requestDucking();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void RotarySpeakerFrame::deactivate()
@@ -49,12 +53,6 @@ void RotarySpeakerFrame::deactivate()
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
   }
   mpStomp = nullptr;
-}
-
-void RotarySpeakerFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void RotarySpeakerFrame::displayStompType(StompInstance stompInstance, FXType fxType)

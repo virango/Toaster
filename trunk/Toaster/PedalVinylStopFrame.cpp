@@ -17,19 +17,23 @@ PedalVinylStopFrame::~PedalVinylStopFrame()
   delete ui;
 }
 
-void PedalVinylStopFrame::activate(Stomp& stomp)
+void PedalVinylStopFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(&mGlobal, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(&mGlobal, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
 
-  mpStomp->requestVolume();
-  mpStomp->requestMix();
-  mGlobal.requestWahPedalToPitch();
+    mpStomp->requestVolume();
+    mpStomp->requestMix();
+    mGlobal.requestWahPedalToPitch();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void PedalVinylStopFrame::deactivate()
@@ -41,12 +45,6 @@ void PedalVinylStopFrame::deactivate()
     disconnect(&mGlobal, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
   }
   mpStomp = nullptr;
-}
-
-void PedalVinylStopFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void PedalVinylStopFrame::displayStompType(StompInstance stompInstance, FXType fxType)

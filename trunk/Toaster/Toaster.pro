@@ -112,7 +112,13 @@ SOURCES += main.cpp\
     LoopFrame.cpp \
     AnalogOctaverFrame.cpp \
     SpaceFrame.cpp \
-    ChromaticPitchFrame.cpp
+    ChromaticPitchFrame.cpp \
+    HarmonicPitchFrame.cpp \
+    DelayFrame.cpp \
+    ReverbFrame.cpp \
+    ReverbCtxMenu.cpp \
+    DelayCtxMenu.cpp \
+    TapDelayFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -190,7 +196,13 @@ HEADERS  += ToasterWindow.h \
     LoopFrame.h \
     AnalogOctaverFrame.h \
     SpaceFrame.h \
-    ChromaticPitchFrame.h
+    ChromaticPitchFrame.h \
+    HarmonicPitchFrame.h \
+    DelayFrame.h \
+    ReverbFrame.h \
+    ReverbCtxMenu.h \
+    DelayCtxMenu.h \
+    TapDelayFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -234,7 +246,11 @@ FORMS    += \
     LoopFrame.ui \
     AnalogOctaverFrame.ui \
     SpaceFrame.ui \
-    ChromaticPitchFrame.ui
+    ChromaticPitchFrame.ui \
+    HarmonicPitchFrame.ui \
+    DelayFrame.ui \
+    ReverbFrame.ui \
+    TapDelayFrame.ui
 
 RESOURCES += \
     resources.qrc

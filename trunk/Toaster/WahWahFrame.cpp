@@ -19,35 +19,39 @@ WahWahFrame::~WahWahFrame()
   delete ui;
 }
 
-void WahWahFrame::activate(Stomp& stomp)
+void WahWahFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(wahManualReceived(double)), this, SLOT(onManual(double)));
-  connect(mpStomp, SIGNAL(wahPeakReceived(double)), this, SLOT(onPeak(double)));
-  connect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
-  connect(mpStomp, SIGNAL(wahPeakRangeReceived(double)), this, SLOT(onPeakRange(double)));
-  connect(mpStomp, SIGNAL(wahPedalModeReceived(::WahPedalMode)), this, SLOT(onPedalMode(::WahPedalMode)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(wahTouchAttackReceived(double)), this, SLOT(onTouchAttack(double)));
-  connect(mpStomp, SIGNAL(wahTouchReleaseReceived(double)), this, SLOT(onTouchRelease(double)));
-  connect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(wahManualReceived(double)), this, SLOT(onManual(double)));
+    connect(mpStomp, SIGNAL(wahPeakReceived(double)), this, SLOT(onPeak(double)));
+    connect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
+    connect(mpStomp, SIGNAL(wahPeakRangeReceived(double)), this, SLOT(onPeakRange(double)));
+    connect(mpStomp, SIGNAL(wahPedalModeReceived(::WahPedalMode)), this, SLOT(onPedalMode(::WahPedalMode)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(wahTouchAttackReceived(double)), this, SLOT(onTouchAttack(double)));
+    connect(mpStomp, SIGNAL(wahTouchReleaseReceived(double)), this, SLOT(onTouchRelease(double)));
+    connect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
 
-  mpStomp->requestWahManual();
-  mpStomp->requestWahPeak();
-  mpStomp->requestWahRange();
-  mpStomp->requestWahPeakRange();
-  mpStomp->requestWahPedalMode();
-  mpStomp->requestMix();
-  mpStomp->requestDucking();
-  mpStomp->requestVolume();
-  mpStomp->requestWahTouchAttack();
-  mpStomp->requestWahTouchRelease();
-  mpStomp->requestWahTouchBoost();
+    mpStomp->requestWahManual();
+    mpStomp->requestWahPeak();
+    mpStomp->requestWahRange();
+    mpStomp->requestWahPeakRange();
+    mpStomp->requestWahPedalMode();
+    mpStomp->requestMix();
+    mpStomp->requestDucking();
+    mpStomp->requestVolume();
+    mpStomp->requestWahTouchAttack();
+    mpStomp->requestWahTouchRelease();
+    mpStomp->requestWahTouchBoost();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void WahWahFrame::deactivate()
@@ -68,13 +72,6 @@ void WahWahFrame::deactivate()
   }
   mpStomp = nullptr;
 }
-
-void WahWahFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
-}
-
 
 void WahWahFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {

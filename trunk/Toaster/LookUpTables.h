@@ -14,6 +14,7 @@ public:
   static QString raw2Note(unsigned short rawVal);
   static QString stompInstanceName(StompInstance instance);
   static QString stompFXName(FXType fxType);
+  static QString delayTypeName(DelayType delayType);
 
 private:
   LookUpTables();
@@ -24,6 +25,7 @@ private:
   static QVector<QString> sNotes;
   static QMap<StompInstance, QString> sStompInstanceNames;
   static QMap<FXType, QString> sStompFXNames;
+  static QMap<DelayType, QString> sDelayTypeNames;
 };
 
 #endif // VOLUMETABLES_H

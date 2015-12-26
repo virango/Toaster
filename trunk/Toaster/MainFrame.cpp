@@ -17,6 +17,8 @@ MainFrame::MainFrame(QWidget *parent)
   , mStompDCtxMenu(mStompD)
   , mStompXCtxMenu(mStompX)
   , mStompModCtxMenu(mStompMod)
+  , mDelayCtxMenu(mDelay)
+  , mReverbCtxMenu(mReverb)
   , mOperationMode(Browser)
   , mPreviousOperationMode(Browser)
   , mEditModeButton(NULL)
@@ -77,6 +79,10 @@ MainFrame::MainFrame(QWidget *parent)
   ui->stompDButton->setCtxMenuProvider(&mStompDCtxMenu);
   ui->stompXButton->setCtxMenuProvider(&mStompXCtxMenu);
   ui->stompModButton->setCtxMenuProvider(&mStompModCtxMenu);
+  ui->delayButton->setCtxMenuProvider(&mDelayCtxMenu);
+  ui->reverbButton->setCtxMenuProvider(&mReverbCtxMenu);
+
+  ui->stompEditor->init(mStompA, mStompB, mStompC, mStompD, mStompX, mStompMod, mDelay, mReverb, mProfile);
 }
 
 MainFrame::~MainFrame()
@@ -249,7 +255,7 @@ void MainFrame::on_reverbButton_clicked(QToasterButton& bt, bool longClick)
 {
   if(longClick)
   {
-    //toggleOperationMode(StompEdit, &bt);
+    toggleOperationMode(mReverb, StompEdit, &bt);
   }
   else
   {
@@ -291,15 +297,7 @@ void MainFrame::onReverbMix(double mix)
 // ui => kpa
 void MainFrame::on_delayButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(longClick)
-  {
-    //toggleOperationMode(StompEdit, &bt);
-  }
-  else
-  {
-    mDelay.applyOnOffCutsTail(bt.toggleOnOff());
-  }
-  update();
+  handleStompButtonClick(mDelay, bt, longClick);
 }
 
 void MainFrame::on_delayFeedbackDial_valueChanged(double arg1)
@@ -315,9 +313,12 @@ void MainFrame::on_delayMixDial_valueChanged(double arg1)
 // kpa => ui
 void MainFrame::onDelayOnOff(bool onOff)
 {
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->delayButton->setState(state);
-  update();
+  if(mOperationMode != StompEdit)
+  {
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+    ui->delayButton->setState(state);
+    update();
+  }
 }
 
 void MainFrame::onDelayFeedback(double feedback)
@@ -568,22 +569,37 @@ void MainFrame::on_rigNextButton_clicked(QToasterButton &bt, bool longClick)
 //------------------------------------------------------------------------------------------
 
 // utility methods
-void MainFrame::handleStompButtonClick(Stomp& stomp, QToasterButton& stompBt, bool longClick)
+void MainFrame::handleStompButtonClick(QObject& module, QToasterButton& stompBt, bool longClick)
 {
   if(longClick)
   {
-    toggleOperationMode(stomp, StompEdit, &stompBt);
+    toggleOperationMode(module, StompEdit, &stompBt);
   }
   else
   {
-    stomp.applyOnOff(stompBt.toggleOnOff());
-    stomp.requestOnOff();
+    Stomp* pStomp = dynamic_cast<Stomp*>(&module);
+    Delay* pDelay = dynamic_cast<Delay*>(&module);
+    Reverb* pReverb = dynamic_cast<Reverb*>(&module);
+    if(pStomp != nullptr)
+    {
+      pStomp->applyOnOff(stompBt.toggleOnOff());
+      pStomp->requestOnOff();
+    }
+    else if(pDelay != nullptr)
+    {
+      pDelay->applyOnOffCutsTail(stompBt.toggleOnOff());
+      pDelay->requestOnOffCutsTail();
+    }
   }
   update();
 }
 
-void MainFrame::toggleOperationMode(Stomp& stomp, OperationMode opMode, QToasterButton* bt)
+void MainFrame::toggleOperationMode(QObject& module, OperationMode opMode, QToasterButton* bt)
 {
+  //Stomp* pStomp = dynamic_cast<Stomp*>(&module);
+  //Delay* pDelay = dynamic_cast<Delay*>(&module);
+  //Reverb* pReverb = dynamic_cast<Reverb*>(&module);
+
   if(bt != NULL)
   {
     if(mEditModeButton != NULL && bt != mEditModeButton)
@@ -593,7 +609,7 @@ void MainFrame::toggleOperationMode(Stomp& stomp, OperationMode opMode, QToaster
     {
       bt->resetToOnOffState();
       mEditModeButton = NULL;
-      ui->modeFrames->setCurrentIndex(1); // todo
+      ui->modeFrames->setCurrentIndex(ui->modeFrames->indexOf(ui->browser)); // todo:
       ui->stompEditor->deactivate();
       mOperationMode = mPreviousOperationMode;
     }
@@ -601,8 +617,8 @@ void MainFrame::toggleOperationMode(Stomp& stomp, OperationMode opMode, QToaster
     {
       bt->setState(QToasterButton::Blinking);
       mEditModeButton = bt;
-      ui->modeFrames->setCurrentIndex(4);
-      ui->stompEditor->activate(stomp.getInstance());
+      ui->modeFrames->setCurrentIndex(ui->modeFrames->indexOf(ui->stompEditor));
+      ui->stompEditor->activate(module);
       mOperationMode = opMode;
     }
   }

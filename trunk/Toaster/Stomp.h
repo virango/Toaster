@@ -12,7 +12,6 @@ public:
   Stomp(StompInstance instance);
   ~Stomp();
 
-
   void requestAllValues();
 
   void requestType() { midiRequestType(); }
@@ -75,6 +74,8 @@ public:
   void requestFormantShift() { midiRequestFormantShift(); }
   void requestLowCut() { midiRequestLowCut(); }
   void requestHighCut() { midiRequestHighCut(); }
+
+  ::FXType getFXType() const { return mFXType; }
 
 signals:
   void onOffReceived(bool onOff);

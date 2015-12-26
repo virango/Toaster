@@ -16,17 +16,21 @@ DriveDSFrame::~DriveDSFrame()
   delete ui;
 }
 
-void DriveDSFrame::activate(Stomp& stomp)
+void DriveDSFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
 
-  mpStomp->requestVolume();
-  mpStomp->requestDistortionShaperDrive();
+    mpStomp->requestVolume();
+    mpStomp->requestDistortionShaperDrive();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void DriveDSFrame::deactivate()
@@ -37,12 +41,6 @@ void DriveDSFrame::deactivate()
     disconnect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
   }
   mpStomp = nullptr;
-}
-
-void DriveDSFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void DriveDSFrame::displayStompType(StompInstance stompInstance, FXType fxType)

@@ -16,17 +16,21 @@ TransposeFrame::~TransposeFrame()
   delete ui;
 }
 
-void TransposeFrame::activate(Stomp& stomp)
+void TransposeFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onPitch(double)));
-  connect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onPitch(double)));
+    connect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
 
-  mpStomp->requestVoice2Pitch();
-  mpStomp->requestSmoothChords();
+    mpStomp->requestVoice2Pitch();
+    mpStomp->requestSmoothChords();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void TransposeFrame::deactivate()
@@ -37,12 +41,6 @@ void TransposeFrame::deactivate()
     disconnect(mpStomp, SIGNAL(smoothChordsReceived(unsigned short)), this, SLOT(onSmoothChords(unsigned short)));
   }
   mpStomp = nullptr;
-}
-
-void TransposeFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void TransposeFrame::displayStompType(StompInstance stompInstance, FXType fxType)

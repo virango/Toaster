@@ -18,39 +18,43 @@ GraphicEqualizerFrame::~GraphicEqualizerFrame()
   delete ui;
 }
 
-void GraphicEqualizerFrame::activate(Stomp& stomp)
+void GraphicEqualizerFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(graphicEQBand1Received(double)), this, SLOT(onBand1(double)));
-  connect(mpStomp, SIGNAL(graphicEQBand2Received(double)), this, SLOT(onBand2(double)));
-  connect(mpStomp, SIGNAL(graphicEQBand3Received(double)), this, SLOT(onBand3(double)));
-  connect(mpStomp, SIGNAL(graphicEQBand4Received(double)), this, SLOT(onBand4(double)));
-  connect(mpStomp, SIGNAL(graphicEQBand5Received(double)), this, SLOT(onBand5(double)));
-  connect(mpStomp, SIGNAL(graphicEQBand6Received(double)), this, SLOT(onBand6(double)));
-  connect(mpStomp, SIGNAL(graphicEQBand7Received(double)), this, SLOT(onBand7(double)));
-  connect(mpStomp, SIGNAL(graphicEQBand8Received(double)), this, SLOT(onBand8(double)));
-  connect(mpStomp, SIGNAL(lowCutReceived(double)), this, SLOT(onLowCut(double)));
-  connect(mpStomp, SIGNAL(highCutReceived(double)), this, SLOT(onHighCut(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(graphicEQBand1Received(double)), this, SLOT(onBand1(double)));
+    connect(mpStomp, SIGNAL(graphicEQBand2Received(double)), this, SLOT(onBand2(double)));
+    connect(mpStomp, SIGNAL(graphicEQBand3Received(double)), this, SLOT(onBand3(double)));
+    connect(mpStomp, SIGNAL(graphicEQBand4Received(double)), this, SLOT(onBand4(double)));
+    connect(mpStomp, SIGNAL(graphicEQBand5Received(double)), this, SLOT(onBand5(double)));
+    connect(mpStomp, SIGNAL(graphicEQBand6Received(double)), this, SLOT(onBand6(double)));
+    connect(mpStomp, SIGNAL(graphicEQBand7Received(double)), this, SLOT(onBand7(double)));
+    connect(mpStomp, SIGNAL(graphicEQBand8Received(double)), this, SLOT(onBand8(double)));
+    connect(mpStomp, SIGNAL(lowCutReceived(double)), this, SLOT(onLowCut(double)));
+    connect(mpStomp, SIGNAL(highCutReceived(double)), this, SLOT(onHighCut(double)));
 
-  mpStomp->requestMix();
-  mpStomp->requestDucking();
-  mpStomp->requestVolume();
-  mpStomp->requestGraphicEQBand1();
-  mpStomp->requestGraphicEQBand2();
-  mpStomp->requestGraphicEQBand3();
-  mpStomp->requestGraphicEQBand4();
-  mpStomp->requestGraphicEQBand5();
-  mpStomp->requestGraphicEQBand6();
-  mpStomp->requestGraphicEQBand7();
-  mpStomp->requestGraphicEQBand8();
-  mpStomp->requestLowCut();
-  mpStomp->requestHighCut();
+    mpStomp->requestMix();
+    mpStomp->requestDucking();
+    mpStomp->requestVolume();
+    mpStomp->requestGraphicEQBand1();
+    mpStomp->requestGraphicEQBand2();
+    mpStomp->requestGraphicEQBand3();
+    mpStomp->requestGraphicEQBand4();
+    mpStomp->requestGraphicEQBand5();
+    mpStomp->requestGraphicEQBand6();
+    mpStomp->requestGraphicEQBand7();
+    mpStomp->requestGraphicEQBand8();
+    mpStomp->requestLowCut();
+    mpStomp->requestHighCut();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 void GraphicEqualizerFrame::deactivate()
 {
@@ -72,13 +76,6 @@ void GraphicEqualizerFrame::deactivate()
   }
   mpStomp = nullptr;
 }
-
-void GraphicEqualizerFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
-}
-
 
 void GraphicEqualizerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {

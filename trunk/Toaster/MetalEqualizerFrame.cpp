@@ -18,31 +18,35 @@ MetalEqualizerFrame::~MetalEqualizerFrame()
   delete ui;
 }
 
-void MetalEqualizerFrame::activate(Stomp& stomp)
+void MetalEqualizerFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowDial(double)));
-  connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddleDial(double)));
-  connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMidFreqDial(double)));
-  connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighDial(double)));
-  connect(mpStomp, SIGNAL(lowCutReceived(double)), this, SLOT(onLowCut(double)));
-  connect(mpStomp, SIGNAL(highCutReceived(double)), this, SLOT(onHighCut(double)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowDial(double)));
+    connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddleDial(double)));
+    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMidFreqDial(double)));
+    connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighDial(double)));
+    connect(mpStomp, SIGNAL(lowCutReceived(double)), this, SLOT(onLowCut(double)));
+    connect(mpStomp, SIGNAL(highCutReceived(double)), this, SLOT(onHighCut(double)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
 
-  mpStomp->requestParametricEQLowGain();
-  mpStomp->requestParametricEQPeakGain();
-  mpStomp->requestParametricEQPeakFrequency();
-  mpStomp->requestParametricEQHighGain();
-  mpStomp->requestLowCut();
-  mpStomp->requestHighCut();
-  mpStomp->requestMix();
-  mpStomp->requestDucking();
-  mpStomp->requestVolume();
+    mpStomp->requestParametricEQLowGain();
+    mpStomp->requestParametricEQPeakGain();
+    mpStomp->requestParametricEQPeakFrequency();
+    mpStomp->requestParametricEQHighGain();
+    mpStomp->requestLowCut();
+    mpStomp->requestHighCut();
+    mpStomp->requestMix();
+    mpStomp->requestDucking();
+    mpStomp->requestVolume();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void MetalEqualizerFrame::deactivate()
@@ -60,12 +64,6 @@ void MetalEqualizerFrame::deactivate()
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
   }
   mpStomp = nullptr;
-}
-
-void MetalEqualizerFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void MetalEqualizerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
