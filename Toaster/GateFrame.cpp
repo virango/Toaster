@@ -16,15 +16,19 @@ GateFrame::~GateFrame()
   delete ui;
 }
 
-void GateFrame::activate(Stomp& stomp)
+void GateFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(compressorGateIntensityReceived(double)), this, SLOT(onThreshold(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(compressorGateIntensityReceived(double)), this, SLOT(onThreshold(double)));
 
-  mpStomp->requestCompressorGateIntensity();
+    mpStomp->requestCompressorGateIntensity();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void GateFrame::deactivate()
@@ -34,12 +38,6 @@ void GateFrame::deactivate()
     disconnect(mpStomp, SIGNAL(compressorGateIntensityReceived(double)), this, SLOT(onThreshold(double)));
   }
   mpStomp = nullptr;
-}
-
-void GateFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void GateFrame::displayStompType(StompInstance stompInstance, FXType fxType)

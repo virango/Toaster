@@ -15,27 +15,58 @@ FlangerFrame::~FlangerFrame()
 {
   delete ui;
 }
-void FlangerFrame::activate(Stomp& stomp)
+void FlangerFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
-  connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-  connect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
-  connect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
+    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
+    connect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
+    connect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
 
-  mpStomp->requestModulationRate();
-  mpStomp->requestModulationDepth();
-  mpStomp->requestModulationManual();
-  mpStomp->requestModulationFeedback();
-  mpStomp->requestMix();
-  mpStomp->requestDucking();
-  mpStomp->requestVolume();
+    mpStomp->requestModulationRate();
+    mpStomp->requestModulationDepth();
+    mpStomp->requestModulationManual();
+    mpStomp->requestModulationFeedback();
+    mpStomp->requestMix();
+    mpStomp->requestDucking();
+    mpStomp->requestVolume();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    mFXType = mpStomp->getFXType();
+
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mFXType));
+
+    if(mFXType == FlangerOneway)
+    {
+      ui->rateDial->setLEDRingType(QToasterDial::Bi);
+      ui->rateDial->setMinValue(-5.0);
+      ui->rateDial->setMaxValue(5.0);
+      ui->rateDial->setStepWidth(0.1);
+      ui->rateDial->setPrecision(1);
+
+      ui->manualDial->setLEDRingType(QToasterDial::Bi);
+      ui->manualDial->setMinValue(-5.0);
+      ui->manualDial->setMaxValue(5);
+    }
+    else
+    {
+      ui->rateDial->setLEDRingType(QToasterDial::Uni);
+      ui->rateDial->setMinValue(0.0);
+      ui->rateDial->setMaxValue(16383.0);
+      ui->rateDial->setStepWidth(1.0);
+      ui->rateDial->setPrecision(0);
+
+      ui->manualDial->setLEDRingType(QToasterDial::Uni);
+      ui->manualDial->setMinValue(0);
+      ui->manualDial->setMaxValue(10);
+    }
+  }
 }
 
 void FlangerFrame::deactivate()
@@ -49,39 +80,11 @@ void FlangerFrame::deactivate()
     disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+
+    mFXType = None;
   }
+
   mpStomp = nullptr;
-}
-
-void FlangerFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
-
-  if(mFXType == FlangerOneway)
-  {
-    ui->rateDial->setLEDRingType(QToasterDial::Bi);
-    ui->rateDial->setMinValue(-5.0);
-    ui->rateDial->setMaxValue(5.0);
-    ui->rateDial->setStepWidth(0.1);
-    ui->rateDial->setPrecision(1);
-
-    ui->manualDial->setLEDRingType(QToasterDial::Bi);
-    ui->manualDial->setMinValue(-5.0);
-    ui->manualDial->setMaxValue(5);
-  }
-  else
-  {
-    ui->rateDial->setLEDRingType(QToasterDial::Uni);
-    ui->rateDial->setMinValue(0.0);
-    ui->rateDial->setMaxValue(16383.0);
-    ui->rateDial->setStepWidth(1.0);
-    ui->rateDial->setPrecision(0);
-
-    ui->manualDial->setLEDRingType(QToasterDial::Uni);
-    ui->manualDial->setMinValue(0);
-    ui->manualDial->setMaxValue(10);
-  }
 }
 
 void FlangerFrame::displayStompType(StompInstance stompInstance, FXType fxType)

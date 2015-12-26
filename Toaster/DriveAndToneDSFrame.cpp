@@ -16,19 +16,23 @@ DriveAndToneDSFrame::~DriveAndToneDSFrame()
   delete ui;
 }
 
-void DriveAndToneDSFrame::activate(Stomp& stomp)
+void DriveAndToneDSFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
-  connect(mpStomp, SIGNAL(distortionBoosterToneReceived(double)), this, SLOT(onTone(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
+    connect(mpStomp, SIGNAL(distortionBoosterToneReceived(double)), this, SLOT(onTone(double)));
 
-  mpStomp->requestVolume();
-  mpStomp->requestDistortionShaperDrive();
-  mpStomp->requestDistortionBoosterTone();
+    mpStomp->requestVolume();
+    mpStomp->requestDistortionShaperDrive();
+    mpStomp->requestDistortionBoosterTone();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void DriveAndToneDSFrame::deactivate()
@@ -40,12 +44,6 @@ void DriveAndToneDSFrame::deactivate()
     disconnect(mpStomp, SIGNAL(distortionBoosterToneReceived(double)), this, SLOT(onTone(double)));
   }
   mpStomp = nullptr;
-}
-
-void DriveAndToneDSFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void DriveAndToneDSFrame::displayStompType(StompInstance stompInstance, FXType fxType)

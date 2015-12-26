@@ -16,15 +16,19 @@ SpaceFrame::~SpaceFrame()
   delete ui;
 }
 
-void SpaceFrame::activate(Stomp& stomp)
+void SpaceFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(intensityReceived(double)), this, SLOT(onIntensity(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(intensityReceived(double)), this, SLOT(onIntensity(double)));
 
-  mpStomp->requestIntensity();
+    mpStomp->requestIntensity();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void SpaceFrame::deactivate()
@@ -34,12 +38,6 @@ void SpaceFrame::deactivate()
     disconnect(mpStomp, SIGNAL(intensityReceived(double)), this, SLOT(onIntensity(double)));
   }
   mpStomp = nullptr;
-}
-
-void SpaceFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void SpaceFrame::displayStompType(StompInstance stompInstance, FXType fxType)

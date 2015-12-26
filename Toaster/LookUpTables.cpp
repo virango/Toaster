@@ -10,6 +10,10 @@ QMap<StompInstance, QString> LookUpTables::sStompInstanceNames = {{StompA, "Stom
                                                                   {StompX, "Effect x"},
                                                                   {StompMOD, "Modulation Effect"}};
 
+QMap<DelayType, QString> LookUpTables::sDelayTypeNames = {{TapDelay, "Tap Delay"},
+                                                          {FreeDelay, "Free Delay"},
+                                                          {AnalogDelay, "Analog Delay"}};
+
 QMap<FXType, QString> LookUpTables::sStompFXNames = {{None, "None"},
                                                      {WahWah, "Wah Wah"},
                                                      {WahLowPass, "Wah Low Pass"},
@@ -355,3 +359,7 @@ QString LookUpTables::stompFXName(FXType fxType)
   return sStompFXNames[fxType];
 }
 
+QString LookUpTables::delayTypeName(DelayType delayType)
+{
+  return sDelayTypeNames[delayType];
+}

@@ -16,25 +16,29 @@ VintageChorusFrame::~VintageChorusFrame()
   delete ui;
 }
 
-void VintageChorusFrame::activate(Stomp& stomp)
+void VintageChorusFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
-  connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-  connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
+    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
+    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
 
-  mpStomp->requestModulationRate();
-  mpStomp->requestModulationDepth();
-  mpStomp->requestModulationCrossover();
-  mpStomp->requestMix();
-  mpStomp->requestVolume();
-  mpStomp->requestDucking();
+    mpStomp->requestModulationRate();
+    mpStomp->requestModulationDepth();
+    mpStomp->requestModulationCrossover();
+    mpStomp->requestMix();
+    mpStomp->requestVolume();
+    mpStomp->requestDucking();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void VintageChorusFrame::deactivate()
@@ -49,12 +53,6 @@ void VintageChorusFrame::deactivate()
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
   }
   mpStomp = nullptr;
-}
-
-void VintageChorusFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void VintageChorusFrame::displayStompType(StompInstance stompInstance, FXType fxType)

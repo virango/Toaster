@@ -16,19 +16,23 @@ ToneAndDuckingDSFrame::~ToneAndDuckingDSFrame()
   delete ui;
 }
 
-void ToneAndDuckingDSFrame::activate(Stomp& stomp)
+void ToneAndDuckingDSFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(distortionBoosterToneReceived(double)), this, SLOT(onTone(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(distortionBoosterToneReceived(double)), this, SLOT(onTone(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
 
-  mpStomp->requestVolume();
-  mpStomp->requestDistortionBoosterTone();
-  mpStomp->requestDucking();
+    mpStomp->requestVolume();
+    mpStomp->requestDistortionBoosterTone();
+    mpStomp->requestDucking();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void ToneAndDuckingDSFrame::deactivate()
@@ -40,12 +44,6 @@ void ToneAndDuckingDSFrame::deactivate()
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
   }
   mpStomp = nullptr;
-}
-
-void ToneAndDuckingDSFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void ToneAndDuckingDSFrame::displayStompType(StompInstance stompInstance, FXType fxType)

@@ -18,9 +18,10 @@ StompCtxMenu::StompCtxMenu(Stomp& stomp)
 
 void StompCtxMenu::createMenu(QMenu& menu)
 {
+  connect(&menu, SIGNAL(triggered(QAction*)), this, SLOT(setType(QAction*)));
+
   QAction* action = menu.addAction("None");
   action->setData(QVariant((unsigned int)None));
-  connect(&menu, SIGNAL(triggered(QAction*)), this, SLOT(setType(QAction*)));
 
   menu.addMenu(&mWahMenu);
   menu.addMenu(&mDistortionMenu);

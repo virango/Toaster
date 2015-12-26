@@ -2,6 +2,7 @@
 #define VINTAGECHORUSFRAME_H
 #include <QWidget>
 #include "StompEditorPage.h"
+#include "Stomp.h"
 
 namespace Ui {
 class VintageChorusFrame;
@@ -15,11 +16,10 @@ public:
   explicit VintageChorusFrame(QWidget *parent = 0);
   ~VintageChorusFrame();
   // IStompEditorPage
-  virtual void activate(Stomp& stomp);
+  virtual void activate(QObject& stomp);
   virtual void deactivate();
   virtual bool isActive() { return mpStomp != nullptr; }
-  virtual FXType getFXType() const { return mFXType; }
-  virtual void setFXType(FXType fxType);
+  virtual QObject* getStomp()  { return mpStomp; }
 
   virtual void displayStompType(StompInstance stompInstance, FXType fxType);
   virtual void displayStompEnabled(StompInstance stompInstance, bool enabled);

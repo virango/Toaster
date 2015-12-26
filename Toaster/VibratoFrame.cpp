@@ -15,21 +15,26 @@ VibratoFrame::~VibratoFrame()
 {
   delete ui;
 }
-void VibratoFrame::activate(Stomp& stomp)
+
+void VibratoFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
-  connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-  connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
+    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
+    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
 
-  mpStomp->requestModulationRate();
-  mpStomp->requestModulationDepth();
-  mpStomp->requestModulationCrossover();
-  mpStomp->requestVolume();
+    mpStomp->requestModulationRate();
+    mpStomp->requestModulationDepth();
+    mpStomp->requestModulationCrossover();
+    mpStomp->requestVolume();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void VibratoFrame::deactivate()
@@ -42,12 +47,6 @@ void VibratoFrame::deactivate()
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
   }
   mpStomp = nullptr;
-}
-
-void VibratoFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void VibratoFrame::displayStompType(StompInstance stompInstance, FXType fxType)

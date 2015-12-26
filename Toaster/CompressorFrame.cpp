@@ -15,23 +15,28 @@ CompressorFrame::~CompressorFrame()
 {
   delete ui;
 }
-void CompressorFrame::activate(Stomp& stomp)
+
+void CompressorFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(compressorGateIntensityReceived(double)), this, SLOT(onIntensity(double)));
-  connect(mpStomp, SIGNAL(compressorAttackReceived(double)), this, SLOT(onAttack(double)));
-  connect(mpStomp, SIGNAL(compressorSquashReceived(double)), this, SLOT(onSquash(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(compressorGateIntensityReceived(double)), this, SLOT(onIntensity(double)));
+    connect(mpStomp, SIGNAL(compressorAttackReceived(double)), this, SLOT(onAttack(double)));
+    connect(mpStomp, SIGNAL(compressorSquashReceived(double)), this, SLOT(onSquash(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
 
-  mpStomp->requestCompressorGateIntensity();
-  mpStomp->requestCompressorAttack();
-  mpStomp->requestCompressorSquash();
-  mpStomp->requestVolume();
-  mpStomp->requestMix();
+    mpStomp->requestCompressorGateIntensity();
+    mpStomp->requestCompressorAttack();
+    mpStomp->requestCompressorSquash();
+    mpStomp->requestVolume();
+    mpStomp->requestMix();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void CompressorFrame::deactivate()
@@ -48,11 +53,6 @@ void CompressorFrame::deactivate()
   mpStomp = nullptr;
 }
 
-void CompressorFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
-}
 void CompressorFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

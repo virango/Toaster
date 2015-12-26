@@ -11,15 +11,6 @@ public:
   Reverb();
   ~Reverb();
 
-  enum ReverbType
-  {
-    Hall,
-    LargeRoom,
-    SmallRoom,
-    Ambience,
-    Matchbox
-  };
-
   void requestAllValues();
   void requestType() { midiRequestType(); }
   void requestOnOffCutsTail() { midiRequestOnOffCutsTail(); }
@@ -35,7 +26,7 @@ public:
   void requestDucking() { midiRequestDucking(); }
 
 signals:
-  void typeReceived(Reverb::ReverbType type);
+  void typeReceived(::ReverbType type);
   void onOffCutsTailReceived(bool onOff);
   void mixReceived(double mix);
   void volumeReceived(double volume);
@@ -49,7 +40,7 @@ signals:
   void duckingReceived(double ducking);
 
 public slots:
-  void applyType(Reverb::ReverbType type);
+  void applyType(::ReverbType type);
   void applyOnOffCutsTail(bool onOff);
   void applyMix(double mix);
   void applyVolume(double volume);

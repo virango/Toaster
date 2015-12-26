@@ -1,6 +1,7 @@
 #include "Delay.h"
 
 Delay::Delay()
+  : mDelayType(TapDelay)
 {
 }
 
@@ -27,9 +28,10 @@ void Delay::requestAllValues()
 }
 
 // slots
-void Delay::applyType(DelayType type)
+void Delay::applyType(::DelayType type)
 {
   midiApplyType((unsigned short) type);
+  midiRequestType();
 }
 
 void Delay::applyOnOffCutsTail(bool onOffCutsTail)
@@ -53,19 +55,19 @@ void Delay::applyTime(double time)
   midiApplyTime(phys2Raw(time, 1280, 0.0));
 }
 
-void Delay::applyRatio(DelayRatio ratio)
+void Delay::applyRatio(::DelayRatio ratio)
 {
   midiApplyRatio((unsigned short)ratio);
 }
 
-void Delay::applyClockLeft(double clockLeft)
+void Delay::applyClockLeft(::DelayClock clockLeft)
 {
-  midiApplyClockLeft(phys2Raw(clockLeft, 12.0, 0));
+  midiApplyClockLeft((unsigned short)clockLeft);
 }
 
-void Delay::applyClockRight(double clockRight)
+void Delay::applyClockRight(::DelayClock clockRight)
 {
-  midiApplyClockRight(phys2Raw(clockRight, 12.0, 0));
+  midiApplyClockRight((unsigned short)clockRight);
 }
 
 void Delay::applyFeedback(double feedback)
@@ -101,7 +103,8 @@ void Delay::applyDucking(double ducking)
 // DelayMidi
 void Delay::midiTypeReceived(unsigned short rawVal)
 {
-  emit typeReceived((DelayType) rawVal);
+  mDelayType = (DelayType) rawVal;
+  emit typeReceived(mDelayType);
 }
 
 void Delay::midiOnOffCutsTailReceived(unsigned short rawVal)
@@ -126,17 +129,17 @@ void Delay::midiTimeReceived(unsigned short rawVal)
 
 void Delay::midiRatioReceived(unsigned short rawVal)
 {
-  emit ratioReceived((DelayRatio)rawVal);
+  emit ratioReceived((::DelayRatio)rawVal);
 }
 
 void Delay::midiClockLeftReceived(unsigned short rawVal)
 {
-  emit clockLeftReceived(raw2Phys(rawVal, 12.0, 0.0));
+  emit clockLeftReceived((::DelayClock)rawVal);
 }
 
 void Delay::midiClockRightReceived(unsigned short rawVal)
 {
-  emit clockRightReceived(raw2Phys(rawVal, 12.0, 0.0));
+  emit clockRightReceived((::DelayClock)rawVal);
 }
 
 void Delay::midiFeedbackReceived(unsigned short rawVal)

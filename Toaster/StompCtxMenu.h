@@ -4,8 +4,8 @@
 #include <QMenu>
 #include "CtxMenuProvider.h"
 
-class Stomp;
 class QAction;
+class Stomp;
 
 class StompCtxMenu : public QObject, public ICtxMenuProvider
 {

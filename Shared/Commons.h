@@ -88,7 +88,49 @@ enum FXType
   LoopDistortion          // LOOP     0x7B
 };
 
-Q_DECLARE_METATYPE(::FXType)
+enum DelayType
+{
+  TapDelay = 1,
+  FreeDelay = 2,
+  AnalogDelay = 3
+};
+
+enum ReverbType
+{
+  Hall = 1,
+  LargeRoom = 2,
+  SmallRoom = 3,
+  Ambience = 4,
+  Matchbox = 5
+};
+
+enum DelayRatio
+{
+  One2Four,
+  Two2Four,
+  Three2Four,
+  Four2Four,
+  Four2Three,
+  Four2Two,
+  Four2One
+};
+
+enum DelayClock
+{
+  OneThirtySecond,
+  OneSixteenth,
+  TwoSixteenth,
+  ThreeSixteenth,
+  FourSixteenth,
+  FiveSixteenth,
+  SixSixteenth,
+  SevenSixteenth,
+  EightSixteenth,
+  OneTwentyFourth,
+  OneTwelfth,
+  TwoTwelfth,
+  FourTwelfth
+};
 
 enum WahPedalMode
 {
@@ -100,7 +142,6 @@ enum WahPedalMode
   BypassAtToe
 };
 
-Q_DECLARE_METATYPE(::WahPedalMode)
 
 enum RotarySpeed
 {
@@ -126,6 +167,11 @@ struct FXDefinition
   unsigned char   mSysExCode;
 };
 
-
+Q_DECLARE_METATYPE(::FXType)
+Q_DECLARE_METATYPE(::DelayType)
+Q_DECLARE_METATYPE(::ReverbType)
+Q_DECLARE_METATYPE(::DelayRatio)
+Q_DECLARE_METATYPE(::WahPedalMode)
+Q_DECLARE_METATYPE(::DelayClock)
 #endif // COMMONDEFS_H
 

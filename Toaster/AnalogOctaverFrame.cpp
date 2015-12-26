@@ -15,24 +15,28 @@ AnalogOctaverFrame::~AnalogOctaverFrame()
 {
   delete ui;
 }
-void AnalogOctaverFrame::activate(Stomp& stomp)
+void AnalogOctaverFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-  connect(mpStomp, SIGNAL(voiceMixReceived(double)), this, SLOT(onVoiceMix(double)));
-  connect(mpStomp, SIGNAL(IntensityReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onLowCut(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, SIGNAL(voiceMixReceived(double)), this, SLOT(onVoiceMix(double)));
+    connect(mpStomp, SIGNAL(IntensityReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onLowCut(double)));
 
 
-  mpStomp->requestVolume();
-  mpStomp->requestDucking();
-  mpStomp->requestVoiceMix();
-  mpStomp->requestIntensity();
-  mpStomp->requestModulationCrossover();
+    mpStomp->requestVolume();
+    mpStomp->requestDucking();
+    mpStomp->requestVoiceMix();
+    mpStomp->requestIntensity();
+    mpStomp->requestModulationCrossover();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void AnalogOctaverFrame::deactivate()
@@ -46,12 +50,6 @@ void AnalogOctaverFrame::deactivate()
     disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onLowCut(double)));
   }
   mpStomp = nullptr;
-}
-
-void AnalogOctaverFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void AnalogOctaverFrame::displayStompType(StompInstance stompInstance, FXType fxType)

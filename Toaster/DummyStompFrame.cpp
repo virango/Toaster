@@ -16,21 +16,20 @@ DummyStompFrame::~DummyStompFrame()
   delete ui;
 }
 
-void DummyStompFrame::activate(Stomp& stomp)
+void DummyStompFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
+
+  if(mpStomp != nullptr)
+  {
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void DummyStompFrame::deactivate()
 {
   mpStomp = nullptr;
-}
-
-void DummyStompFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void DummyStompFrame::displayStompType(StompInstance stompInstance, FXType fxType)

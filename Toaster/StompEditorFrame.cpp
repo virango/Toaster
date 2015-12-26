@@ -6,35 +6,20 @@
 StompEditorFrame::StompEditorFrame(QWidget *parent)
   : QStackedWidget(parent)
   , ui(new Ui::StompEditorFrame)
-  , mStompA(StompA)
-  , mStompB(StompB)
-  , mStompC(StompC)
-  , mStompD(StompD)
-  , mStompX(StompX)
-  , mStompMod(StompMOD)
+  , mpStompA(nullptr)
+  , mpStompB(nullptr)
+  , mpStompC(nullptr)
+  , mpStompD(nullptr)
+  , mpStompX(nullptr)
+  , mpStompMod(nullptr)
+  , mpDelay(nullptr)
+  , mpReverb(nullptr)
+  , mpProfile(nullptr)
   , mpActiveStomp(nullptr)
+  , mActiveStompType(-1)
   , mpActivePage(nullptr)
 {
   ui->setupUi(this);
-  // stomps
-  connect(&mStompA, SIGNAL(onOffReceived(bool)), this, SLOT(onStompAOnOff(bool)));
-  connect(&mStompB, SIGNAL(onOffReceived(bool)), this, SLOT(onStompBOnOff(bool)));
-  connect(&mStompC, SIGNAL(onOffReceived(bool)), this, SLOT(onStompCOnOff(bool)));
-  connect(&mStompD, SIGNAL(onOffReceived(bool)), this, SLOT(onStompDOnOff(bool)));
-  connect(&mStompX, SIGNAL(onOffReceived(bool)), this, SLOT(onStompXOnOff(bool)));
-  connect(&mStompMod, SIGNAL(onOffReceived(bool)), this, SLOT(onStompModOnOff(bool)));
-  connect(&mStompA, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompAType(::FXType)));
-  connect(&mStompB, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompBType(::FXType)));
-  connect(&mStompC, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompCType(::FXType)));
-  connect(&mStompD, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompDType(::FXType)));
-  connect(&mStompX, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompXType(::FXType)));
-  connect(&mStompMod, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompModType(::FXType)));
-  // delay
-  connect(&mDelay, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onDelayOnOff(bool)));
-  // reverb
-  connect(&mReverb, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onReverbOnOff(bool)));
-  // profile
-  connect(&mProfile, SIGNAL(ampNameReceived(const QString&)), this, SLOT(onAmpName(const QString&)));
 }
 
 StompEditorFrame::~StompEditorFrame()
@@ -42,35 +27,72 @@ StompEditorFrame::~StompEditorFrame()
   delete ui;
 }
 
-void StompEditorFrame::activate(StompInstance stompInstance)
+void StompEditorFrame::init(Stomp& stompA,
+                            Stomp& stompB,
+                            Stomp& stompC,
+                            Stomp& stompD,
+                            Stomp& stompX,
+                            Stomp& stompMod,
+                            Delay& delay,
+                            Reverb& reverb,
+                            Profile& profile)
+{
+  mpStompA = &stompA;
+  mpStompB = &stompB;
+  mpStompC = &stompC;
+  mpStompD = &stompD;
+  mpStompX = &stompX;
+  mpStompMod = &stompMod;
+  mpDelay = &delay;
+  mpReverb = &reverb;
+  mpProfile = &profile;
+
+  // stomps
+  connect(mpStompA, SIGNAL(onOffReceived(bool)), this, SLOT(onStompAOnOff(bool)));
+  connect(mpStompB, SIGNAL(onOffReceived(bool)), this, SLOT(onStompBOnOff(bool)));
+  connect(mpStompC, SIGNAL(onOffReceived(bool)), this, SLOT(onStompCOnOff(bool)));
+  connect(mpStompD, SIGNAL(onOffReceived(bool)), this, SLOT(onStompDOnOff(bool)));
+  connect(mpStompX, SIGNAL(onOffReceived(bool)), this, SLOT(onStompXOnOff(bool)));
+  connect(mpStompMod, SIGNAL(onOffReceived(bool)), this, SLOT(onStompModOnOff(bool)));
+  connect(mpStompA, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompAType(::FXType)));
+  connect(mpStompB, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompBType(::FXType)));
+  connect(mpStompC, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompCType(::FXType)));
+  connect(mpStompD, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompDType(::FXType)));
+  connect(mpStompX, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompXType(::FXType)));
+  connect(mpStompMod, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompModType(::FXType)));
+  // delay
+  connect(mpDelay, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onDelayOnOff(bool)));
+  // reverb
+  connect(mpReverb, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onReverbOnOff(bool)));
+  // profile
+  connect(mpProfile, SIGNAL(ampNameReceived(const QString&)), this, SLOT(onAmpName(const QString&)));
+}
+
+
+void StompEditorFrame::activate(QObject& stomp)
 {
   deactivate();
-  switch(stompInstance)
-  {
-  case StompA:
-    mpActiveStomp = &mStompA;
-    break;
-  case StompB:
-    mpActiveStomp = &mStompB;
-    break;
-  case StompC:
-    mpActiveStomp = &mStompC;
-    break;
-  case StompD:
-    mpActiveStomp = &mStompD;
-    break;
-  case StompX:
-    mpActiveStomp = &mStompX;
-    break;
-  case StompMOD:
-    mpActiveStomp = &mStompMod;
-    break;
-  }
+  mpActiveStomp = &stomp;
 
   if(mpActiveStomp != nullptr)
   {
-    connect(mpActiveStomp, SIGNAL(typeReceived(::FXType)), this, SLOT(onActiveStompType(::FXType)));
-    mpActiveStomp->requestType();
+    Stomp* pActiveStomp = dynamic_cast<Stomp*>(mpActiveStomp);
+    Delay* pDelay = dynamic_cast<Delay*>(mpActiveStomp);
+    Reverb* pReverb = dynamic_cast<Reverb*>(mpActiveStomp);
+    if(pActiveStomp != nullptr)
+    {
+      connect(pActiveStomp, SIGNAL(typeReceived(::FXType)), this, SLOT(onActiveStompType(::FXType)));
+      pActiveStomp->requestType();
+    }
+    else if(pDelay != nullptr)
+    {
+      connect(pDelay, SIGNAL(typeReceived(::DelayType)), this, SLOT(onDelayType(::DelayType)));
+      pDelay->requestType();
+    }
+    else if(pReverb != nullptr)
+    {
+
+    }
   }
 
   requestValues();
@@ -80,9 +102,20 @@ void StompEditorFrame::deactivate()
 {
   if(mpActiveStomp != nullptr)
   {
-    disconnect(mpActiveStomp, SIGNAL(typeReceived(::FXType)), this, SLOT(onActiveStompType(::FXType)));
+    Stomp* pActiveStomp = dynamic_cast<Stomp*>(mpActiveStomp);
+    Delay* pDelay = dynamic_cast<Delay*>(mpActiveStomp);
+    Reverb* pReverb = dynamic_cast<Reverb*>(mpActiveStomp);
+
+    if(pActiveStomp != nullptr)
+      disconnect(mpActiveStomp, SIGNAL(typeReceived(::FXType)), this, SLOT(onActiveStompType(::FXType)));
+
+    if(pDelay != nullptr)
+      disconnect(pDelay, SIGNAL(typeReceived(::DelayType)), this, SLOT(onDelayType(::DelayType)));
+
     mpActiveStomp = nullptr;
   }
+
+  mActiveStompType = -1;
 
   if(mpActivePage != nullptr)
   {
@@ -93,13 +126,19 @@ void StompEditorFrame::deactivate()
 
 void StompEditorFrame::onActiveStompType(FXType fxType)
 {
-  if(mpActivePage != nullptr && fxType != mpActivePage->getFXType())
+  Stomp* pActiveStomp = nullptr;
+  if(mpActivePage != nullptr)
   {
-    mpActivePage->deactivate();
-    mpActivePage = nullptr;
+    if(fxType != mActiveStompType)
+    {
+      mpActivePage->deactivate();
+      mpActivePage = nullptr;
+    }
   }
 
-  if(mpActiveStomp != nullptr)
+  pActiveStomp = dynamic_cast<Stomp*>(mpActiveStomp);
+
+  if(pActiveStomp != nullptr)
   {
     switch(fxType)
     {
@@ -237,11 +276,59 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       if(pTmp != nullptr)
         index = indexOf(pTmp);
       setCurrentIndex(index);
-      mpActivePage->setFXType(fxType);
-      mpActivePage->activate(*mpActiveStomp);
+      mActiveStompType = fxType;
+      mpActivePage->activate(*pActiveStomp);
       requestValues();
     }
   }
+}
+
+void StompEditorFrame::onDelayType(::DelayType delayType)
+{
+  Delay* pActiveDelay = nullptr;
+  if(mpActivePage != nullptr)
+  {
+    if(delayType != mActiveStompType)
+    {
+      mpActivePage->deactivate();
+      mpActivePage = nullptr;
+    }
+  }
+
+  pActiveDelay = dynamic_cast<Delay*>(mpActiveStomp);
+
+  if(pActiveDelay != nullptr)
+  {
+    switch(delayType)
+    {
+      case FreeDelay:
+      case AnalogDelay:
+        mpActivePage = ui->delay;
+        break;
+      case TapDelay:
+        mpActivePage = ui->tapDelay;
+        break;
+      default:
+        mpActivePage = ui->dummyStomp;
+    }
+
+    if(mpActivePage != nullptr && !mpActivePage->isActive())
+    {
+      int index = 0; // dummy page => default
+      QWidget* pTmp = dynamic_cast<QWidget*>(mpActivePage);
+      if(pTmp != nullptr)
+        index = indexOf(pTmp);
+      setCurrentIndex(index);
+      mActiveStompType = delayType;
+      mpActivePage->activate(*pActiveDelay);
+      requestValues();
+    }
+  }
+}
+
+void StompEditorFrame::onReverbType(::ReverbType reverbType)
+{
+
 }
 
 void StompEditorFrame::onStompAOnOff(bool onOff)
@@ -345,21 +432,21 @@ void StompEditorFrame::onAmpName(const QString& ampName)
 
 void StompEditorFrame::requestValues()
 {
-  mStompA.requestOnOff();
-  mStompB.requestOnOff();
-  mStompC.requestOnOff();
-  mStompD.requestOnOff();
-  mStompX.requestOnOff();
-  mStompMod.requestOnOff();
+  mpStompA->requestOnOff();
+  mpStompB->requestOnOff();
+  mpStompC->requestOnOff();
+  mpStompD->requestOnOff();
+  mpStompX->requestOnOff();
+  mpStompMod->requestOnOff();
 
-  mStompA.requestType();
-  mStompB.requestType();
-  mStompC.requestType();
-  mStompD.requestType();
-  mStompX.requestType();
-  mStompMod.requestType();
+  mpStompA->requestType();
+  mpStompB->requestType();
+  mpStompC->requestType();
+  mpStompD->requestType();
+  mpStompX->requestType();
+  mpStompMod->requestType();
 
-  mDelay.requestOnOffCutsTail();
-  mReverb.requestOnOffCutsTail();
-  mProfile.requestAmpName();
+  mpDelay->requestOnOffCutsTail();
+  mpReverb->requestOnOffCutsTail();
+  mpProfile->requestAmpName();
 }

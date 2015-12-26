@@ -16,17 +16,21 @@ WahPedalBoosterFrame::~WahPedalBoosterFrame()
   delete ui;
 }
 
-void WahPedalBoosterFrame::activate(Stomp& stomp)
+void WahPedalBoosterFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
 
-  mpStomp->requestVolume();
-  mpStomp->requestWahRange();
+    mpStomp->requestVolume();
+    mpStomp->requestWahRange();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void WahPedalBoosterFrame::deactivate()
@@ -37,12 +41,6 @@ void WahPedalBoosterFrame::deactivate()
     disconnect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
   }
   mpStomp = nullptr;
-}
-
-void WahPedalBoosterFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void WahPedalBoosterFrame::displayStompType(StompInstance stompInstance, FXType fxType)

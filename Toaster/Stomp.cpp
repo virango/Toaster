@@ -328,7 +328,8 @@ void Stomp::applyHighCut(double highCut)
 // StompMidi callbacks
 void Stomp::midiTypeReceived(unsigned short rawVal)
 {
-  emit typeReceived(raw2FXType(rawVal));
+  mFXType = raw2FXType(rawVal);
+  emit typeReceived(mFXType);
 }
 
 void Stomp::midiOnOffReceived(unsigned short rawVal)

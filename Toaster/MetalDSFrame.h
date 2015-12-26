@@ -2,6 +2,7 @@
 #define METALDSFRAME_H
 #include <QWidget>
 #include "StompEditorPage.h"
+#include "Stomp.h"
 
 namespace Ui {
 class MetalDSFrame;
@@ -15,11 +16,10 @@ public:
   explicit MetalDSFrame(QWidget *parent = 0);
   ~MetalDSFrame();
   // IStompEditorPage
-  virtual void activate(Stomp& stomp);
+  virtual void activate(QObject& stomp);
   virtual void deactivate();
   virtual bool isActive() { return mpStomp != nullptr; }
-  virtual FXType getFXType() const { return mFXType; }
-  virtual void setFXType(FXType fxType);
+  virtual QObject* getStomp()  { return mpStomp; }
 
   virtual void displayStompType(StompInstance stompInstance, FXType fxType);
   virtual void displayStompEnabled(StompInstance stompInstance, bool enabled);

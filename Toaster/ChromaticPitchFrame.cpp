@@ -17,35 +17,39 @@ ChromaticPitchFrame::~ChromaticPitchFrame()
   delete ui;
 }
 
-void ChromaticPitchFrame::activate(Stomp& stomp)
+void ChromaticPitchFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(voice1PitchReceived(double)), this, SLOT(onVoice1Pitch(double)));
-  connect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onVoice2Pitch(double)));
-  connect(mpStomp, SIGNAL(formantShiftReceived(double)), this, SLOT(onFormantShift(double)));
-  connect(mpStomp, SIGNAL(detuneReceived(double)), this, SLOT(onDetune(double)));
-  connect(mpStomp, SIGNAL(voiceMixReceived(double)), this, SLOT(onVoiceMix(double)));
-  connect(mpStomp, SIGNAL(intensityReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
-  connect(mpStomp, SIGNAL(pureTuningReceived(bool)), this, SLOT(onPureTuning(bool)));
-  connect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(voice1PitchReceived(double)), this, SLOT(onVoice1Pitch(double)));
+    connect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onVoice2Pitch(double)));
+    connect(mpStomp, SIGNAL(formantShiftReceived(double)), this, SLOT(onFormantShift(double)));
+    connect(mpStomp, SIGNAL(detuneReceived(double)), this, SLOT(onDetune(double)));
+    connect(mpStomp, SIGNAL(voiceMixReceived(double)), this, SLOT(onVoiceMix(double)));
+    connect(mpStomp, SIGNAL(intensityReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
+    connect(mpStomp, SIGNAL(pureTuningReceived(bool)), this, SLOT(onPureTuning(bool)));
+    connect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
 
-  mpStomp->requestVoice1Pitch();
-  mpStomp->requestVoice2Pitch();
-  mpStomp->requestFormantShift();
-  mpStomp->requestDetune();
-  mpStomp->requestVoiceMix();
-  mpStomp->requestIntensity();
-  mpStomp->requestDucking();
-  mpStomp->requestVolume();
-  mpStomp->requestSmoothChords();
-  mpStomp->requestPureTuning();
-  mpStomp->requestFormantShiftOnOff();
+    mpStomp->requestVoice1Pitch();
+    mpStomp->requestVoice2Pitch();
+    mpStomp->requestFormantShift();
+    mpStomp->requestDetune();
+    mpStomp->requestVoiceMix();
+    mpStomp->requestIntensity();
+    mpStomp->requestDucking();
+    mpStomp->requestVolume();
+    mpStomp->requestSmoothChords();
+    mpStomp->requestPureTuning();
+    mpStomp->requestFormantShiftOnOff();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void ChromaticPitchFrame::deactivate()
@@ -67,12 +71,6 @@ void ChromaticPitchFrame::deactivate()
 
 
   mpStomp = nullptr;
-}
-
-void ChromaticPitchFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void ChromaticPitchFrame::displayStompType(StompInstance stompInstance, FXType fxType)

@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>31</number>
+   <number>36</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
@@ -51,6 +51,9 @@
   <widget class="AnalogOctaverFrame" name="analogOctaver"/>
   <widget class="LoopFrame" name="loop"/>
   <widget class="LoopDistortionFrame" name="loopDistortion"/>
+  <widget class="DelayFrame" name="delay"/>
+  <widget class="TapDelayFrame" name="tapDelay"/>
+  <widget class="ReverbFrame" name="reverb"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -261,6 +264,24 @@
    <class>ChromaticPitchFrame</class>
    <extends>QWidget</extends>
    <header>ChromaticPitchFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>DelayFrame</class>
+   <extends>QWidget</extends>
+   <header>DelayFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ReverbFrame</class>
+   <extends>QWidget</extends>
+   <header>ReverbFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TapDelayFrame</class>
+   <extends>QWidget</extends>
+   <header>TapDelayFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

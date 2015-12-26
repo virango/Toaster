@@ -16,25 +16,29 @@ HyperChorusFrame::~HyperChorusFrame()
   delete ui;
 }
 
-void HyperChorusFrame::activate(Stomp& stomp)
+void HyperChorusFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-  connect(mpStomp, SIGNAL(modulationHyperChorusAmountReceived(double)), this, SLOT(onAmount(double)));
-  connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
+    connect(mpStomp, SIGNAL(modulationHyperChorusAmountReceived(double)), this, SLOT(onAmount(double)));
+    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
 
-  mpStomp->requestModulationDepth();
-  mpStomp->requestModulationHyperChorusAmount();
-  mpStomp->requestModulationCrossover();
-  mpStomp->requestMix();
-  mpStomp->requestVolume();
-  mpStomp->requestDucking();
+    mpStomp->requestModulationDepth();
+    mpStomp->requestModulationHyperChorusAmount();
+    mpStomp->requestModulationCrossover();
+    mpStomp->requestMix();
+    mpStomp->requestVolume();
+    mpStomp->requestDucking();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void HyperChorusFrame::deactivate()
@@ -49,12 +53,6 @@ void HyperChorusFrame::deactivate()
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
   }
   mpStomp = nullptr;
-}
-
-void HyperChorusFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void HyperChorusFrame::displayStompType(StompInstance stompInstance, FXType fxType)

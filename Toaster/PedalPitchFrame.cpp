@@ -22,33 +22,37 @@ PedalPitchFrame::~PedalPitchFrame()
   delete ui;
 }
 
-void PedalPitchFrame::activate(Stomp& stomp)
+void PedalPitchFrame::activate(QObject& stomp)
 {
-  mpStomp = &stomp;
+  mpStomp = dynamic_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onHeelPitch(double)));
-  connect(mpStomp, SIGNAL(voice1PitchReceived(double)), this, SLOT(onToePitch(double)));
-  connect(mpStomp, SIGNAL(formantShiftReceived(double)), this, SLOT(onFormantShift(double)));
-  connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-  connect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
-  connect(mpStomp, SIGNAL(pureTuningReceived(bool)), this, SLOT(onPureTuning(bool)));
-  connect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-  connect(&mGlobal, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
+  if(mpStomp != nullptr)
+  {
+    connect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onHeelPitch(double)));
+    connect(mpStomp, SIGNAL(voice1PitchReceived(double)), this, SLOT(onToePitch(double)));
+    connect(mpStomp, SIGNAL(formantShiftReceived(double)), this, SLOT(onFormantShift(double)));
+    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
+    connect(mpStomp, SIGNAL(pureTuningReceived(bool)), this, SLOT(onPureTuning(bool)));
+    connect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
+    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(&mGlobal, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
 
-  mpStomp->requestVoice2Pitch();
-  mpStomp->requestVoice1Pitch();
-  mpStomp->requestFormantShift();
-  mpStomp->requestMix();
-  mpStomp->requestSmoothChords();
-  mpStomp->requestPureTuning();
-  mpStomp->requestFormantShiftOnOff();
-  mpStomp->requestVolume();
-  mpStomp->requestDucking();
-  mGlobal.requestWahPedalToPitch();
+    mpStomp->requestVoice2Pitch();
+    mpStomp->requestVoice1Pitch();
+    mpStomp->requestFormantShift();
+    mpStomp->requestMix();
+    mpStomp->requestSmoothChords();
+    mpStomp->requestPureTuning();
+    mpStomp->requestFormantShiftOnOff();
+    mpStomp->requestVolume();
+    mpStomp->requestDucking();
+    mGlobal.requestWahPedalToPitch();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(stomp.getInstance()));
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  }
 }
 
 void PedalPitchFrame::deactivate()
@@ -69,12 +73,6 @@ void PedalPitchFrame::deactivate()
   disconnect(&mGlobal, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
 
   mpStomp = nullptr;
-}
-
-void PedalPitchFrame::setFXType(FXType fxType)
-{
-  mFXType = fxType;
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(fxType));
 }
 
 void PedalPitchFrame::displayStompType(StompInstance stompInstance, FXType fxType)
