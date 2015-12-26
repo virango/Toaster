@@ -25,6 +25,8 @@ public:
   void requestOnOffKeepsTail() { midiRequestOnOffKeepsTail(); }
   void requestDucking() { midiRequestDucking(); }
 
+  ::ReverbType getReverbType() const { return mReverbType; }
+
 signals:
   void typeReceived(::ReverbType type);
   void onOffCutsTailReceived(bool onOff);
@@ -67,6 +69,8 @@ protected:
   virtual void midiPreDelayReceived(unsigned short rawVal);
   virtual void midiOnOffKeepsTailReceived(unsigned short rawVal);
   virtual void midiDuckingReceived(unsigned short rawVal);
+
+  ReverbType mReverbType;
 };
 
 #endif // REVERB_H

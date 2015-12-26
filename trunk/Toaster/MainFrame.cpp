@@ -253,15 +253,7 @@ void MainFrame::onStompModType(::FXType type)
 // ui => kpa
 void MainFrame::on_reverbButton_clicked(QToasterButton& bt, bool longClick)
 {
-  if(longClick)
-  {
-    toggleOperationMode(mReverb, StompEdit, &bt);
-  }
-  else
-  {
-    mReverb.applyOnOffCutsTail(bt.toggleOnOff());
-  }
-  update();
+  handleStompButtonClick(mReverb, bt, longClick);
 }
 
 void MainFrame::on_reverbTimeDial_valueChanged(double arg1)
@@ -277,9 +269,12 @@ void MainFrame::on_reverbMixDial_valueChanged(double arg1)
 // kpa => ui
 void MainFrame::onReverbOnOff(bool onOff)
 {
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->reverbButton->setState(state);
-  update();
+  if(mOperationMode != StompEdit)
+  {
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+    ui->reverbButton->setState(state);
+    update();
+  }
 }
 
 void MainFrame::onReverbTime(double time)

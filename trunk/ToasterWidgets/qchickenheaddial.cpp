@@ -48,24 +48,28 @@ void QChickenHeadDial::stateDown()
     case Tuner:
       mCurrState = Browser;
       break;
+      /*
     case Browser:
       mCurrState = Perform;
       break;
     case Perform:
       mCurrState = Profiler;
       break;
+      */
   }
 }
 
 void QChickenHeadDial::stateUp()
 {
   switch (mCurrState) {
+    /*
     case Profiler:
       mCurrState = Perform;
       break;
     case Perform:
       mCurrState = Browser;
       break;
+      */
     case Browser:
       mCurrState = Tuner;
       break;
