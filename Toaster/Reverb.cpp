@@ -31,6 +31,7 @@ void Reverb::requestAllValues()
 void Reverb::applyType(::ReverbType type)
 {
   midiApplyType((unsigned short) type);
+  midiRequestType();
 }
 
 void Reverb::applyOnOffCutsTail(bool onOff)
@@ -71,7 +72,7 @@ void Reverb::applyBandwidth(double bandwidth)
 
 void Reverb::applyCenterFrequency(double frequency)
 {
-  midiApplyCenterFrequency(phys2Raw(frequency, 10.0, 0.0));
+  midiApplyCenterFrequency(phys2Raw(frequency, 10.0, -5));
 }
 
 void Reverb::applyPreDelay(double preDelay)
@@ -92,7 +93,8 @@ void Reverb::applyDucking(double ducking)
 // ReverbMidi
 void Reverb::midiTypeReceived(unsigned short rawVal)
 {
-  emit typeReceived((::ReverbType) rawVal);
+  mReverbType = (::ReverbType) rawVal;
+  emit typeReceived(mReverbType);
 }
 
 void Reverb::midiOnOffCutsTailReceived(unsigned short rawVal)
@@ -132,7 +134,7 @@ void Reverb::midiBandwidthReceived(unsigned short rawVal)
 
 void Reverb::midiCenterFrequencyReceived(unsigned short rawVal)
 {
-  emit centerFrequencyReceived(raw2Phys(rawVal, 10.0, 0.0));
+  emit centerFrequencyReceived(raw2Phys(rawVal, 10.0, -5));
 }
 
 void Reverb::midiPreDelayReceived(unsigned short rawVal)

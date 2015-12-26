@@ -14,6 +14,12 @@ QMap<DelayType, QString> LookUpTables::sDelayTypeNames = {{TapDelay, "Tap Delay"
                                                           {FreeDelay, "Free Delay"},
                                                           {AnalogDelay, "Analog Delay"}};
 
+QMap<ReverbType, QString> LookUpTables::sReverbTypeNames = {{Hall, "Hall"},
+                                                            {LargeRoom, "Large Room"},
+                                                            {SmallRoom, "Small Room"},
+                                                            {Ambience, "Ambience"},
+                                                            {Matchbox, "Matchbox"}};
+
 QMap<FXType, QString> LookUpTables::sStompFXNames = {{None, "None"},
                                                      {WahWah, "Wah Wah"},
                                                      {WahLowPass, "Wah Low Pass"},
@@ -362,4 +368,9 @@ QString LookUpTables::stompFXName(FXType fxType)
 QString LookUpTables::delayTypeName(DelayType delayType)
 {
   return sDelayTypeNames[delayType];
+}
+
+QString LookUpTables::reverbTypeName(ReverbType reverbType)
+{
+  return sReverbTypeNames[reverbType];
 }

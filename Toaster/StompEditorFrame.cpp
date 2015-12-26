@@ -91,7 +91,8 @@ void StompEditorFrame::activate(QObject& stomp)
     }
     else if(pReverb != nullptr)
     {
-
+      connect(pReverb, SIGNAL(typeReceived(::ReverbType)), this, SLOT(onReverbType(::ReverbType)));
+      pReverb->requestType();
     }
   }
 
@@ -108,9 +109,10 @@ void StompEditorFrame::deactivate()
 
     if(pActiveStomp != nullptr)
       disconnect(mpActiveStomp, SIGNAL(typeReceived(::FXType)), this, SLOT(onActiveStompType(::FXType)));
-
-    if(pDelay != nullptr)
+    else if(pDelay != nullptr)
       disconnect(pDelay, SIGNAL(typeReceived(::DelayType)), this, SLOT(onDelayType(::DelayType)));
+    else if(pReverb != nullptr)
+      connect(pReverb, SIGNAL(typeReceived(::ReverbType)), this, SLOT(onReverbType(::ReverbType)));
 
     mpActiveStomp = nullptr;
   }
@@ -328,7 +330,45 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
 
 void StompEditorFrame::onReverbType(::ReverbType reverbType)
 {
+  Reverb* pActiveReverb = nullptr;
+  if(mpActivePage != nullptr)
+  {
+    if(reverbType != mActiveStompType)
+    {
+      mpActivePage->deactivate();
+      mpActivePage = nullptr;
+    }
+  }
 
+  pActiveReverb = dynamic_cast<Reverb*>(mpActiveStomp);
+
+  if(pActiveReverb != nullptr)
+  {
+    switch(reverbType)
+    {
+      case Hall:
+      case LargeRoom:
+      case SmallRoom:
+      case Ambience:
+      case Matchbox:
+        mpActivePage = ui->reverb;
+        break;
+      default:
+        mpActivePage = ui->dummyStomp;
+    }
+
+    if(mpActivePage != nullptr && !mpActivePage->isActive())
+    {
+      int index = 0; // dummy page => default
+      QWidget* pTmp = dynamic_cast<QWidget*>(mpActivePage);
+      if(pTmp != nullptr)
+        index = indexOf(pTmp);
+      setCurrentIndex(index);
+      mActiveStompType = reverbType;
+      mpActivePage->activate(*pActiveReverb);
+      requestValues();
+    }
+  }
 }
 
 void StompEditorFrame::onStompAOnOff(bool onOff)

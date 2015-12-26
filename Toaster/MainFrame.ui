@@ -641,7 +641,7 @@
     <number>0</number>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>7</number>
    </property>
    <widget class="TunerFrame" name="tuner"/>
    <widget class="BrowserFrame" name="browser"/>
@@ -651,8 +651,6 @@
    <widget class="QWidget" name="ampEditor"/>
    <widget class="QWidget" name="eqEditor"/>
    <widget class="QWidget" name="cabEditor"/>
-   <widget class="QWidget" name="delayEditor"/>
-   <widget class="QWidget" name="reverbEditor"/>
   </widget>
  </widget>
  <customwidgets>
