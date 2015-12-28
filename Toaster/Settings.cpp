@@ -31,6 +31,11 @@ void Settings::setMidiOutPort(const QString& outPort)
   setValue("MIDI/OutPort", QVariant(outPort));
 }
 
+bool Settings::getDebuggerActive()
+{
+  return value("Debug/Active", QVariant(false)).toBool();
+}
+
 QString Settings::getDebugWriteStringValuesFileName()
 {
   return value("Debug/WriteStringValuesFileName", QVariant("")).toString();

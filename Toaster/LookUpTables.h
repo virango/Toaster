@@ -16,6 +16,7 @@ public:
   static QString stompFXName(FXType fxType);
   static QString delayTypeName(DelayType delayType);
   static QString reverbTypeName(ReverbType reverbType);
+  static QVector<QPair<int, QString>>* getRotaryDistanceValues() { return &sRotaryDistanceValues; }
 
 private:
   LookUpTables();
@@ -28,6 +29,7 @@ private:
   static QMap<FXType, QString> sStompFXNames;
   static QMap<DelayType, QString> sDelayTypeNames;
   static QMap<ReverbType, QString> sReverbTypeNames;
+  static QVector<QPair<int, QString>> sRotaryDistanceValues;
 };
 
 #endif // VOLUMETABLES_H

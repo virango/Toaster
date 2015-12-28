@@ -28,14 +28,14 @@ public:
   virtual void displayAmpName(const QString&  ampName);
 private slots:
   // ui => kpa
-  void on_distanceDial_valueChanged(double value);
+  void on_distanceDial_valueChanged(int value);
   void on_lowHighBalanceDial_valueChanged(double value);
   void on_rotarySpeedDial_valueChanged(int speed);
   void on_volumeDial_valueChanged(double value);
   void on_mixDial_valueChanged(double value);
   void on_duckingDial_valueChanged(double value);
   // kpa => ui
-  void onDistance(double value);
+  void onDistance(int value);
   void onLowHighBalance(double value);
   void onRotarySpeed(::RotarySpeed value);
   void onVolume(double value);

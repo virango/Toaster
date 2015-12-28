@@ -256,49 +256,6 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QToasterDial" name="distanceDial">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>220</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Uni</enum>
-   </property>
-   <property name="minValue">
-    <double>4.000000000000000</double>
-   </property>
-   <property name="maxValue">
-    <double>50.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
-   </property>
-   <property name="isActive">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QToasterDial" name="duckingDial">
    <property name="geometry">
     <rect>
@@ -367,6 +324,19 @@
     </stringlist>
    </property>
   </widget>
+  <widget class="QToasterLookUpTableDial" name="distanceDial">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>220</y>
+     <width>100</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="unit">
+    <string>cm</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -380,6 +350,11 @@
    <header>qtoasterenumdial.h</header>
   </customwidget>
   <customwidget>
+   <class>QToasterLookUpTableDial</class>
+   <extends>QWidget</extends>
+   <header>QToasterLookUpTableDial.h</header>
+  </customwidget>
+  <customwidget>
    <class>QToasterStompEditLCD</class>
    <extends>QWidget</extends>
    <header>QToasterStompEditLCD.h</header>
@@ -388,22 +363,6 @@
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>distanceDial</sender>
-   <signal>valueChanged(QString)</signal>
-   <receiver>lcdDisplay</receiver>
-   <slot>setValue1(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>107</x>
-     <y>286</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>118</x>
-     <y>171</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>lowHighBalanceDial</sender>
    <signal>valueChanged(QString)</signal>
@@ -481,6 +440,22 @@
     <hint type="destinationlabel">
      <x>336</x>
      <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>distanceDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue1(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>104</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>102</x>
+     <y>153</y>
     </hint>
    </hints>
   </connection>

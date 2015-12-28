@@ -10,12 +10,14 @@
 #include "qtoasterbuttonplugin.h"
 #include "qchickenheaddialplugin.h"
 #include "qtoasterwidgets.h"
+#include "QToasterLookUpTableDialPlugin.h"
 
 QToasterWidgets::QToasterWidgets(QObject *parent)
   : QObject(parent)
 {
   m_widgets.append(new QToasterDialPlugin(this));
   m_widgets.append(new QToasterEnumDialPlugin(this));
+  m_widgets.append(new QToasterLookUpTableDialPlugin(this));
   m_widgets.append(new QToasterBrowserLCDPlugin(this));
   m_widgets.append(new QToasterStompEditLCDPlugin(this));
   m_widgets.append(new QToasterTunerLCDPlugin(this));

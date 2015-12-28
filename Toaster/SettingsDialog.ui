@@ -39,7 +39,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="midiTab">
     <attribute name="title">
@@ -103,76 +103,6 @@
        <string>Output Port:</string>
       </property>
      </widget>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="debugTab">
-    <attribute name="title">
-     <string>Debug</string>
-    </attribute>
-    <widget class="QCheckBox" name="printValuesCheckBox">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>131</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Print Values</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="createValueMapCheckBox">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>40</y>
-       <width>121</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Create Values</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="fileEdit">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>70</y>
-       <width>271</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="readOnly">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="fileLabel">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>80</y>
-       <width>41</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>File:</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="fileButton">
-     <property name="geometry">
-      <rect>
-       <x>340</x>
-       <y>69</y>
-       <width>31</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>...</string>
-     </property>
     </widget>
    </widget>
   </widget>

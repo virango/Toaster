@@ -16,6 +16,8 @@ public:
   QString getMidiOutPort();
   void setMidiOutPort(const QString& outPort);
 
+  bool getDebuggerActive();
+
   QString getDebugWriteStringValuesFileName();
   void setDebugWriteStringValuesFileName(const QString& fileName);
 

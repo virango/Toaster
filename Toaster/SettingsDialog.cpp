@@ -32,19 +32,3 @@ void SettingsDialog::on_buttonBox_accepted()
   Settings::get().setMidiOutPort(ui->outputPortComboBox->currentText());
 }
 
-void SettingsDialog::on_printValuesCheckBox_clicked(bool checked)
-{
-  DebugMidi::get().mPrintValues = checked;
-}
-
-void SettingsDialog::on_createValueMapCheckBox_clicked(bool checked)
-{
-  DebugMidi::get().mWriteStringValues = checked;
-}
-
-
-void SettingsDialog::on_fileButton_clicked()
-{
-   QString fileName = QFileDialog::getSaveFileName(this);
-   ui->fileEdit->setText(fileName);
-}

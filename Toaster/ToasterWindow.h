@@ -38,6 +38,8 @@ private slots:
 
   void on_actionSendSySex_triggered();
 
+  void on_actionDebugSettings_triggered();
+
 private:
   //QTimer* timer;
   void showSettingsDialog();

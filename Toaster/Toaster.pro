@@ -118,7 +118,8 @@ SOURCES += main.cpp\
     ReverbFrame.cpp \
     ReverbCtxMenu.cpp \
     DelayCtxMenu.cpp \
-    TapDelayFrame.cpp
+    TapDelayFrame.cpp \
+    DebugSettingsDialog.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -202,7 +203,8 @@ HEADERS  += ToasterWindow.h \
     ReverbFrame.h \
     ReverbCtxMenu.h \
     DelayCtxMenu.h \
-    TapDelayFrame.h
+    TapDelayFrame.h \
+    DebugSettingsDialog.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -250,7 +252,8 @@ FORMS    += \
     HarmonicPitchFrame.ui \
     DelayFrame.ui \
     ReverbFrame.ui \
-    TapDelayFrame.ui
+    TapDelayFrame.ui \
+    DebugSettingsDialog.ui
 
 RESOURCES += \
     resources.qrc
