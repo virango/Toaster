@@ -150,9 +150,9 @@ void Stomp::applyRotarySpeed(::RotarySpeed rotarySpeed)
   midiApplyRotarySpeed((unsigned short)rotarySpeed);
 }
 
-void Stomp::applyRotaryDistance(double rotaryDistance)
+void Stomp::applyRotaryDistance(int rotaryDistance)
 {
-  midiApplyRotaryDistance(phys2Raw(rotaryDistance, 46, 4));
+  midiApplyRotaryDistance((unsigned short)rotaryDistance);
 }
 
 void Stomp::applyRotaryBalance(double rotaryBalance)
@@ -456,7 +456,7 @@ void Stomp::midiRotarySpeedReceived(unsigned short rawVal)
 
 void Stomp::midiRotaryDistanceReceived(unsigned short rawVal)
 {
-  emit rotaryDistanceReceived(raw2Phys(rawVal, 46, 4));
+  emit rotaryDistanceReceived((int)rawVal);
 }
 
 void Stomp::midiRotaryBalanceReceived(unsigned short rawVal)

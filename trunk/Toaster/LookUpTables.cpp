@@ -1,8 +1,8 @@
 #include "LookUpTables.h"
-
+#include "RotaryDistanceValues.h"
 
 QMultiMap<int, unsigned short> LookUpTables::sDB2RawMap = {};
-LookUpTables LookUpTables::singleton;
+
 QMap<StompInstance, QString> LookUpTables::sStompInstanceNames = {{StompA, "Stomp A"},
                                                                   {StompB, "Stomp B"},
                                                                   {StompC, "Stomp C"},
@@ -77,6 +77,9 @@ QMap<FXType, QString> LookUpTables::sStompFXNames = {{None, "None"},
                                                      {LoopStereo, "Loop Stereo"},
                                                      {LoopDistortion, "Loop Distortion"}};
 
+QVector<QPair<int, QString>> LookUpTables::sRotaryDistanceValues;
+
+LookUpTables LookUpTables::singleton;
 
 LookUpTables::LookUpTables()
 {
@@ -103,9 +106,6 @@ LookUpTables::LookUpTables()
     sDB2Raw[k] = j;
     currVal += 1;
   }
-
-
-
 #endif
   unsigned short sizeofRaw2DB = sizeof(sRaw2dB)/sizeof(double);
 
@@ -113,6 +113,19 @@ LookUpTables::LookUpTables()
   {
     int dbVal = sRaw2dB[i] * 10;
     sDB2RawMap.insert(dbVal, i);
+  }
+
+  QVector<QString> tmpRotaryDistanceValues = {ROTARY_DISTANCE_VALUES};
+
+  QString currStrValue = "";
+  for(int i = 0; i < tmpRotaryDistanceValues.size(); ++i)
+  {
+    if(currStrValue != tmpRotaryDistanceValues[i])
+    {
+      currStrValue = tmpRotaryDistanceValues[i];
+      QPair<int, QString> newPair = QPair<int, QString>(i, currStrValue);
+      sRotaryDistanceValues.push_back(newPair);
+    }
   }
 }
 

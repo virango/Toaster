@@ -13,6 +13,9 @@ ToasterWindow::ToasterWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    if(!Settings::get().getDebuggerActive())
+      ui->menuDebug->menuAction()->setVisible(false);
+
     QString inPort(Settings::get().getMidiInPort());
     QString outPort(Settings::get().getMidiOutPort());
 
@@ -167,6 +170,11 @@ void ToasterWindow::on_actionCreateStringValuesTable_triggered()
 }
 
 void ToasterWindow::on_actionSendSySex_triggered()
+{
+
+}
+
+void ToasterWindow::on_actionDebugSettings_triggered()
 {
 
 }

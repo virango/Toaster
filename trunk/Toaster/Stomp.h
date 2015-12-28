@@ -103,7 +103,7 @@ signals:
   void modulationPhaserPeakSpreadReceived(double peakSpread);
   void modulationPhaserStagesReceived(double stages);
   void rotarySpeedReceived(::RotarySpeed speed);
-  void rotaryDistanceReceived(double distance);
+  void rotaryDistanceReceived(int distance);
   void rotaryBalanceReceived(double balance);
   void compressorSquashReceived(double squash);
   void graphicEQBand1Received(double graphicEQBand1);
@@ -166,7 +166,7 @@ public slots:
   void applyModulationPhaserPeakSpread(double modulationPhaserPeakSpread);
   void applyModulationPhaserStages(double modulationPhaserStages);
   void applyRotarySpeed(RotarySpeed rotarySpeed);
-  void applyRotaryDistance(double rotaryDistance);
+  void applyRotaryDistance(int rotaryDistance);
   void applyRotaryBalance(double rotaryBalance);
   void applyCompressorSquash(double compressorSquash);
   void applyGraphicEQBand1(double graphicEQBand1);

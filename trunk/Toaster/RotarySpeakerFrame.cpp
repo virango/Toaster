@@ -9,6 +9,7 @@ RotarySpeakerFrame::RotarySpeakerFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
+  ui->distanceDial->setLookUpTable(LookUpTables::getRotaryDistanceValues());
 }
 
 RotarySpeakerFrame::~RotarySpeakerFrame()
@@ -22,7 +23,7 @@ void RotarySpeakerFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(rotaryDistanceReceived(double)), this, SLOT(onDistance(double)));
+    connect(mpStomp, SIGNAL(rotaryDistanceReceived(int)), this, SLOT(onDistance(int)));
     connect(mpStomp, SIGNAL(rotaryBalanceReceived(double)), this, SLOT(onLowHighBalance(double)));
     connect(mpStomp, SIGNAL(rotarySpeedReceived(::RotarySpeed)), this, SLOT(onRotarySpeed(::RotarySpeed)));
     connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
@@ -45,7 +46,7 @@ void RotarySpeakerFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(rotaryDistanceReceived(double)), this, SLOT(onDistance(double)));
+    disconnect(mpStomp, SIGNAL(rotaryDistanceReceived(int)), this, SLOT(onDistance(int)));
     disconnect(mpStomp, SIGNAL(rotaryBalanceReceived(double)), this, SLOT(onLowHighBalance(double)));
     disconnect(mpStomp, SIGNAL(rotarySpeedReceived(::RotarySpeed)), this, SLOT(onRotarySpeed(::RotarySpeed)));
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
@@ -80,7 +81,7 @@ void RotarySpeakerFrame::displayAmpName(const QString&  ampName)
   ui->lcdDisplay->setAmpName(ampName);
 }
 
-void RotarySpeakerFrame::on_distanceDial_valueChanged(double value)
+void RotarySpeakerFrame::on_distanceDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyRotaryDistance(value);
@@ -116,7 +117,7 @@ void RotarySpeakerFrame::on_duckingDial_valueChanged(double value)
     mpStomp->applyDucking(value);
 }
 
-void RotarySpeakerFrame::onDistance(double value)
+void RotarySpeakerFrame::onDistance(int value)
 {
   ui->distanceDial->setValue(value);
   update();

@@ -148,7 +148,7 @@
    </widget>
    <widget class="QMenu" name="menuConnection">
     <property name="title">
-     <string>Co&amp;nnection</string>
+     <string>&amp;Connection</string>
     </property>
     <addaction name="actionOpenMIDIPorts"/>
     <addaction name="actionClose_MIDI_Ports"/>
@@ -172,11 +172,19 @@
     </property>
     <addaction name="actionCreateStringValuesTable"/>
     <addaction name="actionSendSySex"/>
+    <addaction name="actionDebugSettings"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuConnection"/>
    <addaction name="menuSettings"/>
    <addaction name="menuDebug"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="sizeGripEnabled">
@@ -185,7 +193,7 @@
   </widget>
   <action name="actionRequestValues">
    <property name="text">
-    <string>Request Values</string>
+    <string>&amp;Request Values</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
@@ -193,7 +201,7 @@
   </action>
   <action name="actionConfigure">
    <property name="text">
-    <string>Configure Toaster...</string>
+    <string>&amp;Configure Toaster...</string>
    </property>
    <property name="toolTip">
     <string>Configure Toaster</string>
@@ -209,17 +217,17 @@
   </action>
   <action name="actionOpenMIDIPorts">
    <property name="text">
-    <string>Open MIDI Ports</string>
+    <string>&amp;Open MIDI Ports</string>
    </property>
   </action>
   <action name="actionConnectToKPA">
    <property name="text">
-    <string>Connect To KPA</string>
+    <string>Connect To &amp;KPA</string>
    </property>
   </action>
   <action name="actionDisconnectFromKPA">
    <property name="text">
-    <string>Disconnect From KPA</string>
+    <string>&amp;Disconnect From KPA</string>
    </property>
   </action>
   <action name="actionShowStatusbar">
@@ -227,27 +235,27 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show Statusbar</string>
+    <string>&amp;Show Statusbar</string>
    </property>
   </action>
   <action name="actionUploadKIPRFile">
    <property name="text">
-    <string>Upload KIPR File...</string>
+    <string>&amp;Upload KIPR File...</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>&amp;Exit</string>
    </property>
   </action>
   <action name="actionClose_MIDI_Ports">
    <property name="text">
-    <string>Close MIDI Ports</string>
+    <string>&amp;Close MIDI Ports</string>
    </property>
   </action>
   <action name="actionCreateStringValuesTable">
    <property name="text">
-    <string>Create String Values Table...</string>
+    <string>&amp;Create String Values Table...</string>
    </property>
    <property name="toolTip">
     <string>Create String Values Table</string>
@@ -255,7 +263,17 @@
   </action>
   <action name="actionSendSySex">
    <property name="text">
-    <string>Send SySex...</string>
+    <string>&amp;Send SySex...</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionDebugSettings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>
