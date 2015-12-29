@@ -69,13 +69,13 @@ protected:
   void createSkin();
   void displayStompEnabled(QWidget& w, bool enabled);
 
-  QList<QPixmap> mSkinPixmaps;
   Color mColor;
   Page  mMaxPage;
   Page  mCurrentPage;
 
   ICtxMenuProvider* mpCtxMenuProvider;
 
+  static QList<QPixmap> sSkinPixmaps;
   static QMap<Color, QString>  sColor2StyleSheetsMap;
   static QMap<FXType, QString> sFXType2ShortNameMap;
 };

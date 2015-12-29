@@ -40,9 +40,9 @@ void Reverb::applyOnOffCutsTail(bool onOff)
   midiRequestOnOffCutsTail();
 }
 
-void Reverb::applyMix(double mix)
+void Reverb::applyMix(int mix)
 {
-  midiApplyMix(phys2Raw(mix, 200.0, 0.0));
+  midiApplyMix((unsigned short)mix);
 }
 
 void Reverb::applyVolume(double volume)
@@ -104,7 +104,7 @@ void Reverb::midiOnOffCutsTailReceived(unsigned short rawVal)
 
 void Reverb::midiMixReceived(unsigned short rawVal)
 {
-  emit mixReceived(raw2Phys(rawVal, 200.0, 0.0));
+  emit mixReceived((int)rawVal);
 }
 
 void Reverb::midiVolumeReceived(unsigned short rawVal)

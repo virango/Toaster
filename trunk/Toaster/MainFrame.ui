@@ -80,46 +80,6 @@
     <double>0.100000000000000</double>
    </property>
   </widget>
-  <widget class="QToasterDial" name="volumeDial">
-   <property name="geometry">
-    <rect>
-     <x>730</x>
-     <y>480</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="minValue">
-    <double>-96.000000000000000</double>
-   </property>
-   <property name="maxValue">
-    <double>12.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
-   </property>
-   <property name="unit">
-    <string>dB</string>
-   </property>
-  </widget>
   <widget class="QToasterDial" name="noiseGateDial">
    <property name="geometry">
     <rect>
@@ -218,31 +178,6 @@
     <string>%</string>
    </property>
   </widget>
-  <widget class="QToasterDial" name="delayMixDial">
-   <property name="geometry">
-    <rect>
-     <x>465</x>
-     <y>165</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterDial::Small</enum>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::None</enum>
-   </property>
-   <property name="maxValue">
-    <double>200.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
-   </property>
-   <property name="unit">
-    <string>%</string>
-   </property>
-  </widget>
   <widget class="QToasterDial" name="reverbTimeDial">
    <property name="geometry">
     <rect>
@@ -263,31 +198,6 @@
    </property>
    <property name="stepWidth">
     <double>0.100000000000000</double>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="reverbMixDial">
-   <property name="geometry">
-    <rect>
-     <x>665</x>
-     <y>165</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterDial::Small</enum>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::None</enum>
-   </property>
-   <property name="maxValue">
-    <double>200.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
-   </property>
-   <property name="unit">
-    <string>%</string>
    </property>
   </widget>
   <widget class="QToasterDial" name="cleanSenseDial">
@@ -338,62 +248,6 @@
    </property>
    <property name="maxValue">
     <double>12.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
-   </property>
-   <property name="unit">
-    <string>dB</string>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="headphoneVolumeDial">
-   <property name="geometry">
-    <rect>
-     <x>803</x>
-     <y>18</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterDial::Small</enum>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::None</enum>
-   </property>
-   <property name="minValue">
-    <double>-96.000000000000000</double>
-   </property>
-   <property name="maxValue">
-    <double>0.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>1.000000000000000</double>
-   </property>
-   <property name="unit">
-    <string>dB</string>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="monitorVolumeDial">
-   <property name="geometry">
-    <rect>
-     <x>761</x>
-     <y>84</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterDial::Small</enum>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::None</enum>
-   </property>
-   <property name="minValue">
-    <double>-96.000000000000000</double>
-   </property>
-   <property name="maxValue">
-    <double>0.000000000000000</double>
    </property>
    <property name="stepWidth">
     <double>0.100000000000000</double>
@@ -641,7 +495,7 @@
     <number>0</number>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>4</number>
    </property>
    <widget class="TunerFrame" name="tuner"/>
    <widget class="BrowserFrame" name="browser"/>
@@ -652,12 +506,103 @@
    <widget class="QWidget" name="eqEditor"/>
    <widget class="QWidget" name="cabEditor"/>
   </widget>
+  <widget class="QToasterLookUpTableDial" name="rigVolumeDial">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>480</y>
+     <width>100</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="ledRingType" stdset="0">
+    <enum>QToasterLookUpTableDial::Bi</enum>
+   </property>
+   <property name="unit">
+    <string>dB</string>
+   </property>
+  </widget>
+  <widget class="QToasterLookUpTableDial" name="headphoneVolumeDial">
+   <property name="geometry">
+    <rect>
+     <x>803</x>
+     <y>18</y>
+     <width>70</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="knobSize">
+    <enum>QToasterLookUpTableDial::Small</enum>
+   </property>
+   <property name="ledRingType" stdset="0">
+    <enum>QToasterLookUpTableDial::None</enum>
+   </property>
+   <property name="unit">
+    <string>dB</string>
+   </property>
+  </widget>
+  <widget class="QToasterLookUpTableDial" name="monitorVolumeDial">
+   <property name="geometry">
+    <rect>
+     <x>761</x>
+     <y>84</y>
+     <width>70</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="knobSize">
+    <enum>QToasterLookUpTableDial::Small</enum>
+   </property>
+   <property name="ledRingType" stdset="0">
+    <enum>QToasterLookUpTableDial::None</enum>
+   </property>
+   <property name="unit">
+    <string>dB</string>
+   </property>
+  </widget>
+  <widget class="QToasterLookUpTableDial" name="reverbMixDial">
+   <property name="geometry">
+    <rect>
+     <x>665</x>
+     <y>165</y>
+     <width>70</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="knobSize">
+    <enum>QToasterLookUpTableDial::Small</enum>
+   </property>
+   <property name="ledRingType" stdset="0">
+    <enum>QToasterLookUpTableDial::None</enum>
+   </property>
+  </widget>
+  <widget class="QToasterLookUpTableDial" name="delayMixDial">
+   <property name="geometry">
+    <rect>
+     <x>465</x>
+     <y>165</y>
+     <width>70</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="knobSize">
+    <enum>QToasterLookUpTableDial::Small</enum>
+   </property>
+   <property name="ledRingType" stdset="0">
+    <enum>QToasterLookUpTableDial::None</enum>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>QToasterDial</class>
    <extends>QWidget</extends>
    <header>qtoasterdial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QToasterLookUpTableDial</class>
+   <extends>QWidget</extends>
+   <header>QToasterLookUpTableDial.h</header>
   </customwidget>
   <customwidget>
    <class>QToasterButton</class>

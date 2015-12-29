@@ -61,7 +61,7 @@ void QToasterBrowserLCD::paintEvent(QPaintEvent* /*pe*/)
   QPainter painter(this);
   if(mColor < NoOfColors)
   {
-    QPixmap pm = mSkinPixmaps[mColor];
+    QPixmap pm = sSkinPixmaps[mColor];
     painter.setWindow(0, 0, pm.width(), pm.height());
     painter.drawPixmap(0, 0, pm);
   }

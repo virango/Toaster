@@ -64,21 +64,21 @@ private slots:
   // ui => kpa
   void on_reverbButton_clicked(QToasterButton &bt, bool longClick);
   void on_reverbTimeDial_valueChanged(double arg1);
-  void on_reverbMixDial_valueChanged(double arg1);
+  void on_reverbMixDial_valueChanged(int value);
   // kpa => ui
   void onReverbOnOff(bool onOff);
   void onReverbTime(double time);
-  void onReverbMix(double mix);
+  void onReverbMix(int mix);
 
   // delay
   // ui => kpa
   void on_delayButton_clicked(QToasterButton &bt, bool longClick);
   void on_delayFeedbackDial_valueChanged(double arg1);
-  void on_delayMixDial_valueChanged(double arg1);
+  void on_delayMixDial_valueChanged(int value);
   // kpa => ui
   void onDelayOnOff(bool onOff);
   void onDelayFeedback(double feedback);
-  void onDelayMix(double mix);
+  void onDelayMix(int mix);
 
   // amp
   // ui => kpa
@@ -102,12 +102,12 @@ private slots:
 
   // rig
   // ui => kpa
-  void on_volumeDial_valueChanged(double volume);
+  void on_rigVolumeDial_valueChanged(int value);
   void on_stompsButton_clicked(QToasterButton& bt, bool longClick);
   void on_stackButton_clicked(QToasterButton& bt, bool longClick);
   void on_effectsButton_clicked(QToasterButton& bt, bool longClick);
   // kpa => ui
-  void onRigVolume(double volume);
+  void onRigVolume(int volume);
   void onRigStompsEnable(bool stompsEnable);
   void onRigStackEnable(bool stackEnable);
   void onRigEffectsEnable(bool effectsEnable);
@@ -115,13 +115,13 @@ private slots:
   // global
   // ui => kpa
   void on_chickenHeadDial_valueChanged(const QChickenHeadDial::State& state);
-  void on_monitorVolumeDial_valueChanged(double volume);
-  void on_headphoneVolumeDial_valueChanged(double volume);
+  void on_monitorVolumeDial_valueChanged(int volume);
+  void on_headphoneVolumeDial_valueChanged(int volume);
   // kpa => ui
   void onGlobalOperationMode(unsigned short opMode);
-  void onGlobalMainVolume(double volume);
-  void onGlobalHeadphoneVolume(double volume);
-  void onGlobalMonitorVolume(double volume);
+  void onGlobalMainVolume(int volume);
+  void onGlobalHeadphoneVolume(int volume);
+  void onGlobalMonitorVolume(int volume);
   void onGlobalDirectVolume(double volume);
 
   // input

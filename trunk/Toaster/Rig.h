@@ -14,7 +14,7 @@ public:
 
 signals:
   void tempoReceived(double tempo);
-  void volumeReceived(double volume);
+  void volumeReceived(int volume);
   void tempoEnableReceived(bool tempoEnable);
   void stompsEnableReceived(bool stompsEnable);
   void stackEnableReceived(bool stackEnable);
@@ -22,7 +22,7 @@ signals:
 
 public slots:
   void applyTempo(double tempo);
-  void applyVolume(double volume);
+  void applyVolume(int volume);
   void applyTempoEnable(bool tempoEnable);
   void applyStompsEnable(bool stompsEnable);
   void applyStackEnable(bool stackEnable);

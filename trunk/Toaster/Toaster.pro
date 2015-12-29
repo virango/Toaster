@@ -204,7 +204,11 @@ HEADERS  += ToasterWindow.h \
     ReverbCtxMenu.h \
     DelayCtxMenu.h \
     TapDelayFrame.h \
-    DebugSettingsDialog.h
+    DebugSettingsDialog.h \
+    RotaryDistanceValues.h \
+    RigVolumeValues.h \
+    MainVolumeValues.h \
+    MixValues.h
 
 FORMS    += \
     ToasterWindow.ui \

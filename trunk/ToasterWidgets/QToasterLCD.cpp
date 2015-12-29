@@ -2,6 +2,8 @@
 #include <QPixmap>
 #include "QToasterLCD.h"
 
+QList<QPixmap> QToasterLCD::sSkinPixmaps;
+
 QMap<FXType, QString> QToasterLCD::sFXType2ShortNameMap = {{None,                   "-"},
                                                            {WahWah,                 "WWAH"},
                                                            {WahLowPass,             "WLPF"},
@@ -85,22 +87,25 @@ QToasterLCD::~QToasterLCD()
 
 void QToasterLCD::createSkin()
 {
-  QString skin = ":/resources/LCD.png";
-
-  QPixmap masterPixmap(skin);
-
-  int width = masterPixmap.width();
-  int height = masterPixmap.height() / (NoOfColors + 1); // to compansate a bug in JKnobMan:
-                                                         // as JKnobMan doesn't create the last frame properly
-                                                         // there must be an additional one
-  if(!masterPixmap.isNull())
+  if(sSkinPixmaps.isEmpty())
   {
-    int x = 0;
-    int y = 0;
-    for(int i = 0; i < NoOfColors; i++)
+    QString skin = ":/resources/LCD.png";
+
+    QPixmap masterPixmap(skin);
+
+    int width = masterPixmap.width();
+    int height = masterPixmap.height() / (NoOfColors + 1); // to compansate a bug in JKnobMan:
+                                                           // as JKnobMan doesn't create the last frame properly
+                                                           // there must be an additional one
+    if(!masterPixmap.isNull())
     {
-      y = i * height;
-      mSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      int x = 0;
+      int y = 0;
+      for(int i = 0; i < NoOfColors; i++)
+      {
+        y = i * height;
+        sSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      }
     }
   }
 }

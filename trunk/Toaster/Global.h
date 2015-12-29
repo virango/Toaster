@@ -26,10 +26,10 @@ public:
   void requestWahPedalToPitch() { midiRequestWahPedalToPitch(); }
 
 signals:
-  void mainOutputVolumeReceived(double volume);
-  void headphoneOutputVolumeReceived(double volume);
-  void monitorOutputVolumeReceived(double volume);
-  void directOutputVolumeReceived(double volume);
+  void mainOutputVolumeReceived(int volume);
+  void headphoneOutputVolumeReceived(int volume);
+  void monitorOutputVolumeReceived(int volume);
+  void directOutputVolumeReceived(int volume);
   void spdifInputEnableReceived(bool enabled);
   void mainOutputEQBassReceived(double bass);
   void mainOutputEQMiddleReceived(double middle);
@@ -43,10 +43,10 @@ signals:
   void operationModeReceived(unsigned short);
 
 public slots:
-  void applyMainOutputVolume(double volume);
-  void applyHeadphoneOutputVolume(double volume);
-  void applyMonitorOutputVolume(double volume);
-  void applyDirectOutputVolume(double volume);
+  void applyMainOutputVolume(int volume);
+  void applyHeadphoneOutputVolume(int volume);
+  void applyMonitorOutputVolume(int volume);
+  void applyDirectOutputVolume(int volume);
   void applySpdifInputEnable(bool enabled);
   void applyMainOutputEQBass(double bass);
   void applyMainOutputEQMiddle(double middle);

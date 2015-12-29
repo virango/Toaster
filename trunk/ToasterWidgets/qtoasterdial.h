@@ -5,8 +5,6 @@
 #include <QMap>
 #include "ToasterWidgetsLib.h"
 
-#define MAP_INSERT(x, y, z) x[y] = z
-
 class TOASTERWIDGETS_EXPORT QToasterDial : public QWidget
 {
   Q_OBJECT
@@ -78,31 +76,28 @@ protected:
   void updateLEDRing();
 
 private:
-  QList<QPixmap> mKnobSkinPixmaps;
-  QList<QPixmap> mLEDRingSkinPixmaps;
-  int mCurrKnobFrameNo;
-  int mCurrLEDRingFrameNo;
+  int             mCurrKnobFrameNo;
+  int             mCurrLEDRingFrameNo;
+  KnobSize        mKnobSize;
+  LEDRingType     mLEDRingType;
+  int             mMouseY;
+  double          mMinValue;
+  double          mMaxValue;
+  double          mStepWidth;
+  int             mPrecision;
+  double          mCurrValue;
+  QString         mCurrValueText;
+  QString         mUnit;
+  bool            mIsActive;
+  QList<QPixmap>* mKnobSkinPixmaps;
+  QList<QPixmap>* mLEDRingSkinPixmaps;
 
-  KnobSize mKnobSize;
-  LEDRingType  mLEDRingType;
-
-  int mMouseY;
-
-  double   mMinValue;
-  double   mMaxValue;
-  double   mStepWidth;
-  int      mPrecision;
-  double   mCurrValue;
-  QString  mCurrValueText;
-
-  QString  mUnit;
-
-  bool     mIsActive;
-
-  QMap<KnobSize, QString> mKnobSkins;
-  QMap<LEDRingType, QString> mLEDRingSkins;
-  static const int mKnobSkinNoOfFrames = 40;
-  static const int mLEDRingSkinNoOfFrames = 15;
+  static QList<QPixmap> sSmallKnobSkinPixmaps;
+  static QList<QPixmap> sBigKnobSkinPixmaps;
+  static QList<QPixmap> sUniLEDRingSkinPixmaps;
+  static QList<QPixmap> sBiLEDRingSkinPixmaps;
+  static const int sKnobSkinNoOfFrames = 40;
+  static const int sLEDRingSkinNoOfFrames = 15;
 };
 
 #endif
