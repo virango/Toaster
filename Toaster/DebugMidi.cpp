@@ -83,15 +83,25 @@ void DebugMidi::debugWriteStringValues(ByteArray* msg)
   QTextStream textStream1(&outFile1);
   QTextStream textStream2(&outFile2);
   textStream1 << "\"" << strVal  << "\",";
-  textStream2 << "{\"" << strVal << "\"," << rawVal  << "},";
 
-  static unsigned long long cnt = 0;
-  cnt++;
-  if(cnt%100 == 0)
+  static unsigned long long cnt2 = 0;
+  static QString lastVal = "";
+
+  if(lastVal != strVal)
   {
-    textStream1 << endl;
-    textStream2 << endl;
+    textStream2 << "{" << rawVal << ",\"" << strVal << "\"},";
+    cnt2++;
+    lastVal = strVal;
+    if(cnt2%100 == 0)
+      textStream2 << endl;
   }
+
+  static unsigned long long cnt1 = 0;
+
+  cnt1++;
+
+  if(cnt1%100 == 0)
+    textStream1 << endl;
 
 #endif
 }

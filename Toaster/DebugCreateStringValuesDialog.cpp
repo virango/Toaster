@@ -71,7 +71,7 @@ void DebugCreateStringValuesDialog::on_startButton_clicked()
       mTimer = new QTimer(this);
       mTimer->setSingleShot(false);
       connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimer()));
-      mTimer->start(50);
+      mTimer->start(25);
     }
   }
 }

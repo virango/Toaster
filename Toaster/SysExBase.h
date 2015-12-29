@@ -148,16 +148,6 @@ protected:
     return val;
   }
 
-  double raw2Volume(unsigned short rawVal)
-  {
-    return LookUpTables::raw2dB(rawVal);
-  }
-
-  unsigned short volume2Raw(double val)
-  {
-    return LookUpTables::dB2Raw(val);
-  }
-
   QString raw2Note(unsigned short rawVal)
   {
     if(rawVal >= 12 )

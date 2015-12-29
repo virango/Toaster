@@ -127,34 +127,41 @@ void ReverbFrame::on_volumeDial_valueChanged(double value)
 void ReverbFrame::onPredaly(double value)
 {
   ui->predelayDial->setValue(value);
+  update();
 }
 
 void ReverbFrame::onBandwidth(double value)
 {
   ui->bandwidthDial->setValue(value);
+  update();
 }
 
 void ReverbFrame::onFrequency(double value)
 {
   ui->frequencyDial->setValue(value);
+  update();
 }
 
 void ReverbFrame::onDucking(double value)
 {
   ui->duckingDial->setValue(value);
+  update();
 }
 
 void ReverbFrame::onDelRevBalance(double value)
 {
   ui->delRevBalanceDial->setValue(value);
+  update();
 }
 
 void ReverbFrame::onDamping(double value)
 {
   ui->dampingDial->setValue(value);
+  update();
 }
 
 void ReverbFrame::onVolume(double value)
 {
   ui->volumeDial->setValue(value);
+  update();
 }

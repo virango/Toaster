@@ -126,34 +126,41 @@ void DelayFrame::on_volumeDial_valueChanged(double value)
 void DelayFrame::onBandwidth(double value)
 {
   ui->bandwidthDial->setValue(value);
+  update();
 }
 
 void DelayFrame::onCenterFrequency(double value)
 {
   ui->centerFrequencyDial->setValue(value);
+  update();
 }
 
 void DelayFrame::onModulation(double value)
 {
   ui->modulationDial->setValue(value);
+  update();
 }
 
 void DelayFrame::onDucking(double value)
 {
   ui->duckingDial->setValue(value);
+  update();
 }
 
 void DelayFrame::onTime(double value)
 {
   ui->timeDial->setValue(value);
+  update();
 }
 
 void DelayFrame::onRatio(::DelayRatio ratio)
 {
   ui->ratioDial->setValue((int)ratio);
+  update();
 }
 
 void DelayFrame::onVolume(double value)
 {
   ui->volumeDial->setValue(value);
+  update();
 }

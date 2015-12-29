@@ -25,6 +25,12 @@ MainFrame::MainFrame(QWidget *parent)
 {
   ui->setupUi(this);
 
+  ui->rigVolumeDial->setLookUpTable(LookUpTables::getRigVolumeValues());
+  ui->monitorVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  ui->headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  ui->delayMixDial->setLookUpTable(LookUpTables::getMixValues());
+  ui->reverbMixDial->setLookUpTable(LookUpTables::getMixValues());
+
   // notifications
   // stomps
   //qRegisterMetaType<::FXType>("::FXType");
@@ -43,11 +49,11 @@ MainFrame::MainFrame(QWidget *parent)
   // delay
   connect(&mDelay, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onDelayOnOff(bool)));
   connect(&mDelay, SIGNAL(feedbackReceived(double)), this, SLOT(onDelayFeedback(double)));
-  connect(&mDelay, SIGNAL(mixReceived(double)), this, SLOT(onDelayMix(double)));
+  connect(&mDelay, SIGNAL(mixReceived(int)), this, SLOT(onDelayMix(int)));
   // reverb
   connect(&mReverb, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onReverbOnOff(bool)));
   connect(&mReverb, SIGNAL(timeReceived(double)), this, SLOT(onReverbTime(double)));
-  connect(&mReverb, SIGNAL(mixReceived(double)), this, SLOT(onReverbMix(double)));
+  connect(&mReverb, SIGNAL(mixReceived(int)), this, SLOT(onReverbMix(int)));
   // amp
   connect(&mAmp, SIGNAL(onOffReceived(bool)), this, SLOT(onAmpOnOff(bool)));
   connect(&mAmp, SIGNAL(gainReceived(double)), this, SLOT(onAmpGain(double)));
@@ -57,17 +63,17 @@ MainFrame::MainFrame(QWidget *parent)
   connect(&mCab, SIGNAL(onOffReceived(bool)), this, SLOT(onCabOnOff(bool)));
   // rig
   //connect(&mRig, SIGNAL(tempoReceived(double)), this, SLOT(onRigTempo(double)));
-  connect(&mRig, SIGNAL(volumeReceived(double)), this, SLOT(onRigVolume(double)));
+  connect(&mRig, SIGNAL(volumeReceived(int)), this, SLOT(onRigVolume(int)));
   //connect(&mRig, SIGNAL(tempoEnableReceived(bool)), this, SLOT(onRigTempoEnable(bool)));
   connect(&mRig, SIGNAL(stompsEnableReceived(bool)), this, SLOT(onRigStompsEnable(bool)));
   connect(&mRig, SIGNAL(stackEnableReceived(bool)), this, SLOT(onRigStackEnable(bool)));
   connect(&mRig, SIGNAL(effectsEnableReceived(bool)), this, SLOT(onRigEffectsEnable(bool)));
   // global
   connect(&mGlobal, SIGNAL(operationModeReceived(unsigned short)), this, SLOT(onGlobalOperationMode(unsigned short)));
-  connect(&mGlobal, SIGNAL(mainOutputVolumeReceived(double)), this, SLOT(onGlobalMainVolume(double)));
-  connect(&mGlobal, SIGNAL(headphoneOutputVolumeReceived(double)), this, SLOT(onGlobalHeadphoneVolume(double)));
-  connect(&mGlobal, SIGNAL(monitorOutputVolumeReceived(double)), this, SLOT(onGlobalMonitorVolume(double)));
-  connect(&mGlobal, SIGNAL(directOutputVolumeReceived(double)), this, SLOT(onGlobalDirectVolume(double)));
+  connect(&mGlobal, SIGNAL(mainOutputVolumeReceived(int)), this, SLOT(onGlobalMainVolume(int)));
+  connect(&mGlobal, SIGNAL(headphoneOutputVolumeReceived(int)), this, SLOT(onGlobalHeadphoneVolume(int)));
+  connect(&mGlobal, SIGNAL(monitorOutputVolumeReceived(int)), this, SLOT(onGlobalMonitorVolume(int)));
+  connect(&mGlobal, SIGNAL(directOutputVolumeReceived(int)), this, SLOT(onGlobalDirectVolume(int)));
   // input
   connect(&mInput, SIGNAL(noiseGateReceived(double)), this, SLOT(onInputNoiseGate(double)));
   connect(&mInput, SIGNAL(distortionSenseReceived(double)), SLOT(onInputDistortionSense(double)));
@@ -261,9 +267,9 @@ void MainFrame::on_reverbTimeDial_valueChanged(double arg1)
   mReverb.applyTime(arg1);
 }
 
-void MainFrame::on_reverbMixDial_valueChanged(double arg1)
+void MainFrame::on_reverbMixDial_valueChanged(int value)
 {
-  mReverb.applyMix(arg1);
+  mReverb.applyMix(value);
 }
 
 // kpa => ui
@@ -282,7 +288,7 @@ void MainFrame::onReverbTime(double time)
   ui->reverbTimeDial->setValue(time);
 }
 
-void MainFrame::onReverbMix(double mix)
+void MainFrame::onReverbMix(int mix)
 {
   ui->reverbMixDial->setValue(mix);
 }
@@ -300,9 +306,9 @@ void MainFrame::on_delayFeedbackDial_valueChanged(double arg1)
   mDelay.applyFeedback(arg1);
 }
 
-void MainFrame::on_delayMixDial_valueChanged(double arg1)
+void MainFrame::on_delayMixDial_valueChanged(int value)
 {
-    mDelay.applyMix(arg1);
+    mDelay.applyMix(value);
 }
 
 // kpa => ui
@@ -322,7 +328,7 @@ void MainFrame::onDelayFeedback(double feedback)
   update();
 }
 
-void MainFrame::onDelayMix(double mix)
+void MainFrame::onDelayMix(int mix)
 {
   ui->delayMixDial->setValue(mix);
   update();
@@ -403,9 +409,9 @@ void MainFrame::onCabOnOff(bool onOff)
 
 // rig
 // ui => kpa
-void MainFrame::on_volumeDial_valueChanged(double physVal)
+void MainFrame::on_rigVolumeDial_valueChanged(int value)
 {
-  mRig.applyVolume(physVal);
+  mRig.applyVolume(value);
 }
 
 void MainFrame::on_stompsButton_clicked(QToasterButton& bt, bool longClick)
@@ -427,9 +433,9 @@ void MainFrame::on_effectsButton_clicked(QToasterButton& bt, bool longClick)
 }
 
 // kpa => ui
-void MainFrame::onRigVolume(double volume)
+void MainFrame::onRigVolume(int volume)
 {
-  ui->volumeDial->setValue(volume);
+  ui->rigVolumeDial->setValue(volume);
   update();
 }
 
@@ -462,12 +468,12 @@ void MainFrame::on_chickenHeadDial_valueChanged(const QChickenHeadDial::State& s
   mGlobal.applyOperationMode((Global::OperationMode) state);
 }
 
-void MainFrame::on_monitorVolumeDial_valueChanged(double volume)
+void MainFrame::on_monitorVolumeDial_valueChanged(int volume)
 {
   mGlobal.applyMonitorOutputVolume(volume);
 }
 
-void MainFrame::on_headphoneVolumeDial_valueChanged(double volume)
+void MainFrame::on_headphoneVolumeDial_valueChanged(int volume)
 {
   mGlobal.applyHeadphoneOutputVolume(volume);
 }
@@ -481,18 +487,18 @@ void MainFrame::onGlobalOperationMode(unsigned short opMode)
   update();
 }
 
-void MainFrame::onGlobalMainVolume(double volume)
+void MainFrame::onGlobalMainVolume(int volume)
 {
   update();
 }
 
-void MainFrame::onGlobalHeadphoneVolume(double volume)
+void MainFrame::onGlobalHeadphoneVolume(int volume)
 {
   ui->headphoneVolumeDial->setValue(volume);
   update();
 }
 
-void MainFrame::onGlobalMonitorVolume(double volume)
+void MainFrame::onGlobalMonitorVolume(int volume)
 {
   ui->monitorVolumeDial->setValue(volume);
   update();

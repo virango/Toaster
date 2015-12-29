@@ -31,7 +31,7 @@ public:
 signals:
   void typeReceived(::DelayType type);
   void onOffCutsTailReceived(bool onOffCutsTail);
-  void mixReceived(double mix);
+  void mixReceived(int mix);
   void volumeReceived(double volume);
   void timeReceived(double time);
   void ratioReceived(::DelayRatio ratio);
@@ -47,7 +47,7 @@ signals:
 public slots:
   void applyType(::DelayType type);
   void applyOnOffCutsTail(bool onOffCutsTail);
-  void applyMix(double mix);
+  void applyMix(int mix);
   void applyVolume(double volume);
   void applyTime(double time);
   void applyRatio(::DelayRatio ratio);

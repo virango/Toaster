@@ -19,24 +19,24 @@ void Global::requestAllValues()
 }
 
 // slots
-void Global::applyMainOutputVolume(double volume)
+void Global::applyMainOutputVolume(int volume)
 {
-  midiApplyMainOutputVolume(phys2Raw(volume, 96.0, -96.0));
+  midiApplyMainOutputVolume((unsigned short)volume);
 }
 
-void Global::applyHeadphoneOutputVolume(double volume)
+void Global::applyHeadphoneOutputVolume(int volume)
 {
-  midiApplyHeadphoneOutputVolume(phys2Raw(volume, 96.0, -96.0));
+  midiApplyHeadphoneOutputVolume((unsigned short)volume);
 }
 
-void Global::applyMonitorOutputVolume(double volume)
+void Global::applyMonitorOutputVolume(int volume)
 {
-  midiApplyMonitorOutputVolume(phys2Raw(volume, 96.0, -96.0));
+  midiApplyMonitorOutputVolume((unsigned short)volume);
 }
 
-void Global::applyDirectOutputVolume(double volume)
+void Global::applyDirectOutputVolume(int volume)
 {
-  midiApplyDirectOutputVolume(phys2Raw(volume, 96.0, -96.0));
+  midiApplyDirectOutputVolume((unsigned short)volume);
 }
 
 void Global::applySpdifInputEnable(bool enabled)
@@ -128,22 +128,22 @@ void Global::sendBeacon()
 // GlobalMidi
 void Global::midiMainOutputVolumeReceived(unsigned short rawVal)
 {
-  emit mainOutputVolumeReceived(raw2Phys(rawVal, 96.0, -96.0));
+  emit mainOutputVolumeReceived((int)rawVal);
 }
 
 void Global::midiHeadphoneOutputVolumeReceived(unsigned short rawVal)
 {
-  emit headphoneOutputVolumeReceived(raw2Phys(rawVal, 96.0, -96.0));
+  emit headphoneOutputVolumeReceived((int)rawVal);
 }
 
 void Global::midiMonitorOutputVolumeReceived(unsigned short rawVal)
 {
-  emit monitorOutputVolumeReceived(raw2Phys(rawVal, 96.0, -96.0));
+  emit monitorOutputVolumeReceived((int)rawVal);
 }
 
 void Global::midiDirectOutputVolumeReceived(unsigned short rawVal)
 {
-  emit directOutputVolumeReceived(raw2Phys(rawVal, 96.0, -96.0));
+  emit directOutputVolumeReceived((int)rawVal);
 }
 
 void Global::midiSPDIFInputEnableReceived(unsigned short rawVal)

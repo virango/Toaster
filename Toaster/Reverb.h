@@ -30,7 +30,7 @@ public:
 signals:
   void typeReceived(::ReverbType type);
   void onOffCutsTailReceived(bool onOff);
-  void mixReceived(double mix);
+  void mixReceived(int mix);
   void volumeReceived(double volume);
   void delRevBalanceReceived(double balance);
   void timeReceived(double time);
@@ -44,7 +44,7 @@ signals:
 public slots:
   void applyType(::ReverbType type);
   void applyOnOffCutsTail(bool onOff);
-  void applyMix(double mix);
+  void applyMix(int mix);
   void applyVolume(double volume);
   void applyDelRevBalance(double balance);
   void applyTime(double time);

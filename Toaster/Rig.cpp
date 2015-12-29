@@ -24,9 +24,9 @@ void Rig::applyTempo(double tempo)
   midiApplyTempo(phys2Raw(tempo, 236.0, 20.0));
 }
 
-void Rig::applyVolume(double volume)
+void Rig::applyVolume(int volume)
 {
-  midiApplyVolume(volume2Raw(volume));
+  midiApplyVolume((unsigned short)volume);
 }
 
 void Rig::applyTempoEnable(bool tempoEnable)
@@ -59,7 +59,7 @@ void Rig::midiTempoReceived(unsigned short rawVal)
 
 void Rig::midiVolumeReceived(unsigned short rawVal)
 {
-  emit volumeReceived(raw2Volume(rawVal));
+  emit volumeReceived((int)rawVal);
 }
 
 void Rig::midiTempoEnableReceived(unsigned short rawVal)
