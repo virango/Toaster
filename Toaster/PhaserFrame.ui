@@ -558,6 +558,9 @@
      <property name="precision">
       <UInt>0</UInt>
      </property>
+     <property name="unit">
+      <string>%</string>
+     </property>
     </widget>
     <widget class="QToasterDial" name="dummy11Dial">
      <property name="geometry">

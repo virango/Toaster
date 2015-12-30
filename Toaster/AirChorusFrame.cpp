@@ -9,6 +9,7 @@ AirChorusFrame::AirChorusFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getModulationCrossoverValues());
 }
 
 AirChorusFrame::~AirChorusFrame()
@@ -23,7 +24,7 @@ void AirChorusFrame::activate(QObject& stomp)
   if(mpStomp != nullptr)
   {
     connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
     connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
 
     mpStomp->requestModulationDepth();
@@ -78,7 +79,7 @@ void AirChorusFrame::on_depthDial_valueChanged(double value)
     mpStomp->applyModulationDepth(value);
 }
 
-void AirChorusFrame::on_crossoverDial_valueChanged(double value)
+void AirChorusFrame::on_crossoverDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyModulationCrossover(value);
@@ -96,7 +97,7 @@ void AirChorusFrame::onDepth(double value)
   update();
 }
 
-void AirChorusFrame::onCrossover(double value)
+void AirChorusFrame::onCrossover(int value)
 {
   ui->crossoverDial->setValue(value);
   update();

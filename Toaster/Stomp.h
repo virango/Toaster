@@ -94,10 +94,12 @@ signals:
   void distortionBoosterToneReceived(double tone);
   void compressorGateIntensityReceived(double intensity);
   void compressorAttackReceived(double attack);
-  void modulationRateReceived(double modulationRate, unsigned short rawVal);
+  void modulationRateReceived(double modulationRate);
+  void modulationRateReceived(int modulationRate);
   void modulationDepthReceived(double modulationDepth);
   void modulationFeedbackReceived(double feedback);
   void modulationCrossoverReceived(double crossover);
+  void modulationCrossoverReceived(int crossover);
   void modulationHyperChorusAmountReceived(double amount);
   void modulationManualReceived(double manual);
   void modulationPhaserPeakSpreadReceived(double peakSpread);
@@ -157,10 +159,11 @@ public slots:
   void applyCompressorGateIntensity(double compressorGateIntensity);
   void applyCompressorAttack(double compressorAttack);
   void applyModulationRate(double modulationRate);
-  void applyModulationRate(unsigned short modulationRate);
+  void applyModulationRate(int modulationRate);
   void applyModulationDepth(double modulationDepth);
   void applyModulationFeedback(double modulationFeedback);
   void applyModulationCrossover(double modulationCrossover);
+  void applyModulationCrossover(int modulationCrossover);
   void applyModulationHyperChorusAmount(double modulationHyperChorusAmount);
   void applyModulationManual(double modulationManual);
   void applyModulationPhaserPeakSpread(double modulationPhaserPeakSpread);

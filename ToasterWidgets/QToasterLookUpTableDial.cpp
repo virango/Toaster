@@ -251,5 +251,7 @@ void QToasterLookUpTableDial::updateLEDRing()
     double offset = mMinValue * (-1);
     double value =  (mCurrValue + offset) / step;
     mCurrLEDRingFrameNo = (int) floor(value + 0.5);
+    if(mCurrLEDRingFrameNo >= mLEDRingSkinNoOfFrames)
+      mCurrLEDRingFrameNo = mLEDRingSkinNoOfFrames - 1;
   }
 }

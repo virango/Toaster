@@ -29,13 +29,13 @@ public:
 private slots:
   // ui => kpa
   void on_detuneDial_valueChanged(double value);
-  void on_crossoverDial_valueChanged(double value);
+  void on_crossoverDial_valueChanged(int value);
   void on_volumeDial_valueChanged(double value);
   void on_mixDial_valueChanged(double value);
   void on_duckingDial_valueChanged(double value);
   // kpa => ui
   void onDetune(double value);
-  void onCrossover(double value);
+  void onCrossover(int value);
   void onVolume(double value);
   void onMix(double value);
   void onDucking(double value);

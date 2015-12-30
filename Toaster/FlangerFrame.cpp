@@ -170,11 +170,14 @@ void FlangerFrame::onRate(double value, unsigned short rawVal)
     ui->rateDial->setValue(value - 5.0);
   else
     ui->rateDial->setValue((double) rawVal);
+
+  update();
 }
 
 void FlangerFrame::onDepth(double value)
 {
   ui->depthDial->setValue(value);
+  update();
 }
 
 void FlangerFrame::onManual(double value)
@@ -183,25 +186,30 @@ void FlangerFrame::onManual(double value)
     ui->manualDial->setValue(value);
   else
     ui->manualDial->setValue(value - 5.0);
+  update();
 }
 
 void FlangerFrame::onFeedback(double value)
 {
   ui->feedbackDial->setValue(value);
+  update();
 }
 
 void FlangerFrame::onMix(double value)
 {
   ui->mixDial->setValue(value);
+  update();
 }
 
 void FlangerFrame::onDucking(double value)
 {
   ui->duckingDial->setValue(value);
+  update();
 }
 
 void FlangerFrame::onVolume(double value)
 {
   ui->volumeDial->setValue(value);
+  update();
 }
 

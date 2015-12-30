@@ -205,35 +205,42 @@ void PhaserFrame::onManual(double value)
     ui->manualDial->setValue(value);
   else
     ui->manualDial->setValue(value - 5.0);
+  update();
 }
 
 void PhaserFrame::onFeedback(double value)
 {
   ui->feedbackDial->setValue(value);
+  update();
 }
 
 void PhaserFrame::onPeakSpread(double value)
 {
   ui->peakSpreadDial->setValue(value);
+  update();
 }
 
 void PhaserFrame::onStages(double value)
 {
   ui->stagesDial->setValue(value);
+  update();
 }
 
 void PhaserFrame::onMix(double value)
 {
   ui->mixDial->setValue(value);
+  update();
 }
 
 void PhaserFrame::onDucking(double value)
 {
   ui->duckingDial->setValue(value);
+  update();
 }
 
 void PhaserFrame::onVolume(double value)
 {
   ui->volumeDial->setValue(value);
+  update();
 }
 

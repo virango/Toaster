@@ -208,7 +208,9 @@ HEADERS  += ToasterWindow.h \
     RotaryDistanceValues.h \
     RigVolumeValues.h \
     MainVolumeValues.h \
-    MixValues.h
+    MixValues.h \
+    ModulationCrossoverValues.h \
+    TremoloRateValues.h
 
 FORMS    += \
     ToasterWindow.ui \
