@@ -9,6 +9,7 @@ MicroPitchFrame::MicroPitchFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getModulationCrossoverValues());
 }
 
 MicroPitchFrame::~MicroPitchFrame()
@@ -23,7 +24,7 @@ void MicroPitchFrame::activate(QObject& stomp)
   if(mpStomp != nullptr)
   {
     connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDetune(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
     connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
     connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
@@ -83,7 +84,7 @@ void MicroPitchFrame::on_detuneDial_valueChanged(double value)
     mpStomp->applyModulationDepth(value);
 }
 
-void MicroPitchFrame::on_crossoverDial_valueChanged(double value)
+void MicroPitchFrame::on_crossoverDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyModulationCrossover(value);
@@ -113,7 +114,7 @@ void MicroPitchFrame::onDetune(double value)
   update();
 }
 
-void MicroPitchFrame::onCrossover(double value)
+void MicroPitchFrame::onCrossover(int value)
 {
   ui->crossoverDial->setValue(value);
   update();

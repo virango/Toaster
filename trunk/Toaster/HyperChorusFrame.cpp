@@ -9,6 +9,7 @@ HyperChorusFrame::HyperChorusFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getModulationCrossoverValues());
 }
 
 HyperChorusFrame::~HyperChorusFrame()
@@ -24,7 +25,7 @@ void HyperChorusFrame::activate(QObject& stomp)
   {
     connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
     connect(mpStomp, SIGNAL(modulationHyperChorusAmountReceived(double)), this, SLOT(onAmount(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
     connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
     connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
@@ -92,7 +93,7 @@ void HyperChorusFrame::on_amountDial_valueChanged(double value)
     mpStomp->applyModulationHyperChorusAmount(value);
 }
 
-void HyperChorusFrame::on_crossoverDial_valueChanged(double value)
+void HyperChorusFrame::on_crossoverDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyModulationCrossover(value);
@@ -128,7 +129,7 @@ void HyperChorusFrame::onAmount(double value)
   update();
 }
 
-void HyperChorusFrame::onCrossover(double value)
+void HyperChorusFrame::onCrossover(int value)
 {
   ui->crossoverDial->setValue(value);
   update();

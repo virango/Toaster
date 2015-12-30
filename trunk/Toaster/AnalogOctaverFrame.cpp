@@ -27,7 +27,6 @@ void AnalogOctaverFrame::activate(QObject& stomp)
     connect(mpStomp, SIGNAL(IntensityReceived(double)), this, SLOT(onMix(double)));
     connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onLowCut(double)));
 
-
     mpStomp->requestVolume();
     mpStomp->requestDucking();
     mpStomp->requestVoiceMix();
@@ -104,9 +103,7 @@ void AnalogOctaverFrame::on_mixDial_valueChanged(double value)
 void AnalogOctaverFrame::on_lowCutDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
-  {
-    mpStomp->applyModulationCrossover((value * 16383.0) / 10.0);
-  }
+    mpStomp->applyModulationCrossover(value);
 }
 
 void AnalogOctaverFrame::onVolume(double value)
@@ -135,6 +132,6 @@ void AnalogOctaverFrame::onMix(double value)
 
 void AnalogOctaverFrame::onLowCut(double value)
 {
-  ui->lowCutDial->setValue((value * 10.0) / 16383);
+  ui->lowCutDial->setValue(value);
   update();
 }

@@ -32,52 +32,6 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QToasterDial" name="crossoverDial">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>220</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>100</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Uni</enum>
-   </property>
-   <property name="minValue">
-    <double>0.000000000000000</double>
-   </property>
-   <property name="maxValue">
-    <double>16383.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>1.000000000000000</double>
-   </property>
-   <property name="unit">
-    <string/>
-   </property>
-   <property name="isActive">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QToasterStompEditLCD" name="lcdDisplay">
    <property name="geometry">
     <rect>
@@ -361,12 +315,30 @@
     <string>%</string>
    </property>
   </widget>
+  <widget class="QToasterLookUpTableDial" name="crossoverDial">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>220</y>
+     <width>100</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="unit">
+    <string>Hz</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>QToasterDial</class>
    <extends>QWidget</extends>
    <header>qtoasterdial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QToasterLookUpTableDial</class>
+   <extends>QWidget</extends>
+   <header>QToasterLookUpTableDial.h</header>
   </customwidget>
   <customwidget>
    <class>QToasterStompEditLCD</class>
@@ -426,22 +398,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>crossoverDial</sender>
-   <signal>valueChanged(QString)</signal>
-   <receiver>lcdDisplay</receiver>
-   <slot>setValue3(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>349</x>
-     <y>272</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>334</x>
-     <y>159</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>duckingDial</sender>
    <signal>valueChanged(QString)</signal>
    <receiver>lcdDisplay</receiver>
@@ -470,6 +426,22 @@
     <hint type="destinationlabel">
      <x>439</x>
      <y>111</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>crossoverDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue3(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>349</x>
+     <y>268</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>335</x>
+     <y>159</y>
     </hint>
    </hints>
   </connection>

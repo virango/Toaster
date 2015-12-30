@@ -105,9 +105,9 @@ void Stomp::applyModulationRate(double modulationRate)
   midiApplyModulationRate(phys2Raw(modulationRate, 10, 0));
 }
 
-void Stomp::applyModulationRate(unsigned short modulationRate)
+void Stomp::applyModulationRate(int modulationRate)
 {
-  midiApplyModulationRate(modulationRate);
+  midiApplyModulationRate((unsigned short)modulationRate);
 }
 
 void Stomp::applyModulationDepth(double modulationDepth)
@@ -121,6 +121,11 @@ void Stomp::applyModulationFeedback(double modulationFeedback)
 }
 
 void Stomp::applyModulationCrossover(double modulationCrossover)
+{
+  midiApplyModulationCrossover(phys2Raw(modulationCrossover, 10, 0));
+}
+
+void Stomp::applyModulationCrossover(int modulationCrossover)
 {
   midiApplyModulationCrossover((unsigned short)modulationCrossover);
 }
@@ -411,7 +416,8 @@ void Stomp::midiModulationRateReceived(unsigned short rawVal)
 {
   // there seems to be a bug in the kpa: it sends values between 0..127
   double physVal = ((rawVal * 10.0) / 127.0);
-  emit modulationRateReceived(physVal, rawVal);
+  emit modulationRateReceived(physVal);
+  emit modulationRateReceived(rawVal);
 }
 
 void Stomp::midiModulationDepthReceived(unsigned short rawVal)
@@ -426,7 +432,8 @@ void Stomp::midiModulationFeedbackReceived(unsigned short rawVal)
 
 void Stomp::midiModulationCrossoverReceived(unsigned short rawVal)
 {
-  emit modulationCrossoverReceived((double)rawVal);
+  emit modulationCrossoverReceived(raw2Phys(rawVal, 10, 0));
+  emit modulationCrossoverReceived((int)rawVal);
 }
 
 void Stomp::midiModulationHyperChorusAmountReceived(unsigned short rawVal)
@@ -591,7 +598,7 @@ void Stomp::midiVoice2PitchReceived(unsigned short rawVal)
 
 void Stomp::midiDetuneReceived(unsigned short rawVal)
 {
-  emit detuneReceived(raw2Phys(rawVal, 10, 0));
+  emit detuneReceived(raw2Phys(rawVal, 10, 0));void applyModulationCrossover(int modulationCrossover);
 }
 
 void Stomp::midiSmoothChordsReceived(unsigned short rawVal)

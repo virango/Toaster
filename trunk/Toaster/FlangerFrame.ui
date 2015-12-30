@@ -323,6 +323,9 @@
    <property name="precision">
     <UInt>0</UInt>
    </property>
+   <property name="unit">
+    <string>%</string>
+   </property>
    <property name="isActive">
     <bool>true</bool>
    </property>

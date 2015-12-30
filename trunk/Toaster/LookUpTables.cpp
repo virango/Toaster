@@ -3,6 +3,8 @@
 #include "RigVolumeValues.h"
 #include "MainVolumeValues.h"
 #include "MixValues.h"
+#include "ModulationCrossoverValues.h"
+#include "TremoloRateValues.h"
 
 QMap<StompInstance, QString> LookUpTables::sStompInstanceNames = {{StompA, "Stomp A"},
                                                                   {StompB, "Stomp B"},
@@ -82,55 +84,13 @@ QVector<QPair<int, QString>> LookUpTables::sRotaryDistanceValues = {ROTARY_DISTA
 QVector<QPair<int, QString>> LookUpTables::sRigVolumeValues = {RIG_VOLUME_VALUES};
 QVector<QPair<int, QString>> LookUpTables::sMainVolumeValues = {MAIN_VOLUME_VALUES};
 QVector<QPair<int, QString>> LookUpTables::sMixValues = {MIX_VALUES};
+QVector<QPair<int, QString>> LookUpTables::sModulationCrossoverValues = {MODULATION_CROSSOVER_VALUES};
+QVector<QPair<int, QString>> LookUpTables::sTremoloRateValues = {TREMOLO_RATE_VALUES};
+
 LookUpTables LookUpTables::singleton;
 
 LookUpTables::LookUpTables()
 {
-/*
-  QVector<QString> tmpValues = {ROTARY_DISTANCE_VALUES};
-
-
-  for(int i = 0; i < tmpValues.size(); ++i)
-  {
-    if(currStrValue != tmpValues[i])
-    {
-      currStrValue = tmpValues[i];
-      QPair<int, QString> newPair = QPair<int, QString>(i, currStrValue);
-      sRotaryDistanceValues.push_back(newPair);
-    }
-  }
-
-  tmpValues.clear();
-
-  QString currStrValue = "";
-  QVector<QString> tmpValues = {RIG_VOLUME_VALUES};
-
-  currStrValue = "";
-  for(int i = 0; i < tmpValues.size(); ++i)
-  {
-    if(currStrValue != tmpValues[i])
-    {
-      currStrValue = tmpValues[i];
-      QPair<int, QString> newPair = QPair<int, QString>(i, currStrValue);
-      sRigVolumeValues.push_back(newPair);
-    }
-  }
-
-  /*
-  tmpValues.clear();
-  tmpValues = {MAIN_VOLUME_VALUES};
-
-  currStrValue = "";
-  for(int i = 0; i < tmpValues.size(); ++i)
-  {
-    if(currStrValue != tmpValues[i])
-    {
-      currStrValue = tmpValues[i];
-      QPair<int, QString> newPair = QPair<int, QString>(i, currStrValue);
-      sMainVolumeValues.push_back(newPair);
-    }
-  }
-  */
 }
 
 QVector<QString> LookUpTables::sNotes =

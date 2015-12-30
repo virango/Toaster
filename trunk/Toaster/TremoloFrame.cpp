@@ -9,6 +9,8 @@ TremoloFrame::TremoloFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getModulationCrossoverValues());
+  ui->rateDial->setLookUpTable(LookUpTables::getTremoloRateValues());
 }
 
 TremoloFrame::~TremoloFrame()
@@ -22,9 +24,9 @@ void TremoloFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
+    connect(mpStomp, SIGNAL(modulationRateReceived(int)), this, SLOT(onRate(int)));
     connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
     connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
 
@@ -43,9 +45,9 @@ void TremoloFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
+    disconnect(mpStomp, SIGNAL(modulationRateReceived(int)), this, SLOT(onRate(int)));
     disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
   }
@@ -77,10 +79,10 @@ void TremoloFrame::displayAmpName(const QString&  ampName)
   ui->lcdDisplay->setAmpName(ampName);
 }
 
-void TremoloFrame::on_rateDial_valueChanged(double value)
+void TremoloFrame::on_rateDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
-    mpStomp->applyModulationRate(value);
+    mpStomp->applyModulationRate((int)value);
 }
 
 void TremoloFrame::on_depthDial_valueChanged(double value)
@@ -89,7 +91,7 @@ void TremoloFrame::on_depthDial_valueChanged(double value)
     mpStomp->applyModulationDepth(value);
 }
 
-void TremoloFrame::on_crossoverDial_valueChanged(double value)
+void TremoloFrame::on_crossoverDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyModulationCrossover(value);
@@ -107,9 +109,9 @@ void TremoloFrame::on_duckingDial_valueChanged(double value)
     mpStomp->applyDucking(value);
 }
 
-void TremoloFrame::onRate(double , unsigned short value)
+void TremoloFrame::onRate(int value)
 {
-  ui->rateDial->setValue(value);
+  ui->rateDial->setValue(value*128);
   update();
 }
 
@@ -119,7 +121,7 @@ void TremoloFrame::onDepth(double value)
   update();
 }
 
-void TremoloFrame::onCrossover(double value)
+void TremoloFrame::onCrossover(int value)
 {
   ui->crossoverDial->setValue(value);
   update();

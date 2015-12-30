@@ -18,6 +18,8 @@ public:
   static QVector<QPair<int, QString>>* getRigVolumeValues() { return &sRigVolumeValues; }
   static QVector<QPair<int, QString>>* getMainVolumeValues() { return &sMainVolumeValues; }
   static QVector<QPair<int, QString>>* getMixValues() { return &sMixValues; }
+  static QVector<QPair<int, QString>>* getModulationCrossoverValues() { return &sModulationCrossoverValues; }
+  static QVector<QPair<int, QString>>* getTremoloRateValues() { return &sTremoloRateValues; }
 
 private:
   LookUpTables();
@@ -31,6 +33,8 @@ private:
   static QVector<QPair<int, QString>> sRigVolumeValues;
   static QVector<QPair<int, QString>> sMainVolumeValues;
   static QVector<QPair<int, QString>> sMixValues;
+  static QVector<QPair<int, QString>> sModulationCrossoverValues;
+  static QVector<QPair<int, QString>> sTremoloRateValues;
 };
 
 #endif // VOLUMETABLES_H

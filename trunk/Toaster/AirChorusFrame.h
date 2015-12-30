@@ -29,11 +29,11 @@ public:
 private slots:
   // ui => kpa
   void on_depthDial_valueChanged(double value);
-  void on_crossoverDial_valueChanged(double value);
+  void on_crossoverDial_valueChanged(int value);
   void on_volumeDial_valueChanged(double value);
   // kpa => ui
   void onDepth(double value);
-  void onCrossover(double value);
+  void onCrossover(int value);
   void onVolume(double value);
 private:
   Ui::AirChorusFrame *ui;
