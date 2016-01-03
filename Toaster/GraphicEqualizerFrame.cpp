@@ -11,6 +11,8 @@ GraphicEqualizerFrame::GraphicEqualizerFrame(QWidget *parent)
 {
   ui->setupUi(this);
   ui->pageDial->setValue(0);
+  ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 GraphicEqualizerFrame::~GraphicEqualizerFrame()
@@ -35,8 +37,8 @@ void GraphicEqualizerFrame::activate(QObject& stomp)
     connect(mpStomp, SIGNAL(graphicEQBand6Received(double)), this, SLOT(onBand6(double)));
     connect(mpStomp, SIGNAL(graphicEQBand7Received(double)), this, SLOT(onBand7(double)));
     connect(mpStomp, SIGNAL(graphicEQBand8Received(double)), this, SLOT(onBand8(double)));
-    connect(mpStomp, SIGNAL(lowCutReceived(double)), this, SLOT(onLowCut(double)));
-    connect(mpStomp, SIGNAL(highCutReceived(double)), this, SLOT(onHighCut(double)));
+    connect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
+    connect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onHighCut(int)));
 
     mpStomp->requestMix();
     mpStomp->requestDucking();
@@ -71,8 +73,8 @@ void GraphicEqualizerFrame::deactivate()
     disconnect(mpStomp, SIGNAL(graphicEQBand6Received(double)), this, SLOT(onBand6(double)));
     disconnect(mpStomp, SIGNAL(graphicEQBand7Received(double)), this, SLOT(onBand7(double)));
     disconnect(mpStomp, SIGNAL(graphicEQBand8Received(double)), this, SLOT(onBand8(double)));
-    disconnect(mpStomp, SIGNAL(lowCutReceived(double)), this, SLOT(onLowCut(double)));
-    disconnect(mpStomp, SIGNAL(highCutReceived(double)), this, SLOT(onhighCut(double)));
+    disconnect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
+    disconnect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onhighCut(int)));
   }
   mpStomp = nullptr;
 }
@@ -173,13 +175,13 @@ void GraphicEqualizerFrame::on_band8Dial_valueChanged(double value)
     mpStomp->applyGraphicEQBand8(value);
 }
 
-void GraphicEqualizerFrame::on_lowCutDial_valueChanged(double value)
+void GraphicEqualizerFrame::on_lowCutDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyLowCut(value);
 }
 
-void GraphicEqualizerFrame::on_highCutDial_valueChanged(double value)
+void GraphicEqualizerFrame::on_highCutDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyHighCut(value);
@@ -261,13 +263,13 @@ void GraphicEqualizerFrame::onBand8(double value)
   update();
 }
 
-void GraphicEqualizerFrame::onLowCut(double value)
+void GraphicEqualizerFrame::onLowCut(int value)
 {
   ui->lowCutDial->setValue(value);
   update();
 }
 
-void GraphicEqualizerFrame::onHighCut(double value)
+void GraphicEqualizerFrame::onHighCut(int value)
 {
   ui->highCutDial->setValue(value);
   update();

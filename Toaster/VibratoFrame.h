@@ -33,9 +33,9 @@ private slots:
   void on_crossoverDial_valueChanged(double value);
   void on_volumeDial_valueChanged(double value);
   // kpa => ui
-  void onRate(double value, unsigned short);
+  void onRate(double value);
   void onDepth(double value);
-  void onCrossover(double value);
+  void onCrossover(int value);
   void onVolume(double value);
 
 private:

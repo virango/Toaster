@@ -11,6 +11,14 @@ StudioEqualizerFrame::StudioEqualizerFrame(QWidget *parent)
 {
   ui->setupUi(this);
   ui->pageDial->setValue(0);
+  ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->lowFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->mid1FreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->mid2FreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->highFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->mid1QFactorDial->setLookUpTable(LookUpTables::getQFactorValues());
+  ui->mid2QFactorDial->setLookUpTable(LookUpTables::getQFactorValues());
 }
 
 StudioEqualizerFrame::~StudioEqualizerFrame()
@@ -26,18 +34,18 @@ void StudioEqualizerFrame::activate(QObject& stomp)
     connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
     connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
     connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(lowCutReceived(double)), this, SLOT(onLowCut(double)));
-    connect(mpStomp, SIGNAL(highCutReceived(double)), this, SLOT(onHighCut(double)));
+    connect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
+    connect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onHighCut(int)));
     connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowGain(double)));
-    connect(mpStomp, SIGNAL(parametricEQLowFrequencyReceived(double)), this, SLOT(onLowFreq(double)));
+    connect(mpStomp, SIGNAL(parametricEQLowFrequencyReceived(int)), this, SLOT(onLowFreq(int)));
     connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighGain(double)));
-    connect(mpStomp, SIGNAL(parametricEQHighFrequencyReceived(double)), this, SLOT(onHighFreq(double)));
+    connect(mpStomp, SIGNAL(parametricEQHighFrequencyReceived(int)), this, SLOT(onHighFreq(int)));
     connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMid1Gain(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMid1Freq(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakQFactorReceived(double)), this, SLOT(onMid1QFactor(double)));
+    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMid1Freq(int)));
+    connect(mpStomp, SIGNAL(parametricEQPeakQFactorReceived(int)), this, SLOT(onMid1QFactor(int)));
     connect(mpStomp, SIGNAL(parametricEQPeakGain2Received(double)), this, SLOT(onMid2Gain(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakFrequency2Received(double)), this, SLOT(onMid2Freq(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakQFactor2Received(double)), this, SLOT(onMid2QFactor(double)));
+    connect(mpStomp, SIGNAL(parametricEQPeakFrequency2Received(int)), this, SLOT(onMid2Freq(int)));
+    connect(mpStomp, SIGNAL(parametricEQPeakQFactor2Received(int)), this, SLOT(onMid2QFactor(int)));
 
     mpStomp->requestMix();
     mpStomp->requestDucking();
@@ -67,18 +75,18 @@ void StudioEqualizerFrame::deactivate()
     disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(lowCutReceived(double)), this, SLOT(onLowCut(double)));
-    disconnect(mpStomp, SIGNAL(highCutReceived(double)), this, SLOT(onhighCut(double)));
+    disconnect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
+    disconnect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onHighCut(int)));
     disconnect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowGain(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQLowFrequencyReceived(double)), this, SLOT(onLowFreq(double)));
+    disconnect(mpStomp, SIGNAL(parametricEQLowFrequencyReceived(int)), this, SLOT(onLowFreq(int)));
     disconnect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighGain(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQHighFrequencyReceived(double)), this, SLOT(onHighFreq(double)));
+    disconnect(mpStomp, SIGNAL(parametricEQHighFrequencyReceived(int)), this, SLOT(onHighFreq(int)));
     disconnect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMid1Gain(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMid1Freq(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakQFactorReceived(double)), this, SLOT(onMid1QFactor(double)));
+    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMid1Freq(int)));
+    disconnect(mpStomp, SIGNAL(parametricEQPeakQFactorReceived(int)), this, SLOT(onMid1QFactor(int)));
     disconnect(mpStomp, SIGNAL(parametricEQPeakGain2Received(double)), this, SLOT(onMid2Gain(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequency2Received(double)), this, SLOT(onMid2Freq(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakQFactor2Received(double)), this, SLOT(onMid2QFactor(double)));
+    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequency2Received(int)), this, SLOT(onMid2Freq(int)));
+    disconnect(mpStomp, SIGNAL(parametricEQPeakQFactor2Received(int)), this, SLOT(onMid2QFactor(int)));
   }
   mpStomp = nullptr;
 }
@@ -131,13 +139,13 @@ void StudioEqualizerFrame::on_volumeDial_valueChanged(double value)
     mpStomp->applyVolume(value);
 }
 
-void StudioEqualizerFrame::on_lowCutDial_valueChanged(double value)
+void StudioEqualizerFrame::on_lowCutDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyLowCut(value);
 }
 
-void StudioEqualizerFrame::on_highCutDial_valueChanged(double value)
+void StudioEqualizerFrame::on_highCutDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyHighCut(value);
@@ -149,7 +157,7 @@ void StudioEqualizerFrame::on_lowGainDial_valueChanged(double value)
     mpStomp->applyParametricEQLowGain(value);
 }
 
-void StudioEqualizerFrame::on_lowFreqDial_valueChanged(double value)
+void StudioEqualizerFrame::on_lowFreqDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyParametricEQLowFrequency(value);
@@ -161,7 +169,7 @@ void StudioEqualizerFrame::on_highGainDial_valueChanged(double value)
     mpStomp->applyParametricEQHighGain(value);
 }
 
-void StudioEqualizerFrame::on_highFreqDial_valueChanged(double value)
+void StudioEqualizerFrame::on_highFreqDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyParametricEQHighFrequency(value);
@@ -172,13 +180,13 @@ void StudioEqualizerFrame::on_mid1GainDial_valueChanged(double value)
     mpStomp->applyParametricEQPeakGain(value);
 }
 
-void StudioEqualizerFrame::on_mid1FreqDial_valueChanged(double value)
+void StudioEqualizerFrame::on_mid1FreqDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyParametricEQPeakFrequency(value);
 }
 
-void StudioEqualizerFrame::on_mid1QFactorDial_valueChanged(double value)
+void StudioEqualizerFrame::on_mid1QFactorDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyParametricEQPeakQFactor(value);
@@ -190,13 +198,13 @@ void StudioEqualizerFrame::on_mid2GainDial_valueChanged(double value)
     mpStomp->applyParametricEQPeakGain2(value);
 }
 
-void StudioEqualizerFrame::on_mid2FreqDial_valueChanged(double value)
+void StudioEqualizerFrame::on_mid2FreqDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyParametricEQPeakFrequency2(value);
 }
 
-void StudioEqualizerFrame::on_mid2QFactorDial_valueChanged(double value)
+void StudioEqualizerFrame::on_mid2QFactorDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyParametricEQPeakQFactor2(value);
@@ -220,13 +228,13 @@ void StudioEqualizerFrame::onVolume(double value)
   update();
 }
 
-void StudioEqualizerFrame::onLowCut(double value)
+void StudioEqualizerFrame::onLowCut(int value)
 {
   ui->lowCutDial->setValue(value);
   update();
 }
 
-void StudioEqualizerFrame::onHighCut(double value)
+void StudioEqualizerFrame::onHighCut(int value)
 {
   ui->highCutDial->setValue(value);
   update();
@@ -238,7 +246,7 @@ void StudioEqualizerFrame::onLowGain(double value)
   update();
 }
 
-void StudioEqualizerFrame::onLowFreq(double value)
+void StudioEqualizerFrame::onLowFreq(int value)
 {
   ui->lowFreqDial->setValue(value);
   update();
@@ -250,7 +258,7 @@ void StudioEqualizerFrame::onHighGain(double value)
   update();
 }
 
-void StudioEqualizerFrame::onHighFreq(double value)
+void StudioEqualizerFrame::onHighFreq(int value)
 {
   ui->highFreqDial->setValue(value);
   update();
@@ -262,13 +270,13 @@ void StudioEqualizerFrame::onMid1Gain(double value)
   update();
 }
 
-void StudioEqualizerFrame::onMid1Freq(double value)
+void StudioEqualizerFrame::onMid1Freq(int value)
 {
   ui->mid1FreqDial->setValue(value);
   update();
 }
 
-void StudioEqualizerFrame::onMid1QFactor(double value)
+void StudioEqualizerFrame::onMid1QFactor(int value)
 {
   ui->mid1QFactorDial->setValue(value);
   update();
@@ -280,13 +288,13 @@ void StudioEqualizerFrame::onMid2Gain(double value)
   update();
 }
 
-void StudioEqualizerFrame::onMid2Freq(double value)
+void StudioEqualizerFrame::onMid2Freq(int value)
 {
   ui->mid2FreqDial->setValue(value);
   update();
 }
 
-void StudioEqualizerFrame::onMid2QFactor(double value)
+void StudioEqualizerFrame::onMid2QFactor(int value)
 {
   ui->mid2QFactorDial->setValue(value);
   update();

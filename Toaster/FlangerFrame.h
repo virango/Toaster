@@ -28,7 +28,7 @@ public:
   virtual void displayAmpName(const QString&  ampName);
 private slots:
   // ui => kpa
-  void on_rateDial_valueChanged(double value);
+  void on_rateDial_valueChanged(int value);
   void on_depthDial_valueChanged(double value);
   void on_manualDial_valueChanged(double value);
   void on_feedbackDial_valueChanged(double value);
@@ -36,7 +36,7 @@ private slots:
   void on_duckingDial_valueChanged(double value);
   void on_volumeDial_valueChanged(double value);
   // kpa => ui
-  void onRate(double value, unsigned short rawVal);
+  void onRate(int value);
   void onDepth(double value);
   void onManual(double value);
   void onFeedback(double value);

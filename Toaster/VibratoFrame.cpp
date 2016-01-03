@@ -9,6 +9,7 @@ VibratoFrame::VibratoFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 VibratoFrame::~VibratoFrame()
@@ -22,9 +23,9 @@ void VibratoFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
+    connect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
     connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
     connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
 
     mpStomp->requestModulationRate();
@@ -43,7 +44,7 @@ void VibratoFrame::deactivate()
   {
     disconnect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
     disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
   }
   mpStomp = nullptr;
@@ -98,7 +99,7 @@ void VibratoFrame::on_volumeDial_valueChanged(double value)
     mpStomp->applyVolume(value);
 }
 
-void VibratoFrame::onRate(double value, unsigned short)
+void VibratoFrame::onRate(double value)
 {
   ui->rateDial->setValue(value);
   update();
@@ -110,7 +111,7 @@ void VibratoFrame::onDepth(double value)
   update();
 }
 
-void VibratoFrame::onCrossover(double value)
+void VibratoFrame::onCrossover(int value)
 {
   ui->crossoverDial->setValue(value);
   update();

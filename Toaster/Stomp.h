@@ -82,7 +82,7 @@ signals:
   void typeReceived(::FXType type);
   void mixReceived(double mix);
   void volumeReceived(double volume);
-  void stereoReceived(unsigned short rawVal);
+  void stereoReceived(double stereo);
   void wahManualReceived(double wahManual);
   void wahPeakReceived(double wahPeak);
   void wahRangeReceived(double wahRange);
@@ -117,15 +117,15 @@ signals:
   void graphicEQBand7Received(double graphicEQBand7);
   void graphicEQBand8Received(double graphicEQBand8);
   void parametricEQLowGainReceived(double lowGain);
-  void parametricEQLowFrequencyReceived(double lowFreq);
+  void parametricEQLowFrequencyReceived(int lowFreq);
   void parametricEQHighGainReceived(double highGain);
-  void parametricEQHighFrequencyReceived(double highFreq);
+  void parametricEQHighFrequencyReceived(int highFreq);
   void parametricEQPeakGainReceived(double peakGain);
-  void parametricEQPeakFrequencyReceived(double peakFreq);
-  void parametricEQPeakQFactorReceived(double peakQFactor);
+  void parametricEQPeakFrequencyReceived(int peakFreq);
+  void parametricEQPeakQFactorReceived(int peakQFactor);
   void parametricEQPeakGain2Received(double peakGain);
-  void parametricEQPeakFrequency2Received(double peakFreq);
-  void parametricEQPeakQFactor2Received(double peakQFactor);
+  void parametricEQPeakFrequency2Received(int peakFreq);
+  void parametricEQPeakQFactor2Received(int peakQFactor);
   void wahPeakRangeReceived(double wahPeakRange);
   void duckingReceived(double ducking);
   void intensityReceived(double mix);
@@ -138,8 +138,8 @@ signals:
   void keyReceived(unsigned short rawVal);
   void formantShiftOnOffReceived(bool onOff);
   void formantShiftReceived(double shift);
-  void lowCutReceived(double lowCut);
-  void highCutReceived(double highCut);
+  void lowCutReceived(int lowCut);
+  void highCutReceived(int highCut);
   
 public slots:
   void applyOnOff(bool onOff);
@@ -181,15 +181,15 @@ public slots:
   void applyGraphicEQBand7(double graphicEQBand7);
   void applyGraphicEQBand8(double graphicEQBand8);
   void applyParametricEQLowGain(double parametricEQLowGain);
-  void applyParametricEQLowFrequency(double parametricEQLowFrequency);
+  void applyParametricEQLowFrequency(int parametricEQLowFrequency);
   void applyParametricEQHighGain(double parametricEQHighGain);
-  void applyParametricEQHighFrequency(double parametricEQHighFrequency);
+  void applyParametricEQHighFrequency(int parametricEQHighFrequency);
   void applyParametricEQPeakGain(double parametricEQPeakGain);
-  void applyParametricEQPeakFrequency(double parametricEQPeakFrequency);
-  void applyParametricEQPeakQFactor(double parametricEQPeakQFactor);
+  void applyParametricEQPeakFrequency(int parametricEQPeakFrequency);
+  void applyParametricEQPeakQFactor(int parametricEQPeakQFactor);
   void applyParametricEQPeakGain2(double parametricEQPeakGain2);
-  void applyParametricEQPeakFrequency2(double parametricEQPeakFrequency2);
-  void applyParametricEQPeakQFactor2(double parametricEQPeakQFactor2);
+  void applyParametricEQPeakFrequency2(int parametricEQPeakFrequency2);
+  void applyParametricEQPeakQFactor2(int parametricEQPeakQFactor2);
   void applyWahPeakRange(double wahPeakRange);
   void applyDucking(double ducking);
   void applyIntensity(double mix);
@@ -202,8 +202,8 @@ public slots:
   void applyKey(double key);
   void applyFormantShiftOnOff(bool onOff);
   void applyFormantShift(double shift);
-  void applyLowCut(double lowCut);
-  void applyHighCut(double highCut);
+  void applyLowCut(int lowCut);
+  void applyHighCut(int highCut);
   
 protected:
   // StompMidi

@@ -33,7 +33,7 @@
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
-     <kerning>true</kerning>
+     <kerning>false</kerning>
     </font>
    </property>
    <property name="cursor">
@@ -52,7 +52,8 @@
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
+border-radius: 3px;
+padding-bottom: 2px;</string>
    </property>
    <property name="text">
     <string>DLY</string>
@@ -88,7 +89,7 @@ border-radius: 3px;</string>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
-     <kerning>true</kerning>
+     <kerning>false</kerning>
     </font>
    </property>
    <property name="cursor">
@@ -107,7 +108,8 @@ border-radius: 3px;</string>
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
+border-radius: 3px;
+padding-bottom: 2px;</string>
    </property>
    <property name="text">
     <string>REV</string>
@@ -143,7 +145,7 @@ border-radius: 3px;</string>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
-     <kerning>true</kerning>
+     <kerning>false</kerning>
     </font>
    </property>
    <property name="cursor">
@@ -162,7 +164,8 @@ border-radius: 3px;</string>
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
+border-radius: 3px;
+padding-bottom: 2px;</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -185,6 +188,11 @@ border-radius: 3px;</string>
      <width>152</width>
      <height>1</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <kerning>false</kerning>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QFrame#line4
@@ -218,7 +226,7 @@ border-radius: 3px;</string>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
-     <kerning>true</kerning>
+     <kerning>false</kerning>
     </font>
    </property>
    <property name="cursor">
@@ -237,7 +245,8 @@ border-radius: 3px;</string>
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
+border-radius: 3px;
+padding-bottom: 2px;</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -261,6 +270,11 @@ border-radius: 3px;</string>
      <height>15</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <kerning>false</kerning>
+    </font>
+   </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
    </property>
@@ -278,8 +292,9 @@ border-radius: 3px;</string>
     </property>
     <property name="font">
      <font>
-      <family>Ubuntu</family> 
+      <family>Ubuntu</family>
       <pointsize>7</pointsize>
+      <kerning>false</kerning>
      </font>
     </property>
     <property name="styleSheet">
@@ -288,6 +303,7 @@ border-radius: 3px;</string>
 background-color: transparent;
 border-color: rgb(0, 0, 0);
 color: rgb(0, 0, 0);
+padding-bottom: 2px;
 }</string>
     </property>
     <property name="frame">
@@ -319,7 +335,7 @@ color: rgb(0, 0, 0);
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
-     <kerning>true</kerning>
+     <kerning>false</kerning>
     </font>
    </property>
    <property name="cursor">
@@ -338,7 +354,8 @@ color: rgb(0, 0, 0);
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
+border-radius: 3px;
+padding-bottom: 2px;</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -361,6 +378,11 @@ border-radius: 3px;</string>
      <width>261</width>
      <height>1</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <kerning>false</kerning>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QFrame#line2
@@ -394,7 +416,7 @@ border-radius: 3px;</string>
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
-     <kerning>true</kerning>
+     <kerning>false</kerning>
     </font>
    </property>
    <property name="cursor">
@@ -413,7 +435,8 @@ border-radius: 3px;</string>
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
+border-radius: 3px;
+padding-bottom: 2px;</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -437,6 +460,11 @@ border-radius: 3px;</string>
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <kerning>false</kerning>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(50, 50, 50);
 border-color: rgb(0, 0, 0);</string>
@@ -452,9 +480,11 @@ border-color: rgb(0, 0, 0);</string>
     </property>
     <property name="font">
      <font>
+      <family>Ubuntu</family>
       <pointsize>7</pointsize>
       <weight>50</weight>
       <bold>false</bold>
+      <kerning>false</kerning>
      </font>
     </property>
     <property name="focusPolicy">
@@ -491,9 +521,11 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="font">
      <font>
+      <family>Ubuntu</family>
       <pointsize>8</pointsize>
       <weight>75</weight>
       <bold>true</bold>
+      <kerning>false</kerning>
      </font>
     </property>
     <property name="focusPolicy">
@@ -531,9 +563,11 @@ border-color: rgb(0, 0, 0);</string>
     </property>
     <property name="font">
      <font>
+      <family>Ubuntu</family>
       <pointsize>7</pointsize>
       <weight>50</weight>
       <bold>false</bold>
+      <kerning>false</kerning>
      </font>
     </property>
     <property name="focusPolicy">
@@ -569,6 +603,11 @@ color: rgb(255, 255, 255);</string>
      <height>1</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <kerning>false</kerning>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">QFrame#line5
 {
@@ -591,6 +630,11 @@ color: rgb(255, 255, 255);</string>
      <width>261</width>
      <height>1</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <kerning>false</kerning>
+    </font>
    </property>
    <property name="styleSheet">
     <string notr="true">QFrame#line1
@@ -633,7 +677,7 @@ color: rgb(255, 255, 255);</string>
      <bold>false</bold>
      <underline>false</underline>
      <strikeout>false</strikeout>
-     <kerning>true</kerning>
+     <kerning>false</kerning>
     </font>
    </property>
    <property name="cursor">
@@ -652,7 +696,8 @@ color: rgb(255, 255, 255);</string>
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
+border-radius: 3px;
+padding-bottom: 2px;</string>
    </property>
    <property name="text">
     <string>CHROM</string>
@@ -682,6 +727,11 @@ border-radius: 3px;</string>
      <height>30</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <kerning>false</kerning>
+    </font>
+   </property>
    <property name="autoFillBackground">
     <bool>false</bool>
    </property>
@@ -689,7 +739,7 @@ border-radius: 3px;</string>
     <string notr="true">QStackedWidget {background-color: transparent;}</string>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="valPage11">
     <property name="styleSheet">
@@ -706,9 +756,10 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -738,9 +789,10 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family> 
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -764,9 +816,10 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -790,9 +843,10 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -816,8 +870,9 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -838,8 +893,9 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -860,8 +916,9 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -882,8 +939,9 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -906,7 +964,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
       </font>
      </property>
@@ -928,7 +986,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
       </font>
      </property>
@@ -950,7 +1008,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -976,7 +1034,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1008,7 +1066,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
       </font>
      </property>
@@ -1030,7 +1088,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1056,7 +1114,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1082,7 +1140,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
       </font>
      </property>
@@ -1108,6 +1166,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1130,6 +1189,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1152,6 +1212,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1175,6 +1236,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1207,6 +1269,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1233,6 +1296,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1258,6 +1322,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1281,6 +1346,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1358,6 +1424,11 @@ QProgressBar#progressBar2::chunk
      <height>30</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <kerning>false</kerning>
+    </font>
+   </property>
    <property name="styleSheet">
     <string notr="true">QFrame#line3
 {
@@ -1390,7 +1461,7 @@ QProgressBar#progressBar2::chunk
      <pointsize>7</pointsize>
      <weight>50</weight>
      <bold>false</bold>
-     <kerning>true</kerning>
+     <kerning>false</kerning>
     </font>
    </property>
    <property name="cursor">
@@ -1409,7 +1480,8 @@ QProgressBar#progressBar2::chunk
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
+border-radius: 3px;
+padding-bottom: 2px;</string>
    </property>
    <property name="text">
     <string>CHROM</string>
@@ -1439,8 +1511,13 @@ border-radius: 3px;</string>
      <height>30</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <kerning>false</kerning>
+    </font>
+   </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="valPage21">
     <widget class="QLabel" name="val05Title">
@@ -1454,7 +1531,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1486,7 +1563,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
       </font>
      </property>
@@ -1508,7 +1585,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
       </font>
      </property>
@@ -1530,7 +1607,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
       </font>
      </property>
@@ -1552,7 +1629,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1584,7 +1661,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1616,7 +1693,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -1648,7 +1725,7 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
       </font>
      </property>
@@ -1674,6 +1751,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1697,6 +1775,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1728,6 +1807,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1750,6 +1830,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1772,6 +1853,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1795,6 +1877,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1827,6 +1910,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1859,6 +1943,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1890,8 +1975,9 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1912,9 +1998,10 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1944,8 +2031,9 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1966,9 +2054,10 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1998,9 +2087,10 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -2030,9 +2120,10 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -2062,8 +2153,9 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -2084,8 +2176,9 @@ border-radius: 3px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Ubuntu</family>    
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -2106,6 +2199,11 @@ border-radius: 3px;</string>
      <height>29</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <kerning>false</kerning>
+    </font>
+   </property>
    <property name="currentIndex">
     <number>0</number>
    </property>
@@ -2119,6 +2217,11 @@ border-radius: 3px;</string>
        <width>167</width>
        <height>1</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">QFrame#middleHLine
@@ -2149,6 +2252,11 @@ border-radius: 3px;</string>
        <height>12</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 0);</string>
      </property>
@@ -2161,6 +2269,11 @@ border-radius: 3px;</string>
        <width>15</width>
        <height>12</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 0);</string>
@@ -2175,6 +2288,11 @@ border-radius: 3px;</string>
        <height>12</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 0);</string>
      </property>
@@ -2188,6 +2306,11 @@ border-radius: 3px;</string>
        <height>12</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 0);</string>
      </property>
@@ -2200,6 +2323,11 @@ border-radius: 3px;</string>
        <width>1</width>
        <height>27</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">QFrame#middleVLine
@@ -2224,6 +2352,11 @@ border-radius: 3px;</string>
        <height>12</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 0);</string>
      </property>
@@ -2236,6 +2369,11 @@ border-radius: 3px;</string>
        <width>15</width>
        <height>12</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 0);</string>
@@ -2250,6 +2388,11 @@ border-radius: 3px;</string>
        <height>12</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 0);</string>
      </property>
@@ -2263,6 +2406,11 @@ border-radius: 3px;</string>
        <height>12</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 0);</string>
      </property>
@@ -2275,6 +2423,11 @@ border-radius: 3px;</string>
        <width>1</width>
        <height>27</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">QFrame#startVLine
@@ -2298,6 +2451,11 @@ border-radius: 3px;</string>
        <width>1</width>
        <height>27</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">QFrame#endVLine

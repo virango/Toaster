@@ -9,7 +9,7 @@ AirChorusFrame::AirChorusFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getModulationCrossoverValues());
+  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 AirChorusFrame::~AirChorusFrame()

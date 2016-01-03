@@ -9,6 +9,7 @@ MetalDSFrame::MetalDSFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
+  ui->midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 MetalDSFrame::~MetalDSFrame()
@@ -26,7 +27,7 @@ void MetalDSFrame::activate(QObject& stomp)
     connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
     connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLow(double)));
     connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddle(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMidFreq(double)));
+    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMidFreq(int)));
     connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHigh(double)));
 
     mpStomp->requestVolume();
@@ -49,7 +50,7 @@ void MetalDSFrame::deactivate()
     disconnect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
     disconnect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowDial(double)));
     disconnect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddleDial(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMidFreqDial(double)));
+    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMidFreqDial(int)));
     disconnect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighDial(double)));
   }
   mpStomp = nullptr;
@@ -104,7 +105,7 @@ void MetalDSFrame::on_middleDial_valueChanged(double value)
     mpStomp->applyParametricEQPeakGain(value);
 }
 
-void MetalDSFrame::on_midFreqDial_valueChanged(double value)
+void MetalDSFrame::on_midFreqDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyParametricEQPeakFrequency(value);
@@ -140,7 +141,7 @@ void MetalDSFrame::onMiddle(double value)
   update();
 }
 
-void MetalDSFrame::onMidFreq(double value)
+void MetalDSFrame::onMidFreq(int value)
 {
   ui->midFreqDial->setValue(value);
   update();

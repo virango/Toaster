@@ -35,7 +35,7 @@ private slots:
   void on_volumeDial_valueChanged(double value);
   void on_duckingDial_valueChanged(double value);
   // kpa => ui
-  void onRate(double value, unsigned short);
+  void onRate(double value);
   void onDepth(double value);
   void onCrossover(int value);
   void onMix(double value);

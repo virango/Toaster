@@ -171,6 +171,9 @@
    <property name="stepWidth">
     <double>1.000000000000000</double>
    </property>
+   <property name="unit">
+    <string>%</string>
+   </property>
    <property name="isActive">
     <bool>true</bool>
    </property>
@@ -355,5 +358,38 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pedalRangeDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue1(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>105</x>
+     <y>268</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>108</x>
+     <y>166</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>volumeDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue4(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>457</x>
+     <y>263</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

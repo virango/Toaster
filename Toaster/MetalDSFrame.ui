@@ -156,33 +156,8 @@
    <property name="stepWidth">
     <double>0.100000000000000</double>
    </property>
-   <property name="isActive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QToasterDial" name="midFreqDial">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
-     <y>0</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterDial::Small</enum>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::None</enum>
-   </property>
-   <property name="minValue">
-    <double>20.600000000000001</double>
-   </property>
-   <property name="maxValue">
-    <double>33488.099999999998545</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
+   <property name="unit">
+    <string>dB</string>
    </property>
    <property name="isActive">
     <bool>true</bool>
@@ -211,6 +186,9 @@
    </property>
    <property name="stepWidth">
     <double>0.100000000000000</double>
+   </property>
+   <property name="unit">
+    <string>dB</string>
    </property>
    <property name="isActive">
     <bool>true</bool>
@@ -329,6 +307,9 @@
    <property name="stepWidth">
     <double>0.100000000000000</double>
    </property>
+   <property name="unit">
+    <string>dB</string>
+   </property>
    <property name="isActive">
     <bool>true</bool>
    </property>
@@ -376,12 +357,36 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QToasterLookUpTableDial" name="midFreqDial">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>0</y>
+     <width>70</width>
+     <height>70</height>
+    </rect>
+   </property>
+   <property name="knobSize">
+    <enum>QToasterLookUpTableDial::Small</enum>
+   </property>
+   <property name="ledRingType" stdset="0">
+    <enum>QToasterLookUpTableDial::None</enum>
+   </property>
+   <property name="unit">
+    <string>Hz</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>QToasterDial</class>
    <extends>QWidget</extends>
    <header>qtoasterdial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QToasterLookUpTableDial</class>
+   <extends>QWidget</extends>
+   <header>QToasterLookUpTableDial.h</header>
   </customwidget>
   <customwidget>
    <class>QToasterStompEditLCD</class>
@@ -457,22 +462,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>midFreqDial</sender>
-   <signal>valueChanged(QString)</signal>
-   <receiver>lcdDisplay</receiver>
-   <slot>setValue7(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>327</x>
-     <y>26</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>329</x>
-     <y>98</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>highDial</sender>
    <signal>valueChanged(QString)</signal>
    <receiver>lcdDisplay</receiver>
@@ -485,6 +474,22 @@
     <hint type="destinationlabel">
      <x>450</x>
      <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>midFreqDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue7(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>328</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>332</x>
+     <y>101</y>
     </hint>
    </hints>
   </connection>

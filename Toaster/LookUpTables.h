@@ -18,8 +18,10 @@ public:
   static QVector<QPair<int, QString>>* getRigVolumeValues() { return &sRigVolumeValues; }
   static QVector<QPair<int, QString>>* getMainVolumeValues() { return &sMainVolumeValues; }
   static QVector<QPair<int, QString>>* getMixValues() { return &sMixValues; }
-  static QVector<QPair<int, QString>>* getModulationCrossoverValues() { return &sModulationCrossoverValues; }
+  static QVector<QPair<int, QString>>* getFrequencyValues() { return &sFrequencyValues; }
   static QVector<QPair<int, QString>>* getTremoloRateValues() { return &sTremoloRateValues; }
+  static QVector<QPair<int, QString>>* getQFactorValues() { return &sQFactorValues; }
+  static QVector<QPair<int, QString>>* getFlangerRateValues() { return &sFlangerRateValues; }
 
 private:
   LookUpTables();
@@ -33,8 +35,10 @@ private:
   static QVector<QPair<int, QString>> sRigVolumeValues;
   static QVector<QPair<int, QString>> sMainVolumeValues;
   static QVector<QPair<int, QString>> sMixValues;
-  static QVector<QPair<int, QString>> sModulationCrossoverValues;
+  static QVector<QPair<int, QString>> sFrequencyValues;
   static QVector<QPair<int, QString>> sTremoloRateValues;
+  static QVector<QPair<int, QString>> sQFactorValues;
+  static QVector<QPair<int, QString>> sFlangerRateValues;
 };
 
 #endif // VOLUMETABLES_H

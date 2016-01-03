@@ -42,8 +42,8 @@ private slots:
   void on_band6Dial_valueChanged(double value);
   void on_band7Dial_valueChanged(double value);
   void on_band8Dial_valueChanged(double value);
-  void on_lowCutDial_valueChanged(double value);
-  void on_highCutDial_valueChanged(double value);
+  void on_lowCutDial_valueChanged(int value);
+  void on_highCutDial_valueChanged(int value);
   // kpa => ui
   void onMix(double value);
   void onDucking(double value);
@@ -56,8 +56,8 @@ private slots:
   void onBand6(double value);
   void onBand7(double value);
   void onBand8(double value);
-  void onLowCut(double value);
-  void onHighCut(double value);
+  void onLowCut(int value);
+  void onHighCut(int value);
 
 private:
   Ui::GraphicEqualizerFrame *ui;
