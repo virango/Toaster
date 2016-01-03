@@ -217,7 +217,8 @@ HEADERS  += ToasterWindow.h \
     QFactorValues.h \
     FlangerRateValues.h \
     FlangerOnewayFrame.h \
-    PhaserOnewayFrame.h
+    PhaserOnewayFrame.h \
+    VoiceIntervalValues.h
 
 FORMS    += \
     ToasterWindow.ui \

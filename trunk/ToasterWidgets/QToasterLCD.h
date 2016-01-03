@@ -5,8 +5,13 @@
 #include "ToasterWidgetsLib.h"
 #include "Commons.h"
 
+#ifdef _WIN32
 #define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 2px;"
 #define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 2px;"
+#else
+#define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;"
+#define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;"
+#endif
 
 #define COLOR_STANDARD "color: rgb(167, 179, 175)"
 #define COLOR_ORANGE   "color: rgb(207, 137, 90)"

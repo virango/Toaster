@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>26</number>
+   <number>0</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
@@ -50,6 +50,7 @@
   <widget class="PedalPitchFrame" name="pedalPitch"/>
   <widget class="PedalVinylStopFrame" name="pedalVinylStop"/>
   <widget class="ChromaticPitchFrame" name="chromaticPitch"/>
+  <widget class="HarmonicPitchFrame" name="harmonicPitch"/>
   <widget class="AnalogOctaverFrame" name="analogOctaver"/>
   <widget class="LoopFrame" name="loop"/>
   <widget class="LoopDistortionFrame" name="loopDistortion"/>
@@ -296,6 +297,12 @@
    <class>PhaserOnewayFrame</class>
    <extends>QWidget</extends>
    <header>PhaserOnewayFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HarmonicPitchFrame</class>
+   <extends>QWidget</extends>
+   <header>HarmonicPitchFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

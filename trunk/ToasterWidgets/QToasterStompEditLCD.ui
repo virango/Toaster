@@ -52,8 +52,7 @@
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;
-padding-bottom: 2px;</string>
+border-radius: 3px;</string>
    </property>
    <property name="text">
     <string>DLY</string>
@@ -108,8 +107,7 @@ padding-bottom: 2px;</string>
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;
-padding-bottom: 2px;</string>
+border-radius: 3px;</string>
    </property>
    <property name="text">
     <string>REV</string>
@@ -164,8 +162,7 @@ padding-bottom: 2px;</string>
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;
-padding-bottom: 2px;</string>
+border-radius: 3px;</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -245,8 +242,7 @@ padding-bottom: 2px;</string>
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;
-padding-bottom: 2px;</string>
+border-radius: 3px;</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -303,7 +299,6 @@ padding-bottom: 2px;</string>
 background-color: transparent;
 border-color: rgb(0, 0, 0);
 color: rgb(0, 0, 0);
-padding-bottom: 2px;
 }</string>
     </property>
     <property name="frame">
@@ -354,8 +349,7 @@ padding-bottom: 2px;
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;
-padding-bottom: 2px;</string>
+border-radius: 3px;</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -435,8 +429,7 @@ padding-bottom: 2px;</string>
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;
-padding-bottom: 2px;</string>
+border-radius: 3px;</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -696,8 +689,7 @@ color: rgb(255, 255, 255);</string>
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;
-padding-bottom: 2px;</string>
+border-radius: 3px;</string>
    </property>
    <property name="text">
     <string>CHROM</string>
@@ -1480,8 +1472,7 @@ QProgressBar#progressBar2::chunk
     <string notr="true">background-color: rgb(50,50,50);
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
-border-radius: 3px;
-padding-bottom: 2px;</string>
+border-radius: 3px;</string>
    </property>
    <property name="text">
     <string>CHROM</string>

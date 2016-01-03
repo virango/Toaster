@@ -5,6 +5,7 @@
 DebugMidi DebugMidi::mSingleton;
 
 DebugMidi::DebugMidi()
+  :mPrintValues(false)
 {
   SysExMsgDispatcher::get().addConsumer(this);
 }

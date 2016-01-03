@@ -305,9 +305,19 @@ void Stomp::applyPureTuning(bool onOff)
   midiApplyPureTuning(bool2Raw(onOff));
 }
 
-void Stomp::applyKey(double key)
+void Stomp::applyVoice1Interval(int voice1Interval)
 {
-  //midiApplyKey(phys2Raw(key, , ));
+  midiApplyVoice1Interval((unsigned short)voice1Interval);
+}
+
+void Stomp::applyVoice2Interval(int voice2Interval)
+{
+  midiApplyVoice2Interval((unsigned short)voice2Interval);
+}
+
+void Stomp::applyKey(int key)
+{
+  midiApplyKey((unsigned short) key);
 }
 
 void Stomp::applyFormantShiftOnOff(bool onOff)
@@ -611,9 +621,19 @@ void Stomp::midiPureTuningReceived(unsigned short rawVal)
   emit pureTuningReceived(raw2Bool(rawVal));
 }
 
+void Stomp::midiVoice1IntervalReceived(unsigned short rawVal)
+{
+  emit voice1IntervalReceived((int)rawVal);
+}
+
+void Stomp::midiVoice2IntervalReceived(unsigned short rawVal)
+{
+  emit voice2IntervalReceived((int)rawVal);
+}
+
 void Stomp::midiKeyReceived(unsigned short rawVal)
 {
-  //emit Received(raw2Phys(rawVal, , ));
+  emit keyReceived((int)rawVal);
 }
 
 void Stomp::midiFormantShiftOnOffReceived(unsigned short rawVal)
