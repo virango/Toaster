@@ -3,8 +3,10 @@
 #include "RigVolumeValues.h"
 #include "MainVolumeValues.h"
 #include "MixValues.h"
-#include "ModulationCrossoverValues.h"
+#include "FrequencyValues.h"
 #include "TremoloRateValues.h"
+#include "QFactorValues.h"
+#include "FlangerRateValues.h"
 
 QMap<StompInstance, QString> LookUpTables::sStompInstanceNames = {{StompA, "Stomp A"},
                                                                   {StompB, "Stomp B"},
@@ -84,8 +86,10 @@ QVector<QPair<int, QString>> LookUpTables::sRotaryDistanceValues = {ROTARY_DISTA
 QVector<QPair<int, QString>> LookUpTables::sRigVolumeValues = {RIG_VOLUME_VALUES};
 QVector<QPair<int, QString>> LookUpTables::sMainVolumeValues = {MAIN_VOLUME_VALUES};
 QVector<QPair<int, QString>> LookUpTables::sMixValues = {MIX_VALUES};
-QVector<QPair<int, QString>> LookUpTables::sModulationCrossoverValues = {MODULATION_CROSSOVER_VALUES};
+QVector<QPair<int, QString>> LookUpTables::sFrequencyValues = {FREQUENCY_VALUES};
 QVector<QPair<int, QString>> LookUpTables::sTremoloRateValues = {TREMOLO_RATE_VALUES};
+QVector<QPair<int, QString>> LookUpTables::sQFactorValues = {QFACTOR_VALUES};
+QVector<QPair<int, QString>> LookUpTables::sFlangerRateValues = {FLANGER_RATE_VALUES};
 
 LookUpTables LookUpTables::singleton;
 

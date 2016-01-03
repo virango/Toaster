@@ -32,20 +32,20 @@ private slots:
   // ui => kpa
   void on_lowDial_valueChanged(double value);
   void on_middleDial_valueChanged(double value);
-  void on_midFreqDial_valueChanged(double value);
+  void on_midFreqDial_valueChanged(int value);
   void on_highDial_valueChanged(double value);
-  void on_lowCutDial_valueChanged(double value);
-  void on_highCutDial_valueChanged(double value);
+  void on_lowCutDial_valueChanged(int value);
+  void on_highCutDial_valueChanged(int value);
   void on_mixDial_valueChanged(double value);
   void on_duckingDial_valueChanged(double value);
   void on_volumeDial_valueChanged(double value);
   // kpa => ui
   void onLowDial(double value);
   void onMiddleDial(double value);
-  void onMidFreqDial(double value);
+  void onMidFreqDial(int value);
   void onHighDial(double value);
-  void onLowCut(double value);
-  void onHighCut(double value);
+  void onLowCut(int value);
+  void onHighCut(int value);
   void onMix(double value);
   void onDucking(double value);
   void onVolume(double value);

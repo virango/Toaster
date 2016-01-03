@@ -592,6 +592,84 @@
     <enum>QToasterLookUpTableDial::None</enum>
    </property>
   </widget>
+  <widget class="QMultiColorLed" name="stompALed">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>30</y>
+     <width>22</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="color">
+    <enum>QMultiColorLed::Off</enum>
+   </property>
+  </widget>
+  <widget class="QMultiColorLed" name="stompBLed">
+   <property name="geometry">
+    <rect>
+     <x>207</x>
+     <y>20</y>
+     <width>22</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="color">
+    <enum>QMultiColorLed::Off</enum>
+   </property>
+  </widget>
+  <widget class="QMultiColorLed" name="stompCLed">
+   <property name="geometry">
+    <rect>
+     <x>253</x>
+     <y>20</y>
+     <width>22</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="color">
+    <enum>QMultiColorLed::Off</enum>
+   </property>
+  </widget>
+  <widget class="QMultiColorLed" name="stompDLed">
+   <property name="geometry">
+    <rect>
+     <x>299</x>
+     <y>30</y>
+     <width>22</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="color">
+    <enum>QMultiColorLed::Off</enum>
+   </property>
+  </widget>
+  <widget class="QMultiColorLed" name="stompModLed">
+   <property name="geometry">
+    <rect>
+     <x>624</x>
+     <y>20</y>
+     <width>22</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="color">
+    <enum>QMultiColorLed::Off</enum>
+   </property>
+  </widget>
+  <widget class="QMultiColorLed" name="stompXLed">
+   <property name="geometry">
+    <rect>
+     <x>578</x>
+     <y>30</y>
+     <width>22</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="color">
+    <enum>QMultiColorLed::Off</enum>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -603,6 +681,11 @@
    <class>QToasterLookUpTableDial</class>
    <extends>QWidget</extends>
    <header>QToasterLookUpTableDial.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QMultiColorLed</class>
+   <extends>QWidget</extends>
+   <header>qmulticolorled.h</header>
   </customwidget>
   <customwidget>
    <class>QToasterButton</class>

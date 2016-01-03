@@ -234,12 +234,16 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
         break;
       case Phaser:
       case PhaserVibe:
-      case PhaserOneway:
         mpActivePage = ui->phaser;
         break;
+      case PhaserOneway:
+        mpActivePage = ui->phaserOneway;
+        break;
       case Flanger:
-      case FlangerOneway:
         mpActivePage = ui->flanger;
+        break;
+      case FlangerOneway:
+        mpActivePage = ui->flangerOneway;
         break;
       case Space:
         mpActivePage = ui->space;

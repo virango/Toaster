@@ -890,6 +890,7 @@ border-color: rgb(0, 0, 0);</string>
      </property>
      <property name="font">
       <font>
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
        <weight>75</weight>
        <bold>true</bold>
@@ -920,9 +921,10 @@ color: rgb(255, 255, 255);</string>
      </property>
      <property name="font">
       <font>
+       <family>Ubuntu</family>
        <pointsize>7</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
+       <weight>75</weight>
+       <bold>true</bold>
       </font>
      </property>
      <property name="focusPolicy">

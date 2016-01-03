@@ -13,5 +13,6 @@
         <file>resources/ChickenHeadBlack.png</file>
         <file>resources/LCD.png</file>
         <file>resources/Tuner.png</file>
+        <file>resources/KPA_Stomp_Led.png</file>
     </qresource>
 </RCC>

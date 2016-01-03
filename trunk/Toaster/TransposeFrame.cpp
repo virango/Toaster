@@ -22,10 +22,10 @@ void TransposeFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onPitch(double)));
+    connect(mpStomp, SIGNAL(voice1PitchReceived(double)), this, SLOT(onPitch(double)));
     connect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
 
-    mpStomp->requestVoice2Pitch();
+    mpStomp->requestVoice1Pitch();
     mpStomp->requestSmoothChords();
 
     ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
@@ -71,7 +71,7 @@ void TransposeFrame::displayAmpName(const QString&  ampName)
 void TransposeFrame::on_pitchDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
-    mpStomp->applyVoice2Pitch(value);
+    mpStomp->applyVoice1Pitch(value);
 }
 
 void TransposeFrame::on_smoothChordsDial_valueChanged(int valueIndex)

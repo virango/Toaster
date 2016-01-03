@@ -42,7 +42,7 @@ void Stomp::applyVolume(double volume)
 
 void Stomp::applyStereo(double stereo)
 {
-  //midiApplyStereo(phys2Raw(stereo, , ));
+  midiApplyStereo(phys2Raw(stereo, 360, -180));
 }
 
 void Stomp::applyWahManual(double wahManual)
@@ -215,7 +215,7 @@ void Stomp::applyParametricEQLowGain(double gain)
   midiApplyParametricEQLowGain(phys2Raw(gain, 24, -12));
 }
 
-void Stomp::applyParametricEQLowFrequency(double frequency)
+void Stomp::applyParametricEQLowFrequency(int frequency)
 {
   midiApplyParametricEQLowFrequency((unsigned short)frequency);
 }
@@ -225,7 +225,7 @@ void Stomp::applyParametricEQHighGain(double gain)
   midiApplyParametricEQHighGain(phys2Raw(gain, 24, -12));
 }
 
-void Stomp::applyParametricEQHighFrequency(double frequency)
+void Stomp::applyParametricEQHighFrequency(int frequency)
 {
   midiApplyParametricEQHighFrequency((unsigned short)frequency);
 }
@@ -235,12 +235,12 @@ void Stomp::applyParametricEQPeakGain(double gain)
   midiApplyParametricEQPeakGain(phys2Raw(gain, 24, -12));
 }
 
-void Stomp::applyParametricEQPeakFrequency(double frequency)
+void Stomp::applyParametricEQPeakFrequency(int frequency)
 {
   midiApplyParametricEQPeakFrequency((unsigned short)frequency);
 }
 
-void Stomp::applyParametricEQPeakQFactor(double factor)
+void Stomp::applyParametricEQPeakQFactor(int factor)
 {
   midiApplyParametricEQPeakQFactor((unsigned short)factor);
 }
@@ -250,12 +250,12 @@ void Stomp::applyParametricEQPeakGain2(double gain)
   midiApplyParametricEQPeakGain2(phys2Raw(gain, 24, -12));
 }
 
-void Stomp::applyParametricEQPeakFrequency2(double frequency)
+void Stomp::applyParametricEQPeakFrequency2(int frequency)
 {
   midiApplyParametricEQPeakFrequency2((unsigned short)frequency);
 }
 
-void Stomp::applyParametricEQPeakQFactor2(double factor)
+void Stomp::applyParametricEQPeakQFactor2(int factor)
 {
   midiApplyParametricEQPeakQFactor2((unsigned short)factor);
 }
@@ -320,12 +320,12 @@ void Stomp::applyFormantShift(double shift)
   midiApplyFormantShift(phys2Raw(shift, 10, -5));
 }
 
-void Stomp::applyLowCut(double lowCut)
+void Stomp::applyLowCut(int lowCut)
 {
   midiApplyLowCut((unsigned int)lowCut);
 }
 
-void Stomp::applyHighCut(double highCut)
+void Stomp::applyHighCut(int highCut)
 {
   midiApplyHighCut((unsigned short)highCut);
 }
@@ -354,7 +354,7 @@ void Stomp::midiVolumeReceived(unsigned short rawVal)
 
 void Stomp::midiStereoReceived(unsigned short rawVal)
 {
-  //emit stereoReceived(raw2Phys(rawVal, , ));
+  emit stereoReceived(raw2Phys(rawVal, 360, -180));
 }
 
 void Stomp::midiWahManualReceived(unsigned short rawVal)
@@ -523,7 +523,7 @@ void Stomp::midiParametricEQLowGainReceived(unsigned short rawVal)
 
 void Stomp::midiParametricEQLowFrequencyReceived(unsigned short rawVal)
 {
-  emit parametricEQLowFrequencyReceived((double)rawVal);
+  emit parametricEQLowFrequencyReceived((int)rawVal);
 }
 
 void Stomp::midiParametricEQHighGainReceived(unsigned short rawVal)
@@ -533,7 +533,7 @@ void Stomp::midiParametricEQHighGainReceived(unsigned short rawVal)
 
 void Stomp::midiParametricEQHighFrequencyReceived(unsigned short rawVal)
 {
-  emit parametricEQHighFrequencyReceived((double)rawVal);
+  emit parametricEQHighFrequencyReceived((int)rawVal);
 }
 
 void Stomp::midiParametricEQPeakGainReceived(unsigned short rawVal)
@@ -543,12 +543,12 @@ void Stomp::midiParametricEQPeakGainReceived(unsigned short rawVal)
 
 void Stomp::midiParametricEQPeakFrequencyReceived(unsigned short rawVal)
 {
-  emit parametricEQPeakFrequencyReceived((double)rawVal);
+  emit parametricEQPeakFrequencyReceived((int)rawVal);
 }
 
 void Stomp::midiParametricEQPeakQFactorReceived(unsigned short rawVal)
 {
-  emit parametricEQPeakQFactorReceived((double)rawVal);
+  emit parametricEQPeakQFactorReceived((int)rawVal);
 }
 
 void Stomp::midiParametricEQPeakGain2Received(unsigned short rawVal)
@@ -558,12 +558,12 @@ void Stomp::midiParametricEQPeakGain2Received(unsigned short rawVal)
 
 void Stomp::midiParametricEQPeakFrequency2Received(unsigned short rawVal)
 {
-  emit parametricEQPeakFrequency2Received((double)rawVal);
+  emit parametricEQPeakFrequency2Received((int)rawVal);
 }
 
 void Stomp::midiParametricEQPeakQFactor2Received(unsigned short rawVal)
 {
-  emit parametricEQPeakQFactor2Received((double)rawVal);
+  emit parametricEQPeakQFactor2Received((int)rawVal);
 }
 
 void Stomp::midiWahPeakRangeReceived(unsigned short rawVal)
@@ -628,12 +628,12 @@ void Stomp::midiFormantShiftReceived(unsigned short rawVal)
 
 void Stomp::midiLowCutReceived(unsigned short rawVal)
 {
-  emit lowCutReceived((double)rawVal);
+  emit lowCutReceived((int)rawVal);
 }
 
 void Stomp::midiHighCutReceived(unsigned short rawVal)
 {
-  emit highCutReceived((double)rawVal);
+  emit highCutReceived((int)rawVal);
 }
 
 

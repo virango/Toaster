@@ -23,7 +23,7 @@ void StereoWeidenerFrame::activate(QObject& stomp)
   if(mpStomp != nullptr)
   {
     connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onIntensity(double)));
-    connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onTune(double, unsigned short)));
+    connect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onTune(double)));
     connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
 
     mpStomp->requestModulationDepth();
@@ -95,7 +95,7 @@ void StereoWeidenerFrame::onIntensity(double value)
   update();
 }
 
-void StereoWeidenerFrame::onTune(double value, unsigned short)
+void StereoWeidenerFrame::onTune(double value)
 {
   ui->tuneDial->setValue(value);
   update();

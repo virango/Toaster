@@ -4,6 +4,7 @@
 #include <QFrame>
 #include "qtoasterbutton.h"
 #include "qchickenheaddial.h"
+#include "qmulticolorled.h"
 #include "Stomp.h"
 #include "Amp.h"
 #include "Eq.h"
@@ -136,8 +137,8 @@ private slots:
 
   // profile
   // ui => kpa
-  void on_rigPrevButton_clicked(QToasterButton &bt, bool longClick);
-  void on_rigNextButton_clicked(QToasterButton &bt, bool longClick);
+  void on_rigPrevButton_clicked(QToasterButton &bt, bool);
+  void on_rigNextButton_clicked(QToasterButton &bt, bool);
   // kpa => ui
   // currently none, TODO tempo stuff
 
@@ -159,6 +160,7 @@ private:
   // utility methods
   void handleStompButtonClick(QObject& module, QToasterButton& stompBt, bool longClick);
   void toggleOperationMode(QObject& module, OperationMode opMode, QToasterButton* bt);
+  void setStompLedColor(::FXType type, QMultiColorLed* ledWidget);
 
 private:
   Ui::MainFrame *ui;

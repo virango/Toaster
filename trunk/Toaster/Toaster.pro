@@ -7,6 +7,7 @@
 CONFIG += debug_and_release
 QT       += core gui
 unix:QMAKE_CXXFLAGS += -std=c++11
+win32:QMAKE_CXXFLAGS += -bigobj
 win32:LIBS += -lwinmm
 win32:DEFINES += __WINDOWS_MM__
 
@@ -119,7 +120,9 @@ SOURCES += main.cpp\
     ReverbCtxMenu.cpp \
     DelayCtxMenu.cpp \
     TapDelayFrame.cpp \
-    DebugSettingsDialog.cpp
+    DebugSettingsDialog.cpp \
+    FlangerOnewayFrame.cpp \
+    PhaserOnewayFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -209,8 +212,12 @@ HEADERS  += ToasterWindow.h \
     RigVolumeValues.h \
     MainVolumeValues.h \
     MixValues.h \
-    ModulationCrossoverValues.h \
-    TremoloRateValues.h
+    TremoloRateValues.h \
+    FrequencyValues.h \
+    QFactorValues.h \
+    FlangerRateValues.h \
+    FlangerOnewayFrame.h \
+    PhaserOnewayFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -259,7 +266,9 @@ FORMS    += \
     DelayFrame.ui \
     ReverbFrame.ui \
     TapDelayFrame.ui \
-    DebugSettingsDialog.ui
+    DebugSettingsDialog.ui \
+    FlangerOnewayFrame.ui \
+    PhaserOnewayFrame.ui
 
 RESOURCES += \
     resources.qrc

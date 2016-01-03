@@ -11,6 +11,9 @@ MetalEqualizerFrame::MetalEqualizerFrame(QWidget *parent)
 {
   ui->setupUi(this);
   ui->pageDial->setValue(0);
+  ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 MetalEqualizerFrame::~MetalEqualizerFrame()
@@ -26,10 +29,10 @@ void MetalEqualizerFrame::activate(QObject& stomp)
   {
     connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowDial(double)));
     connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddleDial(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMidFreqDial(double)));
+    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMidFreqDial(int)));
     connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighDial(double)));
-    connect(mpStomp, SIGNAL(lowCutReceived(double)), this, SLOT(onLowCut(double)));
-    connect(mpStomp, SIGNAL(highCutReceived(double)), this, SLOT(onHighCut(double)));
+    connect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
+    connect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onHighCut(int)));
     connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
     connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
     connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
@@ -55,10 +58,10 @@ void MetalEqualizerFrame::deactivate()
   {
     disconnect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowDial(double)));
     disconnect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddleDial(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(double)), this, SLOT(onMidFreqDial(double)));
+    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMidFreqDial(int)));
     disconnect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighDial(double)));
-    disconnect(mpStomp, SIGNAL(lowCutReceived(double)), this, SLOT(onLowCut(double)));
-    disconnect(mpStomp, SIGNAL(highCutReceived(double)), this, SLOT(onHighCut(double)));
+    disconnect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
+    disconnect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onHighCut(int)));
     disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
@@ -108,7 +111,7 @@ void MetalEqualizerFrame::on_middleDial_valueChanged(double value)
     mpStomp->applyParametricEQPeakGain(value);
 }
 
-void MetalEqualizerFrame::on_midFreqDial_valueChanged(double value)
+void MetalEqualizerFrame::on_midFreqDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyParametricEQPeakFrequency(value);
@@ -120,13 +123,13 @@ void MetalEqualizerFrame::on_highDial_valueChanged(double value)
     mpStomp->applyParametricEQHighGain(value);
 }
 
-void MetalEqualizerFrame::on_lowCutDial_valueChanged(double value)
+void MetalEqualizerFrame::on_lowCutDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyLowCut(value);
 }
 
-void MetalEqualizerFrame::on_highCutDial_valueChanged(double value)
+void MetalEqualizerFrame::on_highCutDial_valueChanged(int value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyHighCut(value);
@@ -162,7 +165,7 @@ void MetalEqualizerFrame::onMiddleDial(double value)
   update();
 }
 
-void MetalEqualizerFrame::onMidFreqDial(double value)
+void MetalEqualizerFrame::onMidFreqDial(int value)
 {
   ui->midFreqDial->setValue(value);
   update();
@@ -174,13 +177,13 @@ void MetalEqualizerFrame::onHighDial(double value)
   update();
 }
 
-void MetalEqualizerFrame::onLowCut(double value)
+void MetalEqualizerFrame::onLowCut(int value)
 {
   ui->lowCutDial->setValue(value);
   update();
 }
 
-void MetalEqualizerFrame::onHighCut(double value)
+void MetalEqualizerFrame::onHighCut(int value)
 {
   ui->highCutDial->setValue(value);
   update();

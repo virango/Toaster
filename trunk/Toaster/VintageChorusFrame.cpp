@@ -9,7 +9,7 @@ VintageChorusFrame::VintageChorusFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getModulationCrossoverValues());
+  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 VintageChorusFrame::~VintageChorusFrame()
@@ -23,7 +23,7 @@ void VintageChorusFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
+    connect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
     connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
     connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
     connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
@@ -48,7 +48,7 @@ void VintageChorusFrame::deactivate()
   {
     disconnect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
     disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
+    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
     disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
@@ -117,7 +117,7 @@ void VintageChorusFrame::on_duckingDial_valueChanged(double value)
     mpStomp->applyDucking(value);
 }
 
-void VintageChorusFrame::onRate(double value, unsigned short)
+void VintageChorusFrame::onRate(double value)
 {
   ui->rateDial->setValue(value);
   update();

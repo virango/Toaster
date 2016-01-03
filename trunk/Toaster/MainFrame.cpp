@@ -226,32 +226,32 @@ void MainFrame::onStompModOnOff(bool onOff)
 
 void MainFrame::onStompAType(::FXType type)
 {
-  // TODO: set the LED color
+  setStompLedColor(type, ui->stompALed);
 }
 
 void MainFrame::onStompBType(::FXType type)
 {
-  // TODO: set the LED color
+  setStompLedColor(type, ui->stompBLed);
 }
 
 void MainFrame::onStompCType(::FXType type)
 {
-  // TODO: set the LED color
+  setStompLedColor(type, ui->stompCLed);
 }
 
 void MainFrame::onStompDType(::FXType type)
 {
-  // TODO: set the LED color
+  setStompLedColor(type, ui->stompDLed);
 }
 
 void MainFrame::onStompXType(::FXType type)
 {
-  // TODO: set the LED color
+  setStompLedColor(type, ui->stompXLed);
 }
 
 void MainFrame::onStompModType(::FXType type)
 {
-  // TODO: set the LED color
+  setStompLedColor(type, ui->stompModLed);
 }
 //------------------------------------------------------------------------------------------
 
@@ -549,7 +549,7 @@ void MainFrame::onInputCleanSense(double cleanSense)
 
 // profile
 // ui => kpa
-void MainFrame::on_rigPrevButton_clicked(QToasterButton &bt, bool longClick)
+void MainFrame::on_rigPrevButton_clicked(QToasterButton &bt, bool)
 {
   if(bt.state() == QToasterButton::On)
   {
@@ -558,7 +558,7 @@ void MainFrame::on_rigPrevButton_clicked(QToasterButton &bt, bool longClick)
   }
 }
 
-void MainFrame::on_rigNextButton_clicked(QToasterButton &bt, bool longClick)
+void MainFrame::on_rigNextButton_clicked(QToasterButton &bt, bool )
 {
   if(bt.state() == QToasterButton::On)
   {
@@ -590,6 +590,11 @@ void MainFrame::handleStompButtonClick(QObject& module, QToasterButton& stompBt,
     {
       pDelay->applyOnOffCutsTail(stompBt.toggleOnOff());
       pDelay->requestOnOffCutsTail();
+    }
+    else if(pReverb != nullptr)
+    {
+      pReverb->applyOnOffCutsTail(stompBt.toggleOnOff());
+      pReverb->requestOnOffCutsTail();
     }
   }
   update();
@@ -627,6 +632,86 @@ void MainFrame::toggleOperationMode(QObject& module, OperationMode opMode, QToas
   {
     mEditModeButton->resetToOnOffState();
     mEditModeButton = NULL;
+  }
+}
+
+void MainFrame::setStompLedColor(::FXType type, QMultiColorLed* ledWidget)
+{
+  switch(type)
+  {
+    case WahWah:
+    case WahHighPass:
+    case WahLowPass:
+    case WahVowelFilter:
+    case WahFlanger:
+    case WahRateReducer:
+    case WahRingModulator:
+    case WahFrequencyShifter:
+    case WahFormantShifter:
+    case WahPhaser:
+      ledWidget->setColor(QMultiColorLed::Orange);
+      break;
+    case PureBooster:
+    case SoftShaper:
+    case HardShaper:
+    case WaveShaper:
+    case PlusDS:
+    case FuzzDS:
+    case BitShaper:
+    case GreenScream:
+    case OneDS:
+    case Muffin:
+    case MouseDS:
+    case RectiShaper:
+    case TrebleBooster:
+    case LeadBooster:
+    case WahPedalBooster:
+    case MetalDS:
+      ledWidget->setColor(QMultiColorLed::Red);
+      break;
+    case GraphicEqualizer:
+    case StudioEqualizer:
+    case MetalEqualizer:
+    case StereoWeidener:
+      ledWidget->setColor(QMultiColorLed::Orange);
+      break;
+    case Compressor:
+    case NoiseGate21:
+    case NoiseGate41:
+      ledWidget->setColor(QMultiColorLed::Cyan);
+      break;
+    case VintageChorus:
+    case HyperChorus:
+    case AirChorus:
+    case MicroPitch:;
+    case Vibrato:
+    case RotarySpeaker:
+    case Tremolo:
+      ledWidget->setColor(QMultiColorLed::Blue);
+      break;
+    case Phaser:
+    case PhaserVibe:
+    case PhaserOneway:
+    case Flanger:
+    case FlangerOneway:
+      ledWidget->setColor(QMultiColorLed::Purple);
+      break;
+    case Space:
+      ledWidget->setColor(QMultiColorLed::Green);
+      break;
+    case Transpose:
+    case PedalPitch:
+    case PedalVinylStop:
+    case ChromaticPitch:
+    case AnalogOctaver:
+    case LoopMono:
+    case LoopStereo:
+    case LoopDistortion:
+      ledWidget->setColor(QMultiColorLed::White);
+      break;
+    default:
+      ledWidget->setColor(QMultiColorLed::White);
+      break;
   }
 }
 //------------------------------------------------------------------------------------------

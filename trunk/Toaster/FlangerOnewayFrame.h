@@ -1,20 +1,20 @@
-#ifndef METALDSFRAME_H
-#define METALDSFRAME_H
+#ifndef FLANGERONEWAYFRAME_H
+#define FLANGERONEWAYFRAME_H
 #include <QWidget>
 #include "StompEditorPage.h"
 #include "Stomp.h"
 
 namespace Ui {
-class MetalDSFrame;
+class FlangerOnewayFrame;
 }
 
-class MetalDSFrame : public QWidget, public IStompEditorPage
+class FlangerOnewayFrame : public QWidget, public IStompEditorPage
 {
   Q_OBJECT
 
 public:
-  explicit MetalDSFrame(QWidget *parent = 0);
-  ~MetalDSFrame();
+  explicit FlangerOnewayFrame(QWidget *parent = 0);
+  ~FlangerOnewayFrame();
   // IStompEditorPage
   virtual void activate(QObject& stomp);
   virtual void deactivate();
@@ -26,28 +26,29 @@ public:
   virtual void displayDelayEnabled(bool enabled);
   virtual void displayReverbEnabled(bool enabled);
   virtual void displayAmpName(const QString&  ampName);
-
 private slots:
+  // ui => kpa
+  void on_rateDial_valueChanged(double value);
+  void on_depthDial_valueChanged(double value);
+  void on_manualDial_valueChanged(double value);
+  void on_feedbackDial_valueChanged(double value);
+  void on_mixDial_valueChanged(double value);
+  void on_duckingDial_valueChanged(double value);
   void on_volumeDial_valueChanged(double value);
-  void on_driveDial_valueChanged(double value);
-  void on_lowDial_valueChanged(double value);
-  void on_middleDial_valueChanged(double value);
-  void on_midFreqDial_valueChanged(int value);
-  void on_highDial_valueChanged(double value);
   // kpa => ui
+  void onRate(double value);
+  void onDepth(double value);
+  void onManual(double value);
+  void onFeedback(double value);
+  void onMix(double value);
+  void onDucking(double value);
   void onVolume(double value);
-  void onDrive(double value);
-  void onLow(double value);
-  void onMiddle(double value);
-  void onMidFreq(int value);
-  void onHigh(double value);
-
 private:
-  Ui::MetalDSFrame *ui;
+  Ui::FlangerOnewayFrame *ui;
 
   Stomp* mpStomp;
 
   FXType mFXType;
 };
 
-#endif // METALDSFRAME_H
+#endif // FlangerOnewayFrame_H

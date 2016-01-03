@@ -345,7 +345,10 @@
     <double>0.000000000000000</double>
    </property>
    <property name="stepWidth">
-    <double>0.100000000000000</double>
+    <double>1.000000000000000</double>
+   </property>
+   <property name="precision">
+    <UInt>0</UInt>
    </property>
    <property name="isActive">
     <bool>true</bool>

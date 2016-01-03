@@ -9,7 +9,7 @@ TremoloFrame::TremoloFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getModulationCrossoverValues());
+  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
   ui->rateDial->setLookUpTable(LookUpTables::getTremoloRateValues());
 }
 

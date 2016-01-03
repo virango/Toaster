@@ -1,20 +1,20 @@
-#ifndef PHASERFRAME_H
-#define PHASERFRAME_H
+#ifndef PHASERONEWAYFRAME_H
+#define PHASERONEWAYFRAME_H
 #include <QWidget>
 #include "StompEditorPage.h"
 #include "Stomp.h"
 
 namespace Ui {
-class PhaserFrame;
+class PhaserOnewayFrame;
 }
 
-class PhaserFrame : public QWidget, public IStompEditorPage
+class PhaserOnewayFrame : public QWidget, public IStompEditorPage
 {
   Q_OBJECT
 
 public:
-  explicit PhaserFrame(QWidget *parent = 0);
-  ~PhaserFrame();
+  explicit PhaserOnewayFrame(QWidget *parent = 0);
+  ~PhaserOnewayFrame();
   // IStompEditorPage
   virtual void activate(QObject& stomp);
   virtual void deactivate();
@@ -30,7 +30,7 @@ private slots:
   void on_pageDial_valueChanged(int valueIndex);
 
   // ui => kpa
-  void on_rateDial_valueChanged(int value);
+  void on_rateDial_valueChanged(double value);
   void on_depthDial_valueChanged(double value);
   void on_manualDial_valueChanged(double value);
   void on_feedbackDial_valueChanged(double value);
@@ -41,7 +41,7 @@ private slots:
   void on_volumeDial_valueChanged(double value);
   void on_stereoDial_valueChanged(double value);
   // kpa => ui
-  void onRate(int value);
+  void onRate(double value);
   void onDepth(double value);
   void onManual(double value);
   void onFeedback(double value);
@@ -53,11 +53,11 @@ private slots:
   void onStereo(double value);
 
 private:
-  Ui::PhaserFrame *ui;
+  Ui::PhaserOnewayFrame *ui;
 
   Stomp* mpStomp;
 
   FXType mFXType;
 };
 
-#endif // PHASERFRAME_H
+#endif // PhaserOnewayFrame_H

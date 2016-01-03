@@ -1,28 +1,27 @@
-#include "FlangerFrame.h"
-#include "ui_FlangerFrame.h"
+#include "FlangerOnewayFrame.h"
+#include "ui_FlangerOnewayFrame.h"
 #include "Stomp.h"
 
-FlangerFrame::FlangerFrame(QWidget *parent)
+FlangerOnewayFrame::FlangerOnewayFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::FlangerFrame)
+  , ui(new Ui::FlangerOnewayFrame)
   , mpStomp(nullptr)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->rateDial->setLookUpTable(LookUpTables::getFlangerRateValues());
 }
 
-FlangerFrame::~FlangerFrame()
+FlangerOnewayFrame::~FlangerOnewayFrame()
 {
   delete ui;
 }
-void FlangerFrame::activate(QObject& stomp)
+void FlangerOnewayFrame::activate(QObject& stomp)
 {
   mpStomp = dynamic_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationRateReceived(int)), this, SLOT(onRate(int)));
+    connect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
     connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
     connect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
     connect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
@@ -45,11 +44,11 @@ void FlangerFrame::activate(QObject& stomp)
   }
 }
 
-void FlangerFrame::deactivate()
+void FlangerOnewayFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationRateReceived(double, unsigned short)), this, SLOT(onRate(double, unsigned short)));
+    disconnect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
     disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
     disconnect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
     disconnect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
@@ -63,110 +62,110 @@ void FlangerFrame::deactivate()
   mpStomp = nullptr;
 }
 
-void FlangerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
+void FlangerOnewayFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
-void FlangerFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
+void FlangerOnewayFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
   ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
-void FlangerFrame::displayDelayEnabled(bool enabled)
+void FlangerOnewayFrame::displayDelayEnabled(bool enabled)
 {
   ui->lcdDisplay->setDelayEnabled(enabled);
 }
 
-void FlangerFrame::displayReverbEnabled(bool enabled)
+void FlangerOnewayFrame::displayReverbEnabled(bool enabled)
 {
   ui->lcdDisplay->setReverbEnabled(enabled);
 }
 
-void FlangerFrame::displayAmpName(const QString&  ampName)
+void FlangerOnewayFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
 }
 
-void FlangerFrame::on_rateDial_valueChanged(int value)
+void FlangerOnewayFrame::on_rateDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
-    mpStomp->applyModulationRate(value);
+    mpStomp->applyModulationRate(value + 5.0);
 }
 
-void FlangerFrame::on_depthDial_valueChanged(double value)
+void FlangerOnewayFrame::on_depthDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyModulationDepth(value);
 }
 
-void FlangerFrame::on_manualDial_valueChanged(double value)
+void FlangerOnewayFrame::on_manualDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
-    mpStomp->applyModulationManual(value);
+    mpStomp->applyModulationManual(value + 5.0);
 }
 
-void FlangerFrame::on_feedbackDial_valueChanged(double value)
+void FlangerOnewayFrame::on_feedbackDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyModulationFeedback(value);
 }
 
-void FlangerFrame::on_mixDial_valueChanged(double value)
+void FlangerOnewayFrame::on_mixDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyMix(value);
 }
 
-void FlangerFrame::on_duckingDial_valueChanged(double value)
+void FlangerOnewayFrame::on_duckingDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyDucking(value);
 }
 
-void FlangerFrame::on_volumeDial_valueChanged(double value)
+void FlangerOnewayFrame::on_volumeDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyVolume(value);
 }
 
-void FlangerFrame::onRate(int value)
+void FlangerOnewayFrame::onRate(double value)
 {
-  ui->rateDial->setValue(value*128);
+  ui->rateDial->setValue(value - 5.0);
   update();
 }
 
-void FlangerFrame::onDepth(double value)
+void FlangerOnewayFrame::onDepth(double value)
 {
   ui->depthDial->setValue(value);
   update();
 }
 
-void FlangerFrame::onManual(double value)
+void FlangerOnewayFrame::onManual(double value)
 {
-  ui->manualDial->setValue(value);
+  ui->manualDial->setValue(value - 5.0);
   update();
 }
 
-void FlangerFrame::onFeedback(double value)
+void FlangerOnewayFrame::onFeedback(double value)
 {
   ui->feedbackDial->setValue(value);
   update();
 }
 
-void FlangerFrame::onMix(double value)
+void FlangerOnewayFrame::onMix(double value)
 {
   ui->mixDial->setValue(value);
   update();
 }
 
-void FlangerFrame::onDucking(double value)
+void FlangerOnewayFrame::onDucking(double value)
 {
   ui->duckingDial->setValue(value);
   update();
 }
 
-void FlangerFrame::onVolume(double value)
+void FlangerOnewayFrame::onVolume(double value)
 {
   ui->volumeDial->setValue(value);
   update();
