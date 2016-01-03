@@ -59,7 +59,7 @@ background-color: transparent;
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
 border-radius: 3px;
-padding-bottom: 2px;</string>
+</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -225,7 +225,7 @@ background-color: transparent;
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
 border-radius: 3px;
-padding-bottom: 2px;</string>
+</string>
    </property>
    <property name="text">
     <string>BOOST</string>
@@ -234,7 +234,7 @@ padding-bottom: 2px;</string>
     <bool>true</bool>
    </property>
    <property name="cursorPosition">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -284,7 +284,7 @@ padding-bottom: 2px;</string>
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
 border-radius: 3px;
-padding-bottom: 2px;</string>
+</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -337,7 +337,7 @@ padding-bottom: 2px;</string>
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
 border-radius: 3px;
-padding-bottom: 2px;</string>
+</string>
    </property>
    <property name="text">
     <string>BOOST</string>
@@ -346,7 +346,7 @@ padding-bottom: 2px;</string>
     <bool>true</bool>
    </property>
    <property name="cursorPosition">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -396,7 +396,7 @@ padding-bottom: 2px;</string>
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
 border-radius: 3px;
-padding-bottom: 2px;</string>
+</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -449,7 +449,7 @@ padding-bottom: 2px;</string>
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
 border-radius: 3px;
-padding-bottom: 2px;</string>
+</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -502,7 +502,7 @@ padding-bottom: 2px;</string>
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
 border-radius: 3px;
-padding-bottom: 2px;</string>
+</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -555,7 +555,7 @@ padding-bottom: 2px;</string>
 color: rgb(255, 255, 255);
 border-color: rgb(0, 0, 0);
 border-radius: 3px;
-padding-bottom: 2px;</string>
+</string>
    </property>
    <property name="frame">
     <bool>true</bool>
@@ -1034,7 +1034,6 @@ border-color: rgb(0, 0, 0);</string>
 background-color: transparent;
 border-color: rgb(0, 0, 0);
 color: rgb(0, 0, 0);
-padding-bottom: 2px;
 }</string>
     </property>
     <property name="frame">
@@ -1077,7 +1076,6 @@ color: rgb(167, 179, 175);
 border-color: rgb(0, 0, 0);
 border-radius: 3px;
 padding-left:7px;
-padding-bottom: 2px;
 }
 QComboBox::drop-down {width: 0px; border-style: none}
 </string>

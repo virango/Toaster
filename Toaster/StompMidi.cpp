@@ -65,6 +65,8 @@ BYTEARRAYDEF(StompMidi, Voice2Pitch,                          0x39)
 BYTEARRAYDEF(StompMidi, Detune,                               0x3A)
 BYTEARRAYDEF(StompMidi, SmoothChords,                         0x3C)
 BYTEARRAYDEF(StompMidi, PureTuning,                           0x3D)
+BYTEARRAYDEF(StompMidi, Voice1Interval,                       0x3E)
+BYTEARRAYDEF(StompMidi, Voice2Interval,                       0x3F)
 BYTEARRAYDEF(StompMidi, Key,                                  0x40)
 BYTEARRAYDEF(StompMidi, FormantShiftOnOff,                    0x41)
 BYTEARRAYDEF(StompMidi, FormantShift,                         0x42)
@@ -200,6 +202,10 @@ void StompMidi::consumeSysExMsg(ByteArray* msg)
       midiSmoothChordsReceived(rawVal);
     else if(param == sPureTuning[0])
       midiPureTuningReceived(rawVal);
+    else if(param == sVoice1Interval[0])
+      midiVoice1IntervalReceived(rawVal);
+    else if(param == sVoice2Interval[0])
+      midiVoice2IntervalReceived(rawVal);
     else if(param == sKey[0])
       midiKeyReceived(rawVal);
     else if(param == sFormantShiftOnOff[0])
@@ -765,6 +771,26 @@ void StompMidi::midiApplySmoothChords(unsigned short rawVal)
 void StompMidi::midiRequestPureTuning()
 {
   Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sPureTuning));
+}
+
+void StompMidi::midiRequestVoice1Interval()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sVoice1Interval));
+}
+
+void StompMidi::midiApplyVoice1Interval(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sVoice1Interval, rawVal));
+}
+
+void StompMidi::midiRequestVoice2Interval()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sVoice2Interval));
+}
+
+void StompMidi::midiApplyVoice2Interval(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sVoice2Interval, rawVal));
 }
 
 void StompMidi::midiApplyPureTuning(unsigned short rawVal)

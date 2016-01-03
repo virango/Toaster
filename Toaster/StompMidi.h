@@ -73,6 +73,8 @@ protected:
   BYTEARRAYDECL(Detune)
   BYTEARRAYDECL(SmoothChords)
   BYTEARRAYDECL(PureTuning)
+  BYTEARRAYDECL(Voice1Interval)
+  BYTEARRAYDECL(Voice2Interval)
   BYTEARRAYDECL(Key)
   BYTEARRAYDECL(FormantShiftOnOff)
   BYTEARRAYDECL(FormantShift)
@@ -252,6 +254,12 @@ protected:
   // PureTuning
   void midiRequestPureTuning();
   void midiApplyPureTuning(unsigned short rawVal);
+  // Voice1Interval
+  void midiRequestVoice1Interval();
+  void midiApplyVoice1Interval(unsigned short rawVal);
+  // Voice2Interval
+  void midiRequestVoice2Interval();
+  void midiApplyVoice2Interval(unsigned short rawVal);
   // Key
   void midiRequestKey();
   void midiApplyKey(unsigned short rawVal);
@@ -325,6 +333,8 @@ protected:
   virtual void midiDetuneReceived(unsigned short rawVal) = 0;
   virtual void midiSmoothChordsReceived(unsigned short rawVal) = 0;
   virtual void midiPureTuningReceived(unsigned short rawVal) = 0;
+  virtual void midiVoice1IntervalReceived(unsigned short rawVal) = 0;
+  virtual void midiVoice2IntervalReceived(unsigned short rawVal) = 0;
   virtual void midiKeyReceived(unsigned short rawVal) = 0;
   virtual void midiFormantShiftOnOffReceived(unsigned short rawVal) = 0;
   virtual void midiFormantShiftReceived(unsigned short rawVal) = 0;

@@ -260,6 +260,9 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case ChromaticPitch:
         mpActivePage = ui->chromaticPitch;
         break;
+      case HarmonicPitch:
+        mpActivePage = ui->harmonicPitch;
+        break;
       case AnalogOctaver:
         mpActivePage = ui->analogOctaver;
         break;

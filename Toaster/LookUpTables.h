@@ -22,6 +22,7 @@ public:
   static QVector<QPair<int, QString>>* getTremoloRateValues() { return &sTremoloRateValues; }
   static QVector<QPair<int, QString>>* getQFactorValues() { return &sQFactorValues; }
   static QVector<QPair<int, QString>>* getFlangerRateValues() { return &sFlangerRateValues; }
+  static QVector<QPair<int, QString>>* getVoiceIntervalValues() { return &sVoiceIntervalValues; }
 
 private:
   LookUpTables();
@@ -39,6 +40,7 @@ private:
   static QVector<QPair<int, QString>> sTremoloRateValues;
   static QVector<QPair<int, QString>> sQFactorValues;
   static QVector<QPair<int, QString>> sFlangerRateValues;
+  static QVector<QPair<int, QString>> sVoiceIntervalValues;
 };
 
 #endif // VOLUMETABLES_H
