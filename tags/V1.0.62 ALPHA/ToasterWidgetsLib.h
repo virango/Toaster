@@ -1,0 +1,13 @@
+#ifndef TOASTERWIDGETSLIB
+#define TOASTERWIDGETSLIB
+
+#include <QtCore/QtGlobal>
+
+#if defined(TOASTERWIDGETS_LIB)
+#  define TOASTERWIDGETS_EXPORT Q_DECL_EXPORT
+#else
+#  define TOASTERWIDGETS_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // TOASTERWIDGETSLIB
+

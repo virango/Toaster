@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/BigLEDDial.png</file>
+        <file>resources/BigLEDBiDial.png</file>
+        <file>resources/BigDial.png</file>
+        <file>resources/SmallDial.png</file>
+        <file>resources/SmallButton.png</file>
+        <file>resources/BigButton.png</file>
+        <file>resources/SmallButtonAnim.gif</file>
+        <file>resources/BigButtonAnim.gif</file>
+        <file>resources/LEDRingUni.png</file>
+        <file>resources/LEDRingBi.png</file>
+        <file>resources/ChickenHeadBlack.png</file>
+        <file>resources/LCD.png</file>
+        <file>resources/Tuner.png</file>
+        <file>resources/KPA_Stomp_Led.png</file>
+    </qresource>
+</RCC>

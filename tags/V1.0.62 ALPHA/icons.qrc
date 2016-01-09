@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/DialIcon.png</file>
+        <file>resources/ButtonIcon.png</file>
+        <file>resources/ChickeHeadDialIcon.png</file>
+    </qresource>
+</RCC>
