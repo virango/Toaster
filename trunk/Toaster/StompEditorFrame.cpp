@@ -79,6 +79,8 @@ void StompEditorFrame::activate(QObject& stomp)
     Stomp* pActiveStomp = dynamic_cast<Stomp*>(mpActiveStomp);
     Delay* pDelay = dynamic_cast<Delay*>(mpActiveStomp);
     Reverb* pReverb = dynamic_cast<Reverb*>(mpActiveStomp);
+    Amp* pAmp = dynamic_cast<Amp*>(mpActiveStomp);
+    Cab* pCab = dynamic_cast<Cab*>(mpActiveStomp);
     if(pActiveStomp != nullptr)
     {
       connect(pActiveStomp, SIGNAL(typeReceived(::FXType)), this, SLOT(onActiveStompType(::FXType)));
@@ -93,6 +95,14 @@ void StompEditorFrame::activate(QObject& stomp)
     {
       connect(pReverb, SIGNAL(typeReceived(::ReverbType)), this, SLOT(onReverbType(::ReverbType)));
       pReverb->requestType();
+    }
+    else if (pAmp != nullptr)
+    {
+      activatePage(ui->amp);
+    }
+    else if(pCab != nullptr)
+    {
+      activatePage(ui->cab);
     }
   }
 
@@ -496,4 +506,19 @@ void StompEditorFrame::requestValues()
   mpDelay->requestOnOffCutsTail();
   mpReverb->requestOnOffCutsTail();
   mpProfile->requestAmpName();
+}
+
+void StompEditorFrame::activatePage(IStompEditorPage* page)
+{
+  mpActivePage = page;
+  if(mpActivePage != nullptr && !mpActivePage->isActive())
+  {
+    int index = 0; // dummy page => default
+    QWidget* pTmp = dynamic_cast<QWidget*>(mpActivePage);
+    if(pTmp != nullptr)
+      index = indexOf(pTmp);
+    setCurrentIndex(index);
+    mpActivePage->activate(*mpActiveStomp);
+    requestValues();
+  }
 }

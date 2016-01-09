@@ -57,6 +57,8 @@
   <widget class="DelayFrame" name="delay"/>
   <widget class="TapDelayFrame" name="tapDelay"/>
   <widget class="ReverbFrame" name="reverb"/>
+  <widget class="AmpFrame" name="amp"/>
+  <widget class="CabFrame" name="cab"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -303,6 +305,18 @@
    <class>HarmonicPitchFrame</class>
    <extends>QWidget</extends>
    <header>HarmonicPitchFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AmpFrame</class>
+   <extends>QWidget</extends>
+   <header>AmpFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CabFrame</class>
+   <extends>QWidget</extends>
+   <header>CabFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
