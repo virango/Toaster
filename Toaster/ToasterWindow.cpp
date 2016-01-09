@@ -1,3 +1,4 @@
+#include <QFileDialog>
 #include "ToasterWindow.h"
 #include "ui_ToasterWindow.h"
 #include "Midi.h"
@@ -6,40 +7,57 @@
 #include "Settings.h"
 #include "DebugMidi.h"
 #include "DebugCreateStringValuesDialog.h"
+#include "AboutDialog.h"
 
-ToasterWindow::ToasterWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::ToasterWindow)
+ToasterWindow::ToasterWindow(QWidget *parent)
+  : QMainWindow(parent)
+  , ui(new Ui::ToasterWindow)
+  , mIsConnected2Midi(false)
+  , mIsConnected2KPA(false)
 {
-    ui->setupUi(this);
+  ui->setupUi(this);
+  ui->statusBar->addPermanentWidget(&mConnectionStatus);
 
-    if(!Settings::get().getDebuggerActive())
-      ui->menuDebug->menuAction()->setVisible(false);
+  QString title = "Toaster " + QString(APP_VERSION) + QString(" ") + QString(APP_STAGE);
+  setWindowTitle(title);
 
-    QString inPort(Settings::get().getMidiInPort());
-    QString outPort(Settings::get().getMidiOutPort());
+  connect(this, &ToasterWindow::connectionStatusChanged,
+          [=](bool midiConnected, bool) { ui->actionUploadKIPRFile->setEnabled(midiConnected); });
+  connect(this, &ToasterWindow::connectionStatusChanged,
+          [=](bool midiConnected, bool) { ui->actionClose_MIDI_Ports->setEnabled(midiConnected); });
+  connect(this, &ToasterWindow::connectionStatusChanged,
+          [=](bool midiConnected, bool) { ui->actionRequestValues->setEnabled(midiConnected); });
+  connect(this, &ToasterWindow::connectionStatusChanged,
+          [=](bool midiConnected, bool) { ui->actionOpenMIDIPorts->setDisabled(midiConnected); });
+  connect(this, &ToasterWindow::connectionStatusChanged,
+          [=](bool midiConnected, bool kpaConnected) { ui->actionDisconnectFromKPA->setEnabled(midiConnected && kpaConnected); });
+  connect(this, &ToasterWindow::connectionStatusChanged,
+          [=](bool midiConnected, bool kpaConnected) { ui->actionConnectToKPA->setEnabled(midiConnected && !kpaConnected);});
+  connect(this, &ToasterWindow::connectionStatusChanged,
+          [=](bool midiConnected, bool) { mConnectionStatus.setMidiStatus(midiConnected); });
+  connect(this, &ToasterWindow::connectionStatusChanged,
+          [=](bool midiConnected, bool kpaConnected) { mConnectionStatus.setKPAStatus(midiConnected && kpaConnected); });
 
-    if(inPort.isEmpty() || outPort.isEmpty())
-    {
-      showSettingsDialog();
-      inPort = Settings::get().getMidiInPort();
-      outPort = Settings::get().getMidiOutPort();
-    }
+  if(!Settings::get().getDebuggerActive())
+    ui->menuDebug->menuAction()->setVisible(false);
 
-    Midi::get().openPorts(inPort, outPort);
+  openMidiPorts();
 
+  if(mIsConnected2Midi)
+  {
     QTimer* timer = new QTimer(this);
     timer->setSingleShot(true);
-    connect(timer, SIGNAL(timeout()), this, SLOT(on_actionRequestValues_triggered()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(onStartup()));
     timer->start(20);
+  }
 
-    qRegisterMetaType<::FXType>("::FXType");
-    qRegisterMetaType<::WahPedalMode>("::WahPedalMode");
-    qRegisterMetaType<::RotarySpeed>("::RotarySpeed");
-    qRegisterMetaType<::DelayType>("::DelayType");
-    qRegisterMetaType<::ReverbType>("::ReverbType");
-    qRegisterMetaType<::DelayRatio>("::DelayRatio");
-    qRegisterMetaType<::DelayClock>("::DelayClock");
+  qRegisterMetaType<::FXType>("::FXType");
+  qRegisterMetaType<::WahPedalMode>("::WahPedalMode");
+  qRegisterMetaType<::RotarySpeed>("::RotarySpeed");
+  qRegisterMetaType<::DelayType>("::DelayType");
+  qRegisterMetaType<::ReverbType>("::ReverbType");
+  qRegisterMetaType<::DelayRatio>("::DelayRatio");
+  qRegisterMetaType<::DelayClock>("::DelayClock");
 }
 
 ToasterWindow::~ToasterWindow()
@@ -49,20 +67,18 @@ ToasterWindow::~ToasterWindow()
   delete ui;
 }
 
-
-void ToasterWindow::on_actionRequestValues_triggered()
+void ToasterWindow::onStartup()
 {
-#if 0
-  static int val = 0;
-  DebugMidi::get().debugRequestStringParam((unsigned short)val, 0x32, 0x2F);
-  val++;
-  if(val == 0x4000)
-    timer->stop();
-#else
   QString connectName("Toaster ");
   ui->mainFrame->connect2KPA(connectName);
   ui->mainFrame->requestValues();
-#endif
+  mIsConnected2KPA = true;
+  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
+}
+
+void ToasterWindow::on_actionRequestValues_triggered()
+{
+  ui->mainFrame->requestValues();
 }
 
 void ToasterWindow::on_actionConfigure_triggered()
@@ -74,6 +90,25 @@ void ToasterWindow::showSettingsDialog()
 {
   SettingsDialog settingsDialog(this);
   settingsDialog.exec();
+}
+
+void ToasterWindow::openMidiPorts()
+{
+  QString inPort(Settings::get().getMidiInPort());
+  QString outPort(Settings::get().getMidiOutPort());
+
+  if(inPort.isEmpty() || outPort.isEmpty())
+  {
+    showSettingsDialog();
+    inPort = Settings::get().getMidiInPort();
+    outPort = Settings::get().getMidiOutPort();
+  }
+
+  mIsConnected2Midi = Midi::get().openPorts(inPort, outPort);
+  if(mIsConnected2Midi)
+    ui->statusBar->showMessage("Midi connected");  
+
+  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
 }
 
 void ToasterWindow::on_actionCmd_triggered()
@@ -130,30 +165,76 @@ void ToasterWindow::on_actionCmd_triggered()
 
 void ToasterWindow::on_actionUploadKIPRFile_triggered()
 {
+  QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                  QStandardPaths::locate(QStandardPaths::HomeLocation, ""),
+                                                  tr("KPA-Profiles (*.kipr)"));
 
+  if(fileName.isEmpty())
+    return;
+
+  QFile kiprFile(fileName);
+  kiprFile.open(QIODevice::ReadOnly);
+  QDataStream stream(&kiprFile);
+  unsigned int magic;
+  stream.readRawData((char*)&magic, 4);
+  if(magic == 0x6468544d || magic == 0x6468544b)
+  {
+    stream.skipRawData(16);
+    unsigned char tmp[2];
+    stream.readRawData((char*)tmp, 2);
+    unsigned short dataBytesInFile = (tmp[0] << 8) | tmp[1];
+    if(dataBytesInFile == kiprFile.bytesAvailable())
+    {
+      while(!stream.atEnd())
+      {
+        unsigned char c;
+        stream.readRawData((char*)&c, 1);
+        if(c == 0xF0)
+        {
+          ByteArray midiCmd;
+          midiCmd.push_back(c);
+          unsigned char  len;
+          stream.readRawData((char*)&len, 1);
+          //midiCmd.push_back(len);
+          unsigned char buf[255];
+          stream.readRawData((char*)buf, len);
+          for(unsigned char i = 0; i < len; ++i)
+            midiCmd.push_back(buf[i]);
+          Midi::get().sendCmd(midiCmd);
+        }
+      }
+    }
+  }
 }
 
 void ToasterWindow::on_actionOpenMIDIPorts_triggered()
 {
-
+  openMidiPorts();
 }
 
 void ToasterWindow::on_actionClose_MIDI_Ports_triggered()
 {
-
+  on_actionDisconnectFromKPA_triggered();
+  Midi::get().closePorts();
+  mIsConnected2KPA = false;
+  mIsConnected2Midi = false;
+  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
 }
 
 void ToasterWindow::on_actionConnectToKPA_triggered()
 {
   QString connectName("Toaster ");
   ui->mainFrame->connect2KPA(connectName);
+  mIsConnected2KPA = true;
+  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
 }
 
 void ToasterWindow::on_actionDisconnectFromKPA_triggered()
 {
   ui->mainFrame->disconnectFromKPA();
+  mIsConnected2KPA = false;
+  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
 }
-
 
 void ToasterWindow::on_actionExit_triggered()
 {
@@ -177,4 +258,11 @@ void ToasterWindow::on_actionSendSySex_triggered()
 void ToasterWindow::on_actionDebugSettings_triggered()
 {
 
+}
+
+void ToasterWindow::on_actionAbout_triggered()
+{
+  AboutDialog d;
+  d.setVersionString(QString(APP_VERSION) + QString(" ") + QString(APP_STAGE));
+  d.exec();
 }

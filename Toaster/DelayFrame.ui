@@ -50,6 +50,9 @@
    <property name="maxValue">
     <double>1280.000000000000000</double>
    </property>
+   <property name="unit">
+    <string>ms</string>
+   </property>
    <property name="isActive">
     <bool>true</bool>
    </property>

@@ -168,7 +168,7 @@ void MainFrame::onStompAOnOff(bool onOff)
 {
   if(mOperationMode != StompEdit)
   {
-    QToasterButton::State state = (onOff && mStompA.getFXType() != None) ? QToasterButton::On : QToasterButton::Off;
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
     ui->stompAButton->setState(state);
     update();
   }
@@ -178,7 +178,7 @@ void MainFrame::onStompBOnOff(bool onOff)
 {
   if(mOperationMode != StompEdit)
   {
-    QToasterButton::State state = (onOff && mStompB.getFXType() != None) ? QToasterButton::On : QToasterButton::Off;
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
     ui->stompBButton->setState(state);
     update();
   }
@@ -188,7 +188,7 @@ void MainFrame::onStompCOnOff(bool onOff)
 {
   if(mOperationMode != StompEdit)
   {
-    QToasterButton::State state = (onOff && mStompC.getFXType() != None) ? QToasterButton::On : QToasterButton::Off;
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
     ui->stompCButton->setState(state);
     update();
   }
@@ -198,7 +198,7 @@ void MainFrame::onStompDOnOff(bool onOff)
 {
   if(mOperationMode != StompEdit)
   {
-    QToasterButton::State state = (onOff && mStompD.getFXType() != None) ? QToasterButton::On : QToasterButton::Off;
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
     ui->stompDButton->setState(state);
     update();
   }
@@ -208,7 +208,7 @@ void MainFrame::onStompXOnOff(bool onOff)
 {
   if(mOperationMode != StompEdit)
   {
-    QToasterButton::State state = (onOff && mStompX.getFXType() != None) ? QToasterButton::On : QToasterButton::Off;
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
     ui->stompXButton->setState(state);
     update();
   }
@@ -218,7 +218,7 @@ void MainFrame::onStompModOnOff(bool onOff)
 {
   if(mOperationMode != StompEdit)
   {
-    QToasterButton::State state = (onOff && mStompMod.getFXType() != None) ? QToasterButton::On : QToasterButton::Off;
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
     ui->stompModButton->setState(state);
     update();
   }

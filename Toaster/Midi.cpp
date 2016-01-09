@@ -43,25 +43,32 @@ bool Midi::openPorts(const QString& inPort, const QString& outPort)
   else
     mMidiIn.openVirtualPort("in");
 
-  mMidiIn.setCallback(&cbProcessMidiInput);
-  mMidiIn.ignoreTypes(false, false, false);
-
-  getOutPorts();
-  for(size_t i = 0; i < mOutPorts.size(); ++i)
+  if(mMidiIn.isPortOpen())
   {
-    if(mOutPorts[i] == outPort)
+    mMidiIn.setCallback(&cbProcessMidiInput);
+    mMidiIn.ignoreTypes(false, false, false);
+
+    getOutPorts();
+    for(size_t i = 0; i < mOutPorts.size(); ++i)
     {
-      outPortNo = i;
-      break;
+      if(mOutPorts[i] == outPort)
+      {
+        outPortNo = i;
+        break;
+      }
     }
+
+    if(outPortNo >= 0)
+      mMidiOut.openPort(outPortNo, "out");
+    else
+      mMidiOut.openVirtualPort("out");
+
+    if(mMidiOut.isPortOpen())
+      return true;
+
+    mMidiIn.closePort();
   }
-
-  if(outPortNo >= 0)
-    mMidiOut.openPort(outPortNo, "out");
-  else
-    mMidiOut.openVirtualPort("out");
-
-  return true;
+  return false;
 }
 
 void Midi::closePorts()

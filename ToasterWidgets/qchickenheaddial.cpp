@@ -6,6 +6,7 @@
 QChickenHeadDial::QChickenHeadDial(QWidget *parent)
   : QWidget(parent)
   , mCurrState(Browser)
+  , mMouseY(0)
 {
   createKnobSkin();
 }
@@ -94,4 +95,33 @@ void QChickenHeadDial::wheelEvent(QWheelEvent* we)
     stateUp();
   emit valueChanged(mCurrState);
   update();
+}
+
+void QChickenHeadDial::mousePressEvent(QMouseEvent* me)
+{
+  if(me->button() == Qt::LeftButton)
+  {
+    me->accept();
+    mMouseY = me->y();
+  }
+  else
+    me->ignore();
+}
+
+void QChickenHeadDial::mouseMoveEvent(QMouseEvent* me)
+{
+  if(me->buttons() == Qt::LeftButton)
+  {
+    me->accept();
+    int delta = mMouseY - me->y();
+    mMouseY = me->y();
+    if(delta < 0)
+      stateDown();
+    else
+      stateUp();
+    emit valueChanged(mCurrState);
+    update();
+  }
+  else
+    me->ignore();
 }

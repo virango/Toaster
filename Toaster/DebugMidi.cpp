@@ -1,11 +1,12 @@
 #include <QDebug>
 #include <QFile>
 #include "DebugMidi.h"
+#include "Settings.h"
 
 DebugMidi DebugMidi::mSingleton;
 
 DebugMidi::DebugMidi()
-  :mPrintValues(false)
+  :mPrintValues(Settings::get().getDebuggerActive())
 {
   SysExMsgDispatcher::get().addConsumer(this);
 }

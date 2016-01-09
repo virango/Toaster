@@ -6,26 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>926</width>
-    <height>694</height>
+    <width>922</width>
+    <height>662</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>926</width>
+    <width>922</width>
     <height>350</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>926</width>
-    <height>16777215</height>
+    <width>922</width>
+    <height>662</height>
    </size>
   </property>
   <property name="font">
@@ -57,6 +57,12 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
       </property>
       <property name="widgetResizable">
        <bool>true</bool>
@@ -134,8 +140,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>926</width>
-     <height>27</height>
+     <width>922</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -234,6 +240,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>&amp;Show Statusbar</string>
    </property>
@@ -300,7 +309,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>462</x>
-     <y>678</y>
+     <y>661</y>
     </hint>
    </hints>
   </connection>

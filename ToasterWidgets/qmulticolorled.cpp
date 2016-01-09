@@ -3,10 +3,12 @@
 
 QList<QPixmap> QMultiColorLed::sSkinPixmaps;
 
-QMultiColorLed::QMultiColorLed(QWidget *parent) :
-  QWidget(parent)
+QMultiColorLed::QMultiColorLed(QWidget *parent)
+  : QWidget(parent)
+  , mColor(Off)
 {
   createSkin();
+  resize(sSkinPixmaps[Off].width(), sSkinPixmaps[Off].height());
 }
 
 void QMultiColorLed::createSkin()

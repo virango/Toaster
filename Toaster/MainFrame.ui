@@ -495,7 +495,7 @@
     <number>0</number>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>1</number>
    </property>
    <widget class="TunerFrame" name="tuner"/>
    <widget class="BrowserFrame" name="browser"/>
