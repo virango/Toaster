@@ -30,9 +30,9 @@ protected:
   void createKnobSkin();
   void paintEvent(QPaintEvent* pe);
   void wheelEvent(QWheelEvent* we);
-  //void mousePressEvent(QMouseEvent* me);
+  void mousePressEvent(QMouseEvent* me);
   //void mouseReleaseEvent(QMouseEvent* me);
-  //void mouseMoveEvent(QMouseEvent* me);
+  void mouseMoveEvent(QMouseEvent* me);
 
 
   void stateUp();
@@ -42,6 +42,8 @@ private:
   QList<QPixmap> mKnobSkinPixmaps;
 
   State mCurrState;
+
+  int   mMouseY;
 
   static const int mKnobSkinNoOfFrames = 5;
 };

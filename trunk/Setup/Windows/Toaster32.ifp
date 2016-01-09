@@ -1,0 +1,173 @@
+[General]
+Program name = Toaster
+Program version = 1.0.62 ALPHA
+Windows 2000 = 0
+Windows XP = 0
+Windows Server 2003 = 0
+Windows Vista = 0
+Windows Server 2008 = 1
+Windows 7 = 1
+Windows 8 = 1
+Company name = Thomas Langer
+Website = 
+SFA = 0
+DFA = 0
+Comp = 1
+[Graphics]
+Wizard image = <main>
+Header image = <main>
+Install-icon image = <main>
+Show Label = 1
+Windows style = 1
+XpStyle = 1
+[Files]
+Include Zipfile = 0
+Zipfile = 
+Installation path = <programfiles>\<appname>\
+Autcip = 1
+[Uninstall]
+Vwau = 0
+Website = 
+Include uninstaller = 1
+Uninstaller filename = Uninstall
+[Licence]
+Licence dialog = 0
+[Finish]
+Sart program = 0
+Reboot computer = 0
+Execute DLL: = 0
+Program = <installpath>\
+Dll = 
+[Shortcuts]
+Allowtc = 1
+Shortcut path = <appname>\
+[Serialoptions]
+Allows = 0
+Number = 20
+[SplashScreen]
+Image = 
+Sound = 
+Time = 2
+PlaySound = 0
+Allow = 0
+[Build]
+File = C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Setup32.exe
+[Updater]
+Allow = 0
+1 = <appname>
+2 = <appversion>
+3 = http://
+4 = http://
+5 = http://
+6 = Update
+Language = 0
+RunProg = 
+RunProgs = 0
+Execdlls = 0
+[Languages]
+2
+[Files/Dirs]
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\D3Dcompiler_47.dll
+3.3 MB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\icudt53.dll
+20.5 MB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\icuin53.dll
+1.9 MB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\icuuc53.dll
+1.3 MB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\libEGL.dll
+54 KB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\libGLESV2.dll
+1.3 MB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\opengl32sw.dll
+14.5 MB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_ca.qm
+162.7 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_cs.qm
+175.9 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_de.qm
+193 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_fi.qm
+180.9 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_hu.qm
+179.1 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_it.qm
+185.4 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_ja.qm
+153.8 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_ko.qm
+148.1 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_lv.qm
+176.9 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_ru.qm
+179.9 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_sk.qm
+178.9 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qt_uk.qm
+178.6 KB
+qm
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\Qt5Core.dll
+3.9 MB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\Qt5Gui.dll
+4.3 MB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\Qt5Svg.dll
+246 KB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\Qt5Widgets.dll
+4.2 MB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\qtoasterwidgetsplugin.dll
+1.2 MB
+dll
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\toaster.exe
+4 MB
+exe
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\iconengines\
+n/a
+[Folder]
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\imageformats\
+n/a
+[Folder]
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\Toaster32\platforms\
+n/a
+[Folder]
+C:\Users\tholan\Documents\QtProjects\Toaster\Setup\ubuntu-font-family-0.83\
+n/a
+[Folder]
+[Licence_Begin]
+[Licence_End]
+[Registry]
+[Variables]
+[SCs]
+Startmenu
+Toaster
+<installpath>\toaster.exe
+
+Desktop
+Toaster
+<installpath>\toaster.exe
+
+[IFP_End]
+[Serials]
+[Serials_End]
+[Commands]
