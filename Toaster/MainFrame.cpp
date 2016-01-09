@@ -308,7 +308,7 @@ void MainFrame::on_delayFeedbackDial_valueChanged(double arg1)
 
 void MainFrame::on_delayMixDial_valueChanged(int value)
 {
-    mDelay.applyMix(value);
+  mDelay.applyMix(value);
 }
 
 // kpa => ui
@@ -340,11 +340,7 @@ void MainFrame::onDelayMix(int mix)
 // ui => kpa
 void MainFrame::on_amplifierButton_clicked(QToasterButton& bt, bool longClick)
 {
-  //if(longClick)
-  //  toggleOperationMode(AmpEdit, &bt);
-  //else
-    mAmp.applyOnOff(bt.toggleOnOff());
-  update();
+  handleStompButtonClick(mAmp, bt, longClick);
 }
 
 void MainFrame::on_gainDial_valueChanged(double gain)
@@ -355,9 +351,12 @@ void MainFrame::on_gainDial_valueChanged(double gain)
 // kpa => ui
 void MainFrame::onAmpOnOff(bool onOff)
 {
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->amplifierButton->setState(state);
-  update();
+  if(mOperationMode != StompEdit)
+  {
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+    ui->amplifierButton->setState(state);
+    update();
+  }
 }
 
 void MainFrame::onAmpGain(double val)
@@ -371,10 +370,7 @@ void MainFrame::onAmpGain(double val)
 // ui => kpa
 void MainFrame::on_eqButton_clicked(QToasterButton& bt, bool longClick)
 {
-  //if(longClick)
-  //  toggleOperationMode(EQEdit, &bt);
-  //else
-    mEq.applyOnOff(bt.toggleOnOff());
+  mEq.applyOnOff(bt.toggleOnOff());
   update();
 }
 
@@ -391,19 +387,18 @@ void MainFrame::onEqOnOff(bool onOff)
 // ui => kpa
 void MainFrame::on_cabinetButton_clicked(QToasterButton& bt, bool longClick)
 {
-  //if(longClick)
-    //toggleOperationMode(CabEdit, &bt);
-  //else
-    mCab.applyOnOff(bt.toggleOnOff());
-  update();
+  handleStompButtonClick(mCab, bt, longClick);
 }
 
 // kpa => ui
 void MainFrame::onCabOnOff(bool onOff)
 {
-  QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
-  ui->cabinetButton->setState(state);
-  update();
+  if(mOperationMode != StompEdit)
+  {
+    QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
+    ui->cabinetButton->setState(state);
+    update();
+  }
 }
 //------------------------------------------------------------------------------------------
 
@@ -581,6 +576,8 @@ void MainFrame::handleStompButtonClick(QObject& module, QToasterButton& stompBt,
     Stomp* pStomp = dynamic_cast<Stomp*>(&module);
     Delay* pDelay = dynamic_cast<Delay*>(&module);
     Reverb* pReverb = dynamic_cast<Reverb*>(&module);
+    Amp* pAmp = dynamic_cast<Amp*>(&module);
+    Cab* pCab = dynamic_cast<Cab*>(&module);
     if(pStomp != nullptr)
     {
       pStomp->applyOnOff(stompBt.toggleOnOff());
@@ -595,6 +592,16 @@ void MainFrame::handleStompButtonClick(QObject& module, QToasterButton& stompBt,
     {
       pReverb->applyOnOffCutsTail(stompBt.toggleOnOff());
       pReverb->requestOnOffCutsTail();
+    }
+    else if(pAmp != nullptr)
+    {
+      pAmp->applyOnOff(stompBt.toggleOnOff());
+      pAmp->requestOnOff();
+    }
+    else if(pCab != nullptr)
+    {
+      pCab->applyOnOff(stompBt.toggleOnOff());
+      pCab->requestOnOff();
     }
   }
   update();

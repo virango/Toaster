@@ -44,8 +44,7 @@ SOURCES     = \
     QToasterTunerLCDPlugin.cpp \
     QToasterLookUpTableDialPlugin.cpp
 RESOURCES   = icons.qrc \
-    skins.qrc \
-    fonts.qrc
+    skins.qrc
 LIBS        += -L. 
 
 INCLUDEPATH += $$PWD/../Shared

@@ -12,6 +12,16 @@ public:
   ~Amp();
 
   void requestAllValues();
+  void requestOnOff() { midiRequestOnOff(); }
+  void requestGain() { midiRequestGain(); }
+  void requestDefinition() { midiRequestDefinition(); }
+  void requestClarity() { midiRequestClarity(); }
+  void requestPowerSagging() { midiRequestPowerSagging(); }
+  void requestPick() { midiRequestPick(); }
+  void requestCompressor() { midiRequestCompressor(); }
+  void requestTubeShape() { midiRequestTubeShape(); }
+  void requestTubeBias() { midiRequestTubeBias(); }
+  void requestDirectMix() { midiRequestDirectMix(); }
 
 signals:
   void onOffReceived(bool onOff);

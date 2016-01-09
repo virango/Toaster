@@ -11,6 +11,11 @@ public:
   ~Cab();
 
   void requestAllValues();
+  void requestOnOff() { midiRequestOnOff(); }
+  void requestVolume() { midiRequestVolume(); }
+  void requestHighShift() { midiRequestHighShift(); }
+  void requestLowShift() { midiRequestLowShift(); }
+  void requestCharacter() { midiRequestCharacter(); }
   
 signals:
   void onOffReceived(bool onOff);

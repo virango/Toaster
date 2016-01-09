@@ -66,6 +66,7 @@ private slots:
 
 private:
   void requestValues();
+  void activatePage(IStompEditorPage* page);
 
 private:
   Ui::StompEditorFrame *ui;
