@@ -16,8 +16,9 @@ CONFIG(debug, debug|release) {
 }
 
 win32:DEFINES += __WINDOWS_MM__
-unix:DEFINES += __UNIX_JACK__ \
-                __LINUX_ALSA__
+unix:!macx:DEFINES += __UNIX_JACK__ \
+                      __LINUX_ALSA__
+macx:DEFINES += __MACOSX_CORE__
 
 SOURCES += RtMidi.cpp
 HEADERS += RtMidi.h

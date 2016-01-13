@@ -10,16 +10,15 @@ unix:QMAKE_CXXFLAGS += -std=c++11
 win32:QMAKE_CXXFLAGS += -bigobj
 win32:LIBS += -lwinmm
 win32:DEFINES += __WINDOWS_MM__
-
-unix:DEFINES += __UNIX_JACK__ \
-                __LINUX_ALSA__
+unix:!macx:DEFINES += __UNIX_JACK__ \
+                      __LINUX_ALSA__
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = toaster
 TEMPLATE = app
 
-VERSION = 1.0.62
+VERSION = 1.0.65
 QMAKE_TARGET_COMPANY = Thomas Langer
 QMAKE_TARGET_PRODUCT = Toaster
 QMAKE_TARGET_DESCRIPTION = Editor and remote control for Kemper profiling amplifier
