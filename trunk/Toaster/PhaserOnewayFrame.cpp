@@ -19,7 +19,7 @@ PhaserOnewayFrame::~PhaserOnewayFrame()
 
 void PhaserOnewayFrame::activate(QObject& stomp)
 {
-  mpStomp = dynamic_cast<Stomp*>(&stomp);
+  mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {

@@ -17,7 +17,7 @@ ReverbFrame::~ReverbFrame()
 
 void ReverbFrame::activate(QObject& stomp)
 {
-  mpReverb = dynamic_cast<Reverb*>(&stomp);
+  mpReverb = qobject_cast<Reverb*>(&stomp);
 
   if(mpReverb != nullptr)
   {

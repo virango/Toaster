@@ -15,7 +15,7 @@ TapDelayFrame::~TapDelayFrame()
 }
 void TapDelayFrame::activate(QObject& stomp)
 {
-  mpDelay = dynamic_cast<Delay*>(&stomp);
+  mpDelay = qobject_cast<Delay*>(&stomp);
 
   if(mpDelay != nullptr)
   {
