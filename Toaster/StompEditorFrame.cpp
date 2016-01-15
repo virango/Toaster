@@ -76,11 +76,11 @@ void StompEditorFrame::activate(QObject& stomp)
 
   if(mpActiveStomp != nullptr)
   {
-    Stomp* pActiveStomp = dynamic_cast<Stomp*>(mpActiveStomp);
-    Delay* pDelay = dynamic_cast<Delay*>(mpActiveStomp);
-    Reverb* pReverb = dynamic_cast<Reverb*>(mpActiveStomp);
-    Amp* pAmp = dynamic_cast<Amp*>(mpActiveStomp);
-    Cab* pCab = dynamic_cast<Cab*>(mpActiveStomp);
+    Stomp* pActiveStomp = qobject_cast<Stomp*>(mpActiveStomp);
+    Delay* pDelay = qobject_cast<Delay*>(mpActiveStomp);
+    Reverb* pReverb = qobject_cast<Reverb*>(mpActiveStomp);
+    Amp* pAmp = qobject_cast<Amp*>(mpActiveStomp);
+    Cab* pCab = qobject_cast<Cab*>(mpActiveStomp);
     if(pActiveStomp != nullptr)
     {
       connect(pActiveStomp, SIGNAL(typeReceived(::FXType)), this, SLOT(onActiveStompType(::FXType)));
@@ -113,9 +113,9 @@ void StompEditorFrame::deactivate()
 {
   if(mpActiveStomp != nullptr)
   {
-    Stomp* pActiveStomp = dynamic_cast<Stomp*>(mpActiveStomp);
-    Delay* pDelay = dynamic_cast<Delay*>(mpActiveStomp);
-    Reverb* pReverb = dynamic_cast<Reverb*>(mpActiveStomp);
+    Stomp* pActiveStomp = qobject_cast<Stomp*>(mpActiveStomp);
+    Delay* pDelay = qobject_cast<Delay*>(mpActiveStomp);
+    Reverb* pReverb = qobject_cast<Reverb*>(mpActiveStomp);
 
     if(pActiveStomp != nullptr)
       disconnect(mpActiveStomp, SIGNAL(typeReceived(::FXType)), this, SLOT(onActiveStompType(::FXType)));
@@ -148,7 +148,7 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
     }
   }
 
-  pActiveStomp = dynamic_cast<Stomp*>(mpActiveStomp);
+  pActiveStomp = qobject_cast<Stomp*>(mpActiveStomp);
 
   if(pActiveStomp != nullptr)
   {
@@ -314,7 +314,7 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
     }
   }
 
-  pActiveDelay = dynamic_cast<Delay*>(mpActiveStomp);
+  pActiveDelay = qobject_cast<Delay*>(mpActiveStomp);
 
   if(pActiveDelay != nullptr)
   {
@@ -357,7 +357,7 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
     }
   }
 
-  pActiveReverb = dynamic_cast<Reverb*>(mpActiveStomp);
+  pActiveReverb = qobject_cast<Reverb*>(mpActiveStomp);
 
   if(pActiveReverb != nullptr)
   {

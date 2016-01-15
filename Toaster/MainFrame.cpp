@@ -573,11 +573,11 @@ void MainFrame::handleStompButtonClick(QObject& module, QToasterButton& stompBt,
   }
   else
   {
-    Stomp* pStomp = dynamic_cast<Stomp*>(&module);
-    Delay* pDelay = dynamic_cast<Delay*>(&module);
-    Reverb* pReverb = dynamic_cast<Reverb*>(&module);
-    Amp* pAmp = dynamic_cast<Amp*>(&module);
-    Cab* pCab = dynamic_cast<Cab*>(&module);
+    Stomp* pStomp = qobject_cast<Stomp*>(&module);
+    Delay* pDelay = qobject_cast<Delay*>(&module);
+    Reverb* pReverb = qobject_cast<Reverb*>(&module);
+    Amp* pAmp = qobject_cast<Amp*>(&module);
+    Cab* pCab = qobject_cast<Cab*>(&module);
     if(pStomp != nullptr)
     {
       pStomp->applyOnOff(stompBt.toggleOnOff());
@@ -609,9 +609,9 @@ void MainFrame::handleStompButtonClick(QObject& module, QToasterButton& stompBt,
 
 void MainFrame::toggleOperationMode(QObject& module, OperationMode opMode, QToasterButton* bt)
 {
-  //Stomp* pStomp = dynamic_cast<Stomp*>(&module);
-  //Delay* pDelay = dynamic_cast<Delay*>(&module);
-  //Reverb* pReverb = dynamic_cast<Reverb*>(&module);
+  //Stomp* pStomp = qobject_cast<Stomp*>(&module);
+  //Delay* pDelay = qobject_cast<Delay*>(&module);
+  //Reverb* pReverb = qobject_cast<Reverb*>(&module);
 
   if(bt != NULL)
   {

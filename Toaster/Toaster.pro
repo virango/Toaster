@@ -18,7 +18,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = toaster
 TEMPLATE = app
 
-VERSION = 1.0.65
+VERSION = 1.0.66
 QMAKE_TARGET_COMPANY = Thomas Langer
 QMAKE_TARGET_PRODUCT = Toaster
 QMAKE_TARGET_DESCRIPTION = Editor and remote control for Kemper profiling amplifier
@@ -305,4 +305,5 @@ else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += 
 else:unix: CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/ToasterWidgets/release -lqtoasterwidgetsplugin
 else:unix: CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/ToasterWidgets/debug -lqtoasterwidgetsplugin
 
-unix:LIBS += -lasound -ljack
+unix:!macx:LIBS += -lasound -ljack
+macx:LIBS += -framework CoreMIDI -framework CoreAudio -framework CoreFoundation
