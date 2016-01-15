@@ -16,7 +16,7 @@ AmpFrame::~AmpFrame()
 
 void AmpFrame::activate(QObject& amp)
 {
-  mpAmp = dynamic_cast<Amp*>(&amp);
+  mpAmp = qobject_cast<Amp*>(&amp);
 
   if(mpAmp != nullptr)
   {

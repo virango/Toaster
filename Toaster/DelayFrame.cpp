@@ -16,7 +16,7 @@ DelayFrame::~DelayFrame()
 
 void DelayFrame::activate(QObject& stomp)
 {
-  mpDelay = dynamic_cast<Delay*>(&stomp);
+  mpDelay = qobject_cast<Delay*>(&stomp);
 
   if(mpDelay != nullptr)
   {

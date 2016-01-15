@@ -20,7 +20,7 @@ HarmonicPitchFrame::~HarmonicPitchFrame()
 
 void HarmonicPitchFrame::activate(QObject& stomp)
 {
-  mpStomp = dynamic_cast<Stomp*>(&stomp);
+  mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {

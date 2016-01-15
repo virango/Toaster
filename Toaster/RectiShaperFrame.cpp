@@ -18,7 +18,7 @@ RectiShaperFrame::~RectiShaperFrame()
 
 void RectiShaperFrame::activate(QObject& stomp)
 {
-  mpStomp = dynamic_cast<Stomp*>(&stomp);
+  mpStomp = qobject_cast<Stomp*>(&stomp);
 
   connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
   connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));

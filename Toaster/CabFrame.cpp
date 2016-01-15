@@ -16,7 +16,7 @@ CabFrame::~CabFrame()
 
 void CabFrame::activate(QObject& amp)
 {
-  mpCab = dynamic_cast<Cab*>(&amp);
+  mpCab = qobject_cast<Cab*>(&amp);
 
   if(mpCab != nullptr)
   {
