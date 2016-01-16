@@ -46,6 +46,8 @@ MainFrame::MainFrame(QWidget *parent)
   connect(&mStompD, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompDType(::FXType)));
   connect(&mStompX, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompXType(::FXType)));
   connect(&mStompMod, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompModType(::FXType)));
+  connect(&mStompMod, SIGNAL(modulationRateReceived(int)), this, SLOT(onModRate(int)));
+  connect(&mStompMod, &Stomp::modulationDepthReceived, this, &MainFrame::onModIntensity);
   // delay
   connect(&mDelay, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onDelayOnOff(bool)));
   connect(&mDelay, SIGNAL(feedbackReceived(double)), this, SLOT(onDelayFeedback(double)));
@@ -163,6 +165,16 @@ void MainFrame::on_stompModButton_clicked(QToasterButton& bt, bool longClick)
   handleStompButtonClick(mStompMod, bt, longClick);
 }
 
+void MainFrame::on_modRateDial_valueChanged(double value)
+{
+  mStompMod.applyModulationRate((int) value);
+}
+
+void MainFrame::on_modIntensityDial_valueChanged(double value)
+{
+  mStompMod.applyModulationDepth(value);
+}
+
 // kpa => ui
 void MainFrame::onStompAOnOff(bool onOff)
 {
@@ -253,6 +265,17 @@ void MainFrame::onStompModType(::FXType type)
 {
   setStompLedColor(type, ui->stompModLed);
 }
+
+void MainFrame::onModIntensity(double value)
+{
+  ui->modIntensityDial->setValue(value);
+}
+
+void MainFrame::onModRate(int value)
+{
+  ui->modRateDial->setValue(value);
+}
+
 //------------------------------------------------------------------------------------------
 
 // reverb
@@ -724,4 +747,5 @@ void MainFrame::setStompLedColor(::FXType type, QMultiColorLed* ledWidget)
   update();
 }
 //------------------------------------------------------------------------------------------
+
 

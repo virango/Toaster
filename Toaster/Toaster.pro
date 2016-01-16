@@ -18,7 +18,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = toaster
 TEMPLATE = app
 
-VERSION = 1.0.66
+VERSION = 1.0.68
 QMAKE_TARGET_COMPANY = Thomas Langer
 QMAKE_TARGET_PRODUCT = Toaster
 QMAKE_TARGET_DESCRIPTION = Editor and remote control for Kemper profiling amplifier
@@ -126,7 +126,16 @@ SOURCES += main.cpp\
     ConnectionStatusFrame.cpp \
     AboutDialog.cpp \ 
     AmpFrame.cpp \
-    CabFrame.cpp
+    CabFrame.cpp \
+    MainVolumeValues.cpp \
+    RotaryDistanceValues.cpp \
+    RigVolumeValues.cpp \
+    MixValues.cpp \
+    FrequencyValues.cpp \
+    TremoloRateValues.cpp \
+    QFactorValues.cpp \
+    FlangerRateValues.cpp \
+    VoiceIntervalValues.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \

@@ -1,13 +1,4 @@
 #include "LookUpTables.h"
-#include "RotaryDistanceValues.h"
-#include "RigVolumeValues.h"
-#include "MainVolumeValues.h"
-#include "MixValues.h"
-#include "FrequencyValues.h"
-#include "TremoloRateValues.h"
-#include "QFactorValues.h"
-#include "FlangerRateValues.h"
-#include "VoiceIntervalValues.h"
 
 QMap<StompInstance, QString> LookUpTables::sStompInstanceNames = {{StompA, "Stomp A"},
                                                                   {StompB, "Stomp B"},
@@ -82,16 +73,6 @@ QMap<FXType, QString> LookUpTables::sStompFXNames = {{None, "None"},
                                                      {LoopMono, "Loop Mono"},
                                                      {LoopStereo, "Loop Stereo"},
                                                      {LoopDistortion, "Loop Distortion"}};
-
-QVector<QPair<int, QString>> LookUpTables::sRotaryDistanceValues = {ROTARY_DISTANCE_VALUES};
-QVector<QPair<int, QString>> LookUpTables::sRigVolumeValues = {RIG_VOLUME_VALUES};
-QVector<QPair<int, QString>> LookUpTables::sMainVolumeValues = {MAIN_VOLUME_VALUES};
-QVector<QPair<int, QString>> LookUpTables::sMixValues = {MIX_VALUES};
-QVector<QPair<int, QString>> LookUpTables::sFrequencyValues = {FREQUENCY_VALUES};
-QVector<QPair<int, QString>> LookUpTables::sTremoloRateValues = {TREMOLO_RATE_VALUES};
-QVector<QPair<int, QString>> LookUpTables::sQFactorValues = {QFACTOR_VALUES};
-QVector<QPair<int, QString>> LookUpTables::sFlangerRateValues = {FLANGER_RATE_VALUES};
-QVector<QPair<int, QString>> LookUpTables::sVoiceIntervalValues = {VOICE_INTERVAL_VALUES};
 
 LookUpTables LookUpTables::singleton;
 

@@ -98,11 +98,11 @@ void StompEditorFrame::activate(QObject& stomp)
     }
     else if (pAmp != nullptr)
     {
-      activatePage(ui->amp);
+      activatePage(ui->amp, indexOf(ui->amp));
     }
     else if(pCab != nullptr)
     {
-      activatePage(ui->cab);
+      activatePage(ui->cab, indexOf(ui->cab));
     }
   }
 
@@ -148,6 +148,8 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
     }
   }
 
+  int index = 0;
+
   pActiveStomp = qobject_cast<Stomp*>(mpActiveStomp);
 
   if(pActiveStomp != nullptr)
@@ -161,19 +163,24 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case WahFlanger:
       case WahRateReducer:
         mpActivePage = ui->wahWah;
+        index = indexOf(ui->wahWah);
         break;
       case WahRingModulator:
       case WahFrequencyShifter:
         mpActivePage = ui->wahNoPeak;
+        index = indexOf(ui->wahNoPeak);
         break;
       case WahFormantShifter:
         mpActivePage = ui->wahFormantShift;
+        index = indexOf(ui->wahFormantShift);
         break;
       case WahPhaser:
         mpActivePage = ui->wahPhaser;
+        index = indexOf(ui->wahPhaser);
         break;
       case PureBooster:
         mpActivePage = ui->pureBooster;
+        index = indexOf(ui->pureBooster);
         break;
       case SoftShaper:
       case HardShaper:
@@ -181,6 +188,7 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case PlusDS:
       case FuzzDS:
         mpActivePage = ui->driveDS;
+        index = indexOf(ui->driveDS);
         break;
       case BitShaper:
       case GreenScream:
@@ -188,112 +196,140 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case Muffin:
       case MouseDS:
         mpActivePage = ui->driveAndToneDS;
+        index = indexOf(ui->driveAndToneDS);
         break;
       case RectiShaper:
         mpActivePage = ui->rectiShaper;
+        index = indexOf(ui->rectiShaper);
         break;
       case TrebleBooster:
       case LeadBooster:
         mpActivePage = ui->toneAndDuckingDS;
+        index = indexOf(ui->toneAndDuckingDS);
         break;
       case WahPedalBooster:
         mpActivePage = ui->wahPedalBooster;
+        index = indexOf(ui->wahPedalBooster);
         break;
       case MetalDS:
         mpActivePage = ui->metalDS;
+        index = indexOf(ui->metalDS);
         break;
       case GraphicEqualizer:
         mpActivePage = ui->graphicEqualizer;
+        index = indexOf(ui->graphicEqualizer);
         break;
       case StudioEqualizer:
         mpActivePage = ui->studioEqualizer;
+        index = indexOf(ui->studioEqualizer);
         break;
       case MetalEqualizer:
         mpActivePage = ui->metalEqualizer;
+        index = indexOf(ui->metalEqualizer);
         break;
       case StereoWeidener:
         mpActivePage = ui->stereoWeidener;
+        index = indexOf(ui->stereoWeidener);
         break;
       case Compressor:
         mpActivePage = ui->compressorFrame;
+        index = indexOf(ui->compressorFrame);
         break;
       case NoiseGate21:
       case NoiseGate41:
         mpActivePage = ui->gateFrame;
+        index = indexOf(ui->gateFrame);
         break;
       case VintageChorus:
         mpActivePage = ui->vintageChorusFrame;
+        index = indexOf(ui->vintageChorusFrame);
         break;
       case HyperChorus:
         mpActivePage = ui->hyperChorusFrame;
+        index = indexOf(ui->hyperChorusFrame);
         break;
       case AirChorus:
         mpActivePage = ui->airChorusFrame;
+        index = indexOf(ui->airChorusFrame);
         break;
       case MicroPitch:
         mpActivePage = ui->microPitch;
+        index = indexOf(ui->microPitch);
         break;
       case Vibrato:
         mpActivePage = ui->vibrato;
+        index = indexOf(ui->vibrato);
         break;
       case RotarySpeaker:
         mpActivePage = ui->rotarySpeaker;
+        index = indexOf(ui->rotarySpeaker);
         break;
       case Tremolo:
         mpActivePage = ui->tremolo;
+        index = indexOf(ui->tremolo);
         break;
       case Phaser:
       case PhaserVibe:
         mpActivePage = ui->phaser;
+        index = indexOf(ui->phaser);
         break;
       case PhaserOneway:
         mpActivePage = ui->phaserOneway;
+        index = indexOf(ui->phaserOneway);
         break;
       case Flanger:
         mpActivePage = ui->flanger;
+        index = indexOf(ui->flanger);
         break;
       case FlangerOneway:
         mpActivePage = ui->flangerOneway;
+        index = indexOf(ui->flangerOneway);
         break;
       case Space:
         mpActivePage = ui->space;
+        index = indexOf(ui->space);
         break;
       case Transpose:
         mpActivePage = ui->transpose;
+        index = indexOf(ui->transpose);
         break;
       case PedalPitch:
         mpActivePage = ui->pedalPitch;
+        index = indexOf(ui->pedalPitch);
         break;
       case PedalVinylStop:
         mpActivePage = ui->pedalVinylStop;
+        index = indexOf(ui->pedalVinylStop);
         break;
       case ChromaticPitch:
         mpActivePage = ui->chromaticPitch;
+        index = indexOf(ui->chromaticPitch);
         break;
       case HarmonicPitch:
         mpActivePage = ui->harmonicPitch;
+        index = indexOf(ui->wahWah);
         break;
       case AnalogOctaver:
         mpActivePage = ui->analogOctaver;
+        index = indexOf(ui->analogOctaver);
         break;
       case LoopMono:
       case LoopStereo:
         mpActivePage = ui->loop;
+        index = indexOf(ui->loop);
         break;
       case LoopDistortion:
         mpActivePage = ui->loopDistortion;
+        index = indexOf(ui->loopDistortion);
         break;
       default:
-         mpActivePage = ui->dummyStomp;
-         break;
+        mpActivePage = ui->dummyStomp;
+        index = indexOf(ui->dummyStomp);
+        break;
     }
 
     if(mpActivePage != nullptr && !mpActivePage->isActive())
     {
-      int index = 0; // dummy page => default
-      QWidget* pTmp = dynamic_cast<QWidget*>(mpActivePage);
-      if(pTmp != nullptr)
-        index = indexOf(pTmp);
       setCurrentIndex(index);
       mActiveStompType = fxType;
       mpActivePage->activate(*pActiveStomp);
@@ -314,6 +350,8 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
     }
   }
 
+  int index = 0;
+
   pActiveDelay = qobject_cast<Delay*>(mpActiveStomp);
 
   if(pActiveDelay != nullptr)
@@ -323,20 +361,20 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
       case FreeDelay:
       case AnalogDelay:
         mpActivePage = ui->delay;
+        index = indexOf(ui->delay);
         break;
       case TapDelay:
         mpActivePage = ui->tapDelay;
+        index = indexOf(ui->tapDelay);
         break;
       default:
         mpActivePage = ui->dummyStomp;
+        index = indexOf(ui->dummyStomp);
+        break;
     }
 
     if(mpActivePage != nullptr && !mpActivePage->isActive())
     {
-      int index = 0; // dummy page => default
-      QWidget* pTmp = dynamic_cast<QWidget*>(mpActivePage);
-      if(pTmp != nullptr)
-        index = indexOf(pTmp);
       setCurrentIndex(index);
       mActiveStompType = delayType;
       mpActivePage->activate(*pActiveDelay);
@@ -357,6 +395,8 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
     }
   }
 
+  int index = 0;
+
   pActiveReverb = qobject_cast<Reverb*>(mpActiveStomp);
 
   if(pActiveReverb != nullptr)
@@ -369,17 +409,16 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
       case Ambience:
       case Matchbox:
         mpActivePage = ui->reverb;
+        index = indexOf(ui->reverb);
         break;
       default:
         mpActivePage = ui->dummyStomp;
+        index = indexOf(ui->dummyStomp);
+        break;
     }
 
     if(mpActivePage != nullptr && !mpActivePage->isActive())
     {
-      int index = 0; // dummy page => default
-      QWidget* pTmp = dynamic_cast<QWidget*>(mpActivePage);
-      if(pTmp != nullptr)
-        index = indexOf(pTmp);
       setCurrentIndex(index);
       mActiveStompType = reverbType;
       mpActivePage->activate(*pActiveReverb);
@@ -508,15 +547,11 @@ void StompEditorFrame::requestValues()
   mpProfile->requestAmpName();
 }
 
-void StompEditorFrame::activatePage(IStompEditorPage* page)
+void StompEditorFrame::activatePage(IStompEditorPage* page, int index)
 {
   mpActivePage = page;
   if(mpActivePage != nullptr && !mpActivePage->isActive())
   {
-    int index = 0; // dummy page => default
-    QWidget* pTmp = dynamic_cast<QWidget*>(mpActivePage);
-    if(pTmp != nullptr)
-      index = indexOf(pTmp);
     setCurrentIndex(index);
     mpActivePage->activate(*mpActiveStomp);
     requestValues();
