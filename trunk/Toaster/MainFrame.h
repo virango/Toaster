@@ -47,6 +47,8 @@ private slots:
   void on_stompDButton_clicked(QToasterButton& bt, bool longClick);
   void on_stompXButton_clicked(QToasterButton& bt, bool longClick);
   void on_stompModButton_clicked(QToasterButton& bt, bool longClick);
+  void on_modRateDial_valueChanged(double value);
+  void on_modIntensityDial_valueChanged(double value);
   // kpa => ui
   void onStompAOnOff(bool onOff);
   void onStompBOnOff(bool onOff);
@@ -60,6 +62,8 @@ private slots:
   void onStompDType(::FXType type);
   void onStompXType(::FXType type);
   void onStompModType(::FXType type);
+  void onModRate(int value);
+  void onModIntensity(double value);
 
   // reverb
   // ui => kpa
@@ -141,6 +145,8 @@ private slots:
   void on_rigNextButton_clicked(QToasterButton &bt, bool);
   // kpa => ui
   // currently none, TODO tempo stuff
+
+
 
 private:
   enum OperationMode

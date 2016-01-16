@@ -136,6 +136,9 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="maxValue">
+    <double>16383.000000000000000</double>
+   </property>
   </widget>
   <widget class="QToasterDial" name="modIntensityDial">
    <property name="geometry">
@@ -151,6 +154,12 @@
    </property>
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
+   </property>
+   <property name="maxValue">
+    <double>10.000000000000000</double>
+   </property>
+   <property name="stepWidth">
+    <double>0.100000000000000</double>
    </property>
   </widget>
   <widget class="QToasterDial" name="delayFeedbackDial">
