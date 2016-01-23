@@ -2,8 +2,9 @@
 #define TUNERFRAME_H
 
 #include <QWidget>
-#include "TunerNote.h"
+#include "Tuner.h"
 #include "TunerIndex.h"
+#include "Global.h"
 
 namespace Ui {
   class TunerFrame;
@@ -18,14 +19,22 @@ public:
   ~TunerFrame();
 
 private slots:
+  void on_masterTuneDial_valueChanged(double value);
+  void on_muteDial_valueChanged(int valueIndex);
+
   void onTunerNote(QString note, QString octave);
   void onTunerIndex(int index);
+  void onMasterTune(double value);
+  void onMute(bool muted);
+
+  void on_toasterTunerLCD_signalMuted(bool muted);
 
 private:
   Ui::TunerFrame *ui;
 
-  TunerNote mTunerNote;
+  Tuner mTuner;
   TunerIndex mTunerIndex;
+  Global mGlobal;
 };
 
 #endif // TUNERFRAME_H

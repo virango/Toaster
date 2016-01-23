@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>922</width>
-    <height>662</height>
+    <height>665</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,7 +25,7 @@
   <property name="maximumSize">
    <size>
     <width>922</width>
-    <height>662</height>
+    <height>665</height>
    </size>
   </property>
   <property name="font">
@@ -65,7 +65,7 @@
        <enum>QFrame::Plain</enum>
       </property>
       <property name="widgetResizable">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <widget class="QWidget" name="scrollAreaWidgetContents">
        <property name="geometry">
@@ -141,7 +141,7 @@
      <x>0</x>
      <y>0</y>
      <width>922</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -282,7 +282,7 @@
   </action>
   <action name="actionDebugSettings">
    <property name="text">
-    <string>Settings</string>
+    <string>S&amp;ettings</string>
    </property>
   </action>
  </widget>

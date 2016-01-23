@@ -94,9 +94,8 @@ void QToasterLCD::createSkin()
     QPixmap masterPixmap(skin);
 
     int width = masterPixmap.width();
-    int height = masterPixmap.height() / (NoOfColors + 1); // to compansate a bug in JKnobMan:
-                                                           // as JKnobMan doesn't create the last frame properly
-                                                           // there must be an additional one
+    int height = masterPixmap.height() / (NoOfColors);
+    
     if(!masterPixmap.isNull())
     {
       int x = 0;

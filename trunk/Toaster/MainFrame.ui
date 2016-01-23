@@ -504,7 +504,7 @@
     <number>0</number>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="TunerFrame" name="tuner"/>
    <widget class="BrowserFrame" name="browser"/>
@@ -525,7 +525,7 @@
     </rect>
    </property>
    <property name="ledRingType" stdset="0">
-    <enum>QToasterLookUpTableDial::Bi</enum>
+    <enum>QToasterLookUpTableDial::Uni</enum>
    </property>
    <property name="unit">
     <string>dB</string>
@@ -677,6 +677,58 @@
    </property>
    <property name="color">
     <enum>QMultiColorLed::Off</enum>
+   </property>
+  </widget>
+  <widget class="QToasterButton" name="inputButton">
+   <property name="geometry">
+    <rect>
+     <x>118</x>
+     <y>187</y>
+     <width>34</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="type">
+    <enum>QToasterButton::Big</enum>
+   </property>
+  </widget>
+  <widget class="QToasterButton" name="outputButton">
+   <property name="geometry">
+    <rect>
+     <x>748</x>
+     <y>187</y>
+     <width>34</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="type">
+    <enum>QToasterButton::Big</enum>
+   </property>
+  </widget>
+  <widget class="QToasterButton" name="storeButton">
+   <property name="geometry">
+    <rect>
+     <x>191</x>
+     <y>364</y>
+     <width>34</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="type">
+    <enum>QToasterButton::Big</enum>
+   </property>
+  </widget>
+  <widget class="QToasterButton" name="exitButton">
+   <property name="geometry">
+    <rect>
+     <x>675</x>
+     <y>364</y>
+     <width>34</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="type">
+    <enum>QToasterButton::Big</enum>
    </property>
   </widget>
  </widget>

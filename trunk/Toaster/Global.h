@@ -24,12 +24,14 @@ public:
 
   void requestAllValues();
   void requestWahPedalToPitch() { midiRequestWahPedalToPitch(); }
+  void requestMasterTune() { midiRequestMasterTune(); }
 
 signals:
   void mainOutputVolumeReceived(int volume);
   void headphoneOutputVolumeReceived(int volume);
   void monitorOutputVolumeReceived(int volume);
   void directOutputVolumeReceived(int volume);
+  void masterTuneReceived(double masterTune);
   void spdifInputEnableReceived(bool enabled);
   void mainOutputEQBassReceived(double bass);
   void mainOutputEQMiddleReceived(double middle);
@@ -47,6 +49,7 @@ public slots:
   void applyHeadphoneOutputVolume(int volume);
   void applyMonitorOutputVolume(int volume);
   void applyDirectOutputVolume(int volume);
+  void applyMasterTune(double masterTune);
   void applySpdifInputEnable(bool enabled);
   void applyMainOutputEQBass(double bass);
   void applyMainOutputEQMiddle(double middle);
@@ -68,6 +71,7 @@ protected:
   virtual void midiHeadphoneOutputVolumeReceived(unsigned short rawVal);
   virtual void midiMonitorOutputVolumeReceived(unsigned short rawVal);
   virtual void midiDirectOutputVolumeReceived(unsigned short rawVal);
+  virtual void midiMasterTuneReceived(unsigned short rawVal);
   virtual void midiSPDIFInputEnableReceived(unsigned short rawVal);
   virtual void midiMainOutputEQBassReceived(unsigned short rawVal);
   virtual void midiMainOutputEQMiddleReceived(unsigned short rawVal);

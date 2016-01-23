@@ -290,6 +290,9 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="maxValue">
+    <double>100.000000000000000</double>
+   </property>
    <property name="unit">
     <string>%</string>
    </property>
