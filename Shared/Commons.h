@@ -12,13 +12,10 @@ typedef vector<unsigned char> ByteArray;
 #define VEC_INSERT(x, y) x.insert(x.end(), y.begin(), y.end())
 
 #define BYTEARRAYDECL(Name) \
-  static const unsigned char c##Name[];\
   static const ByteArray s##Name;
 
 #define BYTEARRAYDEF(Class, Name, ...) \
-  const unsigned char Class::c##Name[] = {__VA_ARGS__}; \
-  const ByteArray Class::s##Name(INIT_FROM(c##Name));
-
+  const ByteArray Class::s##Name = {__VA_ARGS__};
 
 enum FXType
 {

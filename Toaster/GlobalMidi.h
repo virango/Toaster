@@ -13,6 +13,7 @@ protected:
   BYTEARRAYDECL(HeadphoneOutputVolume)
   BYTEARRAYDECL(MonitorOutputVolume)
   BYTEARRAYDECL(DirectOutputVolume)
+  BYTEARRAYDECL(MasterTune)
   BYTEARRAYDECL(SPDIFInputEnable)
   BYTEARRAYDECL(MainOutputEQBass)
   BYTEARRAYDECL(MainOutputEQMiddle)
@@ -48,6 +49,9 @@ protected:
   // DirectOutputVolume
   void midiRequestDirectOutputVolume();
   void midiApplyDirectOutputVolume(unsigned short rawVal);
+  // MasterTune
+  void midiRequestMasterTune();
+  void midiApplyMasterTune(unsigned short rawVal);
   // SPDIFInputEnable
   void midiRequestSPDIFInputEnable();
   void midiApplySPDIFInputEnable(unsigned short rawVal);
@@ -91,6 +95,7 @@ protected:
   virtual void midiHeadphoneOutputVolumeReceived(unsigned short rawVal) = 0;
   virtual void midiMonitorOutputVolumeReceived(unsigned short rawVal) = 0;
   virtual void midiDirectOutputVolumeReceived(unsigned short rawVal) = 0;
+  virtual void midiMasterTuneReceived(unsigned short rawVal) = 0;
   virtual void midiSPDIFInputEnableReceived(unsigned short rawVal) = 0;
   virtual void midiMainOutputEQBassReceived(unsigned short rawVal) = 0;
   virtual void midiMainOutputEQMiddleReceived(unsigned short rawVal) = 0;

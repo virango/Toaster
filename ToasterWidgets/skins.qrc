@@ -14,5 +14,7 @@
         <file>resources/LCD.png</file>
         <file>resources/Tuner.png</file>
         <file>resources/KPA_Stomp_Led.png</file>
+        <file>resources/LCDCheckBox_Checked.png</file>
+        <file>resources/LCDCheckBox_Unchecked.png</file>
     </qresource>
 </RCC>

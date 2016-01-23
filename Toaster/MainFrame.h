@@ -148,6 +148,8 @@ private slots:
 
 
 
+  void on_exitButton_clicked(QToasterButton &bt, bool);
+
 private:
   enum OperationMode
   {
@@ -199,6 +201,7 @@ private:
   OperationMode mOperationMode;
   OperationMode mPreviousOperationMode;
   QToasterButton* mEditModeButton;
+  QObject*      mEditModeModule;
 };
 
 #endif // MAINFRAME_H

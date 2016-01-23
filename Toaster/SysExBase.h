@@ -64,9 +64,9 @@ protected:
     return rawVal != 0;
   }
   
-  unsigned short phys2Raw(double physVal, double deltaMinMax, double min)
+  unsigned short phys2Raw(double physVal, double deltaMinMax, double min, unsigned short maxRawVal = 0x3FFF)
   {
-    unsigned short rawVal = ((physVal - min) * 0x3FFF) / deltaMinMax;
+    unsigned short rawVal = ((physVal - min) * maxRawVal) / deltaMinMax;
     return rawVal;
   }
   

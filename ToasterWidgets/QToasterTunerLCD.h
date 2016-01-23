@@ -20,16 +20,23 @@ public:
   explicit QToasterTunerLCD(QWidget *parent = 0);
   ~QToasterTunerLCD();
 
+signals:
+  void signalMuted(bool muted);
 
 public slots:
   void setIndexPosition(int position);
-  void setNote(QString note);
-  void setOctave(QString octave);
+  void setNote(const QString& note);
+  void setOctave(const QString& octave);
+  void setMasterTuneValue(const QString& masterTune);
+  void setMuted(bool muted);
 
 protected:
   void createIndexSkin();
   void paintEvent(QPaintEvent*);
   void contextMenuEvent(QContextMenuEvent * cme);
+
+private slots:
+  void on_muteCheckBox_clicked(bool checked);
 
 private:
   Ui::QToasterTunerLCD *ui;

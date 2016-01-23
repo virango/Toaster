@@ -22,6 +22,7 @@ MainFrame::MainFrame(QWidget *parent)
   , mOperationMode(Browser)
   , mPreviousOperationMode(Browser)
   , mEditModeButton(NULL)
+  , mEditModeModule(NULL)
 {
   ui->setupUi(this);
 
@@ -501,7 +502,12 @@ void MainFrame::onGlobalOperationMode(unsigned short opMode)
 {
   ui->chickenHeadDial->setState((QChickenHeadDial::State)opMode);
   if(mOperationMode != StompEdit)
+  {
     ui->modeFrames->setCurrentIndex(opMode-1);
+    // todo: a better solution
+    if((Global::OperationMode)opMode == Global::Tuner)
+      mGlobal.requestMasterTune();
+  }
   update();
 }
 
@@ -632,11 +638,7 @@ void MainFrame::handleStompButtonClick(QObject& module, QToasterButton& stompBt,
 
 void MainFrame::toggleOperationMode(QObject& module, OperationMode opMode, QToasterButton* bt)
 {
-  //Stomp* pStomp = qobject_cast<Stomp*>(&module);
-  //Delay* pDelay = qobject_cast<Delay*>(&module);
-  //Reverb* pReverb = qobject_cast<Reverb*>(&module);
-
-  if(bt != NULL)
+  if(bt != nullptr)
   {
     if(mEditModeButton != NULL && bt != mEditModeButton)
       mEditModeButton->resetToOnOffState();
@@ -644,7 +646,9 @@ void MainFrame::toggleOperationMode(QObject& module, OperationMode opMode, QToas
     if(bt->state() == QToasterButton::Blinking)
     {
       bt->resetToOnOffState();
-      mEditModeButton = NULL;
+      mEditModeButton = nullptr;
+      mEditModeModule = nullptr;
+      ui->exitButton->setState(QToasterButton::Off);
       ui->modeFrames->setCurrentIndex(ui->modeFrames->indexOf(ui->browser)); // todo:
       ui->stompEditor->deactivate();
       mOperationMode = mPreviousOperationMode;
@@ -652,16 +656,19 @@ void MainFrame::toggleOperationMode(QObject& module, OperationMode opMode, QToas
     else
     {
       bt->setState(QToasterButton::Blinking);
+      ui->exitButton->setState(QToasterButton::On);
       mEditModeButton = bt;
+      mEditModeModule = &module;
       ui->modeFrames->setCurrentIndex(ui->modeFrames->indexOf(ui->stompEditor));
       ui->stompEditor->activate(module);
       mOperationMode = opMode;
     }
   }
-  else if(mEditModeButton != NULL)
+  else if(mEditModeButton != nullptr)
   {
     mEditModeButton->resetToOnOffState();
-    mEditModeButton = NULL;
+    mEditModeButton = nullptr;
+    ui->exitButton->setState(QToasterButton::Off);
   }
 }
 
@@ -748,4 +755,13 @@ void MainFrame::setStompLedColor(::FXType type, QMultiColorLed* ledWidget)
 }
 //------------------------------------------------------------------------------------------
 
+
+
+void MainFrame::on_exitButton_clicked(QToasterButton &bt, bool /*longClick*/)
+{
+  if(mOperationMode == StompEdit && mEditModeButton != nullptr && mEditModeModule != nullptr)
+  {
+    toggleOperationMode(*mEditModeModule, mPreviousOperationMode, mEditModeButton);
+  }
+}
 

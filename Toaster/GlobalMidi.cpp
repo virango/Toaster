@@ -9,6 +9,7 @@ BYTEARRAYDEF(GlobalMidi, MainOutputVolume,        0x00)
 BYTEARRAYDEF(GlobalMidi, HeadphoneOutputVolume,   0x01)
 BYTEARRAYDEF(GlobalMidi, MonitorOutputVolume,     0x02)
 BYTEARRAYDEF(GlobalMidi, DirectOutputVolume,      0x03)
+BYTEARRAYDEF(GlobalMidi, MasterTune,              0x05)
 BYTEARRAYDEF(GlobalMidi, SPDIFInputEnable,        0x0B)
 BYTEARRAYDEF(GlobalMidi, MainOutputEQBass,        0x0C)
 BYTEARRAYDEF(GlobalMidi, MainOutputEQMiddle,      0x0D)
@@ -55,6 +56,8 @@ void GlobalMidi::consumeSysExMsg(ByteArray* msg)
       midiMonitorOutputVolumeReceived(rawVal);
     else if(param == sDirectOutputVolume[0])
       midiDirectOutputVolumeReceived(rawVal);
+    else if(param == sMasterTune[0])
+      midiMasterTuneReceived(rawVal);
     else if(param == sSPDIFInputEnable[0])
       midiSPDIFInputEnableReceived(rawVal);
     else if(param == sMainOutputEQBass[0])
@@ -118,6 +121,16 @@ void GlobalMidi::midiRequestDirectOutputVolume()
 void GlobalMidi::midiApplyDirectOutputVolume(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDirectOutputVolume, rawVal));
+}
+
+void GlobalMidi::midiRequestMasterTune()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sMasterTune));
+}
+
+void GlobalMidi::midiApplyMasterTune(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sMasterTune, rawVal));
 }
 
 void GlobalMidi::midiRequestSPDIFInputEnable()

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QToasterDial" name="qToasterDial_4">
+  <widget class="QToasterDial" name="dummy7Dial">
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -28,8 +28,11 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="isActive">
+    <bool>false</bool>
+   </property>
   </widget>
-  <widget class="QToasterDial" name="qToasterDial_2">
+  <widget class="QToasterDial" name="dummy8Dial">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -44,8 +47,11 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="isActive">
+    <bool>false</bool>
+   </property>
   </widget>
-  <widget class="QToasterDial" name="eqBassDial">
+  <widget class="QToasterDial" name="masterTuneDial">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -73,19 +79,25 @@
     </size>
    </property>
    <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Bi</enum>
+    <enum>QToasterDial::Uni</enum>
    </property>
    <property name="minValue">
-    <double>-5.000000000000000</double>
+    <double>424.000000000000000</double>
    </property>
    <property name="maxValue">
-    <double>5.000000000000000</double>
+    <double>456.000000000000000</double>
+   </property>
+   <property name="value">
+    <double>440.000000000000000</double>
    </property>
    <property name="stepWidth">
     <double>0.100000000000000</double>
    </property>
+   <property name="unit">
+    <string>Hz</string>
+   </property>
   </widget>
-  <widget class="QToasterDial" name="eqTrebleDial">
+  <widget class="QToasterDial" name="dummy3Dial">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -113,7 +125,7 @@
     </size>
    </property>
    <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Bi</enum>
+    <enum>QToasterDial::Uni</enum>
    </property>
    <property name="minValue">
     <double>-5.000000000000000</double>
@@ -124,8 +136,11 @@
    <property name="stepWidth">
     <double>0.100000000000000</double>
    </property>
+   <property name="isActive">
+    <bool>false</bool>
+   </property>
   </widget>
-  <widget class="QToasterEnumDial" name="browseModeDial">
+  <widget class="QToasterEnumDial" name="muteDial">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -137,8 +152,14 @@
    <property name="knobSize">
     <enum>QToasterEnumDial::Small</enum>
    </property>
+   <property name="values">
+    <stringlist>
+     <string>Unmuted</string>
+     <string>Muted</string>
+    </stringlist>
+   </property>
   </widget>
-  <widget class="QToasterDial" name="qToasterDial_3">
+  <widget class="QToasterDial" name="dummy6Dial">
    <property name="geometry">
     <rect>
      <x>190</x>
@@ -153,8 +174,11 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="isActive">
+    <bool>false</bool>
+   </property>
   </widget>
-  <widget class="QToasterDial" name="eqMiddleDial">
+  <widget class="QToasterDial" name="dummy2Dial">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -182,10 +206,10 @@
     </size>
    </property>
    <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Bi</enum>
+    <enum>QToasterDial::Uni</enum>
    </property>
    <property name="minValue">
-    <double>-5.000000000000000</double>
+    <double>0.000000000000000</double>
    </property>
    <property name="maxValue">
     <double>5.000000000000000</double>
@@ -193,8 +217,11 @@
    <property name="stepWidth">
     <double>0.100000000000000</double>
    </property>
+   <property name="isActive">
+    <bool>false</bool>
+   </property>
   </widget>
-  <widget class="QToasterDial" name="eqPresenceDial">
+  <widget class="QToasterDial" name="dummy4Dial">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -222,7 +249,7 @@
     </size>
    </property>
    <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::Bi</enum>
+    <enum>QToasterDial::Uni</enum>
    </property>
    <property name="minValue">
     <double>-5.000000000000000</double>
@@ -235,6 +262,9 @@
    </property>
    <property name="unit">
     <string/>
+   </property>
+   <property name="isActive">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QToasterTunerLCD" name="toasterTunerLCD">
@@ -266,5 +296,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>masterTuneDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>toasterTunerLCD</receiver>
+   <slot>setMasterTuneValue(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>105</x>
+     <y>272</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>126</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

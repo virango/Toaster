@@ -288,9 +288,9 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QLabel#label	
+     <string notr="true">QLabel#indexLabel
 {
-	background-color: rgb(167, 179, 175);
+	background-color: rgb(208, 234, 222);
 }</string>
     </property>
     <property name="text">
@@ -349,6 +349,52 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
+  </widget>
+  <widget class="QCheckBox" name="muteCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>8</x>
+     <y>3</y>
+     <width>101</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Ubuntu</family>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox::indicator:checked
+{
+image: url(:/resources/LCDCheckBox_Checked.png)
+}
+QCheckBox::indicator:unchecked
+{
+image: url(:/resources/LCDCheckBox_Unchecked.png)
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Mute Signal</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>16</width>
+     <height>16</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
   </widget>
  </widget>
  <resources/>

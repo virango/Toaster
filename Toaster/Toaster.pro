@@ -75,8 +75,6 @@ SOURCES += main.cpp\
     TunerFrame.cpp \
     WahWahFrame.cpp \
     DummyStompFrame.cpp \
-    TunerNoteMidi.cpp \
-    TunerNote.cpp \
     LookUpTables.cpp \
     TunerIndex.cpp \
     TunerIndexMidi.cpp \
@@ -135,7 +133,9 @@ SOURCES += main.cpp\
     TremoloRateValues.cpp \
     QFactorValues.cpp \
     FlangerRateValues.cpp \
-    VoiceIntervalValues.cpp
+    VoiceIntervalValues.cpp \
+    TunerMidi.cpp \
+    Tuner.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -174,8 +174,6 @@ HEADERS  += ToasterWindow.h \
     TunerFrame.h \
     WahWahFrame.h \
     DummyStompFrame.h \
-    TunerNoteMidi.h \
-    TunerNote.h \
     LookUpTables.h \
     TunerIndex.h \
     TunerIndexMidi.h \
@@ -235,7 +233,9 @@ HEADERS  += ToasterWindow.h \
     ConnectionStatusFrame.h \
     AboutDialog.h \ 
     AmpFrame.h \
-    CabFrame.h
+    CabFrame.h \
+    Tuner.h \
+    TunerMidi.h
 
 FORMS    += \
     ToasterWindow.ui \

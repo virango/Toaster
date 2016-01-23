@@ -71,12 +71,27 @@ void QToasterTunerLCD::setIndexPosition(int position)
   }
 }
 
-void QToasterTunerLCD::setNote(QString note)
+void QToasterTunerLCD::setNote(const QString& note)
 {
   ui->noteLabel->setText(note);
 }
 
-void QToasterTunerLCD::setOctave(QString octave)
+void QToasterTunerLCD::setOctave(const QString& octave)
 {
   ui->octaveLabel->setText(octave);
+}
+
+void QToasterTunerLCD::setMasterTuneValue(const QString& masterTune)
+{
+  ui->masterTuneVal->setText(masterTune);
+}
+
+void QToasterTunerLCD::setMuted(bool muted)
+{
+  ui->muteCheckBox->setChecked(muted);
+}
+
+void QToasterTunerLCD::on_muteCheckBox_clicked(bool checked)
+{
+  emit signalMuted(checked);
 }

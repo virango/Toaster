@@ -39,6 +39,11 @@ void Global::applyDirectOutputVolume(int volume)
   midiApplyDirectOutputVolume((unsigned short)volume);
 }
 
+void Global::applyMasterTune(double masterTune)
+{
+  midiApplyMasterTune(phys2Raw(masterTune+0.1, 32, 424));
+}
+
 void Global::applySpdifInputEnable(bool enabled)
 {
   midiApplySPDIFInputEnable(bool2Raw(enabled));
@@ -144,6 +149,13 @@ void Global::midiMonitorOutputVolumeReceived(unsigned short rawVal)
 void Global::midiDirectOutputVolumeReceived(unsigned short rawVal)
 {
   emit directOutputVolumeReceived((int)rawVal);
+}
+
+void Global::midiMasterTuneReceived(unsigned short rawVal)
+{
+  long tmp = ((long)((raw2Phys(rawVal, 32, 424)) * 10));
+  double newVal = tmp / 10.0;
+  emit masterTuneReceived(newVal);
 }
 
 void Global::midiSPDIFInputEnableReceived(unsigned short rawVal)

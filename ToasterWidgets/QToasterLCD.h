@@ -13,15 +13,15 @@
 #define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;"
 #endif
 
-#define COLOR_STANDARD "color: rgb(167, 179, 175)"
-#define COLOR_ORANGE   "color: rgb(207, 137, 90)"
-#define COLOR_RED      "color: rgb(210, 53, 53)"
-#define COLOR_YELLOW   "color: rgb(201, 201, 63)"
-#define COLOR_CYAN     "color: rgb(0, 193, 193)"
-#define COLOR_BLUE     "color: rgb(103, 103, 239)"
-#define COLOR_PURPLE   "color: rgb(148, 20, 216)"
-#define COLOR_WHITE    "color: rgb(210, 210, 210)"
-#define COLOR_GREEN    "color: rgb(54, 224, 54)"
+#define COLOR_STANDARD "color: rgb(208, 234, 222)"
+#define COLOR_ORANGE   "color: rgb(227, 183, 159)"
+#define COLOR_RED      "color: rgb(255, 128, 122)"
+#define COLOR_YELLOW   "color: rgb(224, 224, 133)"
+#define COLOR_CYAN     "color: rgb(0, 225, 225)"
+#define COLOR_BLUE     "color: rgb(145, 145, 255)"
+#define COLOR_PURPLE   "color: rgb(211, 132, 255)"
+#define COLOR_WHITE    "color: rgb(209, 215, 222)"
+#define COLOR_GREEN    "color: rgb(124, 233, 124)"
 
 struct ICtxMenuProvider;
 
