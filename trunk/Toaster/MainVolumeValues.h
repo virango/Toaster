@@ -1,3 +1,18 @@
+/*  This file is part of Toaster, the editor and remote control for Kemper profiling amplifier.
+*
+*   Copyright (C) 2016  Thomas Langer
+*
+*   Toaster is free software: you can redistribute it and/or modify it under the terms of the
+*   GNU General Public License as published by the Free Software Foundation, either version 3
+*   of the License, or (at your option) any later version.
+*
+*   Toaster is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+*   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*   See the GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License along with Toaster.
+*   If not, see <http://www.gnu.org/licenses/>.
+*/
 #ifndef MAIN_VOLUME_VALUES
 #define MAIN_VOLUME_VALUES \
 {0,"- ∞"},{1,"-95.9"},{2,"-95.8"},{3,"-95.7"},{4,"-95.5"},{5,"-95.4"},{6,"-95.3"},{7,"-95.2"},{8,"-95.1"},{9,"-95.0"},{10,"-94.8"},{11,"-94.7"},{12,"-94.6"},{13,"-94.5"},{14,"-94.4"},{15,"-94.3"},{16,"-94.1"},{17,"-94.0"},{18,"-93.9"},{19,"-93.8"},{20,"-93.7"},{21,"-93.6"},{22,"-93.4"},{23,"-93.3"},{24,"-93.2"},{25,"-93.1"},{26,"-93.0"},{27,"-92.9"},{28,"-92.8"},{29,"-92.6"},{30,"-92.5"},{31,"-92.4"},{32,"-92.3"},{33,"-92.2"},{34,"-92.1"},{35,"-91.9"},{36,"-91.8"},{37,"-91.7"},{38,"-91.6"},{39,"-91.5"},{40,"-91.3"},{41,"-91.2"},{42,"-91.1"},{43,"-91.0"},{44,"-90.9"},{45,"-90.8"},{46,"-90.7"},{47,"-90.5"},{48,"-90.4"},{49,"-90.3"},{50,"-90.2"},{51,"-90.1"},{52,"-89.9"},{53,"-89.8"},{54,"-89.7"},{55,"-89.6"},{56,"-89.5"},{57,"-89.4"},{58,"-89.2"},{59,"-89.1"},{60,"-89.0"},{61,"-88.9"},{62,"-88.8"},{63,"-88.7"},{64,"-88.6"},{65,"-88.4"},{66,"-88.3"},{67,"-88.2"},{68,"-88.1"},{69,"-88.0"},{70,"-87.9"},{71,"-87.7"},{72,"-87.6"},{73,"-87.5"},{74,"-87.4"},{75,"-87.3"},{76,"-87.2"},{77,"-87.0"},{78,"-86.9"},{79,"-86.8"},{80,"-86.7"},{81,"-86.6"},{82,"-86.5"},{83,"-86.3"},{84,"-86.2"},{85,"-86.1"},{86,"-86.0"},{87,"-85.9"},{88,"-85.8"},{89,"-85.7"},{90,"-85.5"},{91,"-85.4"},{92,"-85.3"},{93,"-85.2"},{94,"-85.1"},{95,"-84.9"},{96,"-84.8"},{97,"-84.7"},{98,"-84.6"},{99,"-84.5"},\

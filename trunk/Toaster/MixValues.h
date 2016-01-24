@@ -1,3 +1,18 @@
+/*  This file is part of Toaster, the editor and remote control for Kemper profiling amplifier.
+*
+*   Copyright (C) 2016  Thomas Langer
+*
+*   Toaster is free software: you can redistribute it and/or modify it under the terms of the
+*   GNU General Public License as published by the Free Software Foundation, either version 3
+*   of the License, or (at your option) any later version.
+*
+*   Toaster is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+*   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*   See the GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License along with Toaster.
+*   If not, see <http://www.gnu.org/licenses/>.
+*/
 #ifndef MIX_VALUES
 #define MIX_VALUES \
 {0,"0.0% (dry)"},{1,"0.0%"},{13,"0.1%"},{25,"0.2%"},{37,"0.3%"},{50,"0.4%"},{62,"0.5%"},{74,"0.6%"},{87,"0.7%"},{99,"0.8%"},{111,"0.9%"},{123,"1.0%"},{136,"1.1%"},{148,"1.2%"},{160,"1.3%"},{173,"1.4%"},{185,"1.5%"},{197,"1.6%"},{210,"1.7%"},{222,"1.8%"},{234,"1.9%"},{246,"2.0%"},{259,"2.1%"},{271,"2.2%"},{283,"2.3%"},{296,"2.4%"},{308,"2.5%"},{320,"2.6%"},{333,"2.7%"},{345,"2.8%"},{357,"2.9%"},{369,"3.0%"},{382,"3.1%"},{394,"3.2%"},{406,"3.3%"},{419,"3.4%"},{431,"3.5%"},{443,"3.6%"},{455,"3.7%"},{468,"3.8%"},{480,"3.9%"},{492,"4.0%"},{505,"4.1%"},{517,"4.2%"},{529,"4.3%"},{542,"4.4%"},{554,"4.5%"},{566,"4.6%"},{578,"4.7%"},{591,"4.8%"},{603,"4.9%"},{615,"5.0%"},{628,"5.1%"},{640,"5.2%"},{652,"5.3%"},{665,"5.4%"},{677,"5.5%"},{689,"5.6%"},{701,"5.7%"},{714,"5.8%"},{726,"5.9%"},{738,"6.0%"},{751,"6.1%"},{763,"6.2%"},{775,"6.3%"},{788,"6.4%"},{800,"6.5%"},{812,"6.6%"},{824,"6.7%"},{837,"6.8%"},{849,"6.9%"},{861,"7.0%"},{874,"7.1%"},{886,"7.2%"},{898,"7.3%"},{910,"7.4%"},{923,"7.5%"},{935,"7.6%"},{947,"7.7%"},{960,"7.8%"},{972,"7.9%"},{984,"8.0%"},{997,"8.1%"},{1009,"8.2%"},{1021,"8.3%"},{1033,"8.4%"},{1046,"8.5%"},{1058,"8.6%"},{1070,"8.7%"},{1083,"8.8%"},{1095,"8.9%"},{1107,"9.0%"},{1120,"9.1%"},{1132,"9.2%"},{1144,"9.3%"},{1156,"9.4%"},{1169,"9.5%"},{1181,"9.6%"},{1193,"9.7%"},{1206,"9.8%"},\

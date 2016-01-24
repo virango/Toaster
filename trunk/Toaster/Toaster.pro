@@ -300,17 +300,17 @@ RESOURCES += \
 DEPENDPATH += $$PWD/../ToasterWidgets \
               $$PWD/../RtMidi
 
-win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster-Desktop_Qt_5_4_1_MSVC2013_64bit/RtMidi/release/ -lRtMidi
-else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster-Desktop_Qt_5_4_1_MSVC2013_64bit/RtMidi/debug/ -lRtMidi
-else:win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster-Desktop_Qt_5_4_1_MSVC2013_32bit/RtMidi/release/ -lRtMidi
-else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster-Desktop_Qt_5_4_1_MSVC2013_32bit/RtMidi/debug/ -lRtMidi
+win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster_64bit/RtMidi/release/ -lRtMidi
+else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster_64bit/RtMidi/debug/ -lRtMidi
+else:win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster_32bit/RtMidi/release/ -lRtMidi
+else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster_32bit/RtMidi/debug/ -lRtMidi
 else:unix: CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/RtMidi/release -lRtMidi
 else:unix: CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/RtMidi/debug -lRtMidi
 
-win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster-Desktop_Qt_5_4_1_MSVC2013_64bit/ToasterWidgets/release/ -lqtoasterwidgetsplugin
-else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster-Desktop_Qt_5_4_1_MSVC2013_64bit/ToasterWidgets/debug/ -lqtoasterwidgetsplugind
-else:win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster-Desktop_Qt_5_4_1_MSVC2013_32bit/ToasterWidgets/release/ -lqtoasterwidgetsplugin
-else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster-Desktop_Qt_5_4_1_MSVC2013_32bit/ToasterWidgets/debug/ -lqtoasterwidgetsplugind
+win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster_64bit/ToasterWidgets/release/ -lqtoasterwidgetsplugin
+else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster_64bit/ToasterWidgets/debug/ -lqtoasterwidgetsplugind
+else:win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster_32bit/ToasterWidgets/release/ -lqtoasterwidgetsplugin
+else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster_32bit/ToasterWidgets/debug/ -lqtoasterwidgetsplugind
 else:unix: CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/ToasterWidgets/release -lqtoasterwidgetsplugin
 else:unix: CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/ToasterWidgets/debug -lqtoasterwidgetsplugin
 

@@ -1,3 +1,18 @@
+/*  This file is part of Toaster, the editor and remote control for Kemper profiling amplifier.
+*
+*   Copyright (C) 2016  Thomas Langer
+*
+*   Toaster is free software: you can redistribute it and/or modify it under the terms of the
+*   GNU General Public License as published by the Free Software Foundation, either version 3
+*   of the License, or (at your option) any later version.
+*
+*   Toaster is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+*   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*   See the GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License along with Toaster.
+*   If not, see <http://www.gnu.org/licenses/>.
+*/
 #ifndef FREQUENCY_VALUES
 #define FREQUENCY_VALUES \
 {0,"20.6"},{11,"20.7"},{22,"20.8"},{32,"20.9"},{43,"21.0"},{54,"21.1"},{64,"21.2"},{75,"21.3"},{86,"21.4"},{96,"21.5"},{107,"21.6"},{118,"21.7"},{128,"21.8"},{138,"21.9"},{148,"22.0"},{158,"22.1"},{168,"22.2"},{178,"22.3"},{188,"22.4"},{197,"22.5"},{207,"22.6"},{217,"22.7"},{227,"22.8"},{237,"22.9"},{247,"23.0"},{256,"23.1"},{266,"23.2"},{275,"23.3"},{284,"23.4"},{293,"23.5"},{302,"23.6"},{311,"23.7"},{320,"23.8"},{330,"23.9"},{339,"24.0"},{348,"24.1"},{357,"24.2"},{366,"24.3"},{375,"24.4"},{384,"24.5"},{393,"24.6"},{402,"24.7"},{410,"24.8"},{419,"24.9"},{427,"25.0"},{436,"25.1"},{444,"25.2"},{453,"25.3"},{461,"25.4"},{470,"25.5"},{478,"25.6"},{487,"25.7"},{495,"25.8"},{504,"25.9"},{512,"26.0"},{521,"26.1"},{530,"26.2"},{538,"26.3"},{547,"26.4"},{555,"26.5"},{564,"26.6"},{572,"26.7"},{581,"26.8"},{589,"26.9"},{598,"27.0"},{606,"27.1"},{615,"27.2"},{623,"27.3"},{632,"27.4"},{640,"27.5"},{648,"27.6"},{656,"27.7"},{664,"27.8"},{672,"27.9"},{680,"28.0"},{688,"28.1"},{696,"28.2"},{704,"28.3"},{712,"28.4"},{720,"28.5"},{728,"28.6"},{736,"28.7"},{744,"28.8"},{752,"28.9"},{760,"29.0"},{768,"29.1"},{776,"29.2"},{783,"29.3"},{790,"29.4"},{797,"29.5"},{804,"29.6"},{811,"29.7"},{818,"29.8"},{825,"29.9"},{832,"30.0"},{840,"30.1"},{847,"30.2"},{854,"30.3"},{861,"30.4"},{868,"30.5"},\

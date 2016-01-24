@@ -1,3 +1,18 @@
+/*  This file is part of Toaster, the editor and remote control for Kemper profiling amplifier.
+*
+*   Copyright (C) 2016  Thomas Langer
+*
+*   Toaster is free software: you can redistribute it and/or modify it under the terms of the
+*   GNU General Public License as published by the Free Software Foundation, either version 3
+*   of the License, or (at your option) any later version.
+*
+*   Toaster is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+*   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*   See the GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License along with Toaster.
+*   If not, see <http://www.gnu.org/licenses/>.
+*/
 #include <QFileDialog>
 #include "ToasterWindow.h"
 #include "ui_ToasterWindow.h"
@@ -173,6 +188,8 @@ void ToasterWindow::on_actionUploadKIPRFile_triggered()
     return;
 
   QFile kiprFile(fileName);
+  QFileInfo kiprFileInfo(fileName);
+  QString rigName = kiprFileInfo.fileName();
   kiprFile.open(QIODevice::ReadOnly);
   QDataStream stream(&kiprFile);
   unsigned int magic;
@@ -185,6 +202,18 @@ void ToasterWindow::on_actionUploadKIPRFile_triggered()
     unsigned short dataBytesInFile = (tmp[0] << 8) | tmp[1];
     if(dataBytesInFile == kiprFile.bytesAvailable())
     {
+      ByteArray c1 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x01,0x00,0x7f,0x7c,0x00,0x00,0xf7};
+      ByteArray c2 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x03,0x00,0x7f,0x7d,0x54,0x6f,0x61,0x73,0x74,0x65,0x72,0x00,0xf7};
+      ByteArray c3 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x03,0x00,0x7f,0x7c,0x52,0x65,0x63,0x65,0x69,0x76,0x69,0x6e,0x67,0x20,0x52,0x69,0x67,0x73,0x2e,0x2e,0x2e,0x00,0xf7};
+      ByteArray c4 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x03,0x00,0x7f,0x7b,0x00,0xf7};
+
+      ByteArray c0 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x7e,0x00,0x03,0x01,0x00,0x00,0x49,0xf7};
+
+      Midi::get().sendCmd(c1);
+      Midi::get().sendCmd(c2);
+      Midi::get().sendCmd(c3);
+      Midi::get().sendCmd(c4);
+      Midi::get().sendCmd(c0);
       while(!stream.atEnd())
       {
         unsigned char c;
@@ -203,6 +232,36 @@ void ToasterWindow::on_actionUploadKIPRFile_triggered()
           Midi::get().sendCmd(midiCmd);
         }
       }
+
+      ByteArray cmd1 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x7e,0x00,0x02,0x01,0x01,0x00};
+      ByteArray cmd2 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x7e,0x00,0x08,0x01};
+      for(int i = 0; i < rigName.length(); ++i)
+      {
+        cmd1.push_back(rigName.at(i).toLatin1());
+        cmd2.push_back(rigName.at(i).toLatin1());
+      }
+      cmd1.push_back(0xf7);
+      cmd2.push_back(0);
+      cmd2.push_back(0xf7);
+      Midi::get().sendCmd(cmd1);
+      Midi::get().sendCmd(cmd2);
+
+      Midi::get().sendCmd(c1);
+      Midi::get().sendCmd(c2);
+      Midi::get().sendCmd(c3);
+      Midi::get().sendCmd(c4);
+
+      ByteArray c5 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x01,0x00,0x7f,0x7c,0x00,0x64,0xf7};
+      ByteArray c6 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x01,0x00,0x7f,0x7c,0x00,0x00,0xf7};
+      ByteArray c7 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x03,0x00,0x7f,0x7d,0x00,0xf7};
+      ByteArray c8 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x03,0x00,0x7f,0x7c,0x00,0xf7};
+      ByteArray c9 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x03,0x00,0x7f,0x7b,0x00,0xf7};
+
+      Midi::get().sendCmd(c5);
+      Midi::get().sendCmd(c6);
+      Midi::get().sendCmd(c7);
+      Midi::get().sendCmd(c8);
+      Midi::get().sendCmd(c9);
     }
   }
 }
