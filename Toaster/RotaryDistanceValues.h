@@ -1,3 +1,18 @@
+/*  This file is part of Toaster, the editor and remote control for Kemper profiling amplifier.
+*
+*   Copyright (C) 2016  Thomas Langer
+*
+*   Toaster is free software: you can redistribute it and/or modify it under the terms of the
+*   GNU General Public License as published by the Free Software Foundation, either version 3
+*   of the License, or (at your option) any later version.
+*
+*   Toaster is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+*   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*   See the GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License along with Toaster.
+*   If not, see <http://www.gnu.org/licenses/>.
+*/
 #ifndef ROTARY_DISTANCE_VALUES
 #define ROTARY_DISTANCE_VALUES \
 {0,"4.0"},{52,"4.1"},{154,"4.2"},{267,"4.3"},{369,"4.4"},{471,"4.5"},{563,"4.6"},{666,"4.7"},{768,"4.8"},{881,"4.9"},{983,"5.0"},{1075,"5.1"},{1178,"5.2"},{1290,"5.3"},{1392,"5.4"},{1495,"5.5"},{1587,"5.6"},{1689,"5.7"},{1792,"5.8"},{1904,"5.9"},{2007,"6.0"},{2099,"6.1"},{2201,"6.2"},{2314,"6.3"},{2416,"6.4"},{2518,"6.5"},{2610,"6.6"},{2713,"6.7"},{2815,"6.8"},{2928,"6.9"},{3030,"7.0"},{3122,"7.1"},{3225,"7.2"},{3337,"7.3"},{3439,"7.4"},{3542,"7.5"},{3634,"7.6"},{3736,"7.7"},{3839,"7.8"},{3951,"7.9"},{4054,"8.0"},{4146,"8.1"},{4258,"8.2"},{4361,"8.3"},{4453,"8.4"},{4565,"8.5"},{4657,"8.6"},{4770,"8.7"},{4862,"8.8"},{4964,"8.9"},{5077,"9.0"},{5169,"9.1"},{5282,"9.2"},{5384,"9.3"},{5476,"9.4"},{5589,"9.5"},{5681,"9.6"},{5794,"9.7"},{5886,"9.8"},{5988,"9.9"},{6101,"10.0"},{6193,"10.1"},{6305,"10.2"},{6408,"10.3"},{6500,"10.4"},{6612,"10.5"},{6704,"10.6"},{6817,"10.7"},{6909,"10.8"},{7011,"10.9"},{7124,"11.0"},{7216,"11.1"},{7329,"11.2"},{7431,"11.3"},{7523,"11.4"},{7636,"11.5"},{7728,"11.6"},{7841,"11.7"},{7933,"11.8"},{8035,"11.9"},{8148,"12.0"},{8223,"12.1"},{8298,"12.2"},{8366,"12.3"},{8427,"12.4"},{8502,"12.5"},{8564,"12.6"},{8639,"12.7"},{8700,"12.8"},{8768,"12.9"},{8844,"13.0"},{8905,"13.1"},{8980,"13.2"},{9048,"13.3"},{9110,"13.4"},{9185,"13.5"},{9246,"13.6"},{9321,"13.7"},{9383,"13.8"},{9451,"13.9"},\
