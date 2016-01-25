@@ -188,8 +188,8 @@ void ToasterWindow::on_actionUploadKIPRFile_triggered()
     return;
 
   QFile kiprFile(fileName);
-  QFileInfo kiprFileInfo(fileName);
-  QString rigName = kiprFileInfo.fileName();
+  //QFileInfo kiprFileInfo(fileName);
+  //QString rigName = kiprFileInfo.fileName();
   kiprFile.open(QIODevice::ReadOnly);
   QDataStream stream(&kiprFile);
   unsigned int magic;
@@ -202,6 +202,8 @@ void ToasterWindow::on_actionUploadKIPRFile_triggered()
     unsigned short dataBytesInFile = (tmp[0] << 8) | tmp[1];
     if(dataBytesInFile == kiprFile.bytesAvailable())
     {
+      ui->mainFrame->disconnectFromKPA();
+      /*
       ByteArray c1 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x01,0x00,0x7f,0x7c,0x00,0x00,0xf7};
       ByteArray c2 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x03,0x00,0x7f,0x7d,0x54,0x6f,0x61,0x73,0x74,0x65,0x72,0x00,0xf7};
       ByteArray c3 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x03,0x00,0x7f,0x7c,0x52,0x65,0x63,0x65,0x69,0x76,0x69,0x6e,0x67,0x20,0x52,0x69,0x67,0x73,0x2e,0x2e,0x2e,0x00,0xf7};
@@ -214,6 +216,7 @@ void ToasterWindow::on_actionUploadKIPRFile_triggered()
       Midi::get().sendCmd(c3);
       Midi::get().sendCmd(c4);
       Midi::get().sendCmd(c0);
+      */
       while(!stream.atEnd())
       {
         unsigned char c;
@@ -232,7 +235,7 @@ void ToasterWindow::on_actionUploadKIPRFile_triggered()
           Midi::get().sendCmd(midiCmd);
         }
       }
-
+      /*
       ByteArray cmd1 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x7e,0x00,0x02,0x01,0x01,0x00};
       ByteArray cmd2 = {0xf0,0x00,0x20,0x33,0x02,0x7f,0x7e,0x00,0x08,0x01};
       for(int i = 0; i < rigName.length(); ++i)
@@ -262,6 +265,8 @@ void ToasterWindow::on_actionUploadKIPRFile_triggered()
       Midi::get().sendCmd(c7);
       Midi::get().sendCmd(c8);
       Midi::get().sendCmd(c9);
+      */
+      ui->mainFrame->connect2KPA("Toaster ");
     }
   }
 }
