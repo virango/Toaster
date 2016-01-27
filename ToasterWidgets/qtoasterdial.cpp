@@ -27,8 +27,8 @@ QList<QPixmap> QToasterDial::sBiLEDRingSkinPixmaps;
 
 QToasterDial::QToasterDial(QWidget *parent)
   : QWidget(parent)
-  , mCurrKnobFrameNo()
-  , mCurrLEDRingFrameNo()
+  , mCurrKnobFrameNo(0)
+  , mCurrLEDRingFrameNo(0)
   , mKnobSize(Big)
   , mLEDRingType(Uni)
   , mMouseY(0)
@@ -161,6 +161,8 @@ void QToasterDial::update(int deltaSteps)
     mCurrKnobFrameNo = newKnobFrameNo % sKnobSkinNoOfFrames;
   else
     mCurrKnobFrameNo = newKnobFrameNo;
+
+  mCurrKnobFrameNo %= sKnobSkinNoOfFrames;
 
   // update led ring
   updateLEDRing();

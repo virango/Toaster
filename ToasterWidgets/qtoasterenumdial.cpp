@@ -24,7 +24,7 @@
 
 QToasterEnumDial::QToasterEnumDial(QWidget *parent)
   : QWidget(parent)
-  , mCurrKnobFrameNo()
+  , mCurrKnobFrameNo(0)
   , mKnobSize(Big)
   , mMouseY(0)
   , mCurrValueIndex(0)
@@ -86,6 +86,8 @@ void QToasterEnumDial::update(int deltaSteps)
     mCurrKnobFrameNo = newKnobFrameNo % mKnobSkinNoOfFrames;
   else
     mCurrKnobFrameNo = newKnobFrameNo;
+
+  mCurrKnobFrameNo %= mKnobSkinNoOfFrames;
 
   // paint
   QWidget::update();

@@ -24,8 +24,8 @@
 
 QToasterLookUpTableDial::QToasterLookUpTableDial(QWidget *parent)
   : QWidget(parent)
-  , mCurrKnobFrameNo()
-  , mCurrLEDRingFrameNo()
+  , mCurrKnobFrameNo(0)
+  , mCurrLEDRingFrameNo(0)
   , mKnobSize(Big)
   , mLEDRingType(Uni)
   , mMouseY(0)
@@ -134,6 +134,8 @@ void QToasterLookUpTableDial::update(int deltaSteps)
       mCurrKnobFrameNo = newKnobFrameNo % mKnobSkinNoOfFrames;
     else
       mCurrKnobFrameNo = newKnobFrameNo;
+
+    mCurrKnobFrameNo %= mKnobSkinNoOfFrames;
 
     // update led ring
     updateLEDRing();
