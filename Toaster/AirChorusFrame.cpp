@@ -63,6 +63,24 @@ void AirChorusFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page AirChorusFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page AirChorusFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void AirChorusFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+  }
+}
+
 void AirChorusFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

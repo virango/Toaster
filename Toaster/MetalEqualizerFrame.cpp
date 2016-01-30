@@ -84,6 +84,26 @@ void MetalEqualizerFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page MetalEqualizerFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page MetalEqualizerFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void MetalEqualizerFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+    ui->bigDials->setCurrentIndex((int) page);
+    ui->smallDials->setCurrentIndex((int) page);
+  }
+}
+
 void MetalEqualizerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

@@ -69,6 +69,24 @@ void TremoloFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page TremoloFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page TremoloFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void TremoloFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+  }
+}
+
 void TremoloFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

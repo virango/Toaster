@@ -98,6 +98,26 @@ void PhaserFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page PhaserFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page PhaserFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void PhaserFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+    ui->bigDials->setCurrentIndex((int) page);
+    ui->smallDials->setCurrentIndex((int) page);
+  }
+}
+
 void PhaserFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

@@ -25,7 +25,7 @@ WahFormantShiftFrame::WahFormantShiftFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->pageDial->setValue(0);
+  setCurrentDisplayPage(QToasterLCD::Page1);
 }
 
 WahFormantShiftFrame::~WahFormantShiftFrame()
@@ -84,6 +84,26 @@ void WahFormantShiftFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page WahFormantShiftFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page WahFormantShiftFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void WahFormantShiftFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+    ui->bigDials->setCurrentIndex((int) page);
+    ui->smallDials->setCurrentIndex((int) page);
+  }
+}
+
 void WahFormantShiftFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);
@@ -109,15 +129,10 @@ void WahFormantShiftFrame::displayAmpName(const QString&  ampName)
   ui->lcdDisplay->setAmpName(ampName);
 }
 
-void WahFormantShiftFrame::on_pageDial_valueChanged(int valueIndex)
-{
-  ui->lcdDisplay->setCurrentPage((QToasterStompEditLCD::Page)valueIndex);
-}
-
 void WahFormantShiftFrame::on_manualDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
-    mpStomp->applyWahManual(value);
+    mpStomp->applyWahManual(value + 5.0);
 }
 
 void WahFormantShiftFrame::on_pedalRangeDial_valueChanged(double value)
@@ -176,7 +191,7 @@ void WahFormantShiftFrame::on_touchBoostDial_valueChanged(double value)
 
 void WahFormantShiftFrame::onManual(double value)
 {
-  ui->manualDial->setValue(value);
+  ui->manualDial->setValue(value - 5.0);
   update();
 }
 

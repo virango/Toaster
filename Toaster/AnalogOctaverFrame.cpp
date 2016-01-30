@@ -66,6 +66,24 @@ void AnalogOctaverFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page AnalogOctaverFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page AnalogOctaverFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void AnalogOctaverFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+  }
+}
+
 void AnalogOctaverFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

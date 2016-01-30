@@ -50,6 +50,9 @@ public:
   void activate(QObject& stomp);
   void deactivate();
 
+signals:
+  void editorPageChanged(IStompEditorPage* editorPage);
+
 private slots:
   void onActiveStompType(::FXType fxType);
   void onDelayType(::DelayType delayType);
@@ -78,6 +81,10 @@ private slots:
   // profile
   // kpa => ui
   void onAmpName(const QString& ampName);
+
+public slots:
+  void nextDisplayPage();
+  void prevDisplayPage();
 
 private:
   void requestValues();

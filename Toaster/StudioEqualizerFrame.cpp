@@ -106,6 +106,26 @@ void StudioEqualizerFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page StudioEqualizerFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page StudioEqualizerFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void StudioEqualizerFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+    ui->bigDials->setCurrentIndex((int) page);
+    ui->smallDials->setCurrentIndex((int) page);
+  }
+}
+
 void StudioEqualizerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

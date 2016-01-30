@@ -38,6 +38,8 @@ namespace Ui {
 class MainFrame;
 }
 
+struct IStompEditorPage;
+
 //class QToasterButton;
 
 class MainFrame : public QFrame
@@ -164,6 +166,12 @@ private slots:
 
 
   void on_exitButton_clicked(QToasterButton &bt, bool);
+
+  void on_prevPageButton_clicked(QToasterButton &bt, bool longClick);
+
+  void on_nextPageButton_clicked(QToasterButton &bt, bool longClick);
+
+  void onEditorPageChanged(IStompEditorPage* editorPage);
 
 private:
   enum OperationMode

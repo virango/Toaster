@@ -37,6 +37,9 @@ public:
   virtual void deactivate();
   virtual bool isActive() { return mpStomp != nullptr; }
   virtual QObject* getStomp()  { return mpStomp; }
+  virtual QToasterLCD::Page getMaxDisplayPage();
+  virtual QToasterLCD::Page getCurrentDisplayPage();
+  virtual void setCurrentDisplayPage(QToasterLCD::Page page);
 
   virtual void displayStompType(StompInstance stompInstance, FXType fxType);
   virtual void displayStompEnabled(StompInstance stompInstance, bool enabled);
@@ -45,8 +48,6 @@ public:
   virtual void displayAmpName(const QString&  ampName);
 
 private slots:
-  void on_pageDial_valueChanged(int valueIndex);
-
   // ui => kpa
   void on_manualDial_valueChanged(double value);
   void on_peakDial_valueChanged(double value);

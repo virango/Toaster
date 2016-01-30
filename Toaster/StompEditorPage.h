@@ -16,6 +16,7 @@
 #ifndef STOMPEDITORPAGE
 #define STOMPEDITORPAGE
 #include "Commons.h"
+#include "QToasterLCD.h"
 
 class Stomp;
 class QString;
@@ -26,6 +27,9 @@ struct IStompEditorPage
   virtual void deactivate() = 0;
   virtual bool isActive() = 0;
   virtual QObject* getStomp() = 0;
+  virtual QToasterLCD::Page getMaxDisplayPage() = 0;
+  virtual QToasterLCD::Page getCurrentDisplayPage() = 0;
+  virtual void setCurrentDisplayPage(QToasterLCD::Page page) = 0;
 
   virtual void displayStompType(StompInstance stompInstance, FXType fxType) = 0;
   virtual void displayStompEnabled(StompInstance stompInstance, bool enabled) = 0;
