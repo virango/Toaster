@@ -324,7 +324,7 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
         break;
       case HarmonicPitch:
         mpActivePage = ui->harmonicPitch;
-        index = indexOf(ui->wahWah);
+        index = indexOf(ui->harmonicPitch);
         break;
       case AnalogOctaver:
         mpActivePage = ui->analogOctaver;

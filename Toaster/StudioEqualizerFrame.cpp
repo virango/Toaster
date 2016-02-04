@@ -25,7 +25,7 @@ StudioEqualizerFrame::StudioEqualizerFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->pageDial->setValue(0);
+  setCurrentDisplayPage(QToasterLCD::Page1);
   ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
   ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
   ui->lowFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
@@ -149,11 +149,6 @@ void StudioEqualizerFrame::displayReverbEnabled(bool enabled)
 void StudioEqualizerFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
-}
-
-void StudioEqualizerFrame::on_pageDial_valueChanged(int valueIndex)
-{
-  ui->lcdDisplay->setCurrentPage((QToasterStompEditLCD::Page)valueIndex);
 }
 
 void StudioEqualizerFrame::on_mixDial_valueChanged(double value)

@@ -25,7 +25,7 @@ PhaserFrame::PhaserFrame(QWidget *parent)
 {
   ui->setupUi(this);
   ui->rateDial->setLookUpTable(LookUpTables::getFlangerRateValues());
-  ui->pageDial->setValue(0);
+  setCurrentDisplayPage(QToasterLCD::Page1);
 }
 
 PhaserFrame::~PhaserFrame()
@@ -141,11 +141,6 @@ void PhaserFrame::displayReverbEnabled(bool enabled)
 void PhaserFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
-}
-
-void PhaserFrame::on_pageDial_valueChanged(int valueIndex)
-{
-  ui->lcdDisplay->setCurrentPage((QToasterStompEditLCD::Page)valueIndex);
 }
 
 void PhaserFrame::on_rateDial_valueChanged(int value)

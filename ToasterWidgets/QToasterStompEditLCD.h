@@ -66,6 +66,7 @@ class TOASTERWIDGETS_EXPORT QToasterStompEditLCD : public QToasterLCD
   Q_PROPERTY(double eqBand7Value READ eqBand7Value WRITE setEqBand7Value)
   Q_PROPERTY(double eqBand8Value READ eqBand8Value WRITE setEqBand8Value)
   Q_PROPERTY(ScaleView scaleView READ scaleView WRITE setScaleView)
+  Q_PROPERTY(bool stompsAndAmpHidden READ stompsAndAmpHidden WRITE setStompsAndAmpHidden)
 
 public:
   explicit QToasterStompEditLCD(QWidget *parent = 0);
@@ -115,6 +116,8 @@ public:
   double eqBand8Value() const;
 
   ScaleView scaleView() const;
+
+  bool stompsAndAmpHidden() const;
 
   void setCtxMenuProvider(ICtxMenuProvider* ctxMenuProvider) { mpCtxMenuProvider = ctxMenuProvider; }
 
@@ -181,6 +184,7 @@ public slots:
   void setEqBand8Value(double value);
 
   void setScaleView(ScaleView scaleView);
+  void setStompsAndAmpHidden(bool hidden);
 
   virtual void setCurrentPage(Page page);
   virtual void setMaxPage(Page page);

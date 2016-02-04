@@ -25,7 +25,7 @@ PedalPitchFrame::PedalPitchFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->pageDial->setValue(0);
+  setCurrentDisplayPage(QToasterLCD::Page1);
   ui->smoothChordsDial->setValue(0);
   ui->pureTuningDial->setValue(0);
   ui->formantShiftOnOffDial->setValue(0);
@@ -106,7 +106,6 @@ void PedalPitchFrame::setCurrentDisplayPage(QToasterLCD::Page page)
   {
     ui->lcdDisplay->setCurrentPage(page);
     ui->bigDials->setCurrentIndex((int) page);
-    ui->smallDials->setCurrentIndex((int) page);
   }
 }
 
@@ -133,11 +132,6 @@ void PedalPitchFrame::displayReverbEnabled(bool enabled)
 void PedalPitchFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
-}
-
-void PedalPitchFrame::on_pageDial_valueChanged(int valueIndex)
-{
-  ui->lcdDisplay->setCurrentPage((QToasterStompEditLCD::Page)valueIndex);
 }
 
 void PedalPitchFrame::on_heelPitchDial_valueChanged(double value)

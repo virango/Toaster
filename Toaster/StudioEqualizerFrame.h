@@ -46,7 +46,6 @@ public:
   virtual void displayAmpName(const QString&  ampName);
 
 private slots:
-  void on_pageDial_valueChanged(int valueIndex);
   // ui => kpa
   void on_mixDial_valueChanged(double value);
   void on_duckingDial_valueChanged(double value);

@@ -135,7 +135,9 @@ SOURCES += main.cpp\
     FlangerRateValues.cpp \
     VoiceIntervalValues.cpp \
     TunerMidi.cpp \
-    Tuner.cpp
+    Tuner.cpp \
+    InputFrame.cpp \
+    OutputFrame.cpp
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -235,7 +237,9 @@ HEADERS  += ToasterWindow.h \
     AmpFrame.h \
     CabFrame.h \
     Tuner.h \
-    TunerMidi.h
+    TunerMidi.h \
+    InputFrame.h \
+    OutputFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -290,7 +294,9 @@ FORMS    += \
     ConnectionStatusFrame.ui \
     AboutDialog.ui \ 
     AmpFrame.ui \
-    CabFrame.ui
+    CabFrame.ui \
+    InputFrame.ui \
+    OutputFrame.ui
 
 RESOURCES += \
     resources.qrc

@@ -25,7 +25,7 @@ MetalEqualizerFrame::MetalEqualizerFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->pageDial->setValue(0);
+  setCurrentDisplayPage(QToasterLCD::Page1);
   ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
   ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
   ui->midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
@@ -127,11 +127,6 @@ void MetalEqualizerFrame::displayReverbEnabled(bool enabled)
 void MetalEqualizerFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
-}
-
-void MetalEqualizerFrame::on_pageDial_valueChanged(int valueIndex)
-{
-  ui->lcdDisplay->setCurrentPage((QToasterStompEditLCD::Page)valueIndex);
 }
 
 void MetalEqualizerFrame::on_lowDial_valueChanged(double value)

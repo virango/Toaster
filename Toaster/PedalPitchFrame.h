@@ -47,8 +47,6 @@ public:
   virtual void displayReverbEnabled(bool enabled);
   virtual void displayAmpName(const QString&  ampName);
 private slots:
-  void on_pageDial_valueChanged(int valueIndex);
-
   // ui => kpa
   void on_heelPitchDial_valueChanged(double value);
   void on_toePitchDial_valueChanged(double value);
