@@ -15,355 +15,6 @@
     <family>Ubuntu</family>
    </font>
   </property>
-  <widget class="QLineEdit" name="delayEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>343</x>
-     <y>35</y>
-     <width>34</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Ubuntu</family>
-     <pointsize>7</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>ArrowCursor</cursorShape>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::CustomContextMenu</enum>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(50,50,50);
-color: rgb(255, 255, 255);
-border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
-   </property>
-   <property name="text">
-    <string>DLY</string>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-   <property name="placeholderText">
-    <string>DLY</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="reverbEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>380</x>
-     <y>35</y>
-     <width>34</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Ubuntu</family>
-     <pointsize>7</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>ArrowCursor</cursorShape>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::CustomContextMenu</enum>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(50,50,50);
-color: rgb(255, 255, 255);
-border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
-   </property>
-   <property name="text">
-    <string>REV</string>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-   <property name="placeholderText">
-    <string>REV</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="stompCEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>35</y>
-     <width>34</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Ubuntu</family>
-     <pointsize>7</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>ArrowCursor</cursorShape>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::CustomContextMenu</enum>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(50,50,50);
-color: rgb(255, 255, 255);
-border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-   <property name="placeholderText">
-    <string>-</string>
-   </property>
-  </widget>
-  <widget class="Line" name="line4">
-   <property name="geometry">
-    <rect>
-     <x>3</x>
-     <y>42</y>
-     <width>152</width>
-     <height>1</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QFrame#line4
-{
-	color:  rgb(0, 0, 0);
-	background-color: rgb(0, 0, 0);
-}</string>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Plain</enum>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="stompAEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>6</x>
-     <y>35</y>
-     <width>34</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Ubuntu</family>
-     <pointsize>7</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>ArrowCursor</cursorShape>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::CustomContextMenu</enum>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(50,50,50);
-color: rgb(255, 255, 255);
-border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-   <property name="placeholderText">
-    <string>-</string>
-   </property>
-  </widget>
-  <widget class="QFrame" name="frame">
-   <property name="geometry">
-    <rect>
-     <x>154</x>
-     <y>35</y>
-     <width>112</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::Panel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Plain</enum>
-   </property>
-   <widget class="QLineEdit" name="ampNameEdit">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>112</width>
-      <height>15</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Ubuntu</family>
-      <pointsize>7</pointsize>
-      <kerning>false</kerning>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QLineEdit
-{
-background-color: transparent;
-border-color: rgb(0, 0, 0);
-color: rgb(0, 0, 0);
-}</string>
-    </property>
-    <property name="frame">
-     <bool>false</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="placeholderText">
-     <string>---</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QLineEdit" name="stompXEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>269</x>
-     <y>35</y>
-     <width>34</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Ubuntu</family>
-     <pointsize>7</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>ArrowCursor</cursorShape>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::CustomContextMenu</enum>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(50,50,50);
-color: rgb(255, 255, 255);
-border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-   <property name="placeholderText">
-    <string>-</string>
-   </property>
-  </widget>
   <widget class="Line" name="line2">
    <property name="geometry">
     <rect>
@@ -390,58 +41,6 @@ border-radius: 3px;</string>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="stompModEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>306</x>
-     <y>35</y>
-     <width>34</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Ubuntu</family>
-     <pointsize>7</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>ArrowCursor</cursorShape>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::CustomContextMenu</enum>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(50,50,50);
-color: rgb(255, 255, 255);
-border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-   <property name="placeholderText">
-    <string>-</string>
    </property>
   </widget>
   <widget class="QWidget" name="stompEditWidget" native="true">
@@ -587,34 +186,6 @@ color: rgb(255, 255, 255);</string>
     </property>
    </widget>
   </widget>
-  <widget class="Line" name="line5">
-   <property name="geometry">
-    <rect>
-     <x>265</x>
-     <y>42</y>
-     <width>152</width>
-     <height>1</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QFrame#line5
-{
-	color:  rgb(0, 0, 0);
-	background-color: rgb(0, 0, 0);
-}</string>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Plain</enum>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
   <widget class="Line" name="line1">
    <property name="geometry">
     <rect>
@@ -647,67 +218,6 @@ color: rgb(255, 255, 255);</string>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="stompDEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>117</x>
-     <y>35</y>
-     <width>34</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Ubuntu</family>
-     <pointsize>7</pointsize>
-     <weight>50</weight>
-     <italic>false</italic>
-     <bold>false</bold>
-     <underline>false</underline>
-     <strikeout>false</strikeout>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>ArrowCursor</cursorShape>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::CustomContextMenu</enum>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(50,50,50);
-color: rgb(255, 255, 255);
-border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
-   </property>
-   <property name="text">
-    <string>CHROM</string>
-   </property>
-   <property name="frame">
-    <bool>false</bool>
-   </property>
-   <property name="cursorPosition">
-    <number>0</number>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-   <property name="placeholderText">
-    <string>-</string>
    </property>
   </widget>
   <widget class="QStackedWidget" name="valWidget1">
@@ -958,6 +468,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -980,6 +491,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1003,6 +515,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1029,6 +542,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1060,6 +574,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1083,6 +598,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1109,6 +625,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1134,6 +651,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1398,6 +916,11 @@ QProgressBar#progressBar2::chunk
        <height>13</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <kerning>false</kerning>
+      </font>
+     </property>
      <property name="text">
       <string>TextLabel</string>
      </property>
@@ -1435,64 +958,6 @@ QProgressBar#progressBar2::chunk
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QLineEdit" name="stompBEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>43</x>
-     <y>35</y>
-     <width>34</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Ubuntu</family>
-     <pointsize>7</pointsize>
-     <weight>50</weight>
-     <bold>false</bold>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="cursor">
-    <cursorShape>ArrowCursor</cursorShape>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::CustomContextMenu</enum>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(50,50,50);
-color: rgb(255, 255, 255);
-border-color: rgb(0, 0, 0);
-border-radius: 3px;</string>
-   </property>
-   <property name="text">
-    <string>CHROM</string>
-   </property>
-   <property name="frame">
-    <bool>true</bool>
-   </property>
-   <property name="cursorPosition">
-    <number>0</number>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-   <property name="placeholderText">
-    <string>-</string>
-   </property>
-  </widget>
   <widget class="QStackedWidget" name="valWidget2">
    <property name="geometry">
     <rect>
@@ -1525,6 +990,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1556,6 +1022,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1578,6 +1045,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1600,6 +1068,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -1623,6 +1092,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1655,6 +1125,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1687,6 +1158,7 @@ border-radius: 3px;</string>
        <family>Ubuntu</family>
        <weight>75</weight>
        <bold>true</bold>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="styleSheet">
@@ -1718,6 +1190,7 @@ border-radius: 3px;</string>
       <font>
        <family>Ubuntu</family>
        <pointsize>7</pointsize>
+       <kerning>false</kerning>
       </font>
      </property>
      <property name="text">
@@ -2465,24 +1938,575 @@ border-radius: 3px;</string>
    </widget>
    <widget class="QWidget" name="stompScalePage"/>
   </widget>
-  <zorder>line4</zorder>
-  <zorder>stompAEdit</zorder>
-  <zorder>frame</zorder>
-  <zorder>line2</zorder>
-  <zorder>stompEditWidget</zorder>
-  <zorder>line5</zorder>
-  <zorder>line1</zorder>
-  <zorder>stompDEdit</zorder>
-  <zorder>valWidget1</zorder>
-  <zorder>line3</zorder>
-  <zorder>stompBEdit</zorder>
-  <zorder>stompCEdit</zorder>
-  <zorder>stompModEdit</zorder>
-  <zorder>stompXEdit</zorder>
-  <zorder>delayEdit</zorder>
-  <zorder>reverbEdit</zorder>
-  <zorder>valWidget2</zorder>
-  <zorder>scaleWidget</zorder>
+  <widget class="QWidget" name="stompsAndAmpWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>30</y>
+     <width>420</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QLineEdit" name="delayEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>343</x>
+      <y>5</y>
+      <width>34</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu</family>
+      <pointsize>7</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(50,50,50);
+color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-radius: 3px;</string>
+    </property>
+    <property name="text">
+     <string>DLY</string>
+    </property>
+    <property name="frame">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>DLY</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="stompBEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>43</x>
+      <y>5</y>
+      <width>34</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu</family>
+      <pointsize>7</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(50,50,50);
+color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-radius: 3px;</string>
+    </property>
+    <property name="text">
+     <string>CHROM</string>
+    </property>
+    <property name="frame">
+     <bool>true</bool>
+    </property>
+    <property name="cursorPosition">
+     <number>5</number>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="stompDEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>117</x>
+      <y>5</y>
+      <width>34</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu</family>
+      <pointsize>7</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(50,50,50);
+color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-radius: 3px;</string>
+    </property>
+    <property name="text">
+     <string>CHROM</string>
+    </property>
+    <property name="frame">
+     <bool>false</bool>
+    </property>
+    <property name="cursorPosition">
+     <number>5</number>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="stompXEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>269</x>
+      <y>5</y>
+      <width>34</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu</family>
+      <pointsize>7</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(50,50,50);
+color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-radius: 3px;</string>
+    </property>
+    <property name="frame">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>154</x>
+      <y>5</y>
+      <width>112</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Panel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <widget class="QLineEdit" name="ampNameEdit">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>112</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>7</pointsize>
+       <kerning>false</kerning>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLineEdit
+{
+background-color: transparent;
+border-color: rgb(0, 0, 0);
+color: rgb(0, 0, 0);
+}</string>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="placeholderText">
+      <string>---</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLineEdit" name="stompModEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>306</x>
+      <y>5</y>
+      <width>34</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu</family>
+      <pointsize>7</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(50,50,50);
+color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-radius: 3px;</string>
+    </property>
+    <property name="frame">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="stompAEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>6</x>
+      <y>5</y>
+      <width>34</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu</family>
+      <pointsize>7</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(50,50,50);
+color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-radius: 3px;</string>
+    </property>
+    <property name="frame">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="reverbEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>5</y>
+      <width>34</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu</family>
+      <pointsize>7</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(50,50,50);
+color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-radius: 3px;</string>
+    </property>
+    <property name="text">
+     <string>REV</string>
+    </property>
+    <property name="frame">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>REV</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="stompCEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>5</y>
+      <width>34</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Ubuntu</family>
+      <pointsize>7</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(50,50,50);
+color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);
+border-radius: 3px;</string>
+    </property>
+    <property name="frame">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line4">
+    <property name="geometry">
+     <rect>
+      <x>3</x>
+      <y>12</y>
+      <width>152</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame#line4
+{
+	color:  rgb(0, 0, 0);
+	background-color: rgb(0, 0, 0);
+}</string>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line5">
+    <property name="geometry">
+     <rect>
+      <x>265</x>
+      <y>12</y>
+      <width>152</width>
+      <height>1</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame#line5
+{
+	color:  rgb(0, 0, 0);
+	background-color: rgb(0, 0, 0);
+}</string>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <zorder>line5</zorder>
+   <zorder>line4</zorder>
+   <zorder>delayEdit</zorder>
+   <zorder>stompBEdit</zorder>
+   <zorder>stompDEdit</zorder>
+   <zorder>stompXEdit</zorder>
+   <zorder>frame</zorder>
+   <zorder>stompModEdit</zorder>
+   <zorder>stompAEdit</zorder>
+   <zorder>reverbEdit</zorder>
+   <zorder>stompCEdit</zorder>
+  </widget>
  </widget>
  <resources/>
  <connections/>

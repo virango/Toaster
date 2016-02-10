@@ -16,6 +16,8 @@
 #include "MainFrame.h"
 #include "ui_MainFrame.h"
 #include "DebugMidi.h"
+#include "StompEditorPage.h"
+#include "StompEditorFrame.h"
 
 MainFrame::MainFrame(QWidget *parent)
   : QFrame(parent)
@@ -96,6 +98,8 @@ MainFrame::MainFrame(QWidget *parent)
   connect(&mInput, SIGNAL(noiseGateReceived(double)), this, SLOT(onInputNoiseGate(double)));
   connect(&mInput, SIGNAL(distortionSenseReceived(double)), SLOT(onInputDistortionSense(double)));
   connect(&mInput, SIGNAL(cleanSenseReceived(double)), SLOT(onInputCleanSense(double)));
+
+  connect(ui->stompEditor, &StompEditorFrame::editorPageChanged, this, &MainFrame::onEditorPageChanged);
 
   ui->stompAButton->setCtxMenuProvider(&mStompACtxMenu);
   ui->stompBButton->setCtxMenuProvider(&mStompBCtxMenu);
@@ -780,3 +784,35 @@ void MainFrame::on_exitButton_clicked(QToasterButton &bt, bool /*longClick*/)
   }
 }
 
+
+void MainFrame::on_prevPageButton_clicked(QToasterButton &bt, bool longClick)
+{
+  ui->stompEditor->prevDisplayPage();
+}
+
+void MainFrame::on_nextPageButton_clicked(QToasterButton &bt, bool longClick)
+{
+  ui->stompEditor->nextDisplayPage();
+}
+
+void MainFrame::onEditorPageChanged(IStompEditorPage* editorPage)
+{
+  if(editorPage == nullptr || editorPage->getMaxDisplayPage() == QToasterLCD::Page1)
+  {
+    ui->prevPageButton->setState(QToasterButton::Off);
+    ui->nextPageButton->setState(QToasterButton::Off);
+  }
+  else
+  {
+    if(editorPage->getCurrentDisplayPage() > QToasterLCD::Page1)
+      ui->prevPageButton->setState(QToasterButton::On);
+    else
+      ui->prevPageButton->setState(QToasterButton::Off);
+
+    if(editorPage->getCurrentDisplayPage() < editorPage->getMaxDisplayPage())
+      ui->nextPageButton->setState(QToasterButton::On);
+    else
+      ui->nextPageButton->setState(QToasterButton::Off);
+  }
+  update();
+}

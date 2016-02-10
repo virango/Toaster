@@ -148,6 +148,7 @@ void StompEditorFrame::deactivate()
   {
     mpActivePage->deactivate();
     mpActivePage = nullptr;
+    emit editorPageChanged(mpActivePage);
   }
 }
 
@@ -160,6 +161,7 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
     {
       mpActivePage->deactivate();
       mpActivePage = nullptr;
+      emit editorPageChanged(mpActivePage);
     }
   }
 
@@ -322,7 +324,7 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
         break;
       case HarmonicPitch:
         mpActivePage = ui->harmonicPitch;
-        index = indexOf(ui->wahWah);
+        index = indexOf(ui->harmonicPitch);
         break;
       case AnalogOctaver:
         mpActivePage = ui->analogOctaver;
@@ -348,6 +350,7 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       setCurrentIndex(index);
       mActiveStompType = fxType;
       mpActivePage->activate(*pActiveStomp);
+      emit editorPageChanged(mpActivePage);
       requestValues();
     }
   }
@@ -362,6 +365,7 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
     {
       mpActivePage->deactivate();
       mpActivePage = nullptr;
+      emit editorPageChanged(mpActivePage);
     }
   }
 
@@ -393,6 +397,7 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
       setCurrentIndex(index);
       mActiveStompType = delayType;
       mpActivePage->activate(*pActiveDelay);
+      emit editorPageChanged(mpActivePage);
       requestValues();
     }
   }
@@ -407,6 +412,7 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
     {
       mpActivePage->deactivate();
       mpActivePage = nullptr;
+      emit editorPageChanged(mpActivePage);
     }
   }
 
@@ -437,6 +443,7 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
       setCurrentIndex(index);
       mActiveStompType = reverbType;
       mpActivePage->activate(*pActiveReverb);
+      emit editorPageChanged(mpActivePage);
       requestValues();
     }
   }
@@ -541,6 +548,45 @@ void StompEditorFrame::onAmpName(const QString& ampName)
 }
 //------------------------------------------------------------------------------------------
 
+void StompEditorFrame::nextDisplayPage()
+{
+  if(mpActivePage != nullptr)
+  {
+    QToasterLCD::Page currentPage = mpActivePage->getCurrentDisplayPage();
+    QToasterLCD::Page pageToSet = currentPage;
+    if(currentPage == QToasterLCD::Page1)
+      pageToSet = QToasterLCD::Page2;
+    else if(currentPage == QToasterLCD::Page2)
+      pageToSet = QToasterLCD::Page3;
+
+    if(pageToSet != currentPage && pageToSet <= mpActivePage->getMaxDisplayPage())
+    {
+      mpActivePage->setCurrentDisplayPage(pageToSet);
+      emit editorPageChanged(mpActivePage);
+    }
+  }
+}
+
+void StompEditorFrame::prevDisplayPage()
+{
+  if(mpActivePage != nullptr)
+  {
+    QToasterLCD::Page currentPage = mpActivePage->getCurrentDisplayPage();
+    QToasterLCD::Page pageToSet = currentPage;
+    if(currentPage == QToasterLCD::Page3)
+      pageToSet = QToasterLCD::Page2;
+    else if(currentPage == QToasterLCD::Page2)
+      pageToSet = QToasterLCD::Page1;
+
+    if(pageToSet != currentPage && pageToSet <= mpActivePage->getMaxDisplayPage())
+    {
+      mpActivePage->setCurrentDisplayPage(pageToSet);
+      emit editorPageChanged(mpActivePage);
+    }
+  }
+}
+
+
 void StompEditorFrame::requestValues()
 {
   mpStompA->requestOnOff();
@@ -569,6 +615,7 @@ void StompEditorFrame::activatePage(IStompEditorPage* page, int index)
   {
     setCurrentIndex(index);
     mpActivePage->activate(*mpActiveStomp);
+    emit editorPageChanged(mpActivePage);
     requestValues();
   }
 }

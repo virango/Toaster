@@ -24,7 +24,7 @@ ChromaticPitchFrame::ChromaticPitchFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->pageDial->setValue(0);
+  setCurrentDisplayPage(QToasterLCD::Page1);
 }
 
 ChromaticPitchFrame::~ChromaticPitchFrame()
@@ -88,6 +88,26 @@ void ChromaticPitchFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page ChromaticPitchFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page ChromaticPitchFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void ChromaticPitchFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+    ui->bigDials->setCurrentIndex((int) page);
+    ui->smallDials->setCurrentIndex((int) page);
+  }
+}
+
 void ChromaticPitchFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);
@@ -111,11 +131,6 @@ void ChromaticPitchFrame::displayReverbEnabled(bool enabled)
 void ChromaticPitchFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
-}
-
-void ChromaticPitchFrame::on_pageDial_valueChanged(int valueIndex)
-{
-  ui->lcdDisplay->setCurrentPage((QToasterStompEditLCD::Page)valueIndex);
 }
 
 void ChromaticPitchFrame::on_voice1PitchDial_valueChanged(double value)

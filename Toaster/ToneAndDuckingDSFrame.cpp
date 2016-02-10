@@ -61,6 +61,24 @@ void ToneAndDuckingDSFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page ToneAndDuckingDSFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page ToneAndDuckingDSFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void ToneAndDuckingDSFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+  }
+}
+
 void ToneAndDuckingDSFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);

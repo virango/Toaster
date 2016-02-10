@@ -25,7 +25,7 @@ WahPhaserFrame::WahPhaserFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->pageDial->setValue(0);
+  setCurrentDisplayPage(QToasterLCD::Page1);
 }
 
 WahPhaserFrame::~WahPhaserFrame()
@@ -94,6 +94,26 @@ void WahPhaserFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page WahPhaserFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page WahPhaserFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void WahPhaserFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+    ui->bigDials->setCurrentIndex((int) page);
+    ui->smallDials->setCurrentIndex((int) page);
+  }
+}
+
 void WahPhaserFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);
@@ -117,11 +137,6 @@ void WahPhaserFrame::displayReverbEnabled(bool enabled)
 void WahPhaserFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
-}
-
-void WahPhaserFrame::on_pageDial_valueChanged(int valueIndex)
-{
-  ui->lcdDisplay->setCurrentPage((QToasterStompEditLCD::Page)valueIndex);
 }
 
 void WahPhaserFrame::on_manualDial_valueChanged(double value)

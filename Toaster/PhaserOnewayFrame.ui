@@ -56,7 +56,7 @@
     <string/>
    </property>
    <property name="value8Title">
-    <string>Page</string>
+    <string/>
    </property>
    <property name="value9Title">
     <string>Mix</string>
@@ -116,9 +116,9 @@
   <widget class="QStackedWidget" name="smallDials">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>80</x>
      <y>0</y>
-     <width>390</width>
+     <width>400</width>
      <height>75</height>
     </rect>
    </property>
@@ -129,7 +129,7 @@
     <widget class="QToasterDial" name="stagesDial">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>110</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -157,7 +157,7 @@
     <widget class="QToasterDial" name="peakSpreadDial">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>0</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -185,7 +185,7 @@
     <widget class="QToasterDial" name="stereoDial">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>220</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -213,12 +213,34 @@
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QToasterEnumDial" name="dummy8Dial">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="values">
+      <stringlist>
+       <string>One</string>
+       <string>Two</string>
+      </stringlist>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page22">
     <widget class="QToasterDial" name="dummy15Dial">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>220</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -243,7 +265,7 @@
     <widget class="QToasterDial" name="dummy14Dial">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>110</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -268,7 +290,7 @@
     <widget class="QToasterDial" name="dummy13Dial">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>0</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -285,6 +307,28 @@
      </property>
      <property name="stepWidth">
       <double>0.100000000000000</double>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="dummy16Dial">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="values">
+      <stringlist>
+       <string>One</string>
+       <string>Two</string>
+      </stringlist>
      </property>
      <property name="isActive">
       <bool>false</bool>
@@ -459,7 +503,7 @@
       </size>
      </property>
      <property name="ledRingType" stdset="0">
-      <enum>QToasterDial::Uni</enum>
+      <enum>QToasterDial::Bi</enum>
      </property>
      <property name="minValue">
       <double>-5.000000000000000</double>
@@ -656,25 +700,6 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QToasterEnumDial" name="pageDial">
-   <property name="geometry">
-    <rect>
-     <x>410</x>
-     <y>0</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterEnumDial::Small</enum>
-   </property>
-   <property name="values">
-    <stringlist>
-     <string>One</string>
-     <string>Two</string>
-    </stringlist>
-   </property>
-  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -789,70 +814,6 @@
     <hint type="destinationlabel">
      <x>226</x>
      <y>112</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pageDial</sender>
-   <signal>valueChanged(QString)</signal>
-   <receiver>lcdDisplay</receiver>
-   <slot>setValue8(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>451</x>
-     <y>29</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>443</x>
-     <y>112</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pageDial</sender>
-   <signal>valueChanged(QString)</signal>
-   <receiver>lcdDisplay</receiver>
-   <slot>setValue16(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>467</x>
-     <y>12</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>463</x>
-     <y>124</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pageDial</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>smallDials</receiver>
-   <slot>setCurrentIndex(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>411</x>
-     <y>36</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>370</x>
-     <y>33</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pageDial</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>bigDials</receiver>
-   <slot>setCurrentIndex(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>474</x>
-     <y>47</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>541</x>
-     <y>252</y>
     </hint>
    </hints>
   </connection>

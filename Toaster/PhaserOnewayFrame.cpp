@@ -24,7 +24,7 @@ PhaserOnewayFrame::PhaserOnewayFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-  ui->pageDial->setValue(0);
+  setCurrentDisplayPage(QToasterLCD::Page1);
 }
 
 PhaserOnewayFrame::~PhaserOnewayFrame()
@@ -97,6 +97,26 @@ void PhaserOnewayFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page PhaserOnewayFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page PhaserOnewayFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void PhaserOnewayFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+    ui->bigDials->setCurrentIndex((int) page);
+    ui->smallDials->setCurrentIndex((int) page);
+  }
+}
+
 void PhaserOnewayFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);
@@ -120,11 +140,6 @@ void PhaserOnewayFrame::displayReverbEnabled(bool enabled)
 void PhaserOnewayFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
-}
-
-void PhaserOnewayFrame::on_pageDial_valueChanged(int valueIndex)
-{
-  ui->lcdDisplay->setCurrentPage((QToasterStompEditLCD::Page)valueIndex);
 }
 
 void PhaserOnewayFrame::on_rateDial_valueChanged(double value)

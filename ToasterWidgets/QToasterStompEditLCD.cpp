@@ -231,6 +231,11 @@ QToasterStompEditLCD::ScaleView QToasterStompEditLCD::scaleView() const
   return (ScaleView) ui->scaleWidget->currentIndex();
 }
 
+bool QToasterStompEditLCD::stompsAndAmpHidden() const
+{
+  return ui->stompsAndAmpWidget->isHidden();
+}
+
 void QToasterStompEditLCD::paintEvent(QPaintEvent* /*pe*/)
 {
   QPainter painter(this);
@@ -630,6 +635,14 @@ void QToasterStompEditLCD::setEqBand8Value(double value)
 void QToasterStompEditLCD::setScaleView(ScaleView scaleView)
 {
   ui->scaleWidget->setCurrentIndex((int)scaleView);
+}
+
+void QToasterStompEditLCD::setStompsAndAmpHidden(bool hidden)
+{
+  if(hidden)
+    ui->stompsAndAmpWidget->hide();
+  else
+    ui->stompsAndAmpWidget->show();
 }
 
 void QToasterStompEditLCD::setStompFXType(StompInstance stompInstance, FXType fxType)

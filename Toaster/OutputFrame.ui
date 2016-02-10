@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OutputFrame</class>
+ <widget class="QWidget" name="OutputFrame">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>560</width>
+    <height>320</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QToasterStompEditLCD" name="toasterStompEditLCD">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>75</y>
+     <width>420</width>
+     <height>115</height>
+    </rect>
+   </property>
+   <property name="maxPage">
+    <enum>QToasterLCD::Page1</enum>
+   </property>
+   <property name="stompInstance">
+    <string>Output</string>
+   </property>
+   <property name="stompName">
+    <string/>
+   </property>
+   <property name="value1Title">
+    <string/>
+   </property>
+   <property name="value2Title">
+    <string/>
+   </property>
+   <property name="value3Title">
+    <string/>
+   </property>
+   <property name="value4Title">
+    <string/>
+   </property>
+   <property name="value5Title">
+    <string/>
+   </property>
+   <property name="value6Title">
+    <string/>
+   </property>
+   <property name="value7Title">
+    <string/>
+   </property>
+   <property name="value8Title">
+    <string/>
+   </property>
+   <property name="value9Title">
+    <string/>
+   </property>
+   <property name="value10Title">
+    <string/>
+   </property>
+   <property name="value11Title">
+    <string/>
+   </property>
+   <property name="value12Title">
+    <string/>
+   </property>
+   <property name="value13Title">
+    <string/>
+   </property>
+   <property name="value14Title">
+    <string/>
+   </property>
+   <property name="value15Title">
+    <string/>
+   </property>
+   <property name="value16Title">
+    <string/>
+   </property>
+   <property name="value17Title">
+    <string/>
+   </property>
+   <property name="value18Title">
+    <string/>
+   </property>
+   <property name="value19Title">
+    <string/>
+   </property>
+   <property name="value20Title">
+    <string/>
+   </property>
+   <property name="value21Title">
+    <string/>
+   </property>
+   <property name="value22Title">
+    <string/>
+   </property>
+   <property name="value23Title">
+    <string/>
+   </property>
+   <property name="value24Title">
+    <string/>
+   </property>
+   <property name="scaleView">
+    <enum>QToasterStompEditLCD::Empty</enum>
+   </property>
+   <property name="stompsAndAmpHidden">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QToasterStompEditLCD</class>
+   <extends>QWidget</extends>
+   <header>QToasterStompEditLCD.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

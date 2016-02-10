@@ -25,8 +25,7 @@ WahNoPeakFrame::WahNoPeakFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
-
-  ui->pageDial->setValue(0);
+  setCurrentDisplayPage(QToasterLCD::Page1);
 }
 
 WahNoPeakFrame::~WahNoPeakFrame()
@@ -82,6 +81,26 @@ void WahNoPeakFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page WahNoPeakFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page WahNoPeakFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void WahNoPeakFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+    ui->bigDials->setCurrentIndex((int) page);
+    ui->smallDials->setCurrentIndex((int) page);
+  }
+}
+
 void WahNoPeakFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);
@@ -107,15 +126,10 @@ void WahNoPeakFrame::displayAmpName(const QString&  ampName)
   ui->lcdDisplay->setAmpName(ampName);
 }
 
-void WahNoPeakFrame::on_pageDial_valueChanged(int valueIndex)
-{
-  ui->lcdDisplay->setCurrentPage((QToasterStompEditLCD::Page)valueIndex);
-}
-
 void WahNoPeakFrame::on_manualDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
-    mpStomp->applyWahManual(value);
+    mpStomp->applyWahManual(value + 5.0);
 }
 
 void WahNoPeakFrame::on_pedalRangeDial_valueChanged(double value)
@@ -168,7 +182,7 @@ void WahNoPeakFrame::on_touchBoostDial_valueChanged(double value)
 
 void WahNoPeakFrame::onManual(double value)
 {
-  ui->manualDial->setValue(value);
+  ui->manualDial->setValue(value - 5.0);
   update();
 }
 

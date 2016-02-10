@@ -22,7 +22,7 @@ HarmonicPitchFrame::HarmonicPitchFrame(QWidget *parent)
   , mpStomp(nullptr)
 {
   ui->setupUi(this);
-  ui->pageDial->setValue(0);
+  setCurrentDisplayPage(QToasterLCD::Page1);
   ui->voice1IntervalDial->setLookUpTable(LookUpTables::getVoiceIntervalValues());
   ui->voice2IntervalDial->setLookUpTable(LookUpTables::getVoiceIntervalValues());
 }
@@ -85,6 +85,26 @@ void HarmonicPitchFrame::deactivate()
   mpStomp = nullptr;
 }
 
+QToasterLCD::Page HarmonicPitchFrame::getMaxDisplayPage()
+{
+  return ui->lcdDisplay->maxPage();
+}
+
+QToasterLCD::Page HarmonicPitchFrame::getCurrentDisplayPage()
+{
+  return ui->lcdDisplay->currentPage();
+}
+
+void HarmonicPitchFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+{
+  if(page <= ui->lcdDisplay->maxPage())
+  {
+    ui->lcdDisplay->setCurrentPage(page);
+    ui->bigDials->setCurrentIndex((int) page);
+    ui->smallDials->setCurrentIndex((int) page);
+  }
+}
+
 void HarmonicPitchFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);
@@ -108,11 +128,6 @@ void HarmonicPitchFrame::displayReverbEnabled(bool enabled)
 void HarmonicPitchFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
-}
-
-void HarmonicPitchFrame::on_pageDial_valueChanged(int valueIndex)
-{
-  ui->lcdDisplay->setCurrentPage((QToasterStompEditLCD::Page)valueIndex);
 }
 
 void HarmonicPitchFrame::on_voice1IntervalDial_valueChanged(int value)

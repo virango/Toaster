@@ -53,10 +53,10 @@
     <string>Pure Tuning</string>
    </property>
    <property name="value7Title">
-    <string>Formant Shift</string>
+    <string>Freeze Formants</string>
    </property>
    <property name="value8Title">
-    <string>Page</string>
+    <string>WPedal2Pitch</string>
    </property>
    <property name="value9Title">
     <string>Ducking</string>
@@ -71,16 +71,16 @@
     <string>Volume</string>
    </property>
    <property name="value13Title">
-    <string>WPedal2Pitch</string>
+    <string>Sm. Chords</string>
    </property>
    <property name="value14Title">
-    <string/>
+    <string>Pure Tuning</string>
    </property>
    <property name="value15Title">
-    <string/>
+    <string>Freeze Formants</string>
    </property>
    <property name="value16Title">
-    <string>Page</string>
+    <string>WPedal2Pitch</string>
    </property>
    <property name="eqBand1Value">
     <double>0.000000000000000</double>
@@ -92,20 +92,20 @@
   <widget class="QStackedWidget" name="smallDials">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>80</x>
      <y>0</y>
-     <width>390</width>
+     <width>400</width>
      <height>75</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page12">
     <widget class="QToasterEnumDial" name="smoothChordsDial">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>0</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -124,7 +124,7 @@
     <widget class="QToasterEnumDial" name="pureTuningDial">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>110</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -143,7 +143,26 @@
     <widget class="QToasterEnumDial" name="formantShiftOnOffDial">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>220</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="values">
+      <stringlist>
+       <string>Off</string>
+       <string>On</string>
+      </stringlist>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="wahPedalToPitchDial">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -164,7 +183,7 @@
     <widget class="QToasterDial" name="dummy15Dial">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>220</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -189,7 +208,7 @@
     <widget class="QToasterDial" name="dummy14Dial">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>110</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -209,25 +228,6 @@
      </property>
      <property name="isActive">
       <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QToasterEnumDial" name="wahPedalToPitchDial">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>0</y>
-       <width>70</width>
-       <height>70</height>
-      </rect>
-     </property>
-     <property name="knobSize">
-      <enum>QToasterEnumDial::Small</enum>
-     </property>
-     <property name="values">
-      <stringlist>
-       <string>Off</string>
-       <string>On</string>
-      </stringlist>
      </property>
     </widget>
    </widget>
@@ -593,25 +593,6 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QToasterEnumDial" name="pageDial">
-   <property name="geometry">
-    <rect>
-     <x>410</x>
-     <y>0</y>
-     <width>70</width>
-     <height>70</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterEnumDial::Small</enum>
-   </property>
-   <property name="values">
-    <stringlist>
-     <string>One</string>
-     <string>Two</string>
-    </stringlist>
-   </property>
-  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -633,70 +614,6 @@
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>pageDial</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>bigDials</receiver>
-   <slot>setCurrentIndex(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>444</x>
-     <y>34</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>279</x>
-     <y>269</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pageDial</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>smallDials</receiver>
-   <slot>setCurrentIndex(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>444</x>
-     <y>34</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>279</x>
-     <y>37</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pageDial</sender>
-   <signal>valueChanged(QString)</signal>
-   <receiver>lcdDisplay</receiver>
-   <slot>setValue8(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>455</x>
-     <y>56</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>438</x>
-     <y>97</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pageDial</sender>
-   <signal>valueChanged(QString)</signal>
-   <receiver>lcdDisplay</receiver>
-   <slot>setValue16(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>470</x>
-     <y>52</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>485</x>
-     <y>108</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>heelPitchDial</sender>
    <signal>valueChanged(QString)</signal>
@@ -845,15 +762,79 @@
    <sender>wahPedalToPitchDial</sender>
    <signal>valueChanged(QString)</signal>
    <receiver>lcdDisplay</receiver>
+   <slot>setValue8(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>445</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>431</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>smoothChordsDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
    <slot>setValue13(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>102</x>
-     <y>17</y>
+     <x>105</x>
+     <y>22</y>
     </hint>
     <hint type="destinationlabel">
-     <x>116</x>
-     <y>85</y>
+     <x>96</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pureTuningDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue14(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>237</x>
+     <y>34</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>246</x>
+     <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>formantShiftOnOffDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue15(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>357</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>351</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>wahPedalToPitchDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue16(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>465</x>
+     <y>16</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>459</x>
+     <y>91</y>
     </hint>
    </hints>
   </connection>
