@@ -7,11 +7,13 @@
 CONFIG += debug_and_release
 QT       += core gui
 unix:QMAKE_CXXFLAGS += -std=c++11
+macx:QMAKE_CXXFLAGS += -stdlib=libc++
 win32:QMAKE_CXXFLAGS += -bigobj
 win32:LIBS += -lwinmm
 win32:DEFINES += __WINDOWS_MM__
 unix:!macx:DEFINES += __UNIX_JACK__ \
                       __LINUX_ALSA__
+macx:QMAKE_LFLAGS += -stdlib=libc++
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -38,7 +40,7 @@ INCLUDEPATH += $$PWD/../ToasterWidgets \
                $$PWD/../Shared
 
 SOURCES += main.cpp\
-        ToasterWindow.cpp \
+    ToasterWindow.cpp \
     SysExBase.cpp \
     Midi.cpp \
     SysExMsgDispatcher.cpp \
@@ -125,7 +127,12 @@ SOURCES += main.cpp\
     AboutDialog.cpp \ 
     AmpFrame.cpp \
     CabFrame.cpp \
-    MainVolumeValues.cpp \
+    TunerMidi.cpp \
+    Tuner.cpp \
+    InputFrame.cpp \
+    OutputFrame.cpp
+
+SOURCES_NOOPTIMIZE = MainVolumeValues.cpp \
     RotaryDistanceValues.cpp \
     RigVolumeValues.cpp \
     MixValues.cpp \
@@ -133,11 +140,15 @@ SOURCES += main.cpp\
     TremoloRateValues.cpp \
     QFactorValues.cpp \
     FlangerRateValues.cpp \
-    VoiceIntervalValues.cpp \
-    TunerMidi.cpp \
-    Tuner.cpp \
-    InputFrame.cpp \
-    OutputFrame.cpp
+    VoiceIntervalValues.cpp
+
+nooptimize.name = nooptimize
+nooptimize.input = SOURCES_NOOPTIMIZE
+nooptimize.dependency_type = TYPE_C
+nooptimize.variable_out = OBJECTS
+nooptimize.output = ${QMAKE_VAR_OBJECTS_DIR}${QMAKE_FILE_IN_BASE}$${first(QMAKE_EXT_OBJ)}
+nooptimize.commands = $${QMAKE_CXX} $(CXXFLAGS) -O0 $(INCPATH) -c ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
+QMAKE_EXTRA_COMPILERS += nooptimize
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \

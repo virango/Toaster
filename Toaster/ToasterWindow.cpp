@@ -32,7 +32,7 @@ ToasterWindow::ToasterWindow(QWidget *parent)
 {
   ui->setupUi(this);
   ui->statusBar->addPermanentWidget(&mConnectionStatus);
-  menuBar()->setNativeMenuBar(false);
+  //menuBar()->setNativeMenuBar(false);
 
   QString title = "Toaster " + QString(APP_VERSION) + QString(" ") + QString(APP_STAGE);
   setWindowTitle(title);
