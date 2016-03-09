@@ -8,6 +8,8 @@ QT       -= core gui
 TARGET = RtMidi
 TEMPLATE = lib
 CONFIG += staticlib debug_and_release
+unix:QMAKE_CXXFLAGS += -std=c++11
+macx:QMAKE_CXXFLAGS += -stdlib=libc++
 
 CONFIG(debug, debug|release) {
     DESTDIR = $$OUT_PWD/debug
