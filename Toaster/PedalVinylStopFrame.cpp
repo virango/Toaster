@@ -120,7 +120,7 @@ void PedalVinylStopFrame::on_mixDial_valueChanged(double value)
 void PedalVinylStopFrame::on_wahPedalToPitchDial_valueChanged(int valueIndex)
 {
   if(mpStomp != nullptr)
-    mGlobal.applyWahPedalToPitchReceived(valueIndex != 0);
+    mGlobal.applyWahPedalToPitch(valueIndex != 0);
 }
 
 void PedalVinylStopFrame::onVolume(double value)

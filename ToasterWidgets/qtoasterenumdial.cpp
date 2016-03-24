@@ -22,47 +22,117 @@
 
 #define DEFAULT_SKIN
 
+QList<QPixmap> QToasterEnumDial::sSmallKnobSkinPixmaps;
+QList<QPixmap> QToasterEnumDial::sBigKnobSkinPixmaps;
+QList<QPixmap> QToasterEnumDial::sUniLEDRingSkinPixmaps;
+QList<QPixmap> QToasterEnumDial::sBiLEDRingSkinPixmaps;
+
 QToasterEnumDial::QToasterEnumDial(QWidget *parent)
   : QWidget(parent)
   , mCurrKnobFrameNo(0)
+  , mCurrLEDRingFrameNo(0)
   , mKnobSize(Big)
+  , mLEDRingType(None)
   , mMouseY(0)
   , mCurrValueIndex(0)
   , mCurrValueText("")
   , mIsActive(true)
+  , mKnobSkinPixmaps(&sBigKnobSkinPixmaps)
+  , mLEDRingSkinPixmaps(&sUniLEDRingSkinPixmaps)
 {
-  MAP_INSERT(mKnobSkins, Big,   ":/resources/BigDial.png");
-  MAP_INSERT(mKnobSkins, Small, ":/resources/SmallDial.png");
-
   createKnobSkin();
+  createLEDRingSkin();
 }
 
 void QToasterEnumDial::createKnobSkin()
 {
-  if(!mKnobSkinPixmaps.isEmpty())
-    mKnobSkinPixmaps.clear();
-
-  QString skin = mKnobSkins[mKnobSize];
-
-  QPixmap masterPixmap(skin);
-
-  int width = masterPixmap.height();
-  int height = masterPixmap.height();
-
-  width = masterPixmap.width() / mKnobSkinNoOfFrames;
-
-  if(!masterPixmap.isNull())
+  if(sSmallKnobSkinPixmaps.isEmpty())
   {
-    int x = 0;
-    int y = 0;
-    for(int i = 0; i < mKnobSkinNoOfFrames; i++)
+    QPixmap masterPixmap(":/resources/SmallDial.png");
+
+    int width = masterPixmap.height();
+    int height = masterPixmap.height();
+
+    width = masterPixmap.width() / sKnobSkinNoOfFrames;
+
+    if(!masterPixmap.isNull())
     {
-      x = i * width;
-      mKnobSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      int x = 0;
+      int y = 0;
+      for(int i = 0; i < sKnobSkinNoOfFrames; i++)
+      {
+        x = i * width;
+        sSmallKnobSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      }
+    }
+  }
+
+  if(sBigKnobSkinPixmaps.isEmpty())
+  {
+    QPixmap masterPixmap(":/resources/BigDial.png");
+
+    int width = masterPixmap.height();
+    int height = masterPixmap.height();
+
+    width = masterPixmap.width() / sKnobSkinNoOfFrames;
+
+    if(!masterPixmap.isNull())
+    {
+      int x = 0;
+      int y = 0;
+      for(int i = 0; i < sKnobSkinNoOfFrames; i++)
+      {
+        x = i * width;
+        sBigKnobSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      }
     }
   }
 }
 
+void QToasterEnumDial::createLEDRingSkin()
+{
+  if(sUniLEDRingSkinPixmaps.isEmpty())
+  {
+    QPixmap masterPixmap(":/resources/LEDRingUni.png");
+
+    int width = masterPixmap.height();
+    int height = masterPixmap.height();
+
+    width = masterPixmap.width() / sLEDRingSkinNoOfFrames;
+
+    if(!masterPixmap.isNull())
+    {
+      int x = 0;
+      int y = 0;
+      for(int i = 0; i < sLEDRingSkinNoOfFrames; i++)
+      {
+        x = i * width;
+        sUniLEDRingSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      }
+    }
+  }
+
+  if(sBiLEDRingSkinPixmaps.isEmpty())
+  {
+    QPixmap masterPixmap(":/resources/LEDRingBi.png");
+
+    int width = masterPixmap.height();
+    int height = masterPixmap.height();
+
+    width = masterPixmap.width() / sLEDRingSkinNoOfFrames;
+
+    if(!masterPixmap.isNull())
+    {
+      int x = 0;
+      int y = 0;
+      for(int i = 0; i < sLEDRingSkinNoOfFrames; i++)
+      {
+        x = i * width;
+        sBiLEDRingSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      }
+    }
+  }
+}
 
 void QToasterEnumDial::update(int deltaSteps)
 {
@@ -81,13 +151,16 @@ void QToasterEnumDial::update(int deltaSteps)
   // update knob
   int newKnobFrameNo = mCurrKnobFrameNo + deltaSteps;
   if(newKnobFrameNo < 0)
-    mCurrKnobFrameNo = mKnobSkinNoOfFrames + (newKnobFrameNo % mKnobSkinNoOfFrames);
-  else if(newKnobFrameNo >= mKnobSkinNoOfFrames)
-    mCurrKnobFrameNo = newKnobFrameNo % mKnobSkinNoOfFrames;
+    mCurrKnobFrameNo = sKnobSkinNoOfFrames + (newKnobFrameNo % sKnobSkinNoOfFrames);
+  else if(newKnobFrameNo >= sKnobSkinNoOfFrames)
+    mCurrKnobFrameNo = newKnobFrameNo % sKnobSkinNoOfFrames;
   else
     mCurrKnobFrameNo = newKnobFrameNo;
 
-  mCurrKnobFrameNo %= mKnobSkinNoOfFrames;
+  mCurrKnobFrameNo %= sKnobSkinNoOfFrames;
+
+  // update led ring
+  updateLEDRing();
 
   // paint
   QWidget::update();
@@ -108,7 +181,19 @@ void QToasterEnumDial::updateValueText()
 void QToasterEnumDial::setKnobSize(KnobSize knobSize)
 {
   mKnobSize = knobSize;
-  createKnobSkin();
+  if(mKnobSize == Small)
+    mKnobSkinPixmaps = &sSmallKnobSkinPixmaps;
+  else
+    mKnobSkinPixmaps = &sBigKnobSkinPixmaps;
+}
+
+void QToasterEnumDial::setLEDRingType(LEDRingType ledRingType)
+{
+  mLEDRingType = ledRingType;
+  if(mLEDRingType == None || mLEDRingType == Uni)
+    mLEDRingSkinPixmaps = &sUniLEDRingSkinPixmaps;
+  else
+    mLEDRingSkinPixmaps = &sBiLEDRingSkinPixmaps;
 }
 
 void QToasterEnumDial::setValues(QStringList values)
@@ -131,10 +216,15 @@ void QToasterEnumDial::setValue(int value)
 
 void QToasterEnumDial::paintEvent(QPaintEvent* /* pe */)
 {
-  QPainter painter(this);
-  QPixmap& pmKnob = mKnobSkinPixmaps[mCurrKnobFrameNo];
-  painter.setWindow(0, 0, pmKnob.width(), pmKnob.height());
-  painter.drawPixmap(0, 0, pmKnob);
+  if(mKnobSkinPixmaps != nullptr)
+  {
+    QPainter painter(this);
+    const QPixmap& pmKnob = mKnobSkinPixmaps->at(mCurrKnobFrameNo);
+    painter.setWindow(0, 0, pmKnob.width(), pmKnob.height());
+    if(mLEDRingType != None && mLEDRingSkinPixmaps != nullptr)
+      painter.drawPixmap(0,0, mLEDRingSkinPixmaps->at(mCurrLEDRingFrameNo));
+    painter.drawPixmap(0, 0, pmKnob);
+  }
 }
 
 void QToasterEnumDial::wheelEvent(QWheelEvent* we)
@@ -189,3 +279,14 @@ void QToasterEnumDial::showValueTooltip()
   }
 }
 
+void QToasterEnumDial::updateLEDRing()
+{
+  if(mLEDRingType != None && mIsActive)
+  {
+    double step = (double)mValues.size() / (double)(sLEDRingSkinNoOfFrames);
+    double value =  mCurrValueIndex / step;
+    mCurrLEDRingFrameNo = (int) floor(value + 0.5);
+    if(mCurrLEDRingFrameNo > sLEDRingSkinNoOfFrames)
+      mCurrLEDRingFrameNo = sLEDRingSkinNoOfFrames;
+  }
+}

@@ -173,7 +173,7 @@ void PedalPitchFrame::on_duckingDial_valueChanged(double value)
 void PedalPitchFrame::on_wahPedalToPitchDial_valueChanged(int valueIndex)
 {
   if(mpStomp != nullptr)
-    mGlobal.applyWahPedalToPitchReceived(valueIndex != 0);
+    mGlobal.applyWahPedalToPitch(valueIndex != 0);
 }
 
 void PedalPitchFrame::on_smoothChordsDial_valueChanged(int valueIndex)

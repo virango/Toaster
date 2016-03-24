@@ -30,6 +30,7 @@ FlangerOnewayFrame::~FlangerOnewayFrame()
 {
   delete ui;
 }
+
 void FlangerOnewayFrame::activate(QObject& stomp)
 {
   mpStomp = qobject_cast<Stomp*>(&stomp);

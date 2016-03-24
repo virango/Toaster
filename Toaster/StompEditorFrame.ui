@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>43</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
@@ -59,6 +59,7 @@
   <widget class="ReverbFrame" name="reverb"/>
   <widget class="AmpFrame" name="amp"/>
   <widget class="CabFrame" name="cab"/>
+  <widget class="OutputFrame" name="output"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -317,6 +318,12 @@
    <class>CabFrame</class>
    <extends>QWidget</extends>
    <header>CabFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OutputFrame</class>
+   <extends>QWidget</extends>
+   <header>OutputFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

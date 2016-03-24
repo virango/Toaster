@@ -96,6 +96,7 @@ void StompEditorFrame::activate(QObject& stomp)
     Reverb* pReverb = qobject_cast<Reverb*>(mpActiveStomp);
     Amp* pAmp = qobject_cast<Amp*>(mpActiveStomp);
     Cab* pCab = qobject_cast<Cab*>(mpActiveStomp);
+    Global* pGlobal = qobject_cast<Global*>(mpActiveStomp);
     if(pActiveStomp != nullptr)
     {
       connect(pActiveStomp, SIGNAL(typeReceived(::FXType)), this, SLOT(onActiveStompType(::FXType)));
@@ -118,6 +119,10 @@ void StompEditorFrame::activate(QObject& stomp)
     else if(pCab != nullptr)
     {
       activatePage(ui->cab, indexOf(ui->cab));
+    }
+    else if(pGlobal != nullptr)
+    {
+      activatePage(ui->output, indexOf(ui->output));
     }
   }
 

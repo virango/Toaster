@@ -26,7 +26,9 @@ class TOASTERWIDGETS_EXPORT QToasterEnumDial : public QWidget
 {
   Q_OBJECT
   Q_ENUMS(KnobSize)
+  Q_ENUMS(LEDRingType)
   Q_PROPERTY(KnobSize knobSize READ knobSize WRITE setKnobSize)
+  Q_PROPERTY(LEDRingType ledRingType READ ledRingType WRITE setLEDRingType)
   Q_PROPERTY(QStringList values READ values WRITE setValues)
   Q_PROPERTY(bool isActive READ isActive WRITE setIsActive)
 public:
@@ -37,7 +39,13 @@ public:
     Big, Small
   };
 
+  enum LEDRingType
+  {
+    None, Uni, Bi
+  };
+
   KnobSize knobSize() const { return mKnobSize; }
+  LEDRingType ledRingType() const { return mLEDRingType; }
   QStringList values() const { return mValues; }
   bool isActive() const { return mIsActive; }
 
@@ -49,6 +57,7 @@ signals:
 
 public slots:
   void setKnobSize(KnobSize knobSize);
+  void setLEDRingType(LEDRingType ledType);
   void setValues(QStringList values);
   void setIsActive(bool enabled) { mIsActive = enabled; }
   //void setValue(const QString& value);
@@ -56,6 +65,7 @@ public slots:
 
 protected:
   void createKnobSkin();
+  void createLEDRingSkin();
   void paintEvent(QPaintEvent* pe);
   void wheelEvent(QWheelEvent* we);
   void mousePressEvent(QMouseEvent* me);
@@ -68,23 +78,29 @@ protected:
   void updateValueText();
   void showValueTooltip();
 
+  void updateLEDRing();
+
 private:
-  QList<QPixmap> mKnobSkinPixmaps;
-  int mCurrKnobFrameNo;
+  QList<QPixmap>* mKnobSkinPixmaps;
+  QList<QPixmap>* mLEDRingSkinPixmaps;
+  int             mCurrKnobFrameNo;
+  int             mCurrLEDRingFrameNo;
+  KnobSize        mKnobSize;
+  LEDRingType     mLEDRingType;
+  int             mMouseY;
+  int             mCurrValueIndex;
+  QString         mCurrValueText;
 
-  KnobSize mKnobSize;
+  bool            mIsActive;
 
-  int mMouseY;
+  QStringList     mValues;
 
-  int               mCurrValueIndex;
-  QString           mCurrValueText;
-
-  bool              mIsActive;
-
-  QStringList mValues;
-
-  QMap<KnobSize, QString> mKnobSkins;
-  static const int mKnobSkinNoOfFrames = 40;
+  static QList<QPixmap> sSmallKnobSkinPixmaps;
+  static QList<QPixmap> sBigKnobSkinPixmaps;
+  static QList<QPixmap> sUniLEDRingSkinPixmaps;
+  static QList<QPixmap> sBiLEDRingSkinPixmaps;
+  static const int sKnobSkinNoOfFrames = 40;
+  static const int sLEDRingSkinNoOfFrames = 15;
 };
 
 #endif

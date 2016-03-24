@@ -173,6 +173,10 @@ private slots:
 
   void onEditorPageChanged(IStompEditorPage* editorPage);
 
+  void on_inputButton_clicked(QToasterButton &bt, bool longClick);
+
+  void on_outputButton_clicked(QToasterButton &bt, bool longClick);
+
 private:
   enum OperationMode
   {

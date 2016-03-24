@@ -38,6 +38,10 @@ protected:
   BYTEARRAYDECL(MonitorOutputEQMiddle)
   BYTEARRAYDECL(MonitorOutputEQTreble)
   BYTEARRAYDECL(MonitorOutputEQPresence)
+  BYTEARRAYDECL(MainOutputSource)
+  BYTEARRAYDECL(SPDIFOutputSource)
+  BYTEARRAYDECL(MonitorOutputSource)
+  BYTEARRAYDECL(DirectOutputSource)
   BYTEARRAYDECL(WahPedalToPitch)
   BYTEARRAYDECL(OperationMode)
   BYTEARRAYDECL(ConnectName)
@@ -94,6 +98,18 @@ protected:
   // MonitorOutputEQPresence
   void midiRequestMonitorOutputEQPresence();
   void midiApplyMonitorOutputEQPresence(unsigned short rawVal);
+  // MainOutputSource
+  void midiRequestMainOutputSource();
+  void midiApplyMainOutputSource(unsigned short rawVal);
+  // SPDIFOutputSource
+  void midiRequestSPDIFOutputSource();
+  void midiApplySPDIFOutputSource(unsigned short rawVal);
+  // MonitorOutputSource
+  void midiRequestMonitorOutputSource();
+  void midiApplyMonitorOutputSource(unsigned short rawVal);
+  // DirectOutputSource
+  void midiRequestDirectOutputSource();
+  void midiApplyDirectOutputSource(unsigned short rawVal);
   // WahPedalToPitch
   void midiRequestWahPedalToPitch();
   void midiApplyWahPedalToPitch(unsigned short rawVal);
@@ -120,6 +136,10 @@ protected:
   virtual void midiMonitorOutputEQMiddleReceived(unsigned short rawVal) = 0;
   virtual void midiMonitorOutputEQTrebleReceived(unsigned short rawVal) = 0;
   virtual void midiMonitorOutputEQPresenceReceived(unsigned short rawVal) = 0;
+  virtual void midiMainOutputSourceReceived(unsigned short rawVal) = 0;
+  virtual void midiSPDIFOutputSourceReceived(unsigned short rawVal) = 0;
+  virtual void midiMonitorOutputSourceReceived(unsigned short rawVal) = 0;
+  virtual void midiDirectOutputSourceReceived(unsigned short rawVal) = 0;
   virtual void midiWahPedalToPitchReceived(unsigned short rawVal) = 0;
   virtual void midiOperationModeReceived(unsigned short rawVal) = 0;
 

@@ -186,6 +186,126 @@ QString QToasterStompEditLCD::value24Title() const
   return ui->val24Title->text();
 }
 
+QString QToasterStompEditLCD::value25Title() const
+{
+  return ui->val25Title->text();
+}
+
+QString QToasterStompEditLCD::value26Title() const
+{
+  return ui->val26Title->text();
+}
+
+QString QToasterStompEditLCD::value27Title() const
+{
+  return ui->val27Title->text();
+}
+
+QString QToasterStompEditLCD::value28Title() const
+{
+  return ui->val28Title->text();
+}
+
+QString QToasterStompEditLCD::value29Title() const
+{
+  return ui->val29Title->text();
+}
+
+QString QToasterStompEditLCD::value30Title() const
+{
+  return ui->val30Title->text();
+}
+
+QString QToasterStompEditLCD::value31Title() const
+{
+  return ui->val31Title->text();
+}
+
+QString QToasterStompEditLCD::value32Title() const
+{
+  return ui->val32Title->text();
+}
+
+QString QToasterStompEditLCD::value33Title() const
+{
+  return ui->val33Title->text();
+}
+
+QString QToasterStompEditLCD::value34Title() const
+{
+  return ui->val34Title->text();
+}
+
+QString QToasterStompEditLCD::value35Title() const
+{
+  return ui->val35Title->text();
+}
+
+QString QToasterStompEditLCD::value36Title() const
+{
+  return ui->val36Title->text();
+}
+
+QString QToasterStompEditLCD::value37Title() const
+{
+  return ui->val37Title->text();
+}
+
+QString QToasterStompEditLCD::value38Title() const
+{
+  return ui->val38Title->text();
+}
+
+QString QToasterStompEditLCD::value39Title() const
+{
+  return ui->val39Title->text();
+}
+
+QString QToasterStompEditLCD::value40Title() const
+{
+  return ui->val40Title->text();
+}
+
+QString QToasterStompEditLCD::value41Title() const
+{
+  return ui->val41Title->text();
+}
+
+QString QToasterStompEditLCD::value42Title() const
+{
+  return ui->val42Title->text();
+}
+
+QString QToasterStompEditLCD::value43Title() const
+{
+  return ui->val43Title->text();
+}
+
+QString QToasterStompEditLCD::value44Title() const
+{
+  return ui->val44Title->text();
+}
+
+QString QToasterStompEditLCD::value45Title() const
+{
+  return ui->val45Title->text();
+}
+
+QString QToasterStompEditLCD::value46Title() const
+{
+  return ui->val46Title->text();
+}
+
+QString QToasterStompEditLCD::value47Title() const
+{
+  return ui->val47Title->text();
+}
+
+QString QToasterStompEditLCD::value48Title() const
+{
+  return ui->val48Title->text();
+}
+
 double QToasterStompEditLCD::eqBand1Value() const
 {
   return getEqBandValue(ui->eqBand1Widget);
@@ -263,16 +383,6 @@ void QToasterStompEditLCD::setColor(Color color)
 {
   QToasterLCD::setColor(color);
   QString colorStyleSheet = sColor2StyleSheetsMap[color];
-  /*
-  ui->stompAEdit->setStyleSheet(colorStyleSheet);
-  ui->stompBEdit->setStyleSheet(colorStyleSheet);
-  ui->stompCEdit->setStyleSheet(colorStyleSheet);
-  ui->stompDEdit->setStyleSheet(colorStyleSheet);
-  ui->stompXEdit->setStyleSheet(colorStyleSheet);
-  ui->stompModEdit->setStyleSheet(colorStyleSheet);
-  ui->delayEdit->setStyleSheet(colorStyleSheet);
-  ui->reverbEdit->setStyleSheet(colorStyleSheet);
-  */
   ui->pageInfo->setStyleSheet(colorStyleSheet);
   ui->stompInstance->setStyleSheet(colorStyleSheet);
   ui->stompTypeName->setStyleSheet(colorStyleSheet);
@@ -472,6 +582,175 @@ void QToasterStompEditLCD::setValue24Title(QString title)
     ui->val24->setText("");
 }
 
+void QToasterStompEditLCD::setValue25Title(QString title)
+{
+  ui->val25Title->setText(title);
+  if(title.isEmpty())
+    ui->val25->setText("");
+}
+
+void QToasterStompEditLCD::setValue26Title(QString title)
+{
+  ui->val26Title->setText(title);
+  if(title.isEmpty())
+    ui->val26->setText("");
+}
+
+void QToasterStompEditLCD::setValue27Title(QString title)
+{
+  ui->val27Title->setText(title);
+  if(title.isEmpty())
+    ui->val27->setText("");
+}
+
+void QToasterStompEditLCD::setValue28Title(QString title)
+{
+  ui->val28Title->setText(title);
+  if(title.isEmpty())
+    ui->val28->setText("");
+}
+
+void QToasterStompEditLCD::setValue29Title(QString title)
+{
+  ui->val29Title->setText(title);
+  if(title.isEmpty())
+    ui->val29->setText("");
+}
+
+void QToasterStompEditLCD::setValue30Title(QString title)
+{
+  ui->val30Title->setText(title);
+  if(title.isEmpty())
+    ui->val30->setText("");
+}
+
+void QToasterStompEditLCD::setValue31Title(QString title)
+{
+  ui->val31Title->setText(title);
+  if(title.isEmpty())
+    ui->val31->setText("");
+}
+
+void QToasterStompEditLCD::setValue32Title(QString title)
+{
+  ui->val32Title->setText(title);
+  if(title.isEmpty())
+    ui->val32->setText("");
+}
+
+void QToasterStompEditLCD::setValue33Title(QString title)
+{
+  ui->val33Title->setText(title);
+  if(title.isEmpty())
+    ui->val33->setText("");
+}
+
+void QToasterStompEditLCD::setValue34Title(QString title)
+{
+  ui->val34Title->setText(title);
+  if(title.isEmpty())
+    ui->val34->setText("");
+}
+
+void QToasterStompEditLCD::setValue35Title(QString title)
+{
+  ui->val35Title->setText(title);
+  if(title.isEmpty())
+    ui->val35->setText("");
+}
+
+void QToasterStompEditLCD::setValue36Title(QString title)
+{
+  ui->val36Title->setText(title);
+  if(title.isEmpty())
+    ui->val36->setText("");
+}
+
+void QToasterStompEditLCD::setValue37Title(QString title)
+{
+  ui->val37Title->setText(title);
+  if(title.isEmpty())
+    ui->val37->setText("");
+}
+
+void QToasterStompEditLCD::setValue38Title(QString title)
+{
+  ui->val38Title->setText(title);
+  if(title.isEmpty())
+    ui->val38->setText("");
+}
+
+void QToasterStompEditLCD::setValue39Title(QString title)
+{
+  ui->val39Title->setText(title);
+  if(title.isEmpty())
+    ui->val39->setText("");
+}
+
+void QToasterStompEditLCD::setValue40Title(QString title)
+{
+  ui->val40Title->setText(title);
+  if(title.isEmpty())
+    ui->val40->setText("");
+}
+
+void QToasterStompEditLCD::setValue41Title(QString title)
+{
+  ui->val41Title->setText(title);
+  if(title.isEmpty())
+    ui->val41->setText("");
+}
+
+void QToasterStompEditLCD::setValue42Title(QString title)
+{
+  ui->val42Title->setText(title);
+  if(title.isEmpty())
+    ui->val42->setText("");
+}
+
+void QToasterStompEditLCD::setValue43Title(QString title)
+{
+  ui->val43Title->setText(title);
+  if(title.isEmpty())
+    ui->val43->setText("");
+}
+
+void QToasterStompEditLCD::setValue44Title(QString title)
+{
+  ui->val44Title->setText(title);
+  if(title.isEmpty())
+    ui->val44->setText("");
+}
+
+void QToasterStompEditLCD::setValue45Title(QString title)
+{
+  ui->val45Title->setText(title);
+  if(title.isEmpty())
+    ui->val45->setText("");
+}
+
+void QToasterStompEditLCD::setValue46Title(QString title)
+{
+  ui->val46Title->setText(title);
+  if(title.isEmpty())
+    ui->val46->setText("");
+}
+
+void QToasterStompEditLCD::setValue47Title(QString title)
+{
+  ui->val47Title->setText(title);
+  if(title.isEmpty())
+    ui->val47->setText("");
+}
+
+void QToasterStompEditLCD::setValue48Title(QString title)
+{
+  ui->val48Title->setText(title);
+  if(title.isEmpty())
+    ui->val48->setText("");
+}
+
+
 void QToasterStompEditLCD::setValue1(QString value)
 {
   ui->val01->setText(value);
@@ -591,6 +870,127 @@ void QToasterStompEditLCD::setValue24(QString value)
 {
   ui->val24->setText(value);
 }
+
+void QToasterStompEditLCD::setValue25(QString value)
+{
+  ui->val25->setText(value);
+}
+
+void QToasterStompEditLCD::setValue26(QString value)
+{
+  ui->val26->setText(value);
+}
+
+void QToasterStompEditLCD::setValue27(QString value)
+{
+  ui->val27->setText(value);
+}
+
+void QToasterStompEditLCD::setValue28(QString value)
+{
+  ui->val28->setText(value);
+}
+
+void QToasterStompEditLCD::setValue29(QString value)
+{
+  ui->val29->setText(value);
+}
+
+void QToasterStompEditLCD::setValue30(QString value)
+{
+  ui->val30->setText(value);
+}
+
+void QToasterStompEditLCD::setValue31(QString value)
+{
+  ui->val31->setText(value);
+}
+
+void QToasterStompEditLCD::setValue32(QString value)
+{
+  ui->val32->setText(value);
+}
+
+void QToasterStompEditLCD::setValue33(QString value)
+{
+  ui->val33->setText(value);
+}
+
+void QToasterStompEditLCD::setValue34(QString value)
+{
+  ui->val34->setText(value);
+}
+
+void QToasterStompEditLCD::setValue35(QString value)
+{
+  ui->val35->setText(value);
+}
+
+void QToasterStompEditLCD::setValue36(QString value)
+{
+  ui->val36->setText(value);
+}
+
+void QToasterStompEditLCD::setValue37(QString value)
+{
+  ui->val37->setText(value);
+}
+
+void QToasterStompEditLCD::setValue38(QString value)
+{
+  ui->val38->setText(value);
+}
+
+void QToasterStompEditLCD::setValue39(QString value)
+{
+  ui->val39->setText(value);
+}
+
+void QToasterStompEditLCD::setValue40(QString value)
+{
+  ui->val40->setText(value);
+}
+
+void QToasterStompEditLCD::setValue41(QString value)
+{
+  ui->val41->setText(value);
+}
+
+void QToasterStompEditLCD::setValue42(QString value)
+{
+  ui->val42->setText(value);
+}
+
+void QToasterStompEditLCD::setValue43(QString value)
+{
+  ui->val43->setText(value);
+}
+
+void QToasterStompEditLCD::setValue44(QString value)
+{
+  ui->val44->setText(value);
+}
+
+void QToasterStompEditLCD::setValue45(QString value)
+{
+  ui->val45->setText(value);
+}
+
+void QToasterStompEditLCD::setValue46(QString value)
+{
+  ui->val46->setText(value);
+}
+
+void QToasterStompEditLCD::setValue47(QString value)
+{
+  ui->val47->setText(value);
+}
+
+void QToasterStompEditLCD::setValue48(QString value)
+{
+  ui->val48->setText(value);
+}
+
 
 void QToasterStompEditLCD::setEqBand1Value(double value)
 {

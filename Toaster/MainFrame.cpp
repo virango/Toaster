@@ -816,3 +816,13 @@ void MainFrame::onEditorPageChanged(IStompEditorPage* editorPage)
   }
   update();
 }
+
+void MainFrame::on_inputButton_clicked(QToasterButton &bt, bool longClick)
+{
+
+}
+
+void MainFrame::on_outputButton_clicked(QToasterButton &bt, bool longClick)
+{
+  handleStompButtonClick(mGlobal, bt, true);
+}

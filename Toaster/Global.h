@@ -41,6 +41,11 @@ public:
   void requestWahPedalToPitch() { midiRequestWahPedalToPitch(); }
   void requestMasterTune() { midiRequestMasterTune(); }
 
+  void requestMainOutputSource() { midiRequestMainOutputSource(); }
+  void requestMonitorOutputSource() { midiRequestMonitorOutputSource(); }
+  void requestDirectOutputSource() { midiRequestDirectOutputSource(); }
+  void requestSPDIFOutputSource() { midiRequestSPDIFOutputSource(); }
+
 signals:
   void mainOutputVolumeReceived(int volume);
   void headphoneOutputVolumeReceived(int volume);
@@ -56,6 +61,10 @@ signals:
   void monitorOutputEQMiddleReceived(double middle);
   void monitorOutputEQTrebleReceived(double treble);
   void monitorOutputEQPresenceReceived(double presence);
+  void mainOutputSourceReceived(int source);
+  void spdifOutputSourceReceived(int source);
+  void monitorOutputSourceReceived(int source);
+  void directOutputSourceReceived(int source);
   void wahPedalToPitchReceived(bool onOff);
   void operationModeReceived(unsigned short);
 
@@ -74,7 +83,11 @@ public slots:
   void applyMonitorOutputEQMiddle(double middle);
   void applyMonitorOutputEQTreble(double treble);
   void applyMonitorOutputEQPresence(double presence);
-  void applyWahPedalToPitchReceived(bool onOff);
+  void applyMainOutputSource(int source);
+  void applySpdifOutputSource(int source);
+  void applyMonitorOutputSource(int source);
+  void applyDirectOutputSource(int source);
+  void applyWahPedalToPitch(bool onOff);
   void applyOperationMode(Global::OperationMode opMode);
 
   void connect2KPA(const QString& connectName);
@@ -96,6 +109,10 @@ protected:
   virtual void midiMonitorOutputEQMiddleReceived(unsigned short rawVal);
   virtual void midiMonitorOutputEQTrebleReceived(unsigned short rawVal);
   virtual void midiMonitorOutputEQPresenceReceived(unsigned short rawVal);
+  virtual void midiMainOutputSourceReceived(unsigned short rawVal);
+  virtual void midiSPDIFOutputSourceReceived(unsigned short rawVal);
+  virtual void midiMonitorOutputSourceReceived(unsigned short rawVal);
+  virtual void midiDirectOutputSourceReceived(unsigned short rawVal);
   virtual void midiWahPedalToPitchReceived(unsigned short rawVal);
   virtual void midiOperationModeReceived(unsigned short rawVal);
 

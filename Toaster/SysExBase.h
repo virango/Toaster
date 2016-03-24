@@ -176,6 +176,22 @@ protected:
       return QString::number((rawVal/12) - 1);
     return "";
   }
+
+  int raw2SPDIFSource(unsigned short rawVal)
+  {
+    static vector<int> values = { 0, 1, 1, 2, 3, 4, 6, 7, 8, 7, 2, 2, 8, 9, 5, 8};
+    if(rawVal < values.size())
+      return values[rawVal];
+    else return 8;
+  }
+
+  unsigned short spdifSource2Raw(int source)
+  {
+    static vector<unsigned short> values = {0, 2, 3, 4, 5, 14, 6, 9, 12, 13};
+    if(source < values.size())
+      return values[source];
+    return 13;
+  }
 };
 
 #endif // SYSEXBASE_H

@@ -104,7 +104,27 @@ void Global::applyMonitorOutputEQPresence(double presence)
   midiApplyMonitorOutputEQPresence(phys2Raw(presence, 10.0, -5.0));
 }
 
-void Global::applyWahPedalToPitchReceived(bool onOff)
+void Global::applyMainOutputSource(int source)
+{
+  midiApplyMonitorOutputSource(source);
+}
+
+void Global::applySpdifOutputSource(int source)
+{
+  midiApplySPDIFOutputSource(spdifSource2Raw(source));
+}
+
+void Global::applyMonitorOutputSource(int source)
+{
+  midiApplyMonitorOutputSource(source);
+}
+
+void Global::applyDirectOutputSource(int source)
+{
+  midiApplyDirectOutputSource(source);
+}
+
+void Global::applyWahPedalToPitch(bool onOff)
 {
   midiApplyWahPedalToPitch(bool2Raw(onOff));
 }
@@ -216,6 +236,26 @@ void Global::midiMonitorOutputEQTrebleReceived(unsigned short rawVal)
 void Global::midiMonitorOutputEQPresenceReceived(unsigned short rawVal)
 {
   emit monitorOutputEQPresenceReceived(raw2Phys(rawVal, 10.0, -5.0));
+}
+
+void Global::midiMainOutputSourceReceived(unsigned short rawVal)
+{
+  emit mainOutputSourceReceived(rawVal);
+}
+
+void Global::midiSPDIFOutputSourceReceived(unsigned short rawVal)
+{
+  emit spdifOutputSourceReceived(raw2SPDIFSource(rawVal));
+}
+
+void Global::midiMonitorOutputSourceReceived(unsigned short rawVal)
+{
+  emit monitorOutputSourceReceived(rawVal);
+}
+
+void Global::midiDirectOutputSourceReceived(unsigned short rawVal)
+{
+  emit directOutputSourceReceived(rawVal);
 }
 
 void Global::midiWahPedalToPitchReceived(unsigned short rawVal)

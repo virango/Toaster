@@ -57,6 +57,30 @@ class TOASTERWIDGETS_EXPORT QToasterStompEditLCD : public QToasterLCD
   Q_PROPERTY(QString value22Title READ value22Title WRITE setValue22Title)
   Q_PROPERTY(QString value23Title READ value23Title WRITE setValue23Title)
   Q_PROPERTY(QString value24Title READ value24Title WRITE setValue24Title)
+  Q_PROPERTY(QString value25Title READ value25Title WRITE setValue25Title)
+  Q_PROPERTY(QString value26Title READ value26Title WRITE setValue26Title)
+  Q_PROPERTY(QString value27Title READ value27Title WRITE setValue27Title)
+  Q_PROPERTY(QString value28Title READ value28Title WRITE setValue28Title)
+  Q_PROPERTY(QString value29Title READ value29Title WRITE setValue29Title)
+  Q_PROPERTY(QString value30Title READ value30Title WRITE setValue30Title)
+  Q_PROPERTY(QString value31Title READ value31Title WRITE setValue31Title)
+  Q_PROPERTY(QString value32Title READ value32Title WRITE setValue32Title)
+  Q_PROPERTY(QString value33Title READ value33Title WRITE setValue33Title)
+  Q_PROPERTY(QString value34Title READ value34Title WRITE setValue34Title)
+  Q_PROPERTY(QString value35Title READ value35Title WRITE setValue35Title)
+  Q_PROPERTY(QString value36Title READ value36Title WRITE setValue36Title)
+  Q_PROPERTY(QString value37Title READ value37Title WRITE setValue37Title)
+  Q_PROPERTY(QString value38Title READ value38Title WRITE setValue38Title)
+  Q_PROPERTY(QString value39Title READ value39Title WRITE setValue39Title)
+  Q_PROPERTY(QString value40Title READ value40Title WRITE setValue40Title)
+  Q_PROPERTY(QString value41Title READ value41Title WRITE setValue41Title)
+  Q_PROPERTY(QString value42Title READ value42Title WRITE setValue42Title)
+  Q_PROPERTY(QString value43Title READ value43Title WRITE setValue43Title)
+  Q_PROPERTY(QString value44Title READ value44Title WRITE setValue44Title)
+  Q_PROPERTY(QString value45Title READ value45Title WRITE setValue45Title)
+  Q_PROPERTY(QString value46Title READ value46Title WRITE setValue46Title)
+  Q_PROPERTY(QString value47Title READ value47Title WRITE setValue47Title)
+  Q_PROPERTY(QString value48Title READ value48Title WRITE setValue48Title)
   Q_PROPERTY(double eqBand1Value READ eqBand1Value WRITE setEqBand1Value)
   Q_PROPERTY(double eqBand2Value READ eqBand2Value WRITE setEqBand2Value)
   Q_PROPERTY(double eqBand3Value READ eqBand3Value WRITE setEqBand3Value)
@@ -105,6 +129,30 @@ public:
   QString value22Title() const;
   QString value23Title() const;
   QString value24Title() const;
+  QString value25Title() const;
+  QString value26Title() const;
+  QString value27Title() const;
+  QString value28Title() const;
+  QString value29Title() const;
+  QString value30Title() const;
+  QString value31Title() const;
+  QString value32Title() const;
+  QString value33Title() const;
+  QString value34Title() const;
+  QString value35Title() const;
+  QString value36Title() const;
+  QString value37Title() const;
+  QString value38Title() const;
+  QString value39Title() const;
+  QString value40Title() const;
+  QString value41Title() const;
+  QString value42Title() const;
+  QString value43Title() const;
+  QString value44Title() const;
+  QString value45Title() const;
+  QString value46Title() const;
+  QString value47Title() const;
+  QString value48Title() const;
 
   double eqBand1Value() const;
   double eqBand2Value() const;
@@ -149,6 +197,31 @@ public slots:
   void setValue22Title(QString title);
   void setValue23Title(QString title);
   void setValue24Title(QString title);
+  void setValue25Title(QString title);
+  void setValue26Title(QString title);
+  void setValue27Title(QString title);
+  void setValue28Title(QString title);
+  void setValue29Title(QString title);
+  void setValue30Title(QString title);
+  void setValue31Title(QString title);
+  void setValue32Title(QString title);
+  void setValue33Title(QString title);
+  void setValue34Title(QString title);
+  void setValue35Title(QString title);
+  void setValue36Title(QString title);
+  void setValue37Title(QString title);
+  void setValue38Title(QString title);
+  void setValue39Title(QString title);
+  void setValue40Title(QString title);
+  void setValue41Title(QString title);
+  void setValue42Title(QString title);
+  void setValue43Title(QString title);
+  void setValue44Title(QString title);
+  void setValue45Title(QString title);
+  void setValue46Title(QString title);
+  void setValue47Title(QString title);
+  void setValue48Title(QString title);
+
   void setValue1(QString value);
   void setValue2(QString value);
   void setValue3(QString value);
@@ -173,6 +246,30 @@ public slots:
   void setValue22(QString value);
   void setValue23(QString value);
   void setValue24(QString value);
+  void setValue25(QString value);
+  void setValue26(QString value);
+  void setValue27(QString value);
+  void setValue28(QString value);
+  void setValue29(QString value);
+  void setValue30(QString value);
+  void setValue31(QString value);
+  void setValue32(QString value);
+  void setValue33(QString value);
+  void setValue34(QString value);
+  void setValue35(QString value);
+  void setValue36(QString value);
+  void setValue37(QString value);
+  void setValue38(QString value);
+  void setValue39(QString value);
+  void setValue40(QString value);
+  void setValue41(QString value);
+  void setValue42(QString value);
+  void setValue43(QString value);
+  void setValue44(QString value);
+  void setValue45(QString value);
+  void setValue46(QString value);
+  void setValue47(QString value);
+  void setValue48(QString value);
 
   void setEqBand1Value(double value);
   void setEqBand2Value(double value);
