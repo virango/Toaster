@@ -1,5 +1,6 @@
 #include "OutputFrame.h"
 #include "ui_OutputFrame.h"
+#include "LookUpTables.h"
 
 OutputFrame::OutputFrame(QWidget *parent)
   : QWidget(parent)
@@ -7,6 +8,10 @@ OutputFrame::OutputFrame(QWidget *parent)
   , mpGlobal(nullptr)
 {
   ui->setupUi(this);
+  ui->mainVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  ui->monitorVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  ui->directVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  ui->headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
 }
 
 OutputFrame::~OutputFrame()
@@ -24,11 +29,19 @@ void OutputFrame::activate(QObject& module)
     connect(mpGlobal, &Global::mainOutputSourceReceived, this, &OutputFrame::OnMonitorOutputSource);
     connect(mpGlobal, &Global::directOutputSourceReceived, this, &OutputFrame::OnDirectOutputSource);
     connect(mpGlobal, &Global::spdifOutputSourceReceived, this, &OutputFrame::OnSpdifOutputSource);
+    connect(mpGlobal, &Global::mainOutputVolumeReceived, this, &OutputFrame::OnMainVolume);
+    connect(mpGlobal, &Global::monitorOutputVolumeReceived, this, &OutputFrame::OnMonitorVolume);
+    connect(mpGlobal, &Global::directOutputVolumeReceived, this, &OutputFrame::OnDirectVolume);
+    connect(mpGlobal, &Global::headphoneOutputVolumeReceived, this, &OutputFrame::OnHeadphoneVolume);
 
     mpGlobal->requestMainOutputSource();
     mpGlobal->requestMonitorOutputSource();
     mpGlobal->requestDirectOutputSource();
     mpGlobal->requestSPDIFOutputSource();
+    mpGlobal->requestMainOutputVolume();
+    mpGlobal->requestMonitorOutputVolume();
+    mpGlobal->requestDirectOutputVolume();
+    mpGlobal->requestHeadphoneOutputVolume();
   }
 }
 
@@ -40,6 +53,10 @@ void OutputFrame::deactivate()
     disconnect(mpGlobal, &Global::mainOutputSourceReceived, this, &OutputFrame::OnMonitorOutputSource);
     disconnect(mpGlobal, &Global::directOutputSourceReceived, this, &OutputFrame::OnDirectOutputSource);
     disconnect(mpGlobal, &Global::spdifOutputSourceReceived, this, &OutputFrame::OnSpdifOutputSource);
+    disconnect(mpGlobal, &Global::mainOutputVolumeReceived, this, &OutputFrame::OnMainVolume);
+    disconnect(mpGlobal, &Global::monitorOutputVolumeReceived, this, &OutputFrame::OnMonitorVolume);
+    disconnect(mpGlobal, &Global::directOutputVolumeReceived, this, &OutputFrame::OnDirectVolume);
+    disconnect(mpGlobal, &Global::headphoneOutputVolumeReceived, this, &OutputFrame::OnHeadphoneVolume);
     mpGlobal = nullptr;
   }
 }
@@ -111,6 +128,30 @@ void OutputFrame::on_spdifOutputSourceDial_valueChanged(int valueIndex)
     mpGlobal->applySpdifOutputSource(valueIndex);
 }
 
+void OutputFrame::on_mainVolumeDial_valueChanged(int value)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applyMainOutputVolume(value);
+}
+
+void OutputFrame::on_monitorVolumeDial_valueChanged(int value)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applyMonitorOutputVolume(value);
+}
+
+void OutputFrame::on_directVolumeDial_valueChanged(int value)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applyDirectOutputVolume(value);
+}
+
+void OutputFrame::on_headphoneVolumeDial_valueChanged(int value)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applyHeadphoneOutputVolume(value);
+}
+
 void OutputFrame::OnMainOutputSource(int valueIndex)
 {
   ui->mainOutputSourceDial->setValue(valueIndex);
@@ -132,5 +173,29 @@ void OutputFrame::OnDirectOutputSource(int valueIndex)
 void OutputFrame::OnSpdifOutputSource(int valueIndex)
 {
   ui->spdifOutputSourceDial->setValue(valueIndex);
+  update();
+}
+
+void OutputFrame::OnMainVolume(int value)
+{
+  ui->mainVolumeDial->setValue(value);
+  update();
+}
+
+void OutputFrame::OnMonitorVolume(int value)
+{
+  ui->monitorVolumeDial->setValue(value);
+  update();
+}
+
+void OutputFrame::OnDirectVolume(int value)
+{
+  ui->directVolumeDial->setValue(value);
+  update();
+}
+
+void OutputFrame::OnHeadphoneVolume(int value)
+{
+  ui->headphoneVolumeDial->setValue(value);
   update();
 }

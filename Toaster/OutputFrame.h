@@ -35,12 +35,20 @@ private slots:
   void on_monitorOutputSourceDial_valueChanged(int valueIndex);
   void on_directOutputSourceDial_valueChanged(int valueIndex);
   void on_spdifOutputSourceDial_valueChanged(int valueIndex);
+  void on_mainVolumeDial_valueChanged(int value);
+  void on_monitorVolumeDial_valueChanged(int value);
+  void on_directVolumeDial_valueChanged(int value);
+  void on_headphoneVolumeDial_valueChanged(int value);
 
   // kpa => ui
   void OnMainOutputSource(int valueIndex);
   void OnMonitorOutputSource(int valueIndex);
   void OnDirectOutputSource(int valueIndex);
   void OnSpdifOutputSource(int valueIndex);
+  void OnMainVolume(int value);
+  void OnMonitorVolume(int value);
+  void OnDirectVolume(int value);
+  void OnHeadphoneVolume(int value);
 
 private:
   Ui::OutputFrame *ui;

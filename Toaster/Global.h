@@ -45,6 +45,10 @@ public:
   void requestMonitorOutputSource() { midiRequestMonitorOutputSource(); }
   void requestDirectOutputSource() { midiRequestDirectOutputSource(); }
   void requestSPDIFOutputSource() { midiRequestSPDIFOutputSource(); }
+  void requestMainOutputVolume() { midiRequestMainOutputVolume(); }
+  void requestMonitorOutputVolume() { midiRequestMonitorOutputVolume(); }
+  void requestDirectOutputVolume() { midiRequestDirectOutputVolume(); }
+  void requestHeadphoneOutputVolume() { midiRequestHeadphoneOutputVolume(); }
 
 signals:
   void mainOutputVolumeReceived(int volume);

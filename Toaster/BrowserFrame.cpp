@@ -62,6 +62,12 @@ BrowserFrame::~BrowserFrame()
 {
   delete ui;
 }
+
+void BrowserFrame::requestValues()
+{
+  mExtParam.requestAllValues();
+}
+
 //------------------------------------------------------------------------------------------
 
 // stomps

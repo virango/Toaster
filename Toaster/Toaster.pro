@@ -130,9 +130,8 @@ SOURCES += main.cpp\
     TunerMidi.cpp \
     Tuner.cpp \
     InputFrame.cpp \
-    OutputFrame.cpp
-
-SOURCES_NOOPTIMIZE = MainVolumeValues.cpp \
+    OutputFrame.cpp \
+    MainVolumeValues.cpp \
     RotaryDistanceValues.cpp \
     RigVolumeValues.cpp \
     MixValues.cpp \
@@ -141,14 +140,6 @@ SOURCES_NOOPTIMIZE = MainVolumeValues.cpp \
     QFactorValues.cpp \
     FlangerRateValues.cpp \
     VoiceIntervalValues.cpp
-
-nooptimize.name = nooptimize
-nooptimize.input = SOURCES_NOOPTIMIZE
-nooptimize.dependency_type = TYPE_C
-nooptimize.variable_out = OBJECTS
-nooptimize.output = ${QMAKE_VAR_OBJECTS_DIR}${QMAKE_FILE_IN_BASE}$${first(QMAKE_EXT_OBJ)}
-nooptimize.commands = $${QMAKE_CXX} $(CXXFLAGS) -O0 $(INCPATH) -c ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
-QMAKE_EXTRA_COMPILERS += nooptimize
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -317,19 +308,14 @@ RESOURCES += \
 DEPENDPATH += $$PWD/../ToasterWidgets \
               $$PWD/../RtMidi
 
-win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster_64bit/RtMidi/release/ -lRtMidi
-else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster_64bit/RtMidi/debug/ -lRtMidi
-else:win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster_32bit/RtMidi/release/ -lRtMidi
-else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster_32bit/RtMidi/debug/ -lRtMidi
-else:unix: CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/RtMidi/release -lRtMidi
-else:unix: CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/RtMidi/debug -lRtMidi
 
-win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster_64bit/ToasterWidgets/release/ -lqtoasterwidgetsplugin
-else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86_64): LIBS += -L$$PWD/../../build-Toaster_64bit/ToasterWidgets/debug/ -lqtoasterwidgetsplugind
-else:win32:CONFIG(release, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster_32bit/ToasterWidgets/release/ -lqtoasterwidgetsplugin
-else:win32:CONFIG(debug, debug|release):contains(QMAKE_HOST.arch, x86): LIBS += -L$$PWD/../../build-Toaster_32bit/ToasterWidgets/debug/ -lqtoasterwidgetsplugind
-else:unix: CONFIG(release, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/ToasterWidgets/release -lqtoasterwidgetsplugin
-else:unix: CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/ToasterWidgets/debug -lqtoasterwidgetsplugin
+CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../RtMidi/release/ -lRtMidi
+CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../RtMidi/debug/ -lRtMidi
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/release/ -lqtoasterwidgetsplugin
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/debug/ -lqtoasterwidgetsplugind
+else:unix: CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/release -lqtoasterwidgetsplugin
+
 
 unix:!macx:LIBS += -lasound -ljack
 macx:LIBS += -framework CoreMIDI -framework CoreAudio -framework CoreFoundation

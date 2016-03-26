@@ -148,6 +148,8 @@ void MainFrame::requestValues()
   mInput.requestAllValues();
   mProfile.requestAllValues();
 
+  ui->browser->requestValues();
+
   //DebugMidi::get().debugScanRequest(0x04, 0x00, 0x7F);
   //DebugMidi::get().debugScanRequest(0x00, 0x0, 0x7F);
   //DebugMidi::get().debugScanRequest(0x01, 0x00, 0x7F);

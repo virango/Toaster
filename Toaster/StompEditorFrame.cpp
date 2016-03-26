@@ -557,14 +557,14 @@ void StompEditorFrame::nextDisplayPage()
 {
   if(mpActivePage != nullptr)
   {
+    QToasterLCD::Page maxPage = mpActivePage->getMaxDisplayPage();
     QToasterLCD::Page currentPage = mpActivePage->getCurrentDisplayPage();
     QToasterLCD::Page pageToSet = currentPage;
-    if(currentPage == QToasterLCD::Page1)
-      pageToSet = QToasterLCD::Page2;
-    else if(currentPage == QToasterLCD::Page2)
-      pageToSet = QToasterLCD::Page3;
 
-    if(pageToSet != currentPage && pageToSet <= mpActivePage->getMaxDisplayPage())
+    if(currentPage < maxPage)
+      pageToSet = (QToasterLCD::Page)(currentPage + 1);
+
+    if(pageToSet != currentPage)
     {
       mpActivePage->setCurrentDisplayPage(pageToSet);
       emit editorPageChanged(mpActivePage);
@@ -578,12 +578,10 @@ void StompEditorFrame::prevDisplayPage()
   {
     QToasterLCD::Page currentPage = mpActivePage->getCurrentDisplayPage();
     QToasterLCD::Page pageToSet = currentPage;
-    if(currentPage == QToasterLCD::Page3)
-      pageToSet = QToasterLCD::Page2;
-    else if(currentPage == QToasterLCD::Page2)
-      pageToSet = QToasterLCD::Page1;
+    if(currentPage > QToasterLCD::Page1)
+      pageToSet = (QToasterLCD::Page)(currentPage - 1);
 
-    if(pageToSet != currentPage && pageToSet <= mpActivePage->getMaxDisplayPage())
+    if(pageToSet != currentPage)
     {
       mpActivePage->setCurrentDisplayPage(pageToSet);
       emit editorPageChanged(mpActivePage);

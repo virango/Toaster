@@ -36,6 +36,7 @@ public:
   explicit BrowserFrame(QWidget *parent = 0);
   ~BrowserFrame();
 
+  void requestValues();
 
 private slots:
   // stomps
