@@ -40,7 +40,7 @@ public:
   void requestAllValues();
   void requestWahPedalToPitch() { midiRequestWahPedalToPitch(); }
   void requestMasterTune() { midiRequestMasterTune(); }
-
+  void requestMonitorCabOff() { midiRequestMonitorCabOff(); }
   void requestMainOutputSource() { midiRequestMainOutputSource(); }
   void requestMonitorOutputSource() { midiRequestMonitorOutputSource(); }
   void requestDirectOutputSource() { midiRequestDirectOutputSource(); }
@@ -49,13 +49,31 @@ public:
   void requestMonitorOutputVolume() { midiRequestMonitorOutputVolume(); }
   void requestDirectOutputVolume() { midiRequestDirectOutputVolume(); }
   void requestHeadphoneOutputVolume() { midiRequestHeadphoneOutputVolume(); }
+  void requestMonitorOutputEQBass() { midiRequestMonitorOutputEQBass(); }
+  void requestMonitorOutputEQMiddle() { midiRequestMonitorOutputEQMiddle(); }
+  void requestMonitorOutputEQTreble() { midiRequestMonitorOutputEQTreble(); }
+  void requestMonitorOutputEQPresence() { midiRequestMonitorOutputEQPresence(); }
+  void requestMainOutputEQBass() { midiRequestMainOutputEQBass(); }
+  void requestMainOutputEQMiddle() { midiRequestMainOutputEQMiddle(); }
+  void requestMainOutputEQTreble() { midiRequestMainOutputEQTreble(); }
+  void requestMainOutputEQPresence() { midiRequestMainOutputEQPresence(); }
+  void requestAuxInToMain() { midiRequestAuxInToMain(); }
+  void requestAuxInToHeadphone() { midiRequestAuxInToHeadphone(); }
+  void requestConstantLatencyOnOff() { midiRequestConstantLatencyOnOff(); }
+  void requestSpace() { midiRequestSpace(); }
+  void requestHeadphoneSpaceOnOff() { midiRequestHeadphoneSpaceOnOff(); }
+  void requestReampSense() { midiRequestReampSense(); }
+  void requestPureCabOnOff() { midiRequestPureCabOnOff(); }
+  void requestPureCab() { midiRequestPureCab(); }
 
 signals:
   void mainOutputVolumeReceived(int volume);
   void headphoneOutputVolumeReceived(int volume);
   void monitorOutputVolumeReceived(int volume);
   void directOutputVolumeReceived(int volume);
+  void spdifOutputVolumeReceived(int volume);
   void masterTuneReceived(double masterTune);
+  void monitorCabOffReceived(bool monitorCabOff);
   void spdifInputEnableReceived(bool enabled);
   void mainOutputEQBassReceived(double bass);
   void mainOutputEQMiddleReceived(double middle);
@@ -69,7 +87,15 @@ signals:
   void spdifOutputSourceReceived(int source);
   void monitorOutputSourceReceived(int source);
   void directOutputSourceReceived(int source);
+  void auxInToMainReceived(unsigned short rawVal);
+  void auxInToHeadphoneReceived(unsigned short rawVal);
+  void constantLatencyOnOffReceived(bool onOff);
+  void spaceReceived(unsigned short rawVal);
+  void headphoneSpaceOnOffReceived(bool onOff);
   void wahPedalToPitchReceived(bool onOff);
+  void reampSensReceived(unsigned short rawVal);
+  void pureCabOnOffReceived(bool onOff);
+  void pureCabReceived(double pureCab);
   void operationModeReceived(unsigned short);
 
 public slots:
@@ -77,8 +103,10 @@ public slots:
   void applyHeadphoneOutputVolume(int volume);
   void applyMonitorOutputVolume(int volume);
   void applyDirectOutputVolume(int volume);
+  void applySPDIFOutputVolue(int volume);
   void applyMasterTune(double masterTune);
-  void applySpdifInputEnable(bool enabled);
+  void applyMonitorCabOff(bool monitorCabOff);
+  void applySPDIFInputEnable(bool enabled);
   void applyMainOutputEQBass(double bass);
   void applyMainOutputEQMiddle(double middle);
   void applyMainOutputEQTreble(double treble);
@@ -88,10 +116,18 @@ public slots:
   void applyMonitorOutputEQTreble(double treble);
   void applyMonitorOutputEQPresence(double presence);
   void applyMainOutputSource(int source);
-  void applySpdifOutputSource(int source);
+  void applySPDIFOutputSource(int source);
   void applyMonitorOutputSource(int source);
   void applyDirectOutputSource(int source);
+  void applyAuxInToMain(unsigned short rawVal);
+  void applyAuxInToHeadphone(unsigned short rawVal);
+  void applyConstantLatencyOnOff(bool onOff);
+  void applySpace(unsigned short rawVal);
+  void applyHeadphoneSpaceOnOff(bool onOff);
   void applyWahPedalToPitch(bool onOff);
+  void applyReampSense(unsigned short rawVal);
+  void applyPureCabOnOff(bool onOff);
+  void applyPureCab(unsigned short rawVal);
   void applyOperationMode(Global::OperationMode opMode);
 
   void connect2KPA(const QString& connectName);
@@ -103,7 +139,9 @@ protected:
   virtual void midiHeadphoneOutputVolumeReceived(unsigned short rawVal);
   virtual void midiMonitorOutputVolumeReceived(unsigned short rawVal);
   virtual void midiDirectOutputVolumeReceived(unsigned short rawVal);
+  virtual void midiSPDIFOutputVolumeReceived(unsigned short rawVal);
   virtual void midiMasterTuneReceived(unsigned short rawVal);
+  virtual void midiMonitorCabOffReceived(unsigned short rawVal);
   virtual void midiSPDIFInputEnableReceived(unsigned short rawVal);
   virtual void midiMainOutputEQBassReceived(unsigned short rawVal);
   virtual void midiMainOutputEQMiddleReceived(unsigned short rawVal);
@@ -117,7 +155,15 @@ protected:
   virtual void midiSPDIFOutputSourceReceived(unsigned short rawVal);
   virtual void midiMonitorOutputSourceReceived(unsigned short rawVal);
   virtual void midiDirectOutputSourceReceived(unsigned short rawVal);
+  virtual void midiAuxInToMainReceived(unsigned short rawVal);
+  virtual void midiAuxInToHeadphoneReceived(unsigned short rawVal);
+  virtual void midiConstantLatencyOnOffReceived(unsigned short rawVal);
+  virtual void midiSpaceReceived(unsigned short rawVal);
+  virtual void midiHeadphoneSpaceOnOffReceived(unsigned short rawVal);
   virtual void midiWahPedalToPitchReceived(unsigned short rawVal);
+  virtual void midiReampSensReceived(unsigned short rawVal);
+  virtual void midiPureCabOnOffReceived(unsigned short rawVal);
+  virtual void midiPureCabReceived(unsigned short rawVal);
   virtual void midiOperationModeReceived(unsigned short rawVal);
 
   void launchBeacon();

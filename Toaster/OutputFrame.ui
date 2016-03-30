@@ -95,7 +95,7 @@
     <string>Presence</string>
    </property>
    <property name="value21Title">
-    <string/>
+    <string>Monitor Cab</string>
    </property>
    <property name="value22Title">
     <string/>
@@ -183,7 +183,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page12">
     <widget class="QToasterDial" name="dummy6Dial">
@@ -243,6 +243,9 @@
      </property>
      <property name="unit">
       <string/>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
      </property>
     </widget>
     <widget class="QToasterDial" name="dummy7Dial">
@@ -389,8 +392,144 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="page32"/>
-   <widget class="QWidget" name="page42"/>
+   <widget class="QWidget" name="page32">
+    <widget class="QToasterEnumDial" name="monitorCabOffDial">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="values">
+      <stringlist>
+       <string>On</string>
+       <string>Off</string>
+      </stringlist>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="dummy22Dial">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="dummy23Dial">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="dummy24Dial">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page42">
+    <widget class="QToasterEnumDial" name="dummy31Dial">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="dummy32Dial">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="dummy29Dial">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="values">
+      <stringlist>
+       <string>On</string>
+       <string>Off</string>
+      </stringlist>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="dummy30Dial">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </widget>
    <widget class="QWidget" name="page52"/>
    <widget class="QWidget" name="page62"/>
   </widget>
@@ -404,7 +543,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page11">
     <widget class="QToasterEnumDial" name="mainOutputSourceDial">
@@ -568,8 +707,186 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="page31"/>
-   <widget class="QWidget" name="page41"/>
+   <widget class="QWidget" name="page31">
+    <widget class="QToasterDial" name="monitorOutputEQBassDial">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="monitorOutputEQMiddleDial">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="monitorOutputEQTrebleDial">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="monitorOutputEQPresenceDial">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page41">
+    <widget class="QToasterDial" name="mainOutputEQMiddleDial">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="mainOutputEQBassDial">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="mainOutputEQTrebleDial">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="mainOutputEQPresenceDial">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::Bi</enum>
+     </property>
+     <property name="minValue">
+      <double>-5.000000000000000</double>
+     </property>
+     <property name="maxValue">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+   </widget>
    <widget class="QWidget" name="page51"/>
    <widget class="QWidget" name="page61"/>
   </widget>
@@ -787,6 +1104,150 @@
     </hint>
     <hint type="destinationlabel">
      <x>457</x>
+     <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>monitorOutputEQBassDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue17(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>108</x>
+     <y>170</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>monitorOutputEQMiddleDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue18(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>292</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>164</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>monitorOutputEQTrebleDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue19(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>337</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>344</x>
+     <y>159</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>monitorOutputEQPresenceDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue20(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>466</x>
+     <y>290</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>461</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>monitorCabOffDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue21(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>112</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>116</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mainOutputEQBassDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue25(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>270</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>111</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mainOutputEQMiddleDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue26(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>238</x>
+     <y>289</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>220</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mainOutputEQTrebleDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue27(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>335</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>336</x>
+     <y>154</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mainOutputEQPresenceDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue28(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>468</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>456</x>
      <y>160</y>
     </hint>
    </hints>

@@ -28,7 +28,9 @@ protected:
   BYTEARRAYDECL(HeadphoneOutputVolume)
   BYTEARRAYDECL(MonitorOutputVolume)
   BYTEARRAYDECL(DirectOutputVolume)
+  BYTEARRAYDECL(SPDIFOutputVolume)
   BYTEARRAYDECL(MasterTune)
+  BYTEARRAYDECL(MonitorCabOff)
   BYTEARRAYDECL(SPDIFInputEnable)
   BYTEARRAYDECL(MainOutputEQBass)
   BYTEARRAYDECL(MainOutputEQMiddle)
@@ -42,7 +44,15 @@ protected:
   BYTEARRAYDECL(SPDIFOutputSource)
   BYTEARRAYDECL(MonitorOutputSource)
   BYTEARRAYDECL(DirectOutputSource)
+  BYTEARRAYDECL(AuxInToMain)
+  BYTEARRAYDECL(AuxInToHeadphone)
+  BYTEARRAYDECL(ConstantLatencyOnOff)
+  BYTEARRAYDECL(Space)
+  BYTEARRAYDECL(HeadphoneSpaceOnOff)
   BYTEARRAYDECL(WahPedalToPitch)
+  BYTEARRAYDECL(ReampSense)
+  BYTEARRAYDECL(PureCabOnOff)
+  BYTEARRAYDECL(PureCab)
   BYTEARRAYDECL(OperationMode)
   BYTEARRAYDECL(ConnectName)
 
@@ -68,9 +78,15 @@ protected:
   // DirectOutputVolume
   void midiRequestDirectOutputVolume();
   void midiApplyDirectOutputVolume(unsigned short rawVal);
+  // SPDIFOutputVolume
+  void midiRequestSPDIFOutputVolume();
+  void midiApplySPDIFOutputVolume(unsigned short rawVal);
   // MasterTune
   void midiRequestMasterTune();
   void midiApplyMasterTune(unsigned short rawVal);
+  // MonitorCabOff
+  void midiRequestMonitorCabOff();
+  void midiApplyMonitorCabOff(unsigned short);
   // SPDIFInputEnable
   void midiRequestSPDIFInputEnable();
   void midiApplySPDIFInputEnable(unsigned short rawVal);
@@ -110,9 +126,33 @@ protected:
   // DirectOutputSource
   void midiRequestDirectOutputSource();
   void midiApplyDirectOutputSource(unsigned short rawVal);
+  // AuxInToMain
+  void midiRequestAuxInToMain();
+  void midiApplyAuxInToMain(unsigned short rawVal);
+  // AuxInToHeadphone
+  void midiRequestAuxInToHeadphone();
+  void midiApplyAuxInToHeadphone(unsigned short rawVal);
+  // ConstantLatencyOnOff
+  void midiRequestConstantLatencyOnOff();
+  void midiApplyConstantLatencyOnOff(unsigned short rawVal);
+  // Space
+  void midiRequestSpace();
+  void midiApplySpace(unsigned short rawVal);
+  // HeadphoneSpaceOnOff
+  void midiRequestHeadphoneSpaceOnOff();
+  void midiApplyHeadphoneSpaceOnOff(unsigned short rawVal);
   // WahPedalToPitch
   void midiRequestWahPedalToPitch();
   void midiApplyWahPedalToPitch(unsigned short rawVal);
+  // ReampSens
+  void midiRequestReampSense();
+  void midiApplyReampSense(unsigned short rawVal);
+  // PureCabOnOff
+  void midiRequestPureCabOnOff();
+  void midiApplyPureCabOnOff(unsigned short rawVal);
+  // PureCab
+  void midiRequestPureCab();
+  void midiApplyPureCab(unsigned short rawVal);
   // OperationMode
   void midiRequestOperationMode();
   void midiApplyOperationMode(unsigned short rawVal);
@@ -126,7 +166,9 @@ protected:
   virtual void midiHeadphoneOutputVolumeReceived(unsigned short rawVal) = 0;
   virtual void midiMonitorOutputVolumeReceived(unsigned short rawVal) = 0;
   virtual void midiDirectOutputVolumeReceived(unsigned short rawVal) = 0;
+  virtual void midiSPDIFOutputVolumeReceived(unsigned short rawVal) = 0;
   virtual void midiMasterTuneReceived(unsigned short rawVal) = 0;
+  virtual void midiMonitorCabOffReceived(unsigned short rawVal) = 0;
   virtual void midiSPDIFInputEnableReceived(unsigned short rawVal) = 0;
   virtual void midiMainOutputEQBassReceived(unsigned short rawVal) = 0;
   virtual void midiMainOutputEQMiddleReceived(unsigned short rawVal) = 0;
@@ -140,7 +182,15 @@ protected:
   virtual void midiSPDIFOutputSourceReceived(unsigned short rawVal) = 0;
   virtual void midiMonitorOutputSourceReceived(unsigned short rawVal) = 0;
   virtual void midiDirectOutputSourceReceived(unsigned short rawVal) = 0;
+  virtual void midiAuxInToMainReceived(unsigned short rawVal) = 0;
+  virtual void midiAuxInToHeadphoneReceived(unsigned short rawVal) = 0;
+  virtual void midiConstantLatencyOnOffReceived(unsigned short rawVal) = 0;
+  virtual void midiSpaceReceived(unsigned short rawVal) = 0;
+  virtual void midiHeadphoneSpaceOnOffReceived(unsigned short rawVal) = 0;
   virtual void midiWahPedalToPitchReceived(unsigned short rawVal) = 0;
+  virtual void midiReampSensReceived(unsigned short rawVal) = 0;
+  virtual void midiPureCabOnOffReceived(unsigned short rawVal) = 0;
+  virtual void midiPureCabReceived(unsigned short rawVal) = 0;
   virtual void midiOperationModeReceived(unsigned short rawVal) = 0;
 
   ByteArray getAddressPage();

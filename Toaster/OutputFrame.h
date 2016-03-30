@@ -1,6 +1,7 @@
 #ifndef OUTPUTFRAME_H
 #define OUTPUTFRAME_H
 #include <QWidget>
+#include <QVector>
 #include "StompEditorPage.h"
 #include "Global.h"
 
@@ -39,6 +40,15 @@ private slots:
   void on_monitorVolumeDial_valueChanged(int value);
   void on_directVolumeDial_valueChanged(int value);
   void on_headphoneVolumeDial_valueChanged(int value);
+  void on_monitorOutputEQBassDial_valueChanged(double value);
+  void on_monitorOutputEQMiddleDial_valueChanged(double value);
+  void on_monitorOutputEQTrebleDial_valueChanged(double value);
+  void on_monitorOutputEQPresenceDial_valueChanged(double value);
+  void on_monitorCabOffDial_valueChanged(int valueIndex);
+  void on_mainOutputEQBassDial_valueChanged(double value);
+  void on_mainOutputEQMiddleDial_valueChanged(double value);
+  void on_mainOutputEQTrebleDial_valueChanged(double value);
+  void on_mainOutputEQPresenceDial_valueChanged(double value);
 
   // kpa => ui
   void OnMainOutputSource(int valueIndex);
@@ -49,11 +59,25 @@ private slots:
   void OnMonitorVolume(int value);
   void OnDirectVolume(int value);
   void OnHeadphoneVolume(int value);
+  void OnMonitorOutputEQBass(double value);
+  void OnMonitorOutputEQMiddle(double value);
+  void OnMonitorOutputEQTreble(double value);
+  void OnMonitorOutputEQPresence(double value);
+  void OnMonitorCabOff(int valueIndex);
+  void OnMainOutputEQBass(double value);
+  void OnMainOutputEQMiddle(double value);
+  void OnMainOutputEQTreble(double value);
+  void OnMainOutputEQPresence(double value);
 
 private:
   Ui::OutputFrame *ui;
-
   Global* mpGlobal;
+  const QVector<QString> mPageTitles = { "Output Source",
+                                         "Output Volumes",
+                                         "Monitor Output EQ",
+                                         "Main Output EQ",
+                                         "Output AddOns",
+                                         "Aux In" };
 };
 
 #endif // OUTPUTFRAME_H

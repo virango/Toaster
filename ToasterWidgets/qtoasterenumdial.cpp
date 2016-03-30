@@ -173,7 +173,8 @@ void QToasterEnumDial::update(int deltaSteps)
 void QToasterEnumDial::updateValueText()
 {
   mCurrValueText = "";
-  mCurrValueText += mValues[mCurrValueIndex];
+  if(mValues.size() > 0 && mCurrValueIndex >= 0 && mCurrValueIndex < mValues.size())
+    mCurrValueText += mValues[mCurrValueIndex];
 
   emit valueChanged(mCurrValueText);
 }

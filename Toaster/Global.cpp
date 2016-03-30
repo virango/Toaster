@@ -54,12 +54,22 @@ void Global::applyDirectOutputVolume(int volume)
   midiApplyDirectOutputVolume((unsigned short)volume);
 }
 
+void Global::applySPDIFOutputVolue(int volume)
+{
+  midiApplySPDIFOutputVolume((unsigned short)volume);
+}
+
 void Global::applyMasterTune(double masterTune)
 {
   midiApplyMasterTune(phys2Raw(masterTune+0.1, 32, 424));
 }
 
-void Global::applySpdifInputEnable(bool enabled)
+void Global::applyMonitorCabOff(bool monitorCabOff)
+{
+  midiApplyMonitorCabOff(bool2Raw(monitorCabOff));
+}
+
+void Global::applySPDIFInputEnable(bool enabled)
 {
   midiApplySPDIFInputEnable(bool2Raw(enabled));
 }
@@ -91,7 +101,7 @@ void Global::applyMonitorOutputEQBass(double bass)
 
 void Global::applyMonitorOutputEQMiddle(double middle)
 {
-  midiApplyMonitorOutputEQBass(phys2Raw(middle, 10.0, -5.0));
+  midiApplyMonitorOutputEQMiddle(phys2Raw(middle, 10.0, -5.0));
 }
 
 void Global::applyMonitorOutputEQTreble(double treble)
@@ -109,7 +119,7 @@ void Global::applyMainOutputSource(int source)
   midiApplyMonitorOutputSource(source);
 }
 
-void Global::applySpdifOutputSource(int source)
+void Global::applySPDIFOutputSource(int source)
 {
   midiApplySPDIFOutputSource(spdifSource2Raw(source));
 }
@@ -124,9 +134,49 @@ void Global::applyDirectOutputSource(int source)
   midiApplyDirectOutputSource(source);
 }
 
+void Global::applyAuxInToMain(unsigned short rawVal)
+{
+  midiApplyAuxInToMain(rawVal);
+}
+
+void Global::applyAuxInToHeadphone(unsigned short rawVal)
+{
+  midiApplyAuxInToHeadphone(rawVal);
+}
+
+void Global::applyConstantLatencyOnOff(bool onOff)
+{
+  midiApplyConstantLatencyOnOff(bool2Raw(onOff));
+}
+
+void Global::applySpace(unsigned short rawVal)
+{
+  midiApplySpace(rawVal);
+}
+
+void Global::applyHeadphoneSpaceOnOff(bool onOff)
+{
+  midiApplyHeadphoneSpaceOnOff(bool2Raw(onOff));
+}
+
 void Global::applyWahPedalToPitch(bool onOff)
 {
   midiApplyWahPedalToPitch(bool2Raw(onOff));
+}
+
+void Global::applyReampSense(unsigned short rawVal)
+{
+  midiApplyReampSense(rawVal);
+}
+
+void Global::applyPureCabOnOff(bool onOff)
+{
+  midiApplyPureCabOnOff(bool2Raw(onOff));
+}
+
+void Global::applyPureCab(unsigned short rawVal)
+{
+  midiApplyPureCab(rawVal);
 }
 
 void Global::applyOperationMode(Global::OperationMode opMode)
@@ -186,11 +236,21 @@ void Global::midiDirectOutputVolumeReceived(unsigned short rawVal)
   emit directOutputVolumeReceived((int)rawVal);
 }
 
+void Global::midiSPDIFOutputVolumeReceived(unsigned short rawVal)
+{
+  emit spdifOutputVolumeReceived((int)rawVal);
+}
+
 void Global::midiMasterTuneReceived(unsigned short rawVal)
 {
   long tmp = ((long)((raw2Phys(rawVal, 32, 424)) * 10));
   double newVal = tmp / 10.0;
   emit masterTuneReceived(newVal);
+}
+
+void Global::midiMonitorCabOffReceived(unsigned short rawVal)
+{
+  emit monitorCabOffReceived(raw2Bool(rawVal));
 }
 
 void Global::midiSPDIFInputEnableReceived(unsigned short rawVal)
@@ -258,9 +318,49 @@ void Global::midiDirectOutputSourceReceived(unsigned short rawVal)
   emit directOutputSourceReceived(rawVal);
 }
 
+void Global::midiAuxInToMainReceived(unsigned short rawVal)
+{
+  emit auxInToMainReceived(rawVal);
+}
+
+void Global::midiAuxInToHeadphoneReceived(unsigned short rawVal)
+{
+  emit auxInToHeadphoneReceived(rawVal);
+}
+
+void Global::midiConstantLatencyOnOffReceived(unsigned short rawVal)
+{
+  emit constantLatencyOnOffReceived(raw2Bool(rawVal));
+}
+
+void Global::midiSpaceReceived(unsigned short rawVal)
+{
+  emit spaceReceived(rawVal);
+}
+
+void Global::midiHeadphoneSpaceOnOffReceived(unsigned short rawVal)
+{
+  emit headphoneSpaceOnOffReceived(raw2Bool(rawVal));
+}
+
 void Global::midiWahPedalToPitchReceived(unsigned short rawVal)
 {
   emit wahPedalToPitchReceived(raw2Bool(rawVal));
+}
+
+void Global::midiReampSensReceived(unsigned short rawVal)
+{
+  emit reampSensReceived(rawVal);
+}
+
+void Global::midiPureCabOnOffReceived(unsigned short rawVal)
+{
+  emit pureCabOnOffReceived(raw2Bool(rawVal));
+}
+
+void Global::midiPureCabReceived(unsigned short rawVal)
+{
+  emit pureCabOnOffReceived(rawVal);
 }
 
 void Global::midiOperationModeReceived(unsigned short rawVal)

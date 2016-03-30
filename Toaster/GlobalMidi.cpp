@@ -24,7 +24,9 @@ BYTEARRAYDEF(GlobalMidi, MainOutputVolume,        0x00)
 BYTEARRAYDEF(GlobalMidi, HeadphoneOutputVolume,   0x01)
 BYTEARRAYDEF(GlobalMidi, MonitorOutputVolume,     0x02)
 BYTEARRAYDEF(GlobalMidi, DirectOutputVolume,      0x03)
+BYTEARRAYDEF(GlobalMidi, SPDIFOutputVolume,       0x04)
 BYTEARRAYDEF(GlobalMidi, MasterTune,              0x05)
+BYTEARRAYDEF(GlobalMidi, MonitorCabOff,           0x08)
 BYTEARRAYDEF(GlobalMidi, SPDIFInputEnable,        0x0B)
 BYTEARRAYDEF(GlobalMidi, MainOutputEQBass,        0x0C)
 BYTEARRAYDEF(GlobalMidi, MainOutputEQMiddle,      0x0D)
@@ -38,9 +40,20 @@ BYTEARRAYDEF(GlobalMidi, MainOutputSource,        0x16)
 BYTEARRAYDEF(GlobalMidi, SPDIFOutputSource,       0x17)
 BYTEARRAYDEF(GlobalMidi, MonitorOutputSource,     0x19)
 BYTEARRAYDEF(GlobalMidi, DirectOutputSource,      0x1a)
+BYTEARRAYDEF(GlobalMidi, AuxInToMain,             0x20)
+BYTEARRAYDEF(GlobalMidi, AuxInToHeadphone,        0x21)
+BYTEARRAYDEF(GlobalMidi, ConstantLatencyOnOff,    0x23)
+BYTEARRAYDEF(GlobalMidi, Space,                   0x24)
+BYTEARRAYDEF(GlobalMidi, HeadphoneSpaceOnOff,     0x25)
 BYTEARRAYDEF(GlobalMidi, WahPedalToPitch,         0x27)
+BYTEARRAYDEF(GlobalMidi, ReampSense,              0x2d)
+BYTEARRAYDEF(GlobalMidi, PureCabOnOff,            0x32)
+BYTEARRAYDEF(GlobalMidi, PureCab,                 0x33)
 BYTEARRAYDEF(GlobalMidi, OperationMode,           0x7E)
 BYTEARRAYDEF(GlobalMidi, ConnectName,             0x7F)
+
+// input source
+// todo check 0x2C and 0x44
 
 GlobalMidi::GlobalMidi()
 {
@@ -75,8 +88,12 @@ void GlobalMidi::consumeSysExMsg(ByteArray* msg)
       midiMonitorOutputVolumeReceived(rawVal);
     else if(param == sDirectOutputVolume[0])
       midiDirectOutputVolumeReceived(rawVal);
+    else if(param == sSPDIFOutputVolume[0])
+      midiSPDIFOutputVolumeReceived(rawVal);
     else if(param == sMasterTune[0])
       midiMasterTuneReceived(rawVal);
+    else if(param == sMonitorCabOff[0])
+      midiMonitorCabOffReceived(rawVal);
     else if(param == sSPDIFInputEnable[0])
       midiSPDIFInputEnableReceived(rawVal);
     else if(param == sMainOutputEQBass[0])
@@ -103,8 +120,24 @@ void GlobalMidi::consumeSysExMsg(ByteArray* msg)
       midiMonitorOutputSourceReceived(rawVal);
     else if(param == sDirectOutputSource[0])
       midiDirectOutputSourceReceived(rawVal);
+    else if(param == sAuxInToMain[0])
+      midiAuxInToMainReceived(rawVal);
+    else if(param == sAuxInToHeadphone[0])
+      midiAuxInToHeadphoneReceived(rawVal);
+    else if(param == sConstantLatencyOnOff[0])
+      midiConstantLatencyOnOffReceived(rawVal);
+    else if(param == sSpace[0])
+      midiSpaceReceived(rawVal);
+    else if(param == sHeadphoneSpaceOnOff[0])
+      midiHeadphoneSpaceOnOffReceived(rawVal);
     else if(param == sWahPedalToPitch[0])
       midiWahPedalToPitchReceived(rawVal);
+    else if(param == sReampSense[0])
+      midiReampSensReceived(rawVal);
+    else if(param == sPureCabOnOff[0])
+      midiPureCabOnOffReceived(rawVal);
+    else if(param == sPureCab[0])
+      midiPureCabReceived(rawVal);
     else if(param == sOperationMode[0])
       midiOperationModeReceived(rawVal);
   }
@@ -150,6 +183,16 @@ void GlobalMidi::midiApplyDirectOutputVolume(unsigned short rawVal)
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDirectOutputVolume, rawVal));
 }
 
+void GlobalMidi::midiRequestSPDIFOutputVolume()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sSPDIFOutputVolume));
+}
+
+void GlobalMidi::midiApplySPDIFOutputVolume(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sSPDIFOutputVolume, rawVal));
+}
+
 void GlobalMidi::midiRequestMasterTune()
 {
   Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sMasterTune));
@@ -158,6 +201,16 @@ void GlobalMidi::midiRequestMasterTune()
 void GlobalMidi::midiApplyMasterTune(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sMasterTune, rawVal));
+}
+
+void GlobalMidi::midiRequestMonitorCabOff()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sMonitorCabOff));
+}
+
+void GlobalMidi::midiApplyMonitorCabOff(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sMonitorCabOff, rawVal));
 }
 
 void GlobalMidi::midiRequestSPDIFInputEnable()
@@ -290,6 +343,56 @@ void GlobalMidi::midiApplyDirectOutputSource(unsigned short rawVal)
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDirectOutputSource, rawVal));
 }
 
+void GlobalMidi::midiRequestAuxInToMain()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sAuxInToMain));
+}
+
+void GlobalMidi::midiApplyAuxInToMain(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sAuxInToMain, rawVal));
+}
+
+void GlobalMidi::midiRequestAuxInToHeadphone()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sAuxInToHeadphone));
+}
+
+void GlobalMidi::midiApplyAuxInToHeadphone(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sAuxInToHeadphone, rawVal));
+}
+
+void GlobalMidi::midiRequestConstantLatencyOnOff()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sConstantLatencyOnOff));
+}
+
+void GlobalMidi::midiApplyConstantLatencyOnOff(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sConstantLatencyOnOff, rawVal));
+}
+
+void GlobalMidi::midiRequestSpace()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sSpace));
+}
+
+void GlobalMidi::midiApplySpace(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sSpace, rawVal));
+}
+
+void GlobalMidi::midiRequestHeadphoneSpaceOnOff()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sHeadphoneSpaceOnOff));
+}
+
+void GlobalMidi::midiApplyHeadphoneSpaceOnOff(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sHeadphoneSpaceOnOff, rawVal));
+}
+
 void GlobalMidi::midiRequestWahPedalToPitch()
 {
   Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sWahPedalToPitch));
@@ -300,6 +403,36 @@ void GlobalMidi::midiApplyWahPedalToPitch(unsigned short rawVal)
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sWahPedalToPitch, rawVal));
 }
 
+void GlobalMidi::midiRequestReampSense()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sReampSense));
+}
+
+void GlobalMidi::midiApplyReampSense(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sReampSense, rawVal));
+}
+
+void GlobalMidi::midiRequestPureCabOnOff()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sPureCabOnOff));
+}
+
+void GlobalMidi::midiApplyPureCabOnOff(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sPureCabOnOff, rawVal));
+}
+
+void GlobalMidi::midiRequestPureCab()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sPureCab));
+}
+
+void GlobalMidi::midiApplyPureCab(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sPureCab, rawVal));
+}
+
 void GlobalMidi::midiRequestOperationMode()
 {
   Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sOperationMode));
@@ -307,7 +440,6 @@ void GlobalMidi::midiRequestOperationMode()
 
 void GlobalMidi::midiApplyOperationMode(unsigned short rawVal)
 {
-
   if(rawVal == 1)
   {
     ByteArray cc;
