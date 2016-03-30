@@ -54,7 +54,7 @@ private slots:
   void OnMainOutputSource(int valueIndex);
   void OnMonitorOutputSource(int valueIndex);
   void OnDirectOutputSource(int valueIndex);
-  void OnSpdifOutputSource(int valueIndex);
+  void OnSPDIFOutputSource(int valueIndex);
   void OnMainVolume(int value);
   void OnMonitorVolume(int value);
   void OnDirectVolume(int value);
