@@ -12,6 +12,7 @@ OutputFrame::OutputFrame(QWidget *parent)
   ui->monitorVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->directVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  ui->spdifVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
 }
 
 OutputFrame::~OutputFrame()
@@ -42,6 +43,14 @@ void OutputFrame::activate(QObject& module)
     connect(mpGlobal, &Global::mainOutputEQMiddleReceived, this, &OutputFrame::OnMainOutputEQMiddle);
     connect(mpGlobal, &Global::mainOutputEQTrebleReceived, this, &OutputFrame::OnMainOutputEQTreble);
     connect(mpGlobal, &Global::mainOutputEQPresenceReceived, this, &OutputFrame::OnMainOutputEQPresence);
+    connect(mpGlobal, &Global::spdifOutputVolumeReceived, this, &OutputFrame::OnSPDIFVolume);
+    connect(mpGlobal, &Global::pureCabReceived, this, &OutputFrame::OnPureCabinet);
+    connect(mpGlobal, &Global::spaceReceived, this, &OutputFrame::OnSpace);
+    connect(mpGlobal, &Global::pureCabOnOffReceived, this, &OutputFrame::OnPureCabinetOnOff);
+    connect(mpGlobal, &Global::headphoneSpaceOnOffReceived, this, &OutputFrame::OnHeadphoneSpace);
+    connect(mpGlobal, &Global::auxInToMainReceived, this, &OutputFrame::OnAuxInMain);
+    connect(mpGlobal, &Global::auxInToHeadphoneReceived, this, &OutputFrame::OnAuxInHeadphone);
+    connect(mpGlobal, &Global::constantLatencyOnOffReceived, this, &OutputFrame::OnConstantLatency);
 
     mpGlobal->requestMainOutputSource();
     mpGlobal->requestMonitorOutputSource();
@@ -60,6 +69,14 @@ void OutputFrame::activate(QObject& module)
     mpGlobal->requestMainOutputEQMiddle();
     mpGlobal->requestMainOutputEQTreble();
     mpGlobal->requestMainOutputEQPresence();
+    mpGlobal->requestSPDIFOutputVlume();
+    mpGlobal->requestPureCab();
+    mpGlobal->requestSpace();
+    mpGlobal->requestPureCabOnOff();
+    mpGlobal->requestHeadphoneSpaceOnOff();
+    mpGlobal->requestAuxInToMain();
+    mpGlobal->requestAuxInToHeadphone();
+    mpGlobal->requestConstantLatencyOnOff();
   }
 }
 
@@ -84,6 +101,14 @@ void OutputFrame::deactivate()
     disconnect(mpGlobal, &Global::mainOutputEQMiddleReceived, this, &OutputFrame::OnMainOutputEQMiddle);
     disconnect(mpGlobal, &Global::mainOutputEQTrebleReceived, this, &OutputFrame::OnMainOutputEQTreble);
     disconnect(mpGlobal, &Global::mainOutputEQPresenceReceived, this, &OutputFrame::OnMainOutputEQPresence);
+    disconnect(mpGlobal, &Global::spdifOutputVolumeReceived, this, &OutputFrame::OnSPDIFVolume);
+    disconnect(mpGlobal, &Global::pureCabReceived, this, &OutputFrame::OnPureCabinet);
+    disconnect(mpGlobal, &Global::spaceReceived, this, &OutputFrame::OnSpace);
+    disconnect(mpGlobal, &Global::pureCabOnOffReceived, this, &OutputFrame::OnPureCabinetOnOff);
+    disconnect(mpGlobal, &Global::headphoneSpaceOnOffReceived, this, &OutputFrame::OnHeadphoneSpace);
+    disconnect(mpGlobal, &Global::auxInToMainReceived, this, &OutputFrame::OnAuxInMain);
+    disconnect(mpGlobal, &Global::auxInToHeadphoneReceived, this, &OutputFrame::OnAuxInHeadphone);
+    disconnect(mpGlobal, &Global::constantLatencyOnOffReceived, this, &OutputFrame::OnConstantLatency);
     mpGlobal = nullptr;
   }
 }
@@ -236,6 +261,58 @@ void OutputFrame::on_mainOutputEQPresenceDial_valueChanged(double value)
     mpGlobal->applyMainOutputEQPresence(value);
 }
 
+void OutputFrame::on_spdifVolumeDial_valueChanged(int value)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applySPDIFOutputVolue(value);
+}
+
+void OutputFrame::on_pureCabinetDial_valueChanged(double value)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applyPureCab(value);
+}
+
+void OutputFrame::on_spaceDial_valueChanged(double value)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applySpace(value);
+}
+
+void OutputFrame::on_spdifOutLinkDial_valueChanged(int valueIndex)
+{
+}
+
+void OutputFrame::on_pureCabinetOnOffDial_valueChanged(int valueIndex)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applyPureCabOnOff(valueIndex != 0);
+}
+
+void OutputFrame::on_headphoneSpaceDial_valueChanged(int valueIndex)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applyHeadphoneSpaceOnOff(valueIndex != 0);
+}
+
+void OutputFrame::on_auxInMainDial_valueChanged(double value)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applyAuxInToMain(value);
+}
+
+void OutputFrame::on_auxInHeadphoneDial_valueChanged(double value)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applyAuxInToHeadphone(value);
+}
+
+void OutputFrame::on_constantLatencyDial_valueChanged(int valueIndex)
+{
+  if(mpGlobal != nullptr)
+    mpGlobal->applyConstantLatencyOnOff(valueIndex != 0);
+}
+
 void OutputFrame::OnMainOutputSource(int valueIndex)
 {
   ui->mainOutputSourceDial->setValue(valueIndex);
@@ -335,5 +412,59 @@ void OutputFrame::OnMainOutputEQTreble(double value)
 void OutputFrame::OnMainOutputEQPresence(double value)
 {
   ui->mainOutputEQPresenceDial->setValue(value);
+  update();
+}
+
+void OutputFrame::OnSPDIFVolume(int value)
+{
+  ui->spdifVolumeDial->setValue(value);
+  update();
+}
+
+void OutputFrame::OnPureCabinet(double value)
+{
+  ui->pureCabinetDial->setValue(value);
+  update();
+}
+
+void OutputFrame::OnSpace(double value)
+{
+  ui->spaceDial->setValue(value);
+  update();
+}
+
+void OutputFrame::OnSPDIFOutLink(int valueIndex)
+{
+  ui->spdifOutLinkDial->setValue(valueIndex);
+  update();
+}
+
+void OutputFrame::OnPureCabinetOnOff(int valueIndex)
+{
+  ui->pureCabinetOnOffDial->setValue(valueIndex);
+  update();
+}
+
+void OutputFrame::OnHeadphoneSpace(int valueIndex)
+{
+  ui->headphoneSpaceDial->setValue(valueIndex);
+  update();
+}
+
+void OutputFrame::OnAuxInMain(double value)
+{
+  ui->auxInMainDial->setValue(value);
+  update();
+}
+
+void OutputFrame::OnAuxInHeadphone(double value)
+{
+  ui->auxInHeadphoneDial->setValue(value);
+  update();
+}
+
+void OutputFrame::OnConstantLatency(int valueIndex)
+{
+  ui->constantLatencyDial->setValue(valueIndex);
   update();
 }

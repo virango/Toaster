@@ -50,6 +50,7 @@ protected:
   BYTEARRAYDECL(Space)
   BYTEARRAYDECL(HeadphoneSpaceOnOff)
   BYTEARRAYDECL(WahPedalToPitch)
+  BYTEARRAYDECL(InputSource)
   BYTEARRAYDECL(ReampSense)
   BYTEARRAYDECL(PureCabOnOff)
   BYTEARRAYDECL(PureCab)
@@ -144,6 +145,9 @@ protected:
   // WahPedalToPitch
   void midiRequestWahPedalToPitch();
   void midiApplyWahPedalToPitch(unsigned short rawVal);
+  // InputSource
+  void midiRequestInputSource();
+  void midiApplyInputSource(unsigned short rawVal);
   // ReampSens
   void midiRequestReampSense();
   void midiApplyReampSense(unsigned short rawVal);
@@ -188,6 +192,7 @@ protected:
   virtual void midiSpaceReceived(unsigned short rawVal) = 0;
   virtual void midiHeadphoneSpaceOnOffReceived(unsigned short rawVal) = 0;
   virtual void midiWahPedalToPitchReceived(unsigned short rawVal) = 0;
+  virtual void midiInputSourceReceived(unsigned short rawVal) = 0;
   virtual void midiReampSensReceived(unsigned short rawVal) = 0;
   virtual void midiPureCabOnOffReceived(unsigned short rawVal) = 0;
   virtual void midiPureCabReceived(unsigned short rawVal) = 0;

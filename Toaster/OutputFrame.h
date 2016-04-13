@@ -49,6 +49,15 @@ private slots:
   void on_mainOutputEQMiddleDial_valueChanged(double value);
   void on_mainOutputEQTrebleDial_valueChanged(double value);
   void on_mainOutputEQPresenceDial_valueChanged(double value);
+  void on_spdifVolumeDial_valueChanged(int value);
+  void on_pureCabinetDial_valueChanged(double value);
+  void on_spaceDial_valueChanged(double value);
+  void on_spdifOutLinkDial_valueChanged(int valueIndex);
+  void on_pureCabinetOnOffDial_valueChanged(int valueIndex);
+  void on_headphoneSpaceDial_valueChanged(int valueIndex);
+  void on_auxInMainDial_valueChanged(double value);
+  void on_auxInHeadphoneDial_valueChanged(double value);
+  void on_constantLatencyDial_valueChanged(int valueIndex);
 
   // kpa => ui
   void OnMainOutputSource(int valueIndex);
@@ -68,6 +77,15 @@ private slots:
   void OnMainOutputEQMiddle(double value);
   void OnMainOutputEQTreble(double value);
   void OnMainOutputEQPresence(double value);
+  void OnSPDIFVolume(int value);
+  void OnPureCabinet(double value);
+  void OnSpace(double value);
+  void OnSPDIFOutLink(int value);
+  void OnPureCabinetOnOff(int valueIndex);
+  void OnHeadphoneSpace(int valueIndex);
+  void OnAuxInMain(double value);
+  void OnAuxInHeadphone(double value);
+  void OnConstantLatency(int valueIndex);
 
 private:
   Ui::OutputFrame *ui;

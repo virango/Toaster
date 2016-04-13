@@ -134,14 +134,14 @@ void Global::applyDirectOutputSource(int source)
   midiApplyDirectOutputSource(source);
 }
 
-void Global::applyAuxInToMain(unsigned short rawVal)
+void Global::applyAuxInToMain(double value)
 {
-  midiApplyAuxInToMain(rawVal);
+  midiApplyAuxInToMain(phys2Raw(value, 10.0, 0));
 }
 
-void Global::applyAuxInToHeadphone(unsigned short rawVal)
+void Global::applyAuxInToHeadphone(double value)
 {
-  midiApplyAuxInToHeadphone(rawVal);
+  midiApplyAuxInToHeadphone(phys2Raw(value, 10.0, 0));
 }
 
 void Global::applyConstantLatencyOnOff(bool onOff)
@@ -149,9 +149,9 @@ void Global::applyConstantLatencyOnOff(bool onOff)
   midiApplyConstantLatencyOnOff(bool2Raw(onOff));
 }
 
-void Global::applySpace(unsigned short rawVal)
+void Global::applySpace(double value)
 {
-  midiApplySpace(rawVal);
+  midiApplySpace(phys2Raw(value, 10.0, 0));
 }
 
 void Global::applyHeadphoneSpaceOnOff(bool onOff)
@@ -164,9 +164,14 @@ void Global::applyWahPedalToPitch(bool onOff)
   midiApplyWahPedalToPitch(bool2Raw(onOff));
 }
 
-void Global::applyReampSense(unsigned short rawVal)
+void Global::applyInputSource(int inputSource)
 {
-  midiApplyReampSense(rawVal);
+  midiApplyInputSource((unsigned short)inputSource);
+}
+
+void Global::applyReampSense(double reampSens)
+{
+  midiApplyReampSense(phys2Raw(reampSens, 24.0, -12.0));
 }
 
 void Global::applyPureCabOnOff(bool onOff)
@@ -174,9 +179,9 @@ void Global::applyPureCabOnOff(bool onOff)
   midiApplyPureCabOnOff(bool2Raw(onOff));
 }
 
-void Global::applyPureCab(unsigned short rawVal)
+void Global::applyPureCab(double value)
 {
-  midiApplyPureCab(rawVal);
+  midiApplyPureCab(phys2Raw(value, 10.0, 0));
 }
 
 void Global::applyOperationMode(Global::OperationMode opMode)
@@ -320,12 +325,12 @@ void Global::midiDirectOutputSourceReceived(unsigned short rawVal)
 
 void Global::midiAuxInToMainReceived(unsigned short rawVal)
 {
-  emit auxInToMainReceived(rawVal);
+  emit auxInToMainReceived(raw2Phys(rawVal, 10.0, 0));
 }
 
 void Global::midiAuxInToHeadphoneReceived(unsigned short rawVal)
 {
-  emit auxInToHeadphoneReceived(rawVal);
+  emit auxInToHeadphoneReceived(raw2Phys(rawVal, 10.0, 0));
 }
 
 void Global::midiConstantLatencyOnOffReceived(unsigned short rawVal)
@@ -335,7 +340,7 @@ void Global::midiConstantLatencyOnOffReceived(unsigned short rawVal)
 
 void Global::midiSpaceReceived(unsigned short rawVal)
 {
-  emit spaceReceived(rawVal);
+  emit spaceReceived(raw2Phys(rawVal, 10.0, 0));
 }
 
 void Global::midiHeadphoneSpaceOnOffReceived(unsigned short rawVal)
@@ -348,9 +353,14 @@ void Global::midiWahPedalToPitchReceived(unsigned short rawVal)
   emit wahPedalToPitchReceived(raw2Bool(rawVal));
 }
 
+void Global::midiInputSourceReceived(unsigned short rawVal)
+{
+  emit inputSourceReceived(rawVal);
+}
+
 void Global::midiReampSensReceived(unsigned short rawVal)
 {
-  emit reampSensReceived(rawVal);
+  emit reampSensReceived(raw2Phys(rawVal, 24.0, -12));
 }
 
 void Global::midiPureCabOnOffReceived(unsigned short rawVal)
@@ -360,7 +370,7 @@ void Global::midiPureCabOnOffReceived(unsigned short rawVal)
 
 void Global::midiPureCabReceived(unsigned short rawVal)
 {
-  emit pureCabOnOffReceived(rawVal);
+  emit pureCabReceived(raw2Phys(rawVal, 10.0, 0));
 }
 
 void Global::midiOperationModeReceived(unsigned short rawVal)

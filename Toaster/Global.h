@@ -65,6 +65,8 @@ public:
   void requestReampSense() { midiRequestReampSense(); }
   void requestPureCabOnOff() { midiRequestPureCabOnOff(); }
   void requestPureCab() { midiRequestPureCab(); }
+  void requestInputSource() { midiRequestInputSource(); }
+  void requestSPDIFOutputVlume() { midiRequestSPDIFOutputVolume(); }
 
 signals:
   void mainOutputVolumeReceived(int volume);
@@ -87,16 +89,17 @@ signals:
   void spdifOutputSourceReceived(int source);
   void monitorOutputSourceReceived(int source);
   void directOutputSourceReceived(int source);
-  void auxInToMainReceived(unsigned short rawVal);
-  void auxInToHeadphoneReceived(unsigned short rawVal);
   void constantLatencyOnOffReceived(bool onOff);
-  void spaceReceived(unsigned short rawVal);
   void headphoneSpaceOnOffReceived(bool onOff);
   void wahPedalToPitchReceived(bool onOff);
-  void reampSensReceived(unsigned short rawVal);
   void pureCabOnOffReceived(bool onOff);
   void pureCabReceived(double pureCab);
   void operationModeReceived(unsigned short);
+  void auxInToMainReceived(double auxInToMain);
+  void auxInToHeadphoneReceived(double auxInToHeadphone);
+  void spaceReceived(double space);
+  void inputSourceReceived(int inputSource);
+  void reampSensReceived(double reampSens);
 
 public slots:
   void applyMainOutputVolume(int volume);
@@ -119,15 +122,16 @@ public slots:
   void applySPDIFOutputSource(int source);
   void applyMonitorOutputSource(int source);
   void applyDirectOutputSource(int source);
-  void applyAuxInToMain(unsigned short rawVal);
-  void applyAuxInToHeadphone(unsigned short rawVal);
   void applyConstantLatencyOnOff(bool onOff);
-  void applySpace(unsigned short rawVal);
   void applyHeadphoneSpaceOnOff(bool onOff);
   void applyWahPedalToPitch(bool onOff);
-  void applyReampSense(unsigned short rawVal);
   void applyPureCabOnOff(bool onOff);
-  void applyPureCab(unsigned short rawVal);
+  void applyAuxInToMain(double value);
+  void applyAuxInToHeadphone(double value);
+  void applySpace(double value);
+  void applyInputSource(int inputSource);
+  void applyReampSense(double reampSens);
+  void applyPureCab(double value);
   void applyOperationMode(Global::OperationMode opMode);
 
   void connect2KPA(const QString& connectName);
@@ -161,6 +165,7 @@ protected:
   virtual void midiSpaceReceived(unsigned short rawVal);
   virtual void midiHeadphoneSpaceOnOffReceived(unsigned short rawVal);
   virtual void midiWahPedalToPitchReceived(unsigned short rawVal);
+  virtual void midiInputSourceReceived(unsigned short rawVal);
   virtual void midiReampSensReceived(unsigned short rawVal);
   virtual void midiPureCabOnOffReceived(unsigned short rawVal);
   virtual void midiPureCabReceived(unsigned short rawVal);

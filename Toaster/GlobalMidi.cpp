@@ -46,6 +46,7 @@ BYTEARRAYDEF(GlobalMidi, ConstantLatencyOnOff,    0x23)
 BYTEARRAYDEF(GlobalMidi, Space,                   0x24)
 BYTEARRAYDEF(GlobalMidi, HeadphoneSpaceOnOff,     0x25)
 BYTEARRAYDEF(GlobalMidi, WahPedalToPitch,         0x27)
+BYTEARRAYDEF(GlobalMidi, InputSource,             0x2C)
 BYTEARRAYDEF(GlobalMidi, ReampSense,              0x2d)
 BYTEARRAYDEF(GlobalMidi, PureCabOnOff,            0x32)
 BYTEARRAYDEF(GlobalMidi, PureCab,                 0x33)
@@ -132,6 +133,8 @@ void GlobalMidi::consumeSysExMsg(ByteArray* msg)
       midiHeadphoneSpaceOnOffReceived(rawVal);
     else if(param == sWahPedalToPitch[0])
       midiWahPedalToPitchReceived(rawVal);
+    else if(param == sInputSource[0])
+      midiInputSourceReceived(rawVal);
     else if(param == sReampSense[0])
       midiReampSensReceived(rawVal);
     else if(param == sPureCabOnOff[0])
@@ -401,6 +404,16 @@ void GlobalMidi::midiRequestWahPedalToPitch()
 void GlobalMidi::midiApplyWahPedalToPitch(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sWahPedalToPitch, rawVal));
+}
+
+void GlobalMidi::midiRequestInputSource()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sInputSource));
+}
+
+void GlobalMidi::midiApplyInputSource(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sInputSource, rawVal));
 }
 
 void GlobalMidi::midiRequestReampSense()

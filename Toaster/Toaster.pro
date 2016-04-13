@@ -130,8 +130,9 @@ SOURCES += main.cpp\
     TunerMidi.cpp \
     Tuner.cpp \
     InputFrame.cpp \
-    OutputFrame.cpp \
-    MainVolumeValues.cpp \
+    OutputFrame.cpp 
+
+macx:SOURCES_NOOPTIMIZE = MainVolumeValues.cpp \
     RotaryDistanceValues.cpp \
     RigVolumeValues.cpp \
     MixValues.cpp \
@@ -140,6 +141,23 @@ SOURCES += main.cpp\
     QFactorValues.cpp \
     FlangerRateValues.cpp \
     VoiceIntervalValues.cpp
+else:SOURCES += MainVolumeValues.cpp \
+    RotaryDistanceValues.cpp \
+    RigVolumeValues.cpp \
+    MixValues.cpp \
+    FrequencyValues.cpp \
+    TremoloRateValues.cpp \
+    QFactorValues.cpp \
+    FlangerRateValues.cpp \
+    VoiceIntervalValues.cpp
+
+macx:nooptimize.name = nooptimize
+macx:nooptimize.input = SOURCES_NOOPTIMIZE
+macx:nooptimize.dependency_type = TYPE_C
+macx:nooptimize.variable_out = OBJECTS
+macx:nooptimize.output = ${QMAKE_VAR_OBJECTS_DIR}${QMAKE_FILE_IN_BASE}$${first(QMAKE_EXT_OBJ)}
+macx:nooptimize.commands = $${QMAKE_CXX} $(CXXFLAGS) -O0 $(INCPATH) -c ${QMAKE_FILE_IN} -o ${QMAKE_FILE_OUT}
+macx:QMAKE_EXTRA_COMPILERS += nooptimize
 
 HEADERS  += ToasterWindow.h \
     SysExBase.h \
@@ -314,7 +332,10 @@ CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../RtMidi/debug/ -lRtMidi
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/release/ -lqtoasterwidgetsplugin
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/debug/ -lqtoasterwidgetsplugind
+else:macx:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/release -lqtoasterwidgetsplugin
+else:macx: CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/debug -lqtoasterwidgetsplugin_debug
 else:unix: CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/release -lqtoasterwidgetsplugin
+else:unix: CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/ToasterWidgets/debug -lqtoasterwidgetsplugin
 
 
 unix:!macx:LIBS += -lasound -ljack

@@ -183,7 +183,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="page12">
     <widget class="QToasterDial" name="dummy6Dial">
@@ -530,8 +530,150 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="page52"/>
-   <widget class="QWidget" name="page62"/>
+   <widget class="QWidget" name="page52">
+    <widget class="QToasterEnumDial" name="spdifOutLinkDial">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="values">
+      <stringlist>
+       <string>Off</string>
+       <string>On</string>
+      </stringlist>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="dummy38Dial">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="pureCabinetOnOffDial">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="values">
+      <stringlist>
+       <string>Off</string>
+       <string>On</string>
+      </stringlist>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="headphoneSpaceDial">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="values">
+      <stringlist>
+       <string>Off</string>
+       <string>On</string>
+      </stringlist>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page62">
+    <widget class="QToasterEnumDial" name="dummy45Dial">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="dummy46Dial">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="dummy47Dial">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterEnumDial" name="constantLatencyDial">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>0</y>
+       <width>70</width>
+       <height>70</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="values">
+      <stringlist>
+       <string>Off</string>
+       <string>On</string>
+      </stringlist>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QStackedWidget" name="bigDials">
    <property name="geometry">
@@ -543,7 +685,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="page11">
     <widget class="QToasterEnumDial" name="mainOutputSourceDial">
@@ -887,8 +1029,138 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="page51"/>
-   <widget class="QWidget" name="page61"/>
+   <widget class="QWidget" name="page51">
+    <widget class="QToasterLookUpTableDial" name="spdifVolumeDial">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="dummy34Dial">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="pureCabinetDial">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="maxValue">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="spaceDial">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="maxValue">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>0.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page61">
+    <widget class="QToasterDial" name="auxInMainDial">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="maxValue">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="auxInHeadphoneDial">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="maxValue">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="dummy43Dial">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="maxValue">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QToasterDial" name="dummy44Dial">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="maxValue">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
@@ -1249,6 +1521,150 @@
     <hint type="destinationlabel">
      <x>456</x>
      <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spdifVolumeDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue33(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>107</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>104</x>
+     <y>135</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pureCabinetDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue35(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>276</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>336</x>
+     <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spaceDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue36(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>474</x>
+     <y>297</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spdifOutLinkDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue37(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>105</x>
+     <y>14</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>113</x>
+     <y>110</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pureCabinetOnOffDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue39(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>335</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>headphoneSpaceDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue40(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>447</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>445</x>
+     <y>122</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>auxInMainDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue41(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>115</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>104</x>
+     <y>154</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>auxInHeadphoneDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue42(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>225</x>
+     <y>268</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>219</x>
+     <y>152</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>constantLatencyDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue48(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>454</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>444</x>
+     <y>107</y>
     </hint>
    </hints>
   </connection>
