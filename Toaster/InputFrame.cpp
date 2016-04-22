@@ -55,7 +55,7 @@ QToasterLCD::Page InputFrame::getCurrentDisplayPage()
   return ui->lcdDisplay->currentPage();
 }
 
-void InputFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+void InputFrame::setCurrentDisplayPage(QToasterLCD::Page /*page*/)
 {
 }
 

@@ -188,7 +188,7 @@ protected:
   unsigned short spdifSource2Raw(int source)
   {
     static vector<unsigned short> values = {0, 2, 3, 4, 5, 14, 6, 9, 12, 13};
-    if(source < values.size())
+    if((size_t)source < values.size())
       return values[source];
     return 13;
   }

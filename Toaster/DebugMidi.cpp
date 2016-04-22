@@ -88,7 +88,7 @@ void DebugMidi::debugWriteStringValues(ByteArray* msg)
   QString strVal;
   unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
 
-  for(int i = 12; (i < msg->size() && msg->at(i) != 0); ++i)
+  for(unsigned int i = 12; (i < msg->size() && msg->at(i) != 0); ++i)
     strVal.append(msg->at(i));
   qDebug() << QString::number(rawVal) << strVal;
 
@@ -163,7 +163,7 @@ void DebugMidi::debugPrintValues(ByteArray* msg)
   }
   else
   {
-    for(int i=10; i < msg->size(); ++i)
+    for(unsigned int i=10; i < msg->size(); ++i)
     {
       strVal += "0x";
       strVal += QString::number(msg->at(i), 16);

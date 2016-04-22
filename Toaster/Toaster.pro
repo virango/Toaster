@@ -130,7 +130,8 @@ SOURCES += main.cpp\
     TunerMidi.cpp \
     Tuner.cpp \
     InputFrame.cpp \
-    OutputFrame.cpp 
+    OutputFrame.cpp \ 
+    MasterVolume.cpp
 
 macx:SOURCES_NOOPTIMIZE = MainVolumeValues.cpp \
     RotaryDistanceValues.cpp \
@@ -259,7 +260,8 @@ HEADERS  += ToasterWindow.h \
     Tuner.h \
     TunerMidi.h \
     InputFrame.h \
-    OutputFrame.h
+    OutputFrame.h \
+    MasterVolume.h
 
 FORMS    += \
     ToasterWindow.ui \

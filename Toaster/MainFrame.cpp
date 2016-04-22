@@ -18,6 +18,7 @@
 #include "DebugMidi.h"
 #include "StompEditorPage.h"
 #include "StompEditorFrame.h"
+#include "MasterVolume.h"
 
 MainFrame::MainFrame(QWidget *parent)
   : QFrame(parent)
@@ -52,52 +53,52 @@ MainFrame::MainFrame(QWidget *parent)
   // notifications
   // stomps
   //qRegisterMetaType<::FXType>("::FXType");
-  connect(&mStompA, SIGNAL(onOffReceived(bool)), this, SLOT(onStompAOnOff(bool)));
-  connect(&mStompB, SIGNAL(onOffReceived(bool)), this, SLOT(onStompBOnOff(bool)));
-  connect(&mStompC, SIGNAL(onOffReceived(bool)), this, SLOT(onStompCOnOff(bool)));
-  connect(&mStompD, SIGNAL(onOffReceived(bool)), this, SLOT(onStompDOnOff(bool)));
-  connect(&mStompX, SIGNAL(onOffReceived(bool)), this, SLOT(onStompXOnOff(bool)));
-  connect(&mStompMod, SIGNAL(onOffReceived(bool)), this, SLOT(onStompModOnOff(bool)));
-  connect(&mStompA, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompAType(::FXType)));
-  connect(&mStompB, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompBType(::FXType)));
-  connect(&mStompC, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompCType(::FXType)));
-  connect(&mStompD, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompDType(::FXType)));
-  connect(&mStompX, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompXType(::FXType)));
-  connect(&mStompMod, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompModType(::FXType)));
-  connect(&mStompMod, SIGNAL(modulationRateReceived(int)), this, SLOT(onModRate(int)));
+  connect(&mStompA, &Stomp::onOffReceived, this, &MainFrame::onStompAOnOff);
+  connect(&mStompB, &Stomp::onOffReceived, this, &MainFrame::onStompBOnOff);
+  connect(&mStompC, &Stomp::onOffReceived, this, &MainFrame::onStompCOnOff);
+  connect(&mStompD, &Stomp::onOffReceived, this, &MainFrame::onStompDOnOff);
+  connect(&mStompX, &Stomp::onOffReceived, this, &MainFrame::onStompXOnOff);
+  connect(&mStompMod, &Stomp::onOffReceived, this, &MainFrame::onStompModOnOff);
+  connect(&mStompA, &Stomp::typeReceived, this, &MainFrame::onStompAType);
+  connect(&mStompB, &Stomp::typeReceived, this, &MainFrame::onStompBType);
+  connect(&mStompC, &Stomp::typeReceived, this, &MainFrame::onStompCType);
+  connect(&mStompD, &Stomp::typeReceived, this, &MainFrame::onStompDType);
+  connect(&mStompX, &Stomp::typeReceived, this, &MainFrame::onStompXType);
+  connect(&mStompMod, &Stomp::typeReceived, this, &MainFrame::onStompModType);
+  connect(&mStompMod, static_cast<void (Stomp::*)(int)>(&Stomp::modulationRateReceived), this, &MainFrame::onModRate);
   connect(&mStompMod, &Stomp::modulationDepthReceived, this, &MainFrame::onModIntensity);
   // delay
-  connect(&mDelay, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onDelayOnOff(bool)));
-  connect(&mDelay, SIGNAL(feedbackReceived(double)), this, SLOT(onDelayFeedback(double)));
-  connect(&mDelay, SIGNAL(mixReceived(int)), this, SLOT(onDelayMix(int)));
+  connect(&mDelay, &Delay::onOffCutsTailReceived, this, &MainFrame::onDelayOnOff);
+  connect(&mDelay, &Delay::feedbackReceived, this, &MainFrame::onDelayFeedback);
+  connect(&mDelay, &Delay::mixReceived, this, &MainFrame::onDelayMix);
   // reverb
-  connect(&mReverb, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onReverbOnOff(bool)));
-  connect(&mReverb, SIGNAL(timeReceived(double)), this, SLOT(onReverbTime(double)));
-  connect(&mReverb, SIGNAL(mixReceived(int)), this, SLOT(onReverbMix(int)));
+  connect(&mReverb, &Reverb::onOffCutsTailReceived, this, &MainFrame::onReverbOnOff);
+  connect(&mReverb, &Reverb::timeReceived, this, &MainFrame::onReverbTime);
+  connect(&mReverb, &Reverb::mixReceived, this, &MainFrame::onReverbMix);
   // amp
-  connect(&mAmp, SIGNAL(onOffReceived(bool)), this, SLOT(onAmpOnOff(bool)));
-  connect(&mAmp, SIGNAL(gainReceived(double)), this, SLOT(onAmpGain(double)));
+  connect(&mAmp, &Amp::onOffReceived, this, &MainFrame::onAmpOnOff);
+  connect(&mAmp, &Amp::gainReceived, this, &MainFrame::onAmpGain);
   // eq
-  connect(&mEq, SIGNAL(onOffReceived(bool)), this, SLOT(onEqOnOff(bool)));
+  connect(&mEq, &Eq::onOffReceived, this, &MainFrame::onEqOnOff);
   // cab
-  connect(&mCab, SIGNAL(onOffReceived(bool)), this, SLOT(onCabOnOff(bool)));
+  connect(&mCab, &Cab::onOffReceived, this, &MainFrame::onCabOnOff);
   // rig
   //connect(&mRig, SIGNAL(tempoReceived(double)), this, SLOT(onRigTempo(double)));
-  connect(&mRig, SIGNAL(volumeReceived(int)), this, SLOT(onRigVolume(int)));
+  connect(&mRig, &Rig::volumeReceived, this, &MainFrame::onRigVolume);
   //connect(&mRig, SIGNAL(tempoEnableReceived(bool)), this, SLOT(onRigTempoEnable(bool)));
-  connect(&mRig, SIGNAL(stompsEnableReceived(bool)), this, SLOT(onRigStompsEnable(bool)));
-  connect(&mRig, SIGNAL(stackEnableReceived(bool)), this, SLOT(onRigStackEnable(bool)));
-  connect(&mRig, SIGNAL(effectsEnableReceived(bool)), this, SLOT(onRigEffectsEnable(bool)));
+  connect(&mRig, &Rig::stompsEnableReceived, this, &MainFrame::onRigStompsEnable);
+  connect(&mRig, &Rig::stackEnableReceived, this, &MainFrame::onRigStackEnable);
+  connect(&mRig, &Rig::effectsEnableReceived, this, &MainFrame::onRigEffectsEnable);
   // global
-  connect(&mGlobal, SIGNAL(operationModeReceived(unsigned short)), this, SLOT(onGlobalOperationMode(unsigned short)));
-  connect(&mGlobal, SIGNAL(mainOutputVolumeReceived(int)), this, SLOT(onGlobalMainVolume(int)));
-  connect(&mGlobal, SIGNAL(headphoneOutputVolumeReceived(int)), this, SLOT(onGlobalHeadphoneVolume(int)));
-  connect(&mGlobal, SIGNAL(monitorOutputVolumeReceived(int)), this, SLOT(onGlobalMonitorVolume(int)));
-  connect(&mGlobal, SIGNAL(directOutputVolumeReceived(int)), this, SLOT(onGlobalDirectVolume(int)));
+  connect(&mGlobal, &Global::operationModeReceived, this, &MainFrame::onGlobalOperationMode);
+  connect(&mGlobal, &Global::mainOutputVolumeReceived, this, &MainFrame::onGlobalMainVolume);
+  connect(&mGlobal, &Global::headphoneOutputVolumeReceived, this, &MainFrame::onGlobalHeadphoneVolume);
+  connect(&mGlobal, &Global::monitorOutputVolumeReceived, this, &MainFrame::onGlobalMonitorVolume);
+  connect(&mGlobal, &Global::directOutputVolumeReceived, this, &MainFrame::onGlobalDirectVolume);
   // input
-  connect(&mInput, SIGNAL(noiseGateReceived(double)), this, SLOT(onInputNoiseGate(double)));
-  connect(&mInput, SIGNAL(distortionSenseReceived(double)), SLOT(onInputDistortionSense(double)));
-  connect(&mInput, SIGNAL(cleanSenseReceived(double)), SLOT(onInputCleanSense(double)));
+  connect(&mInput, &Input::noiseGateReceived, this, &MainFrame::onInputNoiseGate);
+  connect(&mInput, &Input::distortionSenseReceived, this, &MainFrame::onInputDistortionSense);
+  connect(&mInput, &Input::cleanSenseReceived, this, &MainFrame::onInputCleanSense);
 
   connect(ui->stompEditor, &StompEditorFrame::editorPageChanged, this, &MainFrame::onEditorPageChanged);
 
@@ -111,6 +112,12 @@ MainFrame::MainFrame(QWidget *parent)
   ui->reverbButton->setCtxMenuProvider(&mReverbCtxMenu);
 
   ui->stompEditor->init(mStompA, mStompB, mStompC, mStompD, mStompX, mStompMod, mDelay, mReverb, mProfile);
+
+  MasterVolume& mv = MasterVolume::get();
+  mv.init();
+
+  connect(&mv, &MasterVolume::setMasterVolume,
+          [=](double value) {ui->masterVolumeDial->setValue(value);} );
 }
 
 MainFrame::~MainFrame()
@@ -150,6 +157,7 @@ void MainFrame::requestValues()
 
   ui->browser->requestValues();
 
+  MasterVolume::get().requestValues();
   //DebugMidi::get().debugScanRequest(0x04, 0x00, 0x7F);
   //DebugMidi::get().debugScanRequest(0x00, 0x0, 0x7F);
   //DebugMidi::get().debugScanRequest(0x01, 0x00, 0x7F);
@@ -413,7 +421,7 @@ void MainFrame::onAmpGain(double val)
 
 // eq
 // ui => kpa
-void MainFrame::on_eqButton_clicked(QToasterButton& bt, bool longClick)
+void MainFrame::on_eqButton_clicked(QToasterButton& bt, bool /*longClick*/)
 {
   mEq.applyOnOff(bt.toggleOnOff());
   update();
@@ -454,19 +462,19 @@ void MainFrame::on_rigVolumeDial_valueChanged(int value)
   mRig.applyVolume(value);
 }
 
-void MainFrame::on_stompsButton_clicked(QToasterButton& bt, bool longClick)
+void MainFrame::on_stompsButton_clicked(QToasterButton& bt, bool /*longClick*/)
 {
   mRig.applyStompsEnable(bt.toggleOnOff());
   update();
 }
 
-void MainFrame::on_stackButton_clicked(QToasterButton& bt, bool longClick)
+void MainFrame::on_stackButton_clicked(QToasterButton& bt, bool /*longClick*/)
 {
   mRig.applyStackEnable(bt.toggleOnOff());
   update();
 }
 
-void MainFrame::on_effectsButton_clicked(QToasterButton& bt, bool longClick)
+void MainFrame::on_effectsButton_clicked(QToasterButton& bt, bool /*longClick*/)
 {
   mRig.applyEffectsEnable(bt.toggleOnOff());
   update();
@@ -778,7 +786,7 @@ void MainFrame::setStompLedColor(::FXType type, QMultiColorLed* ledWidget)
 
 
 
-void MainFrame::on_exitButton_clicked(QToasterButton &bt, bool /*longClick*/)
+void MainFrame::on_exitButton_clicked(QToasterButton& /*bt*/, bool /*longClick*/)
 {
   if(mOperationMode == StompEdit && mEditModeButton != nullptr && mEditModeModule != nullptr)
   {
@@ -787,12 +795,12 @@ void MainFrame::on_exitButton_clicked(QToasterButton &bt, bool /*longClick*/)
 }
 
 
-void MainFrame::on_prevPageButton_clicked(QToasterButton &bt, bool longClick)
+void MainFrame::on_prevPageButton_clicked(QToasterButton& /*bt*/, bool /*longClick*/)
 {
   ui->stompEditor->prevDisplayPage();
 }
 
-void MainFrame::on_nextPageButton_clicked(QToasterButton &bt, bool longClick)
+void MainFrame::on_nextPageButton_clicked(QToasterButton& /*bt*/, bool /*longClick*/)
 {
   ui->stompEditor->nextDisplayPage();
 }
@@ -819,12 +827,18 @@ void MainFrame::onEditorPageChanged(IStompEditorPage* editorPage)
   update();
 }
 
-void MainFrame::on_inputButton_clicked(QToasterButton &bt, bool longClick)
+void MainFrame::on_inputButton_clicked(QToasterButton &bt, bool /*longClick*/)
 {
   handleStompButtonClick(mInput, bt, true);
 }
 
-void MainFrame::on_outputButton_clicked(QToasterButton &bt, bool longClick)
+void MainFrame::on_outputButton_clicked(QToasterButton &bt, bool /*longClick*/)
 {
   handleStompButtonClick(mGlobal, bt, true);
+}
+
+
+void MainFrame::on_masterVolumeDial_valueChanged(double value)
+{
+  MasterVolume::get().onMasterVolume(value);
 }

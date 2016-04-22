@@ -42,6 +42,23 @@ public:
   bool getDebugWriteStringValues();
   void setDebugWriteStringValues(bool writeStringValues);
 
+  bool getMainOutputLink();
+  void setMainOutputLink(bool link);
+
+  bool getMonitorOutputLink();
+  void setMonitorOutputLink(bool link);
+
+  bool getDirectOutputLink();
+  void setDirectOutputLink(bool link);
+
+  bool getHeadphoneOutputLink();
+  void setHeadphoneOutputLink(bool link);
+
+  bool getSPDIFOutputLink();
+  void setSPDIFOutputLink(bool link);
+
+  int getMasterVolume();
+  void setMasterVolume(int volume);
 };
 
 #endif // SETTINGS_H

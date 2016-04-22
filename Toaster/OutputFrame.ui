@@ -183,7 +183,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page12">
     <widget class="QToasterDial" name="dummy6Dial">
@@ -550,7 +550,7 @@
       </stringlist>
      </property>
      <property name="isActive">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QToasterEnumDial" name="dummy38Dial">
@@ -564,6 +564,9 @@
      </property>
      <property name="knobSize">
       <enum>QToasterEnumDial::Small</enum>
+     </property>
+     <property name="isActive">
+      <bool>false</bool>
      </property>
     </widget>
     <widget class="QToasterEnumDial" name="pureCabinetOnOffDial">

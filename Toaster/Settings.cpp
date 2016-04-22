@@ -80,3 +80,63 @@ void Settings::setDebugWriteStringValues(bool writeStringValues)
 {
   setValue("Debug/WriteStringValues", QVariant(writeStringValues));
 }
+
+bool Settings::getMainOutputLink()
+{
+  return value("MasterOutput/MainOutputLink", QVariant(false)).toBool();
+}
+
+void Settings::setMainOutputLink(bool link)
+{
+  setValue("MasterOutput/MainOutputLink", QVariant(link));
+}
+
+bool Settings::getMonitorOutputLink()
+{
+  return value("MasterOutput/MonitorOutputLink", QVariant(false)).toBool();
+}
+
+void Settings::setMonitorOutputLink(bool link)
+{
+  setValue("MasterOutput/MonitorOutputLink", QVariant(link));
+}
+
+bool Settings::getDirectOutputLink()
+{
+  return value("MasterOutput/DirectOutputLink", QVariant(false)).toBool();
+}
+
+void Settings::setDirectOutputLink(bool link)
+{
+  setValue("MasterOutput/DirectOutputLink", QVariant(link));
+}
+
+bool Settings::getHeadphoneOutputLink()
+{
+  return value("MasterOutput/HeadphoneOutputLink", QVariant(false)).toBool();
+}
+
+void Settings::setHeadphoneOutputLink(bool link)
+{
+  setValue("MasterOutput/HeadphoneOutputLink", QVariant(link));
+}
+
+bool Settings::getSPDIFOutputLink()
+{
+  return value("MasterOutput/SPDIFOutputLink", QVariant(false)).toBool();
+}
+
+void Settings::setSPDIFOutputLink(bool link)
+{
+  setValue("MasterOutput/SPDIFOutputLink", QVariant(link));
+}
+
+int Settings::getMasterVolume()
+{
+  return value("MasterOutput/Volume", QVariant(0)).toInt();
+}
+
+void Settings::setMasterVolume(int volume)
+{
+  setValue("MasterOutput/Volume", QVariant(volume));
+}

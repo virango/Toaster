@@ -1,6 +1,22 @@
+/*  This file is part of Toaster, the editor and remote control for Kemper profiling amplifier.
+*
+*   Copyright (C) 2016  Thomas Langer
+*
+*   Toaster is free software: you can redistribute it and/or modify it under the terms of the
+*   GNU General Public License as published by the Free Software Foundation, either version 3
+*   of the License, or (at your option) any later version.
+*
+*   Toaster is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+*   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*   See the GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License along with Toaster.
+*   If not, see <http://www.gnu.org/licenses/>.
+*/
 #include "OutputFrame.h"
 #include "ui_OutputFrame.h"
 #include "LookUpTables.h"
+#include "MasterVolume.h"
 
 OutputFrame::OutputFrame(QWidget *parent)
   : QWidget(parent)
@@ -13,6 +29,11 @@ OutputFrame::OutputFrame(QWidget *parent)
   ui->directVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->spdifVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+
+  MasterVolume& mv = MasterVolume::get();
+
+  connect(&mv, &MasterVolume::setMainOutputVolume,
+          [=](int value) { ui->mainVolumeDial->setValue(value);});
 }
 
 OutputFrame::~OutputFrame()
@@ -77,6 +98,14 @@ void OutputFrame::activate(QObject& module)
     mpGlobal->requestAuxInToMain();
     mpGlobal->requestAuxInToHeadphone();
     mpGlobal->requestConstantLatencyOnOff();
+
+    ui->monitorOutLinkDial->setValue(MasterVolume::get().getMonitoprOutputLink() ? 1 : 0);
+    ui->mainOutLinkDial->setValue(MasterVolume::get().getMainOutputLink() ? 1 : 0);
+    ui->directOutLinkDial->setValue(MasterVolume::get().getDirectOutputLink() ? 1 : 0);
+    ui->headphoneLinkDial->setValue(MasterVolume::get().getHeadphoneOutputLink() ? 1 : 0);
+    ui->spdifOutLinkDial->setValue(MasterVolume::get().getSPDIFOutputLink() ? 1 : 0);
+
+
   }
 }
 
@@ -264,7 +293,7 @@ void OutputFrame::on_mainOutputEQPresenceDial_valueChanged(double value)
 void OutputFrame::on_spdifVolumeDial_valueChanged(int value)
 {
   if(mpGlobal != nullptr)
-    mpGlobal->applySPDIFOutputVolue(value);
+    mpGlobal->applySPDIFOutputVolume(value);
 }
 
 void OutputFrame::on_pureCabinetDial_valueChanged(double value)
@@ -279,8 +308,29 @@ void OutputFrame::on_spaceDial_valueChanged(double value)
     mpGlobal->applySpace(value);
 }
 
+void OutputFrame::on_mainOutLinkDial_valueChanged(int valueIndex)
+{
+  MasterVolume::get().onMainOutputLink(valueIndex != 0);
+}
+
+void OutputFrame::on_monitorOutLinkDial_valueChanged(int valueIndex)
+{
+  MasterVolume::get().onMonitorOutputLink(valueIndex != 0);
+}
+
+void OutputFrame::on_directOutLinkDial_valueChanged(int valueIndex)
+{
+  MasterVolume::get().onDirectOutputLink(valueIndex != 0);
+}
+
+void OutputFrame::on_headphoneLinkDial_valueChanged(int valueIndex)
+{
+  MasterVolume::get().onHeadPhoneOutputLink(valueIndex != 0);
+}
+
 void OutputFrame::on_spdifOutLinkDial_valueChanged(int valueIndex)
 {
+  MasterVolume::get().onSPDIFOutputLink(valueIndex != 0);
 }
 
 void OutputFrame::on_pureCabinetOnOffDial_valueChanged(int valueIndex)
@@ -468,3 +518,5 @@ void OutputFrame::OnConstantLatency(int valueIndex)
   ui->constantLatencyDial->setValue(valueIndex);
   update();
 }
+
+

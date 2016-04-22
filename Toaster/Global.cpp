@@ -54,7 +54,7 @@ void Global::applyDirectOutputVolume(int volume)
   midiApplyDirectOutputVolume((unsigned short)volume);
 }
 
-void Global::applySPDIFOutputVolue(int volume)
+void Global::applySPDIFOutputVolume(int volume)
 {
   midiApplySPDIFOutputVolume((unsigned short)volume);
 }

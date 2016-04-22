@@ -111,8 +111,8 @@ signals:
   void distortionBoosterToneReceived(double tone);
   void compressorGateIntensityReceived(double intensity);
   void compressorAttackReceived(double attack);
-  void modulationRateReceived(double modulationRate);
   void modulationRateReceived(int modulationRate);
+  void modulationRateReceived(double modulationRate);
   void modulationDepthReceived(double modulationDepth);
   void modulationFeedbackReceived(double feedback);
   void modulationCrossoverReceived(double crossover);

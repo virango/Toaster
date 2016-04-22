@@ -1,3 +1,18 @@
+/*  This file is part of Toaster, the editor and remote control for Kemper profiling amplifier.
+*
+*   Copyright (C) 2016  Thomas Langer
+*
+*   Toaster is free software: you can redistribute it and/or modify it under the terms of the
+*   GNU General Public License as published by the Free Software Foundation, either version 3
+*   of the License, or (at your option) any later version.
+*
+*   Toaster is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+*   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*   See the GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License along with Toaster.
+*   If not, see <http://www.gnu.org/licenses/>.
+*/
 #ifndef OUTPUTFRAME_H
 #define OUTPUTFRAME_H
 #include <QWidget>
@@ -53,6 +68,10 @@ private slots:
   void on_pureCabinetDial_valueChanged(double value);
   void on_spaceDial_valueChanged(double value);
   void on_spdifOutLinkDial_valueChanged(int valueIndex);
+  void on_mainOutLinkDial_valueChanged(int valueIndex);
+  void on_monitorOutLinkDial_valueChanged(int valueIndex);
+  void on_directOutLinkDial_valueChanged(int valueIndex);
+  void on_headphoneLinkDial_valueChanged(int valueIndex);
   void on_pureCabinetOnOffDial_valueChanged(int valueIndex);
   void on_headphoneSpaceDial_valueChanged(int valueIndex);
   void on_auxInMainDial_valueChanged(double value);
@@ -86,6 +105,8 @@ private slots:
   void OnAuxInMain(double value);
   void OnAuxInHeadphone(double value);
   void OnConstantLatency(int valueIndex);
+
+
 
 private:
   Ui::OutputFrame *ui;

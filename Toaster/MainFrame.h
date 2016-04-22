@@ -177,6 +177,8 @@ private slots:
 
   void on_outputButton_clicked(QToasterButton &bt, bool longClick);
 
+  void on_masterVolumeDial_valueChanged(double value);
+
 private:
   enum OperationMode
   {

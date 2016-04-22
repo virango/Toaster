@@ -106,7 +106,7 @@ public slots:
   void applyHeadphoneOutputVolume(int volume);
   void applyMonitorOutputVolume(int volume);
   void applyDirectOutputVolume(int volume);
-  void applySPDIFOutputVolue(int volume);
+  void applySPDIFOutputVolume(int volume);
   void applyMasterTune(double masterTune);
   void applyMonitorCabOff(bool monitorCabOff);
   void applySPDIFInputEnable(bool enabled);
