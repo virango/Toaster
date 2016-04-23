@@ -117,6 +117,7 @@ private:
                                          "Main Output EQ",
                                          "Output AddOns",
                                          "Aux In" };
+
 };
 
 #endif // OUTPUTFRAME_H

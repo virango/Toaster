@@ -35,12 +35,13 @@ public:
   void requestValues();
 
 signals:
-  void setMasterVolume(double value);
-  void setMainOutputVolume(int value);
-  void setMonitorOutputVolume(int value);
-  void setDirectOutputVolume(int value);
-  void setHeadphoneOutputVolume(int value);
-  void setSPDIFOutputVolume(int value);
+  void masterVolumeChanged(int value);
+  void mainOutputVolumeChanged(int value);
+  void monitorOutputVolumeChanged(int value);
+  void directOutputVolumeChanged(int value);
+  void headphoneOutputVolumeChanged(int value);
+  void spdifOutputVolumeChanged(int value);
+  void linksChanged(int noOfLinks);
 
 public slots:
   void onMainOutputLink(bool link);
@@ -53,11 +54,13 @@ public slots:
   void onDirectOutputVolume(int value);
   void onHeadPhoneOutputVolume(int value);
   void onSPDIFOutputVolume(int value);
-  void onMasterVolume(double value);
+  void onMasterVolume(int value);
 
 private:
   explicit MasterVolume(QObject *parent = 0);
   ~MasterVolume();
+
+  int noOfLinks();
 
   static MasterVolume mThis;
 
@@ -76,19 +79,6 @@ private:
   int mSPDIFOutputVolume;
 
   int mMasterVolume;
-
-  // TODO: put this methods in a separate header
-  unsigned short phys2Raw(double physVal, double deltaMinMax, double min, unsigned short maxRawVal = 0x3FFF)
-  {
-    unsigned short rawVal = ((physVal - min) * maxRawVal) / deltaMinMax;
-    return rawVal;
-  }
-
-  double raw2Phys(unsigned short rawVal, double deltaMinMax, double min)
-  {
-    double physVal = ((rawVal * deltaMinMax) / 0x3FFF) + min;
-    return physVal;
-  }
 };
 
 #endif // MASTERVOLUME_H

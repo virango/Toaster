@@ -99,28 +99,6 @@
     <double>0.100000000000000</double>
    </property>
   </widget>
-  <widget class="QToasterDial" name="masterVolumeDial">
-   <property name="geometry">
-    <rect>
-     <x>785</x>
-     <y>150</y>
-     <width>100</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <property name="knobSize">
-    <enum>QToasterDial::Big</enum>
-   </property>
-   <property name="ledRingType" stdset="0">
-    <enum>QToasterDial::None</enum>
-   </property>
-   <property name="maxValue">
-    <double>10.000000000000000</double>
-   </property>
-   <property name="stepWidth">
-    <double>0.100000000000000</double>
-   </property>
-  </widget>
   <widget class="QToasterDial" name="modRateDial">
    <property name="geometry">
     <rect>
@@ -753,6 +731,58 @@
    <property name="state">
     <enum>QToasterButton::Off</enum>
    </property>
+  </widget>
+  <widget class="QStackedWidget" name="masterVolumeWidget">
+   <property name="geometry">
+    <rect>
+     <x>785</x>
+     <y>150</y>
+     <width>100</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <widget class="QWidget" name="masterVolumeDBPage">
+    <widget class="QToasterLookUpTableDial" name="masterVolumeDBDial">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterLookUpTableDial::None</enum>
+     </property>
+     <property name="unit">
+      <string>dB</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="masterVolumePage">
+    <widget class="QToasterDial" name="masterVolumeDial">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="knobSize">
+      <enum>QToasterDial::Big</enum>
+     </property>
+     <property name="ledRingType" stdset="0">
+      <enum>QToasterDial::None</enum>
+     </property>
+     <property name="maxValue">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="stepWidth">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <customwidgets>

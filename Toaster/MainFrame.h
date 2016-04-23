@@ -177,6 +177,8 @@ private slots:
 
   void on_outputButton_clicked(QToasterButton &bt, bool longClick);
 
+  void on_masterVolumeDBDial_valueChanged(int value);
+
   void on_masterVolumeDial_valueChanged(double value);
 
 private:
@@ -231,6 +233,19 @@ private:
   OperationMode mPreviousOperationMode;
   QToasterButton* mEditModeButton;
   QObject*      mEditModeModule;
+
+  // TODO: put this methods in a separate header
+  unsigned short phys2Raw(double physVal, double deltaMinMax, double min, unsigned short maxRawVal = 0x3FFF)
+  {
+    unsigned short rawVal = ((physVal - min) * maxRawVal) / deltaMinMax;
+    return rawVal;
+  }
+
+  double raw2Phys(unsigned short rawVal, double deltaMinMax, double min)
+  {
+    double physVal = ((rawVal * deltaMinMax) / 0x3FFF) + min;
+    return physVal;
+  }
 };
 
 #endif // MAINFRAME_H

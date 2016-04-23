@@ -32,8 +32,20 @@ OutputFrame::OutputFrame(QWidget *parent)
 
   MasterVolume& mv = MasterVolume::get();
 
-  connect(&mv, &MasterVolume::setMainOutputVolume,
+  connect(&mv, &MasterVolume::mainOutputVolumeChanged,
           [=](int value) { ui->mainVolumeDial->setValue(value);});
+
+  connect(&mv, &MasterVolume::monitorOutputVolumeChanged,
+          [=](int value) { ui->monitorVolumeDial->setValue(value);});
+
+  connect(&mv, &MasterVolume::directOutputVolumeChanged,
+          [=](int value) { ui->directVolumeDial->setValue(value);});
+
+  connect(&mv, &MasterVolume::headphoneOutputVolumeChanged,
+          [=](int value) { ui->headphoneVolumeDial->setValue(value);});
+
+  connect(&mv, &MasterVolume::spdifOutputVolumeChanged,
+          [=](int value) {ui->spdifVolumeDial->setValue(value);});
 }
 
 OutputFrame::~OutputFrame()

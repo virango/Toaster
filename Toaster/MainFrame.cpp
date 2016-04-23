@@ -49,6 +49,7 @@ MainFrame::MainFrame(QWidget *parent)
   ui->headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->delayMixDial->setLookUpTable(LookUpTables::getMixValues());
   ui->reverbMixDial->setLookUpTable(LookUpTables::getMixValues());
+  ui->masterVolumeDBDial->setLookUpTable(LookUpTables::getMainVolumeValues());
 
   // notifications
   // stomps
@@ -116,8 +117,12 @@ MainFrame::MainFrame(QWidget *parent)
   MasterVolume& mv = MasterVolume::get();
   mv.init();
 
-  connect(&mv, &MasterVolume::setMasterVolume,
+  connect(&mv, &MasterVolume::masterVolumeChanged,
           [=](double value) {ui->masterVolumeDial->setValue(value);} );
+
+  connect(&mv, &MasterVolume::linksChanged,
+          [=](int noOfLinks) { ui->masterVolumeWidget->setCurrentIndex(noOfLinks == 1 ? 0 : 1);});
+
 }
 
 MainFrame::~MainFrame()
@@ -838,7 +843,15 @@ void MainFrame::on_outputButton_clicked(QToasterButton &bt, bool /*longClick*/)
 }
 
 
-void MainFrame::on_masterVolumeDial_valueChanged(double value)
+void MainFrame::on_masterVolumeDBDial_valueChanged(int value)
 {
   MasterVolume::get().onMasterVolume(value);
+  ui->masterVolumeDial->setValue(raw2Phys(value, 10.0, 0));
+}
+
+void MainFrame::on_masterVolumeDial_valueChanged(double value)
+{
+  unsigned short newValue = phys2Raw(value, 10.0, 0);
+  MasterVolume::get().onMasterVolume(newValue);
+  ui->masterVolumeDBDial->setValue(newValue);
 }

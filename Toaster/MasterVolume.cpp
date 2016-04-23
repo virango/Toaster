@@ -54,6 +54,22 @@ void MasterVolume::init()
   connect(&mGlobal, &Global::spdifOutputVolumeReceived, this, &MasterVolume::onSPDIFOutputVolume);
 }
 
+int MasterVolume::noOfLinks()
+{
+  int noOfLinks = 0;
+  if(mMainOutputLink)
+    noOfLinks++;
+  if(mMonitorOutputLink)
+    noOfLinks++;
+  if(mDirectOutputLink)
+    noOfLinks++;
+  if(mHeadphoneOutputLink)
+    noOfLinks++;
+  if(mSPDIFOutputLink)
+    noOfLinks++;
+  return noOfLinks;
+}
+
 void MasterVolume::requestValues()
 {
   if(mMainOutputLink)
@@ -70,6 +86,8 @@ void MasterVolume::requestValues()
 
   if(mSPDIFOutputLink)
     mGlobal.requestSPDIFOutputVlume();
+
+  emit linksChanged(noOfLinks());
 }
 
 void MasterVolume::onMainOutputLink(bool link)
@@ -78,6 +96,8 @@ void MasterVolume::onMainOutputLink(bool link)
   Settings::get().setMainOutputLink(link);
   if(mMainOutputLink)
     mGlobal.requestMainOutputVolume();
+
+  emit linksChanged(noOfLinks());
 }
 
 void MasterVolume::onMonitorOutputLink(bool link)
@@ -86,6 +106,8 @@ void MasterVolume::onMonitorOutputLink(bool link)
   Settings::get().setMonitorOutputLink(link);
   if(mMonitorOutputLink)
     mGlobal.requestMonitorOutputVolume();
+
+  emit linksChanged(noOfLinks());
 }
 
 void MasterVolume::onDirectOutputLink(bool link)
@@ -94,6 +116,8 @@ void MasterVolume::onDirectOutputLink(bool link)
   Settings::get().setDirectOutputLink(link);
   if(mDirectOutputLink)
     mGlobal.requestDirectOutputVolume();
+
+  emit linksChanged(noOfLinks());
 }
 
 void MasterVolume::onHeadPhoneOutputLink(bool link)
@@ -102,6 +126,8 @@ void MasterVolume::onHeadPhoneOutputLink(bool link)
   Settings::get().setHeadphoneOutputLink(link);
   if(mHeadphoneOutputLink)
     mGlobal.requestHeadphoneOutputVolume();
+
+  emit linksChanged(noOfLinks());
 }
 
 void MasterVolume::onSPDIFOutputLink(bool link)
@@ -110,6 +136,8 @@ void MasterVolume::onSPDIFOutputLink(bool link)
   Settings::get().setSPDIFOutputLink(link);
   if(mSPDIFOutputLink)
     mGlobal.requestSPDIFOutputVlume();
+
+  emit linksChanged(noOfLinks());
 }
 
 void MasterVolume::onMainOutputVolume(int value)
@@ -118,7 +146,7 @@ void MasterVolume::onMainOutputVolume(int value)
   if(mMainOutputLink && (mMainOutputVolume == 0x3FFF))
   {
     mMasterVolume = 0x3FFF;
-    emit setMasterVolume(raw2Phys(mMasterVolume, 10.0, 0));
+    emit masterVolumeChanged(mMasterVolume);
   }
 }
 
@@ -128,7 +156,7 @@ void MasterVolume::onMonitorOutputVolume(int value)
   if(mMonitorOutputLink && (mMonitorOutputVolume == 0x3FFF))
   {
     mMasterVolume = 0x3FFF;
-    emit setMasterVolume(raw2Phys(mMasterVolume, 10.0, 0));
+    emit masterVolumeChanged(mMasterVolume);
   }
 }
 
@@ -138,7 +166,7 @@ void MasterVolume::onDirectOutputVolume(int value)
   if(mDirectOutputLink && (mDirectOutputVolume == 0x3FFF))
   {
     mMasterVolume = 0x3FFF;
-    emit setMasterVolume(raw2Phys(mMasterVolume, 10.0, 0));
+    emit masterVolumeChanged(mMasterVolume);
   }
 }
 
@@ -148,7 +176,7 @@ void MasterVolume::onHeadPhoneOutputVolume(int value)
   if(mHeadphoneOutputLink && (mHeadphoneOutputVolume == 0x3FFF))
   {
     mMasterVolume = 0x3FFF;
-    emit setMasterVolume(raw2Phys(mMasterVolume, 10.0, 0));
+    emit masterVolumeChanged(mMasterVolume);
   }
 }
 
@@ -158,15 +186,14 @@ void MasterVolume::onSPDIFOutputVolume(int value)
   if(mSPDIFOutputLink && (mSPDIFOutputVolume == 0x3FFF))
   {
     mMasterVolume = 0x3FFF;
-    emit setMasterVolume(raw2Phys(mMasterVolume, 10.0, 0));
+    emit masterVolumeChanged(mMasterVolume);
   }
 }
 
-void MasterVolume::onMasterVolume(double value)
+void MasterVolume::onMasterVolume(int value)
 {
-  int newValue = phys2Raw(value, 10.0, 0);
-  int delta = newValue - mMasterVolume;
-  mMasterVolume = newValue;
+  int delta = value - mMasterVolume;
+  mMasterVolume = value;
 
   if(mMainOutputLink)
   {
@@ -175,7 +202,7 @@ void MasterVolume::onMasterVolume(double value)
     if(mMainOutputVolume == 0x3FFF)
       mMasterVolume = 0x3FFF;
 
-    emit setMainOutputVolume(mMainOutputVolume > 0 ? mMainOutputVolume : 0);
+    emit mainOutputVolumeChanged(mMainOutputVolume > 0 ? mMainOutputVolume : 0);
   }
 
   if(mMonitorOutputLink)
@@ -185,7 +212,7 @@ void MasterVolume::onMasterVolume(double value)
     if(mMonitorOutputVolume == 0x3FFF)
       mMasterVolume = 0x3FFF;
 
-    emit setMonitorOutputVolume(mMonitorOutputVolume > 0 ? mMonitorOutputVolume : 0);
+    emit monitorOutputVolumeChanged(mMonitorOutputVolume > 0 ? mMonitorOutputVolume : 0);
   }
 
   if(mDirectOutputLink)
@@ -195,7 +222,7 @@ void MasterVolume::onMasterVolume(double value)
     if(mDirectOutputVolume == 0x3FFF)
       mMasterVolume = 0x3FFF;
 
-    emit setDirectOutputVolume(mDirectOutputVolume > 0 ? mDirectOutputVolume : 0);
+    emit directOutputVolumeChanged(mDirectOutputVolume > 0 ? mDirectOutputVolume : 0);
   }
 
   if(mHeadphoneOutputLink)
@@ -205,7 +232,7 @@ void MasterVolume::onMasterVolume(double value)
     if(mHeadphoneOutputVolume == 0x3FFF)
       mMasterVolume = 0x3FFF;
 
-    emit setHeadphoneOutputVolume(mHeadphoneOutputVolume > 0 ? mHeadphoneOutputVolume : 0);
+    emit headphoneOutputVolumeChanged(mHeadphoneOutputVolume > 0 ? mHeadphoneOutputVolume : 0);
   }
 
   if(mSPDIFOutputLink)
@@ -215,9 +242,9 @@ void MasterVolume::onMasterVolume(double value)
     if(mSPDIFOutputVolume  == 0x3FFF)
       mMasterVolume = 0x3FFF;
 
-    emit setSPDIFOutputVolume(mSPDIFOutputVolume > 0 ? mSPDIFOutputVolume : 0);
+    emit spdifOutputVolumeChanged(mSPDIFOutputVolume > 0 ? mSPDIFOutputVolume : 0);
   }
 
   if(mMasterVolume == 0x3FFF)
-    emit setMasterVolume(raw2Phys(mMasterVolume, 10.0, 0));
+    emit masterVolumeChanged(mMasterVolume);
 }
