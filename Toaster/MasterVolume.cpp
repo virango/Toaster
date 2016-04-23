@@ -52,6 +52,7 @@ void MasterVolume::init()
   connect(&mGlobal, &Global::directOutputVolumeReceived, this, &MasterVolume::onDirectOutputVolume);
   connect(&mGlobal, &Global::headphoneOutputVolumeReceived, this, &MasterVolume::onHeadPhoneOutputVolume);
   connect(&mGlobal, &Global::spdifOutputVolumeReceived, this, &MasterVolume::onSPDIFOutputVolume);
+  emit masterVolumeChanged(mMasterVolume);
 }
 
 int MasterVolume::noOfLinks()
@@ -88,6 +89,7 @@ void MasterVolume::requestValues()
     mGlobal.requestSPDIFOutputVlume();
 
   emit linksChanged(noOfLinks());
+  emit masterVolumeChanged(mMasterVolume);
 }
 
 void MasterVolume::onMainOutputLink(bool link)

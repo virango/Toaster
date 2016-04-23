@@ -33,6 +33,7 @@
 #include "StompCtxMenu.h"
 #include "DelayCtxMenu.h"
 #include "ReverbCtxMenu.h"
+#include "Tap.h"
 
 namespace Ui {
 class MainFrame;
@@ -181,6 +182,9 @@ private slots:
 
   void on_masterVolumeDial_valueChanged(double value);
 
+  void on_tapButton_clicked(QToasterButton &bt, bool longClick);
+
+
 private:
   enum OperationMode
   {
@@ -228,6 +232,7 @@ private:
   StompCtxMenu  mStompModCtxMenu;
   DelayCtxMenu  mDelayCtxMenu;
   ReverbCtxMenu mReverbCtxMenu;
+  Tap           mTap;
 
   OperationMode mOperationMode;
   OperationMode mPreviousOperationMode;

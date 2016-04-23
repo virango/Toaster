@@ -118,7 +118,10 @@ MainFrame::MainFrame(QWidget *parent)
   mv.init();
 
   connect(&mv, &MasterVolume::masterVolumeChanged,
-          [=](double value) {ui->masterVolumeDial->setValue(value);} );
+          [=](int value) {ui->masterVolumeDBDial->setValue(value);} );
+
+  connect(&mv, &MasterVolume::masterVolumeChanged,
+          [=](int value) {ui->masterVolumeDial->setValue(raw2Phys(value, 10.0, 0));} );
 
   connect(&mv, &MasterVolume::linksChanged,
           [=](int noOfLinks) { ui->masterVolumeWidget->setCurrentIndex(noOfLinks == 1 ? 0 : 1);});
@@ -855,3 +858,12 @@ void MainFrame::on_masterVolumeDial_valueChanged(double value)
   MasterVolume::get().onMasterVolume(newValue);
   ui->masterVolumeDBDial->setValue(newValue);
 }
+
+void MainFrame::on_tapButton_clicked(QToasterButton &bt, bool longClick)
+{
+  if(longClick)
+    mTap.applyTapTempoBeatScanner();
+  else
+    mTap.applyTapTempo();
+}
+

@@ -319,8 +319,8 @@
   <widget class="QToasterButton" name="rigUpButton">
    <property name="geometry">
     <rect>
-     <x>810</x>
-     <y>254</y>
+     <x>817</x>
+     <y>318</y>
      <width>24</width>
      <height>24</height>
     </rect>
@@ -332,8 +332,8 @@
   <widget class="QToasterButton" name="rigNextButton">
    <property name="geometry">
     <rect>
-     <x>852</x>
-     <y>292</y>
+     <x>860</x>
+     <y>356</y>
      <width>24</width>
      <height>24</height>
     </rect>
@@ -345,8 +345,8 @@
   <widget class="QToasterButton" name="rigDownButton">
    <property name="geometry">
     <rect>
-     <x>810</x>
-     <y>331</y>
+     <x>817</x>
+     <y>394</y>
      <width>24</width>
      <height>24</height>
     </rect>
@@ -358,8 +358,8 @@
   <widget class="QToasterButton" name="rigPrevButton">
    <property name="geometry">
     <rect>
-     <x>768</x>
-     <y>292</y>
+     <x>774</x>
+     <y>356</y>
      <width>24</width>
      <height>24</height>
     </rect>
@@ -462,8 +462,8 @@
   <widget class="QChickenHeadDial" name="chickenHeadDial">
    <property name="geometry">
     <rect>
-     <x>12</x>
-     <y>267</y>
+     <x>0</x>
+     <y>332</y>
      <width>100</width>
      <height>100</height>
     </rect>
@@ -669,6 +669,9 @@
    <property name="type">
     <enum>QToasterButton::Big</enum>
    </property>
+   <property name="state">
+    <enum>QToasterButton::On</enum>
+   </property>
   </widget>
   <widget class="QToasterButton" name="outputButton">
    <property name="geometry">
@@ -681,6 +684,9 @@
    </property>
    <property name="type">
     <enum>QToasterButton::Big</enum>
+   </property>
+   <property name="state">
+    <enum>QToasterButton::On</enum>
    </property>
   </widget>
   <widget class="QToasterButton" name="storeButton">
@@ -712,7 +718,7 @@
   <widget class="QToasterButton" name="prevPageButton">
    <property name="geometry">
     <rect>
-     <x>671</x>
+     <x>667</x>
      <y>422</y>
      <width>24</width>
      <height>24</height>
@@ -722,7 +728,7 @@
   <widget class="QToasterButton" name="nextPageButton">
    <property name="geometry">
     <rect>
-     <x>715</x>
+     <x>705</x>
      <y>422</y>
      <width>24</width>
      <height>24</height>
@@ -783,6 +789,19 @@
      </property>
     </widget>
    </widget>
+  </widget>
+  <widget class="QToasterButton" name="tapButton">
+   <property name="geometry">
+    <rect>
+     <x>845</x>
+     <y>456</y>
+     <width>34</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="type">
+    <enum>QToasterButton::Big</enum>
+   </property>
   </widget>
  </widget>
  <customwidgets>

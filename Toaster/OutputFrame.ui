@@ -688,7 +688,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>5</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page11">
     <widget class="QToasterEnumDial" name="mainOutputSourceDial">
