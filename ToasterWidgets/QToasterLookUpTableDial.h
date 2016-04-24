@@ -18,6 +18,7 @@
 #include <QWidget>
 #include <QPixmap>
 #include <QMap>
+#include <QTimer>
 #include "ToasterWidgetsLib.h"
 
 #define MAP_INSERT(x, y, z) x[y] = z
@@ -91,13 +92,16 @@ private:
 
   int mMouseY;
 
+  int      mMinValueIndex;
+  int      mMaxValueIndex;
   int      mMinValue;
   int      mMaxValue;
   int      mCurrValue;
   QString  mCurrValueText;
   QString  mUnit;
   bool     mIsActive;
-
+  int      mAcceleration;
+  QTimer   mAccelerationTimer;
   QVector<QPair<int,QString>>* mLookUpTable;
 
   QMap<KnobSize, QString> mKnobSkins;

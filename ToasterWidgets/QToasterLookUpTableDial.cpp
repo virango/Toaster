@@ -29,12 +29,15 @@ QToasterLookUpTableDial::QToasterLookUpTableDial(QWidget *parent)
   , mKnobSize(Big)
   , mLEDRingType(Uni)
   , mMouseY(0)
+  , mMinValueIndex(0)
+  , mMaxValueIndex(0)
   , mMinValue(0)
   , mMaxValue(0)
   , mCurrValue(0)
   , mCurrValueText("<0.0>")
   , mUnit("")
   , mIsActive(true)
+  , mAcceleration(1)
   , mLookUpTable(nullptr)
 {
   MAP_INSERT(mKnobSkins, Big,   ":/resources/BigDial.png");
@@ -44,6 +47,9 @@ QToasterLookUpTableDial::QToasterLookUpTableDial(QWidget *parent)
   MAP_INSERT(mLEDRingSkins, Bi,  ":/resources/LEDRingBi.png");
   createKnobSkin();
   createLEDRingSkin();
+
+  connect(&mAccelerationTimer, &QTimer::timeout,
+          [=](){ mAcceleration = 1; });
 }
 
 void QToasterLookUpTableDial::createKnobSkin()
@@ -106,8 +112,11 @@ void QToasterLookUpTableDial::setLookUpTable(QVector<QPair<int,QString>>* lookUp
   mLookUpTable = lookUpTable;
   if(mLookUpTable != nullptr)
   {
-    mMinValue = 0;
-    mMaxValue = mLookUpTable->size() - 1;
+    mMinValue = mLookUpTable->at(0).first;
+    mMaxValue = mLookUpTable->at(mLookUpTable->size() - 1).first;
+
+    mMinValueIndex = 0;
+    mMaxValueIndex = mLookUpTable->size() - 1;
   }
 }
 
@@ -116,11 +125,11 @@ void QToasterLookUpTableDial::update(int deltaSteps)
   if(mLookUpTable != nullptr)
   {
     // update value
-    int newValue = mCurrValue + deltaSteps;
-    if (newValue < mMinValue)
-      mCurrValue = mMinValue;
-    else if(newValue > mMaxValue)
-      mCurrValue = mMaxValue;
+    int newValue = mCurrValue + (deltaSteps * mAcceleration);
+    if (newValue < mMinValueIndex)
+      mCurrValue = mMinValueIndex;
+    else if(newValue > mMaxValueIndex)
+      mCurrValue = mMaxValueIndex;
     else
       mCurrValue = newValue;
 
@@ -146,6 +155,15 @@ void QToasterLookUpTableDial::update(int deltaSteps)
     // notify value changed
     if(mIsActive)
       emit valueChanged(mLookUpTable->at(mCurrValue).first);
+
+    if(mAccelerationTimer.isActive())
+    {
+      mAccelerationTimer.stop();
+      if(mAcceleration < 10)
+        mAcceleration++;
+    }
+
+    mAccelerationTimer.start(200);
   }
 }
 
@@ -155,7 +173,7 @@ void QToasterLookUpTableDial::updateValueText()
   {
     mCurrValueText = mLookUpTable->at((int)mCurrValue).second + " " + mUnit;
 
-    if(mCurrValueText.startsWith("0.0") && mMinValue < 0)
+    if(mCurrValueText.startsWith("0.0") && mMinValueIndex < 0)
       mCurrValueText = "<" + mCurrValueText + ">";
 
     if(mIsActive)
@@ -185,8 +203,8 @@ void QToasterLookUpTableDial::setValue(int value)
         break;
       mCurrValue = i;
     }
-    if(mCurrValue > mMaxValue)
-      mCurrValue = mMaxValue;
+    if(mCurrValue > mMaxValueIndex)
+      mCurrValue = mMaxValueIndex;
 
     updateValueText();
     updateLEDRing();
@@ -266,7 +284,7 @@ void QToasterLookUpTableDial::updateLEDRing()
   {
     double step = (mMaxValue - mMinValue) / (mLEDRingSkinNoOfFrames - 1);
     double offset = mMinValue * (-1);
-    double value =  (mCurrValue + offset) / step;
+    double value =  (mLookUpTable->at(mCurrValue).first + offset) / step;
     mCurrLEDRingFrameNo = (int) floor(value + 0.5);
     if(mCurrLEDRingFrameNo >= mLEDRingSkinNoOfFrames)
       mCurrLEDRingFrameNo = mLEDRingSkinNoOfFrames - 1;

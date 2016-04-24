@@ -126,6 +126,8 @@ MainFrame::MainFrame(QWidget *parent)
   connect(&mv, &MasterVolume::linksChanged,
           [=](int noOfLinks) { ui->masterVolumeWidget->setCurrentIndex(noOfLinks == 1 ? 0 : 1);});
 
+  connect(ui->headphoneVolumeDial, static_cast<void (QToasterLookUpTableDial::*)(int)>(&QToasterLookUpTableDial::valueChanged), &mGlobal, &Global::applyHeadphoneOutputVolume);
+  connect(ui->monitorVolumeDial, static_cast<void (QToasterLookUpTableDial::*)(int)>(&QToasterLookUpTableDial::valueChanged), &mGlobal, &Global::applyMonitorOutputVolume);
 }
 
 MainFrame::~MainFrame()
@@ -522,16 +524,6 @@ void MainFrame::onRigEffectsEnable(bool effectsEnable)
 void MainFrame::on_chickenHeadDial_valueChanged(const QChickenHeadDial::State& state)
 {
   mGlobal.applyOperationMode((Global::OperationMode) state);
-}
-
-void MainFrame::on_monitorVolumeDial_valueChanged(int volume)
-{
-  mGlobal.applyMonitorOutputVolume(volume);
-}
-
-void MainFrame::on_headphoneVolumeDial_valueChanged(int volume)
-{
-  mGlobal.applyHeadphoneOutputVolume(volume);
 }
 
 // kpa => ui

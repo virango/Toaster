@@ -138,8 +138,6 @@ private slots:
   // global
   // ui => kpa
   void on_chickenHeadDial_valueChanged(const QChickenHeadDial::State& state);
-  void on_monitorVolumeDial_valueChanged(int volume);
-  void on_headphoneVolumeDial_valueChanged(int volume);
   // kpa => ui
   void onGlobalOperationMode(unsigned short opMode);
   void onGlobalMainVolume(int volume);
