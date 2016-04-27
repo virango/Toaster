@@ -182,6 +182,7 @@ private slots:
 
   void on_tapButton_clicked(QToasterButton &bt, bool longClick);
 
+  void onRigNameReveived(const QString& rigName);
 
 private:
   enum OperationMode
@@ -236,6 +237,8 @@ private:
   OperationMode mPreviousOperationMode;
   QToasterButton* mEditModeButton;
   QObject*      mEditModeModule;
+
+  QString       mCurrRigName;
 
   // TODO: put this methods in a separate header
   unsigned short phys2Raw(double physVal, double deltaMinMax, double min, unsigned short maxRawVal = 0x3FFF)

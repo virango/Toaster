@@ -25,6 +25,7 @@ QToasterTunerLCD::QToasterTunerLCD(QWidget *parent)
   , ui(new Ui::QToasterTunerLCD)
 {
   ui->setupUi(this);
+  setFonts();
   createSkin();
   createIndexSkin();
   setIndexPosition(100);
@@ -109,4 +110,28 @@ void QToasterTunerLCD::setMuted(bool muted)
 void QToasterTunerLCD::on_muteCheckBox_clicked(bool checked)
 {
   emit signalMuted(checked);
+}
+
+void QToasterTunerLCD::setFonts()
+{
+  QFont font;
+  font.setFamily(QStringLiteral("Ubuntu"));
+  font.setStretch(95);
+  font.setWeight(QFont::DemiBold);
+  font.setPixelSize(13);
+
+  ui->masterTuneTitle->setFont(font);
+  ui->muteCheckBox->setFont(font);
+  ui->octaveLabel->setFont(font);
+
+  font.setPixelSize(10);
+  font.setWeight(QFont::Normal);
+  font.setStretch(QFont::Unstretched);
+  ui->masterTuneVal->setFont(font);
+
+  font.setPixelSize(11);
+  ui->titleLabel->setFont(font);
+
+  font.setPixelSize(18);
+  ui->noteLabel->setFont(font);
 }

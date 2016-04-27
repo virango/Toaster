@@ -41,6 +41,7 @@ MainFrame::MainFrame(QWidget *parent)
   , mPreviousOperationMode(Browser)
   , mEditModeButton(NULL)
   , mEditModeModule(NULL)
+  , mCurrRigName("")
 {
   ui->setupUi(this);
 
@@ -128,6 +129,8 @@ MainFrame::MainFrame(QWidget *parent)
 
   connect(ui->headphoneVolumeDial, static_cast<void (QToasterLookUpTableDial::*)(int)>(&QToasterLookUpTableDial::valueChanged), &mGlobal, &Global::applyHeadphoneOutputVolume);
   connect(ui->monitorVolumeDial, static_cast<void (QToasterLookUpTableDial::*)(int)>(&QToasterLookUpTableDial::valueChanged), &mGlobal, &Global::applyMonitorOutputVolume);
+
+  connect(&mProfile, &Profile::rigNameReceived, this, &MainFrame::onRigNameReveived);
 }
 
 MainFrame::~MainFrame()
@@ -857,5 +860,14 @@ void MainFrame::on_tapButton_clicked(QToasterButton &bt, bool longClick)
     mTap.applyTapTempoBeatScanner();
   else
     mTap.applyTapTempo();
+}
+
+void MainFrame::onRigNameReveived(const QString& rigName)
+{
+  if(mCurrRigName != rigName)
+  {
+    mCurrRigName = rigName;
+    requestValues();
+  }
 }
 
