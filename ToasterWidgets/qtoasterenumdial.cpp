@@ -231,8 +231,11 @@ void QToasterEnumDial::paintEvent(QPaintEvent* /* pe */)
 void QToasterEnumDial::wheelEvent(QWheelEvent* we)
 {
   we->accept();
-  int delta = we->delta()/120;
-  update(delta);
+  int delta = we->delta();
+  if(delta > 0)
+    update(1);
+  else if(delta < 0)
+    update(-1);
 }
 
 void QToasterEnumDial::mousePressEvent(QMouseEvent* me)

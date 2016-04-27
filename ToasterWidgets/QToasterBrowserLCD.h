@@ -72,6 +72,7 @@ public slots:
 protected:
   void paintEvent(QPaintEvent*);
   void contextMenuEvent(QContextMenuEvent * cme);
+  void setFonts();
 
 private slots:
   void on_browserViewComboBox_currentIndexChanged(int index);

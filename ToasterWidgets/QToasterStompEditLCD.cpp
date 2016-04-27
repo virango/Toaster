@@ -26,6 +26,7 @@ QToasterStompEditLCD::QToasterStompEditLCD(QWidget *parent)
   , ui(new Ui::QToasterStompEditLCD)
 {
   ui->setupUi(this);
+  setFonts();
   createSkin();
 
   ui->stompAEdit->setText("-");
@@ -1224,3 +1225,130 @@ double QToasterStompEditLCD::getEqBandValue(QWidget* widget) const
   return (double)val;
 }
 
+
+void QToasterStompEditLCD::setFonts()
+{
+  QFont font;
+  font.setFamily(QStringLiteral("Ubuntu"));
+  font.setStretch(95);
+  font.setWeight(QFont::DemiBold);
+  font.setPixelSize(13);
+  ui->val01Title->setFont(font);
+  ui->val02Title->setFont(font);
+  ui->val03Title->setFont(font);
+  ui->val04Title->setFont(font);
+  ui->val05Title->setFont(font);
+  ui->val06Title->setFont(font);
+  ui->val07Title->setFont(font);
+  ui->val08Title->setFont(font);
+  ui->val09Title->setFont(font);
+  ui->val10Title->setFont(font);
+  ui->val11Title->setFont(font);
+  ui->val12Title->setFont(font);
+  ui->val13Title->setFont(font);
+  ui->val14Title->setFont(font);
+  ui->val15Title->setFont(font);
+  ui->val16Title->setFont(font);
+  ui->val17Title->setFont(font);
+  ui->val18Title->setFont(font);
+  ui->val19Title->setFont(font);
+  ui->val20Title->setFont(font);
+  ui->val21Title->setFont(font);
+  ui->val22Title->setFont(font);
+  ui->val23Title->setFont(font);
+  ui->val24Title->setFont(font);
+  ui->val25Title->setFont(font);
+  ui->val26Title->setFont(font);
+  ui->val27Title->setFont(font);
+  ui->val28Title->setFont(font);
+  ui->val29Title->setFont(font);
+  ui->val30Title->setFont(font);
+  ui->val31Title->setFont(font);
+  ui->val32Title->setFont(font);
+  ui->val33Title->setFont(font);
+  ui->val34Title->setFont(font);
+  ui->val35Title->setFont(font);
+  ui->val36Title->setFont(font);
+  ui->val37Title->setFont(font);
+  ui->val38Title->setFont(font);
+  ui->val39Title->setFont(font);
+  ui->val40Title->setFont(font);
+  ui->val41Title->setFont(font);
+  ui->val42Title->setFont(font);
+  ui->val43Title->setFont(font);
+  ui->val44Title->setFont(font);
+  ui->val45Title->setFont(font);
+  ui->val46Title->setFont(font);
+  ui->val47Title->setFont(font);
+  ui->val48Title->setFont(font);
+
+  font.setPixelSize(10);
+  font.setWeight(QFont::Normal);
+  font.setStretch(QFont::Unstretched);
+  ui->val01->setFont(font);
+  ui->val02->setFont(font);
+  ui->val03->setFont(font);
+  ui->val04->setFont(font);
+  ui->val05->setFont(font);
+  ui->val06->setFont(font);
+  ui->val07->setFont(font);
+  ui->val08->setFont(font);
+  ui->val09->setFont(font);
+  ui->val10->setFont(font);
+  ui->val11->setFont(font);
+  ui->val12->setFont(font);
+  ui->val13->setFont(font);
+  ui->val14->setFont(font);
+  ui->val15->setFont(font);
+  ui->val16->setFont(font);
+  ui->val17->setFont(font);
+  ui->val18->setFont(font);
+  ui->val19->setFont(font);
+  ui->val20->setFont(font);
+  ui->val21->setFont(font);
+  ui->val22->setFont(font);
+  ui->val23->setFont(font);
+  ui->val24->setFont(font);
+  ui->val25->setFont(font);
+  ui->val26->setFont(font);
+  ui->val27->setFont(font);
+  ui->val28->setFont(font);
+  ui->val29->setFont(font);
+  ui->val30->setFont(font);
+  ui->val31->setFont(font);
+  ui->val32->setFont(font);
+  ui->val33->setFont(font);
+  ui->val34->setFont(font);
+  ui->val35->setFont(font);
+  ui->val36->setFont(font);
+  ui->val37->setFont(font);
+  ui->val38->setFont(font);
+  ui->val39->setFont(font);
+  ui->val40->setFont(font);
+  ui->val41->setFont(font);
+  ui->val42->setFont(font);
+  ui->val43->setFont(font);
+  ui->val44->setFont(font);
+  ui->val45->setFont(font);
+  ui->val46->setFont(font);
+  ui->val47->setFont(font);
+  ui->val48->setFont(font);
+
+  ui->ampNameEdit->setFont(font);
+  ui->pageInfo->setFont(font);
+  ui->stompInstance->setFont(font);
+  ui->stompTypeName->setFont(font);
+
+  font.setWeight(QFont::Light);
+  font.setStretch(92);
+  ui->stompAEdit->setFont(font);
+  ui->stompBEdit->setFont(font);
+  ui->stompCEdit->setFont(font);
+  ui->stompDEdit->setFont(font);
+  ui->stompXEdit->setFont(font);
+  ui->stompModEdit->setFont(font);
+  ui->delayEdit->setFont(font);
+  ui->reverbEdit->setFont(font);
+
+
+}

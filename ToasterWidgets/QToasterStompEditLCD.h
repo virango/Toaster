@@ -314,6 +314,8 @@ protected:
   void setEqBandValue(QWidget* widget, int value);
   double getEqBandValue(QWidget* widget) const;
 
+  void setFonts();
+
 private:
   Ui::QToasterStompEditLCD *ui;
 };

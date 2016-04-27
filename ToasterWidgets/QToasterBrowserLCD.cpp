@@ -39,6 +39,7 @@ QToasterBrowserLCD::QToasterBrowserLCD(QWidget *parent)
   , ui(new Ui::QToasterBrowserLCD)
 {
   ui->setupUi(this);
+  setFonts();
   createSkin();
   ui->stompAEdit->setText("-");
   ui->stompBEdit->setText("-");
@@ -295,4 +296,48 @@ QStringList QToasterBrowserLCD::getBrowserModeViews()
   for(int i = 0; i < ui->browserViewComboBox->count(); i++)
     list.append(ui->browserViewComboBox->itemText(i));
   return list;
+}
+
+void QToasterBrowserLCD::setFonts()
+{
+  QFont font;
+  font.setFamily(QStringLiteral("Ubuntu"));
+
+  font.setStretch(95);
+  font.setWeight(QFont::DemiBold);
+  font.setPixelSize(13);
+  ui->bassLabel->setFont(font);
+  ui->middleLabel->setFont(font);
+  ui->trebleLabel->setFont(font);
+  ui->presenceLabel->setFont(font);
+
+  font.setPixelSize(10);
+  ui->browserViewComboBox->setFont(font);
+
+  font.setWeight(QFont::Normal);
+  font.setStretch(QFont::Unstretched);
+  ui->bassValueLabel->setFont(font);
+  ui->middleValueLabel->setFont(font);
+  ui->trebleValueLabel->setFont(font);
+  ui->presenceValueLabel->setFont(font);
+  ui->ampNameEdit->setFont(font);
+  ui->rigAuthorEdit->setFont(font);
+  ui->rigTypeEdit->setFont(font);
+
+  font.setWeight(QFont::Light);
+  font.setStretch(92);
+  ui->stompAEdit->setFont(font);
+  ui->stompBEdit->setFont(font);
+  ui->stompCEdit->setFont(font);
+  ui->stompDEdit->setFont(font);
+  ui->stompXEdit->setFont(font);
+  ui->stompModEdit->setFont(font);
+  ui->delayEdit->setFont(font);
+  ui->reverbEdit->setFont(font);
+
+
+  font.setWeight(QFont::DemiBold);
+  font.setPixelSize(22);
+  font.setStretch(QFont::Unstretched);
+  ui->rigNameEdit->setFont(font);
 }

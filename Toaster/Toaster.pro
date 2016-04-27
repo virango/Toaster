@@ -341,7 +341,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/d
 else:macx:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/release -lqtoasterwidgetsplugin
 else:macx: CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/debug -lqtoasterwidgetsplugin_debug
 else:unix: CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/release -lqtoasterwidgetsplugin
-else:unix: CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build-Toaster-Desktop/ToasterWidgets/debug -lqtoasterwidgetsplugin
+else:unix: CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/debug -lqtoasterwidgetsplugin
 
 
 unix:!macx:LIBS += -lasound -ljack
