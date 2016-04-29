@@ -20,12 +20,12 @@
 #include "ToasterWidgetsLib.h"
 #include "Commons.h"
 
-#if 1
-#define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 2px;"
-#define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 2px;"
+#ifdef _WIN32
+#define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 4px;"
+#define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 4px;"
 #else
-#define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;"
-#define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;"
+#define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;;padding-bottom: 2px;"
+#define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;;padding-bottom: 2px;"
 #endif
 
 #define COLOR_STANDARD "color: rgb(208, 234, 222)"
