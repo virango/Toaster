@@ -1231,7 +1231,7 @@ void QToasterStompEditLCD::setFonts()
   QFont font;
   font.setFamily(QStringLiteral("Ubuntu"));
   font.setStretch(95);
-  font.setWeight(QFont::DemiBold);
+  font.setWeight(QFont::Bold);
   font.setPixelSize(13);
   ui->val01Title->setFont(font);
   ui->val02Title->setFont(font);
@@ -1282,9 +1282,12 @@ void QToasterStompEditLCD::setFonts()
   ui->val47Title->setFont(font);
   ui->val48Title->setFont(font);
 
+  font.setStretch(QFont::Unstretched);
+  font.setPixelSize(11);
+  ui->stompTypeName->setFont(font);
+
   font.setPixelSize(10);
   font.setWeight(QFont::Normal);
-  font.setStretch(QFont::Unstretched);
   ui->val01->setFont(font);
   ui->val02->setFont(font);
   ui->val03->setFont(font);
@@ -1337,8 +1340,8 @@ void QToasterStompEditLCD::setFonts()
   ui->ampNameEdit->setFont(font);
   ui->pageInfo->setFont(font);
   ui->stompInstance->setFont(font);
-  ui->stompTypeName->setFont(font);
 
+  font.setPixelSize(10);
   font.setWeight(QFont::Light);
   font.setStretch(92);
   ui->stompAEdit->setFont(font);

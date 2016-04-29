@@ -45,6 +45,8 @@ MainFrame::MainFrame(QWidget *parent)
 {
   ui->setupUi(this);
 
+  ui->storeButton->setVisible(false);
+
   ui->rigVolumeDial->setLookUpTable(LookUpTables::getRigVolumeValues());
   ui->monitorVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());

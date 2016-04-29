@@ -304,12 +304,15 @@ void QToasterBrowserLCD::setFonts()
   font.setFamily(QStringLiteral("Ubuntu"));
 
   font.setStretch(95);
-  font.setWeight(QFont::DemiBold);
+  font.setWeight(QFont::Bold);
   font.setPixelSize(13);
   ui->bassLabel->setFont(font);
   ui->middleLabel->setFont(font);
   ui->trebleLabel->setFont(font);
   ui->presenceLabel->setFont(font);
+
+  font.setPixelSize(11);
+  ui->rigAuthorEdit->setFont(font);
 
   font.setPixelSize(10);
   ui->browserViewComboBox->setFont(font);
@@ -321,7 +324,6 @@ void QToasterBrowserLCD::setFonts()
   ui->trebleValueLabel->setFont(font);
   ui->presenceValueLabel->setFont(font);
   ui->ampNameEdit->setFont(font);
-  ui->rigAuthorEdit->setFont(font);
   ui->rigTypeEdit->setFont(font);
 
   font.setWeight(QFont::Light);
@@ -335,8 +337,7 @@ void QToasterBrowserLCD::setFonts()
   ui->delayEdit->setFont(font);
   ui->reverbEdit->setFont(font);
 
-
-  font.setWeight(QFont::DemiBold);
+  font.setWeight(QFont::Bold);
   font.setPixelSize(22);
   font.setStretch(QFont::Unstretched);
   ui->rigNameEdit->setFont(font);
