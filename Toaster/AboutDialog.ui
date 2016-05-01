@@ -6,9 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>301</height>
+    <width>514</width>
+    <height>324</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>514</width>
+    <height>324</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>514</width>
+    <height>324</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>About Toaster</string>
@@ -92,7 +110,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit_2">
+        <widget class="QPlainTextEdit" name="disclaimerTextEdit">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -119,13 +137,13 @@ If not, see &lt;http://www.gnu.org/licenses/&gt;.</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="creditsTab">
+     <widget class="QWidget" name="copyrightsTab">
       <attribute name="title">
        <string>3rd Party Copyrights</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="QPlainTextEdit" name="plainTextEdit">
+        <widget class="QPlainTextEdit" name="copyrightsTextEdit">
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
          </property>
@@ -135,46 +153,49 @@ If not, see &lt;http://www.gnu.org/licenses/&gt;.</string>
          <property name="plainText">
           <string>Toaster uses:
 
-  * Qt 5.4.2 (dynamically linked)
-     Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
-     Qt library is used under the terms of GNU LESSER GENERAL PUBLIC LICENSE 2.1.
-     https://opensource.org/licenses/LGPL-2.1
+  * Qt 5.6 (dynamically linked)
+     Copyright (C) 2015 Digia Plc and/or its subsidiary(-ies).
+     Qt library is used under the terms of GNU LESSER GENERAL PUBLIC LICENSE 3.0
+     https://opensource.org/licenses/LGPL-3.0
 
-  * Ubuntu Font 0.83 (intalled)
+  * Ubuntu Font 0.83 (installed)
      Copyright 2010,2011 Canonical Ltd.
-     This Font Software is licensed under the Ubuntu Font Licence, Version1.0.  
+     This Font Software is licensed under the Ubuntu Font Licence, Version1.0
      https://launchpad.net/ubuntu-font-licence
 
   *  RtMidi 2.1.0 (built-in)
       Copyright (c) 2003-2014 Gary P. Scavone
-      https://www.music.mcgill.ca/~gary/rtmidi/
-===================================================
-RtMidi: realtime MIDI i/o C++ classes
-Copyright (c) 2003-2014 Gary P. Scavone
+      https://www.music.mcgill.ca/~gary/rtmidi/</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="acknowledgementsTab">
+      <attribute name="title">
+       <string>Acknowledgements</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QPlainTextEdit" name="acknowledgementsTextEdit">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="plainText">
+          <string>Knobs, buttons and the LCD display were created with JKnobMan,  Copyright (c)  g200kg
+http://www.g200kg.com/en/software/knobman.html
 
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation files
-(the &quot;Software&quot;), to deal in the Software without restriction,
-including without limitation the rights to use, copy, modify, merge,
-publish, distribute, sublicense, and/or sell copies of the Software,
-and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
+The chicken head knob is based on knob_67_black.knob
+http://www.g200kg.com/en/webknobman/get.php?t=bin&amp;n=402
+created by an unknown author, copyrighted under CC0 Public Domain:
+http://creativecommons.org/publicdomain/zero/1.0/
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+The skin was created with Inkscape https://inkscape.org/
 
-Any person wishing to distribute modifications to the Software is
-asked to send the modifications to the original developer so that
-they can be incorporated into the canonical version.  This is,
-however, not a binding provision of this license.
-
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
-CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
+The Windows setup was created with Inno Script Studio</string>
          </property>
         </widget>
        </item>
