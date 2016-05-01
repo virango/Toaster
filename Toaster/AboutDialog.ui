@@ -38,7 +38,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="versionTab">
       <attribute name="title">
@@ -193,9 +193,16 @@ http://www.g200kg.com/en/webknobman/get.php?t=bin&amp;n=402
 created by an unknown author, copyrighted under CC0 Public Domain:
 http://creativecommons.org/publicdomain/zero/1.0/
 
-The skin was created with Inkscape https://inkscape.org/
+The skin was created with Inkscape 
+https://inkscape.org/
 
-The Windows setup was created with Inno Script Studio</string>
+The Windows setup was created with Inno Setup 
+http://www.jrsoftware.org/isdl.php
+and Inno Script Studio
+https://www.kymoto.org/products/inno-script-studio/downloads
+
+The Mac OS X setup was created with Packages
+http://s.sudre.free.fr/Software/Packages/about.html</string>
          </property>
         </widget>
        </item>
