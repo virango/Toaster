@@ -3,7 +3,7 @@
 
 [Setup]
 AppName=Toaster
-AppVersion=1.0.98 ALPHA
+AppVersion=1.0.100 ALPHA
 AppCopyright=Thomas Langer
 DefaultDirName={pf}\Toaster
 AppPublisher=Thomas Langer
@@ -11,7 +11,7 @@ AppUpdatesURL=https://github.com/virango/Toaster/releases
 DefaultGroupName=Toaster
 LicenseFile=..\Licences\gpl-3.0.txt
 OutputDir=.\
-OutputBaseFilename=Toaster32_Setup_1.0.98_ALPHA
+OutputBaseFilename=Toaster32_Setup_1.0.100_ALPHA
 VersionInfoVersion=1.0.0.0
 
 [Files]
