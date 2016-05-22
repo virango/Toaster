@@ -24,8 +24,8 @@
 #define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 4px;"
 #define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 4px;"
 #elif defined(Q_WS_X11)
-#define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 2px;"
-#define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 2px;"
+#define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 4px;"
+#define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;padding-bottom: 4px;"
 #else
 #define ENABLED "background-color: rgb(50,50,50);%1;border-color: rgb(0, 0, 0);border-radius: 3px;"
 #define DISABLED "background-color: rgb(128,128,128);%1;border-color: rgb(0, 0, 0);border-radius: 3px;"

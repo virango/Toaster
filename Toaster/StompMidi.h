@@ -32,6 +32,8 @@ protected:
   BYTEARRAYDECL(AddressPageD)
   BYTEARRAYDECL(AddressPageX)
   BYTEARRAYDECL(AddressPageMOD)
+  BYTEARRAYDECL(AddressPageDelay)
+
   // parameter
   BYTEARRAYDECL(Type)
   BYTEARRAYDECL(OnOff)
@@ -95,6 +97,14 @@ protected:
   BYTEARRAYDECL(FormantShift)
   BYTEARRAYDECL(LowCut)
   BYTEARRAYDECL(HighCut)
+  BYTEARRAYDECL(DelayMix)
+  BYTEARRAYDECL(Delay1Time)
+  BYTEARRAYDECL(Delay2Ratio)
+  BYTEARRAYDECL(DelayNoteValue1)
+  BYTEARRAYDECL(DelayNoteValue2)
+  BYTEARRAYDECL(DelayFeedback)
+  BYTEARRAYDECL(DelayToTempo)
+  BYTEARRAYDECL(DelayModulation)
 
   StompMidi(StompInstance instance);
   ~StompMidi();
@@ -290,7 +300,30 @@ protected:
   // HighCut
   void midiRequestHighCut();
   void midiApplyHighCut(unsigned short rawVal);
-
+  // DelayMix
+  void midiRequestDelayMix();
+  void midiApplyDelayMix(unsigned short rawVal);
+  // Delay1Time
+  void midiRequestDelay1Time();
+  void midiApplyDelay1Time(unsigned short rawVal);
+  // Delay2Ratio
+  void midiRequestDelay2Ratio();
+  void midiApplyDelay2Ratio(unsigned short rawVal);
+  // DelayNoteValue1
+  void midiRequestDelayNoteValue1();
+  void midiApplyDelayNoteValue1(unsigned short rawVal);
+  // DelayNoteValue2
+  void midiRequestDelayNoteValue2();
+  void midiApplyDelayNoteValue2(unsigned short rawVal);
+  // DelayFeedback
+  void midiRequestDelayFeedback();
+  void midiApplyDelayFeedback(unsigned short rawVal);
+  // DelayToTempo
+  void midiRequestDelayToTempo();
+  void midiApplyDelayToTempo(unsigned short rawVal);
+  // DelayModulation
+  void midiRequestDelayModulation();
+  void midiApplyDelayModulation(unsigned short rawVal);
 
   // receive callbacks for derived class
   virtual void midiTypeReceived(unsigned short rawVal) = 0;
@@ -355,6 +388,14 @@ protected:
   virtual void midiFormantShiftReceived(unsigned short rawVal) = 0;
   virtual void midiLowCutReceived(unsigned short rawVal) = 0;
   virtual void midiHighCutReceived(unsigned short rawVal) = 0;
+  virtual void midiDelayMixReceived(unsigned short rawVal) = 0;
+  virtual void midiDelay1TimeReceived(unsigned short rawVal) = 0;
+  virtual void midiDelay2RatioReceived(unsigned short rawVal) = 0;
+  virtual void midiDelayNoteValue1Received(unsigned short rawVal) = 0;
+  virtual void midiDelayNoteValue2Received(unsigned short rawVal) = 0;
+  virtual void midiDelayFeedbackReceived(unsigned short rawVal) = 0;
+  virtual void midiDelayToTempoReceived(unsigned short rawVal) = 0;
+  virtual void midiDelayModulationReceived(unsigned short rawVal) = 0;
 
   StompInstance mInstance;
 
@@ -410,6 +451,7 @@ protected:
       (*this)[Flanger] =                0x59;
       (*this)[FlangerOneway] =          0x5B;
       (*this)[Space] =                  0x40;
+      (*this)[LegacyDelay] =            0x91;
       (*this)[Transpose] =              0x81;
       (*this)[PedalPitch] =             0x0B;
       (*this)[PedalVinylStop] =         0x0D;
@@ -475,6 +517,7 @@ protected:
       (*this)[0x59] = Flanger;
       (*this)[0x5B] = FlangerOneway;
       (*this)[0x40] = Space;
+      (*this)[0x91] = LegacyDelay;
       (*this)[0x81] = Transpose;
       (*this)[0x0B] = PedalPitch;
       (*this)[0x0D] = PedalVinylStop;

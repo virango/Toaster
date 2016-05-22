@@ -14,7 +14,7 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>44</number>
+   <number>45</number>
   </property>
   <widget class="DummyStompFrame" name="dummyStomp"/>
   <widget class="WahWahFrame" name="wahWah"/>
@@ -61,6 +61,7 @@
   <widget class="CabFrame" name="cab"/>
   <widget class="OutputFrame" name="output"/>
   <widget class="InputFrame" name="input"/>
+  <widget class="LegacyDelayFrame" name="legacyDelay"/>
  </widget>
  <customwidgets>
   <customwidget>
@@ -331,6 +332,12 @@
    <class>InputFrame</class>
    <extends>QWidget</extends>
    <header>InputFrame.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LegacyDelayFrame</class>
+   <extends>QWidget</extends>
+   <header>LegacyDelayFrame.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -51,6 +51,8 @@ public:
   QString unit() const { return mUnit; }
   bool isActive() const { return mIsActive; }
 
+  const QString& valueText() const { return mCurrValueText; }
+
   void setLookUpTable(QVector<QPair<int, QString> >* lookUpTable);
 
 signals:

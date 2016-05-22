@@ -57,6 +57,7 @@ public:
   int precision() const { return mPrecision; }
   QString unit() const { return mUnit; }
   bool isActive() const { return mIsActive; }
+  const QString& valueText() const { return mCurrValueText; }
 
 signals:
   void valueChanged(double);

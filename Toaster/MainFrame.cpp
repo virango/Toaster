@@ -50,8 +50,8 @@ MainFrame::MainFrame(QWidget *parent)
   ui->rigVolumeDial->setLookUpTable(LookUpTables::getRigVolumeValues());
   ui->monitorVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
-  ui->delayMixDial->setLookUpTable(LookUpTables::getMixValues());
-  ui->reverbMixDial->setLookUpTable(LookUpTables::getMixValues());
+  ui->delayMixDial->setLookUpTable(LookUpTables::getMixValuesV4());
+  ui->reverbMixDial->setLookUpTable(LookUpTables::getMixValuesV4());
   ui->masterVolumeDBDial->setLookUpTable(LookUpTables::getMainVolumeValues());
 
   // notifications
@@ -768,6 +768,7 @@ void MainFrame::setStompLedColor(::FXType type, QMultiColorLed* ledWidget)
       ledWidget->setColor(QMultiColorLed::Purple);
       break;
     case Space:
+    case LegacyDelay:
       ledWidget->setColor(QMultiColorLed::Green);
       break;
     case Transpose:

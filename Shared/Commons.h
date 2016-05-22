@@ -88,6 +88,7 @@ enum FXType
   FlangerOneway,          // FLA      0x5B
 //-----green----------------------
   Space,                  // SPCE     0x40
+  LegacyDelay,            // LDLY     0x91
 //-----white----------------------
   Transpose,              // TRP      0x81
   PedalPitch,             // PPTC     0x0B
@@ -169,7 +170,8 @@ enum StompInstance
   StompC,
   StompD,
   StompX,
-  StompMOD
+  StompMOD,
+  StompDelay
 };
 
 struct FXDefinition

@@ -91,6 +91,14 @@ public:
   void requestFormantShift() { midiRequestFormantShift(); }
   void requestLowCut() { midiRequestLowCut(); }
   void requestHighCut() { midiRequestHighCut(); }
+  void requestDelayMix() { midiRequestDelayMix(); }
+  void requestDelay1Time() { midiRequestDelay1Time(); }
+  void requestDelay2Ratio() { midiRequestDelay2Ratio(); }
+  void requestDelayNoteValue1() { midiRequestDelayNoteValue1(); }
+  void requestDelayNoteValue2() { midiRequestDelayNoteValue2(); }
+  void requestDelayFeedback() { midiRequestDelayFeedback(); }
+  void requestDelayToTempo() { midiRequestDelayToTempo(); }
+  void requestDelayModulation() { midiRequestDelayModulation(); }
 
   ::FXType getFXType() const { return mFXType; }
 
@@ -159,6 +167,14 @@ signals:
   void formantShiftReceived(double shift);
   void lowCutReceived(int lowCut);
   void highCutReceived(int highCut);
+  void delayMixReceived(int mix);
+  void delay1TimeReceived(double time);
+  void delay2RatioReceived(double ratio);
+  void delayNoteValue1Received(int noteValue);
+  void delayNoteValue2Received(int noteValue);
+  void delayFeedbackReceived(double feedback);
+  void delayToTempoReceived(int toTempo);
+  void delayModulationReceived(double modulation);
   
 public slots:
   void applyOnOff(bool onOff);
@@ -225,6 +241,14 @@ public slots:
   void applyFormantShift(double shift);
   void applyLowCut(int lowCut);
   void applyHighCut(int highCut);
+  void applyDelayMix(int mix);
+  void applyDelay1Time(double time);
+  void applyDelay2Ratio(double ratio);
+  void applyDelayNoteValue1(int noteValue);
+  void applyDelayNoteValue2(int noteValue);
+  void applyDelayFeedback(double feedback);
+  void applyDelayToTempo(int toTempo);
+  void applyDelayModulation(double modulation);
   
 protected:
   // StompMidi
@@ -290,6 +314,14 @@ protected:
   virtual void midiFormantShiftReceived(unsigned short rawVal);
   virtual void midiLowCutReceived(unsigned short rawVal);
   virtual void midiHighCutReceived(unsigned short rawVal);
+  virtual void midiDelayMixReceived(unsigned short rawVal);
+  virtual void midiDelay1TimeReceived(unsigned short rawVal);
+  virtual void midiDelay2RatioReceived(unsigned short rawVal);
+  virtual void midiDelayNoteValue1Received(unsigned short rawVal);
+  virtual void midiDelayNoteValue2Received(unsigned short rawVal);
+  virtual void midiDelayFeedbackReceived(unsigned short rawVal);
+  virtual void midiDelayToTempoReceived(unsigned short rawVal);
+  virtual void midiDelayModulationReceived(unsigned short rawVal);
 
   FXType mFXType;
 

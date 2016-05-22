@@ -19,7 +19,7 @@
 
 SpaceFrame::SpaceFrame(QWidget *parent)
   : QWidget(parent)
-,   ui(new Ui::SpaceFrame)
+  , ui(new Ui::SpaceFrame)
   , mpStomp(nullptr)
   , mFXType(None)
 {

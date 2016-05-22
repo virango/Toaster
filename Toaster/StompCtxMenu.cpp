@@ -266,6 +266,9 @@ void StompCtxMenu::createDelayReverbMenu()
 
   QAction* action = mDelayReverbMenu.addAction("Space");
   action->setData(QVariant((unsigned int)Space));
+
+  action = mDelayReverbMenu.addAction("Legacy Delay");
+  action->setData(QVariant((unsigned int)LegacyDelay));
 }
 
 

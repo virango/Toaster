@@ -347,12 +347,52 @@ void Stomp::applyFormantShift(double shift)
 
 void Stomp::applyLowCut(int lowCut)
 {
-  midiApplyLowCut((unsigned int)lowCut);
+  midiApplyLowCut((unsigned short)lowCut);
 }
 
 void Stomp::applyHighCut(int highCut)
 {
   midiApplyHighCut((unsigned short)highCut);
+}
+
+void Stomp::applyDelayMix(int mix)
+{
+  midiApplyDelayMix((unsigned short)mix);
+}
+
+void Stomp::applyDelay1Time(double time)
+{
+  midiApplyDelay1Time(phys2Raw(time, 2000, 0));
+}
+
+void Stomp::applyDelay2Ratio(double ratio)
+{
+  midiApplyDelay2Ratio(phys2Raw(ratio, 100, 0));
+}
+
+void Stomp::applyDelayNoteValue1(int noteValue)
+{
+  midiApplyDelayNoteValue1((unsigned short)noteValue);
+}
+
+void Stomp::applyDelayNoteValue2(int noteValue)
+{
+  midiApplyDelayNoteValue2((unsigned short)noteValue);
+}
+
+void Stomp::applyDelayFeedback(double feedback)
+{
+  midiApplyDelayFeedback(phys2Raw(feedback, 100, 0));
+}
+
+void Stomp::applyDelayToTempo(int toTempo)
+{
+  midiApplyDelayToTempo((unsigned short)toTempo);
+}
+
+void Stomp::applyDelayModulation(double modulation)
+{
+  midiApplyDelayModulation(phys2Raw(modulation, 10, 0));
 }
 
 // StompMidi callbacks
@@ -671,4 +711,42 @@ void Stomp::midiHighCutReceived(unsigned short rawVal)
   emit highCutReceived((int)rawVal);
 }
 
+void Stomp::midiDelayMixReceived(unsigned short rawVal)
+{
+  emit delayMixReceived((int)rawVal);
+}
 
+void Stomp::midiDelay1TimeReceived(unsigned short rawVal)
+{
+  emit delay1TimeReceived(raw2Phys(rawVal, 2000, 0));
+}
+
+void Stomp::midiDelay2RatioReceived(unsigned short rawVal)
+{
+  emit delay2RatioReceived(raw2Phys(rawVal, 100, 0));
+}
+
+void Stomp::midiDelayNoteValue1Received(unsigned short rawVal)
+{
+  emit delayNoteValue1Received((int)rawVal);
+}
+
+void Stomp::midiDelayNoteValue2Received(unsigned short rawVal)
+{
+  emit delayNoteValue2Received((int)rawVal);
+}
+
+void Stomp::midiDelayFeedbackReceived(unsigned short rawVal)
+{
+  emit delayFeedbackReceived(raw2Phys(rawVal, 100, 0));
+}
+
+void Stomp::midiDelayToTempoReceived(unsigned short rawVal)
+{
+  emit delayToTempoReceived((int)rawVal);
+}
+
+void Stomp::midiDelayModulationReceived(unsigned short rawVal)
+{
+  emit delayModulationReceived(raw2Phys(rawVal, 10, 0));
+}

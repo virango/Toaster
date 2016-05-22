@@ -24,6 +24,8 @@ BYTEARRAYDEF(StompMidi, AddressPageC,                         0x34)
 BYTEARRAYDEF(StompMidi, AddressPageD,                         0x35)
 BYTEARRAYDEF(StompMidi, AddressPageX,                         0x38)
 BYTEARRAYDEF(StompMidi, AddressPageMOD,                       0x3A)
+BYTEARRAYDEF(StompMidi, AddressPageDelay,                     0x3C)
+
 // parameter
 BYTEARRAYDEF(StompMidi, Type,                                 0x00)
 BYTEARRAYDEF(StompMidi, OnOff,                                0x03)
@@ -37,8 +39,8 @@ BYTEARRAYDEF(StompMidi, WahPedalMode,                         0x0C)
 BYTEARRAYDEF(StompMidi, WahTouchAttack,                       0x0D)
 BYTEARRAYDEF(StompMidi, WahTouchRelease,                      0x0E)
 BYTEARRAYDEF(StompMidi, WahTouchBoost,                        0x0F)
-BYTEARRAYDEF(StompMidi, DistortionShaperDrive,                0x10)
-BYTEARRAYDEF(StompMidi, DistortionBoosterTone,                0x11)
+BYTEARRAYDEF(StompMidi, DistortionShaperDrive,                0x10) // also for legacy delay bandwidth
+BYTEARRAYDEF(StompMidi, DistortionBoosterTone,                0x11) // also for legacy delay frequency
 BYTEARRAYDEF(StompMidi, CompressorGateIntensity,              0x12)
 BYTEARRAYDEF(StompMidi, CompressorAttack,                     0x13)
 BYTEARRAYDEF(StompMidi, ModulationRate,                       0x14) // also for stereo widener tune
@@ -87,6 +89,14 @@ BYTEARRAYDEF(StompMidi, FormantShiftOnOff,                    0x41)
 BYTEARRAYDEF(StompMidi, FormantShift,                         0x42)
 BYTEARRAYDEF(StompMidi, LowCut,                               0x43)
 BYTEARRAYDEF(StompMidi, HighCut,                              0x44)
+BYTEARRAYDEF(StompMidi, DelayMix,                             0x45)
+BYTEARRAYDEF(StompMidi, Delay1Time,                           0x47)
+BYTEARRAYDEF(StompMidi, Delay2Ratio,                          0x49)
+BYTEARRAYDEF(StompMidi, DelayNoteValue1,                      0x4c)
+BYTEARRAYDEF(StompMidi, DelayNoteValue2,                      0x4d)
+BYTEARRAYDEF(StompMidi, DelayFeedback,                        0x5d)
+BYTEARRAYDEF(StompMidi, DelayToTempo,                         0x50)
+BYTEARRAYDEF(StompMidi, DelayModulation,                      0x65)
 
 StompMidi::FXType2MidiRawValMap StompMidi::sFXType2MidiRawValMap;
 StompMidi::MidiRawValMap2FXType StompMidi::sMidiRawValMap2FXType;
@@ -231,6 +241,22 @@ void StompMidi::consumeSysExMsg(ByteArray* msg)
       midiLowCutReceived(rawVal);
     else if(param == sHighCut[0])
       midiHighCutReceived(rawVal);
+    else if(param == sDelayMix[0])
+      midiDelayMixReceived(rawVal);
+    else if(param == sDelay1Time[0])
+      midiDelay1TimeReceived(rawVal);
+    else if(param == sDelay2Ratio[0])
+      midiDelay2RatioReceived(rawVal);
+    else if(param == sDelayNoteValue1[0])
+      midiDelayNoteValue1Received(rawVal);
+    else if(param == sDelayNoteValue2[0])
+      midiDelayNoteValue2Received(rawVal);
+    else if(param == sDelayFeedback[0])
+      midiDelayFeedbackReceived(rawVal);
+    else if(param == sDelayToTempo[0])
+      midiDelayToTempoReceived(rawVal);
+    else if(param == sDelayModulation[0])
+      midiDelayModulationReceived(rawVal);
   }
 }
 
@@ -863,6 +889,86 @@ void StompMidi::midiApplyHighCut(unsigned short rawVal)
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sHighCut, rawVal));
 }
 
+void StompMidi::midiRequestDelayMix()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sDelayMix));
+}
+
+void StompMidi::midiApplyDelayMix(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDelayMix, rawVal));
+}
+
+void StompMidi::midiRequestDelay1Time()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sDelay1Time));
+}
+
+void StompMidi::midiApplyDelay1Time(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDelay1Time, rawVal));
+}
+
+void StompMidi::midiRequestDelay2Ratio()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sDelay2Ratio));
+}
+
+void StompMidi::midiApplyDelay2Ratio(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDelay2Ratio, rawVal));
+}
+
+void StompMidi::midiRequestDelayNoteValue1()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sDelayNoteValue1));
+}
+
+void StompMidi::midiApplyDelayNoteValue1(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDelayNoteValue1, rawVal));
+}
+
+void StompMidi::midiRequestDelayNoteValue2()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sDelayNoteValue2));
+}
+
+void StompMidi::midiApplyDelayNoteValue2(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDelayNoteValue2, rawVal));
+}
+
+void StompMidi::midiRequestDelayFeedback()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sDelayFeedback));
+}
+
+void StompMidi::midiApplyDelayFeedback(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDelayFeedback, rawVal));
+}
+
+void StompMidi::midiRequestDelayToTempo()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sDelayToTempo));
+}
+
+void StompMidi::midiApplyDelayToTempo(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDelayToTempo, rawVal));
+}
+
+void StompMidi::midiRequestDelayModulation()
+{
+  Midi::get().sendCmd(createSingleParamGetCmd(getAddressPage(), sDelayModulation));
+}
+
+void StompMidi::midiApplyDelayModulation(unsigned short rawVal)
+{
+  Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDelayModulation, rawVal));
+}
+
 ByteArray StompMidi::getAddressPage()
 {
   switch(mInstance)
@@ -879,6 +985,8 @@ ByteArray StompMidi::getAddressPage()
       return sAddressPageX;
     case StompMOD:
       return sAddressPageMOD;
+    case StompDelay:
+      return sAddressPageDelay;
     default:
       return ByteArray();
   }

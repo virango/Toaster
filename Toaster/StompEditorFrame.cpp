@@ -350,6 +350,10 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
         mpActivePage = ui->loopDistortion;
         index = indexOf(ui->loopDistortion);
         break;
+      case LegacyDelay:
+        mpActivePage = ui->legacyDelay;
+        index = indexOf(ui->legacyDelay);
+        break;
       default:
         mpActivePage = ui->dummyStomp;
         index = indexOf(ui->dummyStomp);

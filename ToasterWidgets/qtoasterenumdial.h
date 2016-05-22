@@ -49,6 +49,8 @@ public:
   QStringList values() const { return mValues; }
   bool isActive() const { return mIsActive; }
 
+  const QString& valueText() const { return mCurrValueText; }
+
   unsigned int valueIndex() const { return mCurrValueIndex; }
 
 signals:

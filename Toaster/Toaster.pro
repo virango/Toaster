@@ -134,7 +134,9 @@ SOURCES += main.cpp\
     OutputFrame.cpp \ 
     MasterVolume.cpp \
     TapMidi.cpp \
-    Tap.cpp
+    Tap.cpp \
+    LegacyDelayFrame.cpp \
+    MixValuesV4.cpp
 
 macx:SOURCES_NOOPTIMIZE = MainVolumeValues.cpp \
     RotaryDistanceValues.cpp \
@@ -266,7 +268,9 @@ HEADERS  += ToasterWindow.h \
     OutputFrame.h \
     MasterVolume.h \
     TapMidi.h \
-    Tap.h
+    Tap.h \
+    LegacyDelayFrame.h \
+    MixValuesV4.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -323,7 +327,8 @@ FORMS    += \
     AmpFrame.ui \
     CabFrame.ui \
     InputFrame.ui \
-    OutputFrame.ui
+    OutputFrame.ui \
+    LegacyDelayFrame.ui
 
 RESOURCES += \
     resources.qrc
