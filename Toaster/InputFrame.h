@@ -4,7 +4,6 @@
 #include <QWidget>
 #include "StompEditorPage.h"
 #include "Input.h"
-#include "Global.h"
 
 namespace Ui {
 class InputFrame;
@@ -46,7 +45,6 @@ private slots:
 private:
   Ui::InputFrame *ui;
   Input* mpInput;
-  Global mGlobal;
 };
 
 #endif // INPUTFRAME_H

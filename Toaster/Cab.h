@@ -18,12 +18,13 @@
 #include <QObject>
 #include "CabMidi.h"
 
+#define cabObj Cab::get()
+
 class Cab : public QObject, public CabMidi
 {
   Q_OBJECT
 public:
-  Cab();
-  ~Cab();
+  static Cab& get();
 
   void requestAllValues();
   void requestOnOff() { midiRequestOnOff(); }
@@ -53,6 +54,10 @@ protected:
   void midiHighShiftReceived(unsigned short rawVal);
   void midiLowShiftReceived(unsigned short rawVal);
   void midiCharacterReceived(unsigned short rawVal);
+
+private:
+  Cab();
+  ~Cab();
 };
 
 #endif // CAB_H

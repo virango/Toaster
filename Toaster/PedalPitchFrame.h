@@ -18,7 +18,6 @@
 #include <QWidget>
 #include "StompEditorPage.h"
 #include "Stomp.h"
-#include "Global.h"
 
 namespace Ui {
 class PedalPitchFrame;
@@ -76,8 +75,6 @@ private:
   Ui::PedalPitchFrame *ui;
 
   Stomp* mpStomp;
-  Global mGlobal;
-
   FXType mFXType;
 };
 

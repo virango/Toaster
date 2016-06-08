@@ -17,11 +17,13 @@
 #define TUNER_H
 #include "TunerMidi.h"
 
+#define tunerObj Tuner::get()
+
 class Tuner : public QObject, public TunerMidi
 {
   Q_OBJECT
 public:
-  explicit Tuner(QObject *parent = 0);
+  static Tuner& get();
 
   void requestMuteSignal() { midiRequestMuteSignal(); }
 
@@ -36,6 +38,10 @@ public slots:
 protected:
   virtual void midiNoteReceived(unsigned short rawVal);
   virtual void midiMuteSignalReceived(unsigned short rawVal);
+
+private:
+  Tuner();
+  ~Tuner();
 };
 
 #endif // TUNER_H

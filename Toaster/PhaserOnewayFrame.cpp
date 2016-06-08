@@ -65,7 +65,7 @@ void PhaserOnewayFrame::activate(QObject& stomp)
     mpStomp->requestVolume();
     mpStomp->requestStereo();
 
-    if(mpStomp->getInstance() != StompX && mpStomp->getInstance() != StompMOD)
+    if(mpStomp->getInstance() != StompX && mpStomp->getInstance() != StompMod)
     {
       ui->stereoDial->setIsActive(false);
       ui->lcdDisplay->setValue7("");

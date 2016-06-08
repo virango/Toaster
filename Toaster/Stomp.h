@@ -20,15 +20,28 @@
 #include "StompMidi.h"
 #include "Commons.h"
 
+#define stompAObj Stomp::getA()
+#define stompBObj Stomp::getB()
+#define stompCObj Stomp::getC()
+#define stompDObj Stomp::getD()
+#define stompXObj Stomp::getX()
+#define stompModObj Stomp::getMod()
+#define stompDelayObj Stomp::getDelay()
+
 class Stomp : public QObject, public StompMidi
 {
   Q_OBJECT
 public:
-  Stomp(StompInstance instance);
-  ~Stomp();
+
+  static Stomp& getA();
+  static Stomp& getB();
+  static Stomp& getC();
+  static Stomp& getD();
+  static Stomp& getX();
+  static Stomp& getMod();
+  static Stomp& getDelay();
 
   void requestAllValues();
-
   void requestType() { midiRequestType(); }
   void requestOnOff() { midiRequestOnOff(); }
   void requestMix() { midiRequestMix(); }
@@ -327,6 +340,9 @@ protected:
 
   static FXDefinition sFXDefinitions[];
 
+private:
+  Stomp(StompInstance instance);
+  ~Stomp();
 };
 
 #endif // STOMP_H

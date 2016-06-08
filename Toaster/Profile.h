@@ -19,12 +19,13 @@
 #include <QObject>
 #include "ProfileMidi.h"
 
+#define profileObj Profile::get()
+
 class Profile : public QObject, public ProfileMidi
 {
   Q_OBJECT
 public:
-  explicit Profile(QObject *parent = 0);
-  ~Profile();
+  static Profile& get();
 
   void requestAllValues();
   void requestRigName() { midiRequestRigName(); }
@@ -71,6 +72,10 @@ protected:
   virtual void midiAmpDateReceived(const QString& ampDate);
   virtual void midiAmpTimeReceived(const QString& ampTime);
   virtual void midiCabNameReceived(const QString& cabName);
+
+private:
+  Profile();
+  ~Profile();
 };
 
 #endif // PROFILE_H

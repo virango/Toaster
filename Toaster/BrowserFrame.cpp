@@ -15,47 +15,47 @@
 */
 #include "BrowserFrame.h"
 #include "ui_BrowserFrame.h"
+#include "Delay.h"
+#include "Eq.h"
+#include "ExtParam.h"
+#include "Profile.h"
+#include "Stomp.h"
+#include "Reverb.h"
 
 BrowserFrame::BrowserFrame(QWidget *parent)
   : QFrame(parent)
   , ui(new Ui::BrowserFrame)
-  , mStompA(StompA)
-  , mStompB(StompB)
-  , mStompC(StompC)
-  , mStompD(StompD)
-  , mStompX(StompX)
-  , mStompMod(StompMOD)
 {
   ui->setupUi(this);
   ui->browseModeDial->setValues(ui->lcdDisplay->getBrowserModeViews());
   // stomps
-  connect(&mStompA, SIGNAL(onOffReceived(bool)), this, SLOT(onStompAOnOff(bool)));
-  connect(&mStompB, SIGNAL(onOffReceived(bool)), this, SLOT(onStompBOnOff(bool)));
-  connect(&mStompC, SIGNAL(onOffReceived(bool)), this, SLOT(onStompCOnOff(bool)));
-  connect(&mStompD, SIGNAL(onOffReceived(bool)), this, SLOT(onStompDOnOff(bool)));
-  connect(&mStompX, SIGNAL(onOffReceived(bool)), this, SLOT(onStompXOnOff(bool)));
-  connect(&mStompMod, SIGNAL(onOffReceived(bool)), this, SLOT(onStompModOnOff(bool)));
-  connect(&mStompA, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompAType(::FXType)));
-  connect(&mStompB, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompBType(::FXType)));
-  connect(&mStompC, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompCType(::FXType)));
-  connect(&mStompD, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompDType(::FXType)));
-  connect(&mStompX, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompXType(::FXType)));
-  connect(&mStompMod, SIGNAL(typeReceived(::FXType)), this, SLOT(onStompModType(::FXType)));
+  connect(&stompAObj, &Stomp::onOffReceived, this, &BrowserFrame::onStompAOnOff);
+  connect(&stompBObj, &Stomp::onOffReceived, this, &BrowserFrame::onStompBOnOff);
+  connect(&stompCObj, &Stomp::onOffReceived, this, &BrowserFrame::onStompCOnOff);
+  connect(&stompDObj, &Stomp::onOffReceived, this, &BrowserFrame::onStompDOnOff);
+  connect(&stompXObj, &Stomp::onOffReceived, this, &BrowserFrame::onStompXOnOff);
+  connect(&stompModObj, &Stomp::onOffReceived, this, &BrowserFrame::onStompModOnOff);
+  connect(&stompAObj, &Stomp::typeReceived, this, &BrowserFrame::onStompAType);
+  connect(&stompBObj, &Stomp::typeReceived, this, &BrowserFrame::onStompBType);
+  connect(&stompCObj, &Stomp::typeReceived, this, &BrowserFrame::onStompCType);
+  connect(&stompDObj, &Stomp::typeReceived, this, &BrowserFrame::onStompDType);
+  connect(&stompXObj, &Stomp::typeReceived, this, &BrowserFrame::onStompXType);
+  connect(&stompModObj, &Stomp::typeReceived, this, &BrowserFrame::onStompModType);
   // delay
-  connect(&mDelay, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onDelayOnOff(bool)));
+  connect(&delayObj, &Delay::onOffCutsTailReceived, this, &BrowserFrame::onDelayOnOff);
   // reverb
-  connect(&mReverb, SIGNAL(onOffCutsTailReceived(bool)), this, SLOT(onReverbOnOff(bool)));
+  connect(&reverbObj, &Reverb::onOffCutsTailReceived, this, &BrowserFrame::onReverbOnOff);
   // eq
-  connect(&mEq, SIGNAL(bassReceived(double)), this, SLOT(onEqBass(double)));
-  connect(&mEq, SIGNAL(middleReceived(double)), this, SLOT(onEqMiddle(double)));
-  connect(&mEq, SIGNAL(trebleReceived(double)), this, SLOT(onEqTreble(double)));
-  connect(&mEq, SIGNAL(presenceReceived(double)), this, SLOT(onEqPresence(double)));
+  connect(&eqObj, &Eq::bassReceived, this, &BrowserFrame::onEqBass);
+  connect(&eqObj, &Eq::middleReceived, this, &BrowserFrame::onEqMiddle);
+  connect(&eqObj, &Eq::trebleReceived, this, &BrowserFrame::onEqTreble);
+  connect(&eqObj, &Eq::presenceReceived, this, &BrowserFrame::onEqPresence);
   // profile
-  connect(&mProfile, SIGNAL(rigNameReceived(const QString&)), this, SLOT(onRigName(const QString&)));
-  connect(&mProfile, SIGNAL(rigAuthorReceived(const QString&)), this, SLOT(onRigAuthor(const QString&)));
-  connect(&mProfile, SIGNAL(ampNameReceived(const QString&)), this, SLOT(onAmpName(const QString&)));
+  connect(&profileObj, &Profile::rigNameReceived, this, &BrowserFrame::onRigName);
+  connect(&profileObj, &Profile::rigAuthorReceived, this, &BrowserFrame::onRigAuthor);
+  connect(&profileObj, &Profile::ampNameReceived, this, &BrowserFrame::onAmpName);
   // extended parameter
-  connect(&mExtParam, SIGNAL(browserViewReceived(uint)), this, SLOT(onBrowserView(uint)));
+  connect(&extParamObj, &ExtParam::browserViewReceived, this, &BrowserFrame::onBrowserView);
 }
 
 BrowserFrame::~BrowserFrame()
@@ -65,7 +65,7 @@ BrowserFrame::~BrowserFrame()
 
 void BrowserFrame::requestValues()
 {
-  mExtParam.requestAllValues();
+  extParamObj.requestAllValues();
 }
 
 //------------------------------------------------------------------------------------------
@@ -156,7 +156,7 @@ void BrowserFrame::onReverbOnOff(bool onOff)
 // ui => kpa
 void BrowserFrame::on_eqBassDial_valueChanged(double value)
 {
-  mEq.applyBass(value);
+  eqObj.applyBass(value);
 }
 
 void BrowserFrame::on_eqBassDial_valueChanged(const QString &value)
@@ -166,7 +166,7 @@ void BrowserFrame::on_eqBassDial_valueChanged(const QString &value)
 
 void BrowserFrame::on_eqMiddleDial_valueChanged(double value)
 {
-  mEq.applyMiddle(value);
+  eqObj.applyMiddle(value);
 }
 
 void BrowserFrame::on_eqMiddleDial_valueChanged(const QString &value)
@@ -176,7 +176,7 @@ void BrowserFrame::on_eqMiddleDial_valueChanged(const QString &value)
 
 void BrowserFrame::on_eqTrebleDial_valueChanged(double value)
 {
-  mEq.applyTreble(value);
+  eqObj.applyTreble(value);
 }
 
 void BrowserFrame::on_eqTrebleDial_valueChanged(const QString &value)
@@ -186,7 +186,7 @@ void BrowserFrame::on_eqTrebleDial_valueChanged(const QString &value)
 
 void BrowserFrame::on_eqPresenceDial_valueChanged(double value)
 {
-  mEq.applyPresence(value);
+  eqObj.applyPresence(value);
 }
 
 void BrowserFrame::on_eqPresenceDial_valueChanged(const QString &value)
@@ -243,7 +243,7 @@ void BrowserFrame::onAmpName(const QString& ampName)
 // ui => kpa
 void BrowserFrame::on_browseModeDial_valueChanged(int view)
 {
-  mExtParam.applyBrowserView(view);
+  extParamObj.applyBrowserView(view);
 }
 
 // kpa => ui

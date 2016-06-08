@@ -16,7 +16,7 @@
 #ifndef QMULTICOLORLEDPLUGIN_H
 #define QMULTICOLORLEDPLUGIN_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class QMultiColorLedPlugin : public QObject, public QDesignerCustomWidgetInterface
 {

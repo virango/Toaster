@@ -23,6 +23,12 @@ Rig::~Rig()
 {
 }
 
+Rig& Rig::get()
+{
+  static Rig rig;
+  return rig;
+}
+
 void Rig::requestAllValues()
 {
   midiRequestTempo();

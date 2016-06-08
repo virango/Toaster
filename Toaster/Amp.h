@@ -19,12 +19,13 @@
 #include <QObject>
 #include "AmpMidi.h"
 
+#define ampObj Amp::get()
+
 class Amp : public QObject, public AmpMidi
 {
   Q_OBJECT
 public:
-  Amp();
-  ~Amp();
+  static Amp& get();
 
   void requestAllValues();
   void requestOnOff() { midiRequestOnOff(); }
@@ -74,6 +75,10 @@ protected:
   virtual void midiTubeShapeReceived(unsigned short rawVal);
   virtual void midiTubeBiasReceived(unsigned short rawVal);
   virtual void midiDirectMixReceived(unsigned short rawVal);
+
+private:
+  Amp();
+  ~Amp();
 };
 
 #endif // AMP_H

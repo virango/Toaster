@@ -17,7 +17,6 @@
 #define MASTERVOLUME_H
 
 #include <QObject>
-#include "Global.h"
 
 class MasterVolume : public QObject
 {
@@ -63,8 +62,6 @@ private:
   int noOfLinks();
 
   static MasterVolume mThis;
-
-  Global mGlobal;
 
   bool mMainOutputLink;
   bool mMonitorOutputLink;

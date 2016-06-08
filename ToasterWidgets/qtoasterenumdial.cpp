@@ -29,6 +29,8 @@ QList<QPixmap> QToasterEnumDial::sBiLEDRingSkinPixmaps;
 
 QToasterEnumDial::QToasterEnumDial(QWidget *parent)
   : QWidget(parent)
+  , mKnobSkinPixmaps(&sBigKnobSkinPixmaps)
+  , mLEDRingSkinPixmaps(&sUniLEDRingSkinPixmaps)
   , mCurrKnobFrameNo(0)
   , mCurrLEDRingFrameNo(0)
   , mKnobSize(Big)
@@ -37,8 +39,6 @@ QToasterEnumDial::QToasterEnumDial(QWidget *parent)
   , mCurrValueIndex(0)
   , mCurrValueText("")
   , mIsActive(true)
-  , mKnobSkinPixmaps(&sBigKnobSkinPixmaps)
-  , mLEDRingSkinPixmaps(&sUniLEDRingSkinPixmaps)
 {
   createKnobSkin();
   createLEDRingSkin();

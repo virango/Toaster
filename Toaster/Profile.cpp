@@ -15,14 +15,18 @@
 */
 #include "Profile.h"
 
-Profile::Profile(QObject *parent) : QObject(parent)
+Profile::Profile()
 {
-
 }
 
 Profile::~Profile()
 {
+}
 
+Profile& Profile::get()
+{
+  static Profile profile;
+  return profile;
 }
 
 void Profile::requestAllValues()

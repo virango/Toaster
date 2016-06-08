@@ -19,12 +19,13 @@
 #include <QObject>
 #include "ReverbMidi.h"
 
+#define reverbObj Reverb::get()
+
 class Reverb : public QObject, public ReverbMidi
 {
   Q_OBJECT
 public:
-  Reverb();
-  ~Reverb();
+  static Reverb& get();
 
   void requestAllValues();
   void requestType() { midiRequestType(); }
@@ -86,6 +87,10 @@ protected:
   virtual void midiDuckingReceived(unsigned short rawVal);
 
   ReverbType mReverbType;
+
+private:
+  Reverb();
+  ~Reverb();
 };
 
 #endif // REVERB_H

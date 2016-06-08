@@ -140,3 +140,8 @@ void Settings::setMasterVolume(int volume)
 {
   setValue("MasterOutput/Volume", QVariant(volume));
 }
+
+unsigned int Settings::getKPAOSVersion()
+{
+  return 0x04000200;
+}

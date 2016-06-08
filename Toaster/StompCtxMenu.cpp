@@ -16,6 +16,7 @@
 #include <QMenu>
 #include "Stomp.h"
 #include "StompCtxMenu.h"
+#include "Settings.h"
 
 StompCtxMenu::StompCtxMenu(Stomp& stomp)
   : mStomp(stomp)
@@ -267,10 +268,12 @@ void StompCtxMenu::createDelayReverbMenu()
   QAction* action = mDelayReverbMenu.addAction("Space");
   action->setData(QVariant((unsigned int)Space));
 
-  action = mDelayReverbMenu.addAction("Legacy Delay");
-  action->setData(QVariant((unsigned int)LegacyDelay));
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    action = mDelayReverbMenu.addAction("Legacy Delay");
+    action->setData(QVariant((unsigned int)LegacyDelay));
+  }
 }
-
 
 void StompCtxMenu::setType(QAction* action)
 {

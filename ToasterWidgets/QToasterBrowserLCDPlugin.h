@@ -16,7 +16,7 @@
 #ifndef QTOASTERBROWSERLCDPLUGIN_H
 #define QTOASTERBROWSERLCDPLUGIN_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class QToasterBrowserLCDPlugin : public QObject, public QDesignerCustomWidgetInterface
 {

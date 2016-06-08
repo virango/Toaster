@@ -15,15 +15,18 @@
 */
 #include "ExtParam.h"
 
-ExtParam::ExtParam(QObject *parent)
-  : QObject(parent)
+ExtParam::ExtParam()
 {
-
 }
 
 ExtParam::~ExtParam()
 {
+}
 
+ExtParam& ExtParam::get()
+{
+  static ExtParam extParam;
+  return extParam;
 }
 
 void ExtParam::requestAllValues()
@@ -41,4 +44,3 @@ void ExtParam::midiBrowserViewReceived(unsigned int rawVal)
 {
   emit browserViewReceived(rawVal);
 }
-

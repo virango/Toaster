@@ -293,6 +293,7 @@ public slots:
   void setStompDFXType(FXType fxType);
   void setStompXFXType(FXType fxType);
   void setStompModFXType(FXType fxType);
+  void setStompDelayFXType(FXType fxType);
 
   void setStompEnabled(StompInstance stompInstance, bool enabled);
   void setStompAEnabled(bool enabled);

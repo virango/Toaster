@@ -14,29 +14,36 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "MainFrame.h"
+#include "Stomp.h"
+#include "Amp.h"
 #include "ui_MainFrame.h"
 #include "DebugMidi.h"
 #include "StompEditorPage.h"
 #include "StompEditorFrame.h"
 #include "MasterVolume.h"
+#include "Settings.h"
+#include "Delay.h"
+#include "Eq.h"
+#include "Cab.h"
+#include "Global.h"
+#include "Rig.h"
+#include "Input.h"
+#include "Reverb.h"
+#include "Profile.h"
+#include "Tap.h"
 
 MainFrame::MainFrame(QWidget *parent)
   : QFrame(parent)
   , ui(new Ui::MainFrame)
-  , mStompA(StompA)
-  , mStompB(StompB)
-  , mStompC(StompC)
-  , mStompD(StompD)
-  , mStompX(StompX)
-  , mStompMod(StompMOD)
-  , mStompACtxMenu(mStompA)
-  , mStompBCtxMenu(mStompB)
-  , mStompCCtxMenu(mStompC)
-  , mStompDCtxMenu(mStompD)
-  , mStompXCtxMenu(mStompX)
-  , mStompModCtxMenu(mStompMod)
-  , mDelayCtxMenu(mDelay)
-  , mReverbCtxMenu(mReverb)
+  , mStompACtxMenu(stompAObj)
+  , mStompBCtxMenu(stompBObj)
+  , mStompCCtxMenu(stompCObj)
+  , mStompDCtxMenu(stompDObj)
+  , mStompXCtxMenu(stompXObj)
+  , mStompModCtxMenu(stompModObj)
+  , mStompDelayCtxMenu(stompDelayObj)
+  , mDelayCtxMenu(delayObj)
+  , mReverbCtxMenu(reverbObj)
   , mOperationMode(Browser)
   , mPreviousOperationMode(Browser)
   , mEditModeButton(NULL)
@@ -50,59 +57,68 @@ MainFrame::MainFrame(QWidget *parent)
   ui->rigVolumeDial->setLookUpTable(LookUpTables::getRigVolumeValues());
   ui->monitorVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
-  ui->delayMixDial->setLookUpTable(LookUpTables::getMixValuesV4());
-  ui->reverbMixDial->setLookUpTable(LookUpTables::getMixValuesV4());
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    ui->delayMixDial->setLookUpTable(LookUpTables::getMixValuesV4());
+    ui->reverbMixDial->setLookUpTable(LookUpTables::getMixValuesV4());
+  }
+  else
+  {
+    ui->delayMixDial->setLookUpTable(LookUpTables::getMixValues());
+    ui->reverbMixDial->setLookUpTable(LookUpTables::getMixValues());
+  }
+
   ui->masterVolumeDBDial->setLookUpTable(LookUpTables::getMainVolumeValues());
 
   // notifications
   // stomps
   //qRegisterMetaType<::FXType>("::FXType");
-  connect(&mStompA, &Stomp::onOffReceived, this, &MainFrame::onStompAOnOff);
-  connect(&mStompB, &Stomp::onOffReceived, this, &MainFrame::onStompBOnOff);
-  connect(&mStompC, &Stomp::onOffReceived, this, &MainFrame::onStompCOnOff);
-  connect(&mStompD, &Stomp::onOffReceived, this, &MainFrame::onStompDOnOff);
-  connect(&mStompX, &Stomp::onOffReceived, this, &MainFrame::onStompXOnOff);
-  connect(&mStompMod, &Stomp::onOffReceived, this, &MainFrame::onStompModOnOff);
-  connect(&mStompA, &Stomp::typeReceived, this, &MainFrame::onStompAType);
-  connect(&mStompB, &Stomp::typeReceived, this, &MainFrame::onStompBType);
-  connect(&mStompC, &Stomp::typeReceived, this, &MainFrame::onStompCType);
-  connect(&mStompD, &Stomp::typeReceived, this, &MainFrame::onStompDType);
-  connect(&mStompX, &Stomp::typeReceived, this, &MainFrame::onStompXType);
-  connect(&mStompMod, &Stomp::typeReceived, this, &MainFrame::onStompModType);
-  connect(&mStompMod, static_cast<void (Stomp::*)(int)>(&Stomp::modulationRateReceived), this, &MainFrame::onModRate);
-  connect(&mStompMod, &Stomp::modulationDepthReceived, this, &MainFrame::onModIntensity);
+  connect(&stompAObj, &Stomp::onOffReceived, this, &MainFrame::onStompAOnOff);
+  connect(&stompBObj, &Stomp::onOffReceived, this, &MainFrame::onStompBOnOff);
+  connect(&stompCObj, &Stomp::onOffReceived, this, &MainFrame::onStompCOnOff);
+  connect(&stompDObj, &Stomp::onOffReceived, this, &MainFrame::onStompDOnOff);
+  connect(&stompXObj, &Stomp::onOffReceived, this, &MainFrame::onStompXOnOff);
+  connect(&stompModObj, &Stomp::onOffReceived, this, &MainFrame::onStompModOnOff);
+  connect(&stompAObj, &Stomp::typeReceived, this, &MainFrame::onStompAType);
+  connect(&stompBObj, &Stomp::typeReceived, this, &MainFrame::onStompBType);
+  connect(&stompCObj, &Stomp::typeReceived, this, &MainFrame::onStompCType);
+  connect(&stompDObj, &Stomp::typeReceived, this, &MainFrame::onStompDType);
+  connect(&stompXObj, &Stomp::typeReceived, this, &MainFrame::onStompXType);
+  connect(&stompModObj, &Stomp::typeReceived, this, &MainFrame::onStompModType);
+  connect(&stompModObj, static_cast<void (Stomp::*)(int)>(&Stomp::modulationRateReceived), this, &MainFrame::onModRate);
+  connect(&stompModObj, &Stomp::modulationDepthReceived, this, &MainFrame::onModIntensity);
   // delay
-  connect(&mDelay, &Delay::onOffCutsTailReceived, this, &MainFrame::onDelayOnOff);
-  connect(&mDelay, &Delay::feedbackReceived, this, &MainFrame::onDelayFeedback);
-  connect(&mDelay, &Delay::mixReceived, this, &MainFrame::onDelayMix);
+  connect(&delayObj, &Delay::onOffCutsTailReceived, this, &MainFrame::onDelayOnOff);
+  connect(&delayObj, &Delay::feedbackReceived, this, &MainFrame::onDelayFeedback);
+  connect(&delayObj, &Delay::mixReceived, this, &MainFrame::onDelayMix);
   // reverb
-  connect(&mReverb, &Reverb::onOffCutsTailReceived, this, &MainFrame::onReverbOnOff);
-  connect(&mReverb, &Reverb::timeReceived, this, &MainFrame::onReverbTime);
-  connect(&mReverb, &Reverb::mixReceived, this, &MainFrame::onReverbMix);
+  connect(&reverbObj, &Reverb::onOffCutsTailReceived, this, &MainFrame::onReverbOnOff);
+  connect(&reverbObj, &Reverb::timeReceived, this, &MainFrame::onReverbTime);
+  connect(&reverbObj, &Reverb::mixReceived, this, &MainFrame::onReverbMix);
   // amp
-  connect(&mAmp, &Amp::onOffReceived, this, &MainFrame::onAmpOnOff);
-  connect(&mAmp, &Amp::gainReceived, this, &MainFrame::onAmpGain);
+  connect(&ampObj, &Amp::onOffReceived, this, &MainFrame::onAmpOnOff);
+  connect(&ampObj, &Amp::gainReceived, this, &MainFrame::onAmpGain);
   // eq
-  connect(&mEq, &Eq::onOffReceived, this, &MainFrame::onEqOnOff);
+  connect(&eqObj, &Eq::onOffReceived, this, &MainFrame::onEqOnOff);
   // cab
-  connect(&mCab, &Cab::onOffReceived, this, &MainFrame::onCabOnOff);
+  connect(&cabObj, &Cab::onOffReceived, this, &MainFrame::onCabOnOff);
   // rig
-  //connect(&mRig, SIGNAL(tempoReceived(double)), this, SLOT(onRigTempo(double)));
-  connect(&mRig, &Rig::volumeReceived, this, &MainFrame::onRigVolume);
-  //connect(&mRig, SIGNAL(tempoEnableReceived(bool)), this, SLOT(onRigTempoEnable(bool)));
-  connect(&mRig, &Rig::stompsEnableReceived, this, &MainFrame::onRigStompsEnable);
-  connect(&mRig, &Rig::stackEnableReceived, this, &MainFrame::onRigStackEnable);
-  connect(&mRig, &Rig::effectsEnableReceived, this, &MainFrame::onRigEffectsEnable);
+  //connect(&rigObj, SIGNAL(tempoReceived(double)), this, SLOT(onRigTempo(double)));
+  connect(&rigObj, &Rig::volumeReceived, this, &MainFrame::onRigVolume);
+  //connect(&rigObj, SIGNAL(tempoEnableReceived(bool)), this, SLOT(onRigTempoEnable(bool)));
+  connect(&rigObj, &Rig::stompsEnableReceived, this, &MainFrame::onRigStompsEnable);
+  connect(&rigObj, &Rig::stackEnableReceived, this, &MainFrame::onRigStackEnable);
+  connect(&rigObj, &Rig::effectsEnableReceived, this, &MainFrame::onRigEffectsEnable);
   // global
-  connect(&mGlobal, &Global::operationModeReceived, this, &MainFrame::onGlobalOperationMode);
-  connect(&mGlobal, &Global::mainOutputVolumeReceived, this, &MainFrame::onGlobalMainVolume);
-  connect(&mGlobal, &Global::headphoneOutputVolumeReceived, this, &MainFrame::onGlobalHeadphoneVolume);
-  connect(&mGlobal, &Global::monitorOutputVolumeReceived, this, &MainFrame::onGlobalMonitorVolume);
-  connect(&mGlobal, &Global::directOutputVolumeReceived, this, &MainFrame::onGlobalDirectVolume);
+  connect(&globalObj, &Global::operationModeReceived, this, &MainFrame::onGlobalOperationMode);
+  connect(&globalObj, &Global::mainOutputVolumeReceived, this, &MainFrame::onGlobalMainVolume);
+  connect(&globalObj, &Global::headphoneOutputVolumeReceived, this, &MainFrame::onGlobalHeadphoneVolume);
+  connect(&globalObj, &Global::monitorOutputVolumeReceived, this, &MainFrame::onGlobalMonitorVolume);
+  connect(&globalObj, &Global::directOutputVolumeReceived, this, &MainFrame::onGlobalDirectVolume);
   // input
-  connect(&mInput, &Input::noiseGateReceived, this, &MainFrame::onInputNoiseGate);
-  connect(&mInput, &Input::distortionSenseReceived, this, &MainFrame::onInputDistortionSense);
-  connect(&mInput, &Input::cleanSenseReceived, this, &MainFrame::onInputCleanSense);
+  connect(&inputObj, &Input::noiseGateReceived, this, &MainFrame::onInputNoiseGate);
+  connect(&inputObj, &Input::distortionSenseReceived, this, &MainFrame::onInputDistortionSense);
+  connect(&inputObj, &Input::cleanSenseReceived, this, &MainFrame::onInputCleanSense);
 
   connect(ui->stompEditor, &StompEditorFrame::editorPageChanged, this, &MainFrame::onEditorPageChanged);
 
@@ -112,10 +128,19 @@ MainFrame::MainFrame(QWidget *parent)
   ui->stompDButton->setCtxMenuProvider(&mStompDCtxMenu);
   ui->stompXButton->setCtxMenuProvider(&mStompXCtxMenu);
   ui->stompModButton->setCtxMenuProvider(&mStompModCtxMenu);
-  ui->delayButton->setCtxMenuProvider(&mDelayCtxMenu);
+
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    ui->delayButton->setCtxMenuProvider(&mStompDelayCtxMenu);
+  }
+  else
+  {
+    ui->delayButton->setCtxMenuProvider(&mDelayCtxMenu);
+  }
+
   ui->reverbButton->setCtxMenuProvider(&mReverbCtxMenu);
 
-  ui->stompEditor->init(mStompA, mStompB, mStompC, mStompD, mStompX, mStompMod, mDelay, mReverb, mProfile);
+  ui->stompEditor->init();
 
   MasterVolume& mv = MasterVolume::get();
   mv.init();
@@ -129,10 +154,10 @@ MainFrame::MainFrame(QWidget *parent)
   connect(&mv, &MasterVolume::linksChanged,
           [=](int noOfLinks) { ui->masterVolumeWidget->setCurrentIndex(noOfLinks == 1 ? 0 : 1);});
 
-  connect(ui->headphoneVolumeDial, static_cast<void (QToasterLookUpTableDial::*)(int)>(&QToasterLookUpTableDial::valueChanged), &mGlobal, &Global::applyHeadphoneOutputVolume);
-  connect(ui->monitorVolumeDial, static_cast<void (QToasterLookUpTableDial::*)(int)>(&QToasterLookUpTableDial::valueChanged), &mGlobal, &Global::applyMonitorOutputVolume);
+  connect(ui->headphoneVolumeDial, static_cast<void (QToasterLookUpTableDial::*)(int)>(&QToasterLookUpTableDial::valueChanged), &globalObj, &Global::applyHeadphoneOutputVolume);
+  connect(ui->monitorVolumeDial, static_cast<void (QToasterLookUpTableDial::*)(int)>(&QToasterLookUpTableDial::valueChanged), &globalObj, &Global::applyMonitorOutputVolume);
 
-  connect(&mProfile, &Profile::rigNameReceived, this, &MainFrame::onRigNameReveived);
+  connect(&profileObj, &Profile::rigNameReceived, this, &MainFrame::onRigNameReveived);
 }
 
 MainFrame::~MainFrame()
@@ -144,31 +169,34 @@ MainFrame::~MainFrame()
 // global communication
 void MainFrame::connect2KPA(const QString& connectName)
 {
-  mGlobal.connect2KPA(connectName);
+  globalObj.connect2KPA(connectName);
 }
 
 void MainFrame::disconnectFromKPA()
 {
-  mGlobal.disconnectFromKPA();
+  globalObj.disconnectFromKPA();
 }
 
 void MainFrame::requestValues()
 {
-  mStompA.requestAllValues();
-  mStompB.requestAllValues();
-  mStompC.requestAllValues();
-  mStompD.requestAllValues();
-  mStompX.requestAllValues();
-  mStompMod.requestAllValues();
-  mDelay.requestAllValues();
-  mReverb.requestAllValues();
-  mAmp.requestAllValues();
-  mEq.requestAllValues();
-  mCab.requestAllValues();
-  mRig.requestAllValues();
-  mGlobal.requestAllValues();
-  mInput.requestAllValues();
-  mProfile.requestAllValues();
+  stompAObj.requestAllValues();
+  stompBObj.requestAllValues();
+  stompCObj.requestAllValues();
+  stompDObj.requestAllValues();
+  stompXObj.requestAllValues();
+  stompModObj.requestAllValues();
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+    stompDelayObj.requestAllValues();
+
+  delayObj.requestAllValues();
+  reverbObj.requestAllValues();
+  ampObj.requestAllValues();
+  eqObj.requestAllValues();
+  cabObj.requestAllValues();
+  rigObj.requestAllValues();
+  globalObj.requestAllValues();
+  inputObj.requestAllValues();
+  profileObj.requestAllValues();
 
   ui->browser->requestValues();
 
@@ -182,42 +210,42 @@ void MainFrame::requestValues()
 // ui => kpa
 void MainFrame::on_stompAButton_clicked(QToasterButton& bt, bool longClick)
 {
-  handleStompButtonClick(mStompA, bt, longClick);
+  handleStompButtonClick(stompAObj, bt, longClick);
 }
 
 void MainFrame::on_stompBButton_clicked(QToasterButton& bt, bool longClick)
 {
-  handleStompButtonClick(mStompB, bt, longClick);
+  handleStompButtonClick(stompBObj, bt, longClick);
 }
 
 void MainFrame::on_stompCButton_clicked(QToasterButton& bt, bool longClick)
 {
-  handleStompButtonClick(mStompC, bt, longClick);
+  handleStompButtonClick(stompCObj, bt, longClick);
 }
 
 void MainFrame::on_stompDButton_clicked(QToasterButton& bt, bool longClick)
 {
-  handleStompButtonClick(mStompD, bt, longClick);
+  handleStompButtonClick(stompDObj, bt, longClick);
 }
 
 void MainFrame::on_stompXButton_clicked(QToasterButton& bt, bool longClick)
 {
-  handleStompButtonClick(mStompX, bt, longClick);
+  handleStompButtonClick(stompXObj, bt, longClick);
 }
 
 void MainFrame::on_stompModButton_clicked(QToasterButton& bt, bool longClick)
 {
-  handleStompButtonClick(mStompMod, bt, longClick);
+  handleStompButtonClick(stompModObj, bt, longClick);
 }
 
 void MainFrame::on_modRateDial_valueChanged(double value)
 {
-  mStompMod.applyModulationRate((int) value);
+  stompModObj.applyModulationRate((int) value);
 }
 
 void MainFrame::on_modIntensityDial_valueChanged(double value)
 {
-  mStompMod.applyModulationDepth(value);
+  stompModObj.applyModulationDepth(value);
 }
 
 // kpa => ui
@@ -327,17 +355,17 @@ void MainFrame::onModRate(int value)
 // ui => kpa
 void MainFrame::on_reverbButton_clicked(QToasterButton& bt, bool longClick)
 {
-  handleStompButtonClick(mReverb, bt, longClick);
+  handleStompButtonClick(reverbObj, bt, longClick);
 }
 
 void MainFrame::on_reverbTimeDial_valueChanged(double arg1)
 {
-  mReverb.applyTime(arg1);
+  reverbObj.applyTime(arg1);
 }
 
 void MainFrame::on_reverbMixDial_valueChanged(int value)
 {
-  mReverb.applyMix(value);
+  reverbObj.applyMix(value);
 }
 
 // kpa => ui
@@ -366,23 +394,30 @@ void MainFrame::onReverbMix(int mix)
 // ui => kpa
 void MainFrame::on_delayButton_clicked(QToasterButton& bt, bool longClick)
 {
-  handleStompButtonClick(mDelay, bt, longClick);
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    handleStompButtonClick(stompDelayObj, bt, longClick);
+  }
+  else
+  {
+    handleStompButtonClick(delayObj, bt, longClick);
+  }
 }
 
 void MainFrame::on_delayFeedbackDial_valueChanged(double arg1)
 {
-  mDelay.applyFeedback(arg1);
+  delayObj.applyFeedback(arg1);
 }
 
 void MainFrame::on_delayMixDial_valueChanged(int value)
 {
-  mDelay.applyMix(value);
+  delayObj.applyMix(value);
 }
 
 // kpa => ui
 void MainFrame::onDelayOnOff(bool onOff)
 {
-  if(mOperationMode != StompEdit)
+  if(mOperationMode != StompEdit && Settings::get().getKPAOSVersion() < 0x04000000)
   {
     QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
     ui->delayButton->setState(state);
@@ -408,12 +443,12 @@ void MainFrame::onDelayMix(int mix)
 // ui => kpa
 void MainFrame::on_amplifierButton_clicked(QToasterButton& bt, bool longClick)
 {
-  handleStompButtonClick(mAmp, bt, longClick);
+  handleStompButtonClick(ampObj, bt, longClick);
 }
 
 void MainFrame::on_gainDial_valueChanged(double gain)
 {
-  mAmp.applyGain(gain);
+  ampObj.applyGain(gain);
 }
 
 // kpa => ui
@@ -438,7 +473,7 @@ void MainFrame::onAmpGain(double val)
 // ui => kpa
 void MainFrame::on_eqButton_clicked(QToasterButton& bt, bool /*longClick*/)
 {
-  mEq.applyOnOff(bt.toggleOnOff());
+  eqObj.applyOnOff(bt.toggleOnOff());
   update();
 }
 
@@ -455,7 +490,7 @@ void MainFrame::onEqOnOff(bool onOff)
 // ui => kpa
 void MainFrame::on_cabinetButton_clicked(QToasterButton& bt, bool longClick)
 {
-  handleStompButtonClick(mCab, bt, longClick);
+  handleStompButtonClick(cabObj, bt, longClick);
 }
 
 // kpa => ui
@@ -474,24 +509,24 @@ void MainFrame::onCabOnOff(bool onOff)
 // ui => kpa
 void MainFrame::on_rigVolumeDial_valueChanged(int value)
 {
-  mRig.applyVolume(value);
+  rigObj.applyVolume(value);
 }
 
 void MainFrame::on_stompsButton_clicked(QToasterButton& bt, bool /*longClick*/)
 {
-  mRig.applyStompsEnable(bt.toggleOnOff());
+  rigObj.applyStompsEnable(bt.toggleOnOff());
   update();
 }
 
 void MainFrame::on_stackButton_clicked(QToasterButton& bt, bool /*longClick*/)
 {
-  mRig.applyStackEnable(bt.toggleOnOff());
+  rigObj.applyStackEnable(bt.toggleOnOff());
   update();
 }
 
 void MainFrame::on_effectsButton_clicked(QToasterButton& bt, bool /*longClick*/)
 {
-  mRig.applyEffectsEnable(bt.toggleOnOff());
+  rigObj.applyEffectsEnable(bt.toggleOnOff());
   update();
 }
 
@@ -528,7 +563,7 @@ void MainFrame::onRigEffectsEnable(bool effectsEnable)
 // ui => kpa
 void MainFrame::on_chickenHeadDial_valueChanged(const QChickenHeadDial::State& state)
 {
-  mGlobal.applyOperationMode((Global::OperationMode) state);
+  globalObj.applyOperationMode((Global::OperationMode) state);
 }
 
 // kpa => ui
@@ -540,7 +575,7 @@ void MainFrame::onGlobalOperationMode(unsigned short opMode)
     ui->modeFrames->setCurrentIndex(opMode-1);
     // todo: a better solution
     if((Global::OperationMode)opMode == Global::Tuner)
-      mGlobal.requestMasterTune();
+      globalObj.requestMasterTune();
   }
   update();
 }
@@ -572,17 +607,17 @@ void MainFrame::onGlobalDirectVolume(double volume)
 // ui => kpa
 void MainFrame::on_noiseGateDial_valueChanged(double noiseGate)
 {
-  mInput.applyNoiseGate(noiseGate);
+  inputObj.applyNoiseGate(noiseGate);
 }
 
 void MainFrame::on_distortionSenseDial_valueChanged(double distortionSense)
 {
-  mInput.applyDistortionSense(distortionSense);
+  inputObj.applyDistortionSense(distortionSense);
 }
 
 void MainFrame::on_cleanSenseDial_valueChanged(double cleanSense)
 {
-  mInput.applyCleanSense(cleanSense);
+  inputObj.applyCleanSense(cleanSense);
 }
 
 // kpa => ui
@@ -611,7 +646,7 @@ void MainFrame::on_rigPrevButton_clicked(QToasterButton &bt, bool)
 {
   if(bt.state() == QToasterButton::On)
   {
-    mProfile.applyRigPrev();
+    profileObj.applyRigPrev();
     requestValues(); // todo: request just the required values
   }
 }
@@ -620,7 +655,7 @@ void MainFrame::on_rigNextButton_clicked(QToasterButton &bt, bool )
 {
   if(bt.state() == QToasterButton::On)
   {
-    mProfile.applyRigNext();
+    profileObj.applyRigNext();
     requestValues(); // todo: request just the required values
   }
 }
@@ -835,12 +870,12 @@ void MainFrame::onEditorPageChanged(IStompEditorPage* editorPage)
 
 void MainFrame::on_inputButton_clicked(QToasterButton &bt, bool /*longClick*/)
 {
-  handleStompButtonClick(mInput, bt, true);
+  handleStompButtonClick(inputObj, bt, true);
 }
 
 void MainFrame::on_outputButton_clicked(QToasterButton &bt, bool /*longClick*/)
 {
-  handleStompButtonClick(mGlobal, bt, true);
+  handleStompButtonClick(globalObj, bt, true);
 }
 
 
@@ -860,9 +895,9 @@ void MainFrame::on_masterVolumeDial_valueChanged(double value)
 void MainFrame::on_tapButton_clicked(QToasterButton &bt, bool longClick)
 {
   if(longClick)
-    mTap.applyTapTempoBeatScanner();
+    tapObj.applyTapTempoBeatScanner();
   else
-    mTap.applyTapTempo();
+    tapObj.applyTapTempo();
 }
 
 void MainFrame::onRigNameReveived(const QString& rigName)

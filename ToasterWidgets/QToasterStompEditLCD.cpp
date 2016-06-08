@@ -1065,9 +1065,11 @@ void QToasterStompEditLCD::setStompFXType(StompInstance stompInstance, FXType fx
   case StompX:
     setStompXFXType(fxType);
     break;
-  case StompMOD:
+  case StompMod:
     setStompModFXType(fxType);
     break;
+  case StompDelay:
+    setStompDelayFXType(fxType);
   }
 }
 
@@ -1107,6 +1109,12 @@ void QToasterStompEditLCD::setStompModFXType(FXType fxType)
   ui->stompModEdit->setCursorPosition(0);
 }
 
+void QToasterStompEditLCD::setStompDelayFXType(FXType fxType)
+{
+  ui->delayEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->delayEdit->setCursorPosition(0);
+}
+
 void QToasterStompEditLCD::setStompEnabled(StompInstance stompInstance, bool enabled)
 {
   switch(stompInstance)
@@ -1126,7 +1134,7 @@ void QToasterStompEditLCD::setStompEnabled(StompInstance stompInstance, bool ena
   case StompX:
     setStompXEnabled(enabled);
     break;
-  case StompMOD:
+  case StompMod:
     setStompModEnabled(enabled);
     break;
   }

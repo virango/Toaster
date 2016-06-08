@@ -18,12 +18,13 @@
 #include <QObject>
 #include "RigMidi.h"
 
+#define rigObj Rig::get()
+
 class Rig : public QObject, public RigMidi
 {
   Q_OBJECT
 public:
-  Rig();
-  ~Rig();
+  static Rig& get();
 
   void requestAllValues();
 
@@ -51,6 +52,10 @@ protected:
   virtual void midiStompsEnableReceived(unsigned short rawVal);
   virtual void midiStackEnableReceived(unsigned short rawVal);
   virtual void midiEffectsEnableReceived(unsigned short rawVal);
+
+private:
+  Rig();
+  ~Rig();
 };
 
 #endif // RIG_H

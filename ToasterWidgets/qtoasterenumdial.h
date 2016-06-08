@@ -105,4 +105,6 @@ private:
   static const int sLEDRingSkinNoOfFrames = 15;
 };
 
+Q_DECLARE_METATYPE(QToasterEnumDial::LEDRingType)
+
 #endif

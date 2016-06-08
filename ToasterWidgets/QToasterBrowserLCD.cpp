@@ -178,7 +178,7 @@ void QToasterBrowserLCD::setStompFXType(StompInstance stompInstance, FXType fxTy
   case StompX:
     setStompXFXType(fxType);
     break;
-  case StompMOD:
+  case StompMod:
     setStompModFXType(fxType);
     break;
   }
@@ -239,7 +239,7 @@ void QToasterBrowserLCD::setStompEnabled(StompInstance stompInstance, bool enabl
   case StompX:
     setStompXEnabled(enabled);
     break;
-  case StompMOD:
+  case StompMod:
     setStompModEnabled(enabled);
     break;
   }

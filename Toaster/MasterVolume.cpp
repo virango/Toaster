@@ -15,6 +15,7 @@
 */
 #include "MasterVolume.h"
 #include "Settings.h"
+#include "Global.h"
 
 MasterVolume MasterVolume::mThis;
 
@@ -38,20 +39,20 @@ MasterVolume::~MasterVolume()
 {
   Settings::get().setMasterVolume(mMasterVolume);
 
-  disconnect(&mGlobal, &Global::mainOutputVolumeReceived, this, &MasterVolume::onMainOutputVolume);
-  disconnect(&mGlobal, &Global::monitorOutputVolumeReceived, this, &MasterVolume::onMonitorOutputVolume);
-  disconnect(&mGlobal, &Global::directOutputVolumeReceived, this, &MasterVolume::onDirectOutputVolume);
-  disconnect(&mGlobal, &Global::headphoneOutputVolumeReceived, this, &MasterVolume::onHeadPhoneOutputVolume);
-  disconnect(&mGlobal, &Global::spdifOutputVolumeReceived, this, &MasterVolume::onSPDIFOutputVolume);
+  disconnect(&globalObj, &Global::mainOutputVolumeReceived, this, &MasterVolume::onMainOutputVolume);
+  disconnect(&globalObj, &Global::monitorOutputVolumeReceived, this, &MasterVolume::onMonitorOutputVolume);
+  disconnect(&globalObj, &Global::directOutputVolumeReceived, this, &MasterVolume::onDirectOutputVolume);
+  disconnect(&globalObj, &Global::headphoneOutputVolumeReceived, this, &MasterVolume::onHeadPhoneOutputVolume);
+  disconnect(&globalObj, &Global::spdifOutputVolumeReceived, this, &MasterVolume::onSPDIFOutputVolume);
 }
 
 void MasterVolume::init()
 {
-  connect(&mGlobal, &Global::mainOutputVolumeReceived, this, &MasterVolume::onMainOutputVolume);
-  connect(&mGlobal, &Global::monitorOutputVolumeReceived, this, &MasterVolume::onMonitorOutputVolume);
-  connect(&mGlobal, &Global::directOutputVolumeReceived, this, &MasterVolume::onDirectOutputVolume);
-  connect(&mGlobal, &Global::headphoneOutputVolumeReceived, this, &MasterVolume::onHeadPhoneOutputVolume);
-  connect(&mGlobal, &Global::spdifOutputVolumeReceived, this, &MasterVolume::onSPDIFOutputVolume);
+  connect(&globalObj, &Global::mainOutputVolumeReceived, this, &MasterVolume::onMainOutputVolume);
+  connect(&globalObj, &Global::monitorOutputVolumeReceived, this, &MasterVolume::onMonitorOutputVolume);
+  connect(&globalObj, &Global::directOutputVolumeReceived, this, &MasterVolume::onDirectOutputVolume);
+  connect(&globalObj, &Global::headphoneOutputVolumeReceived, this, &MasterVolume::onHeadPhoneOutputVolume);
+  connect(&globalObj, &Global::spdifOutputVolumeReceived, this, &MasterVolume::onSPDIFOutputVolume);
   emit masterVolumeChanged(mMasterVolume);
 }
 
@@ -74,19 +75,19 @@ int MasterVolume::noOfLinks()
 void MasterVolume::requestValues()
 {
   if(mMainOutputLink)
-    mGlobal.requestMainOutputVolume();
+    globalObj.requestMainOutputVolume();
 
   if(mMonitorOutputLink)
-    mGlobal.requestMonitorOutputVolume();
+    globalObj.requestMonitorOutputVolume();
 
   if(mDirectOutputLink)
-    mGlobal.requestDirectOutputVolume();
+    globalObj.requestDirectOutputVolume();
 
   if(mHeadphoneOutputLink)
-    mGlobal.requestHeadphoneOutputVolume();
+    globalObj.requestHeadphoneOutputVolume();
 
   if(mSPDIFOutputLink)
-    mGlobal.requestSPDIFOutputVlume();
+    globalObj.requestSPDIFOutputVlume();
 
   emit linksChanged(noOfLinks());
   emit masterVolumeChanged(mMasterVolume);
@@ -97,7 +98,7 @@ void MasterVolume::onMainOutputLink(bool link)
   mMainOutputLink = link;
   Settings::get().setMainOutputLink(link);
   if(mMainOutputLink)
-    mGlobal.requestMainOutputVolume();
+    globalObj.requestMainOutputVolume();
 
   emit linksChanged(noOfLinks());
 }
@@ -107,7 +108,7 @@ void MasterVolume::onMonitorOutputLink(bool link)
   mMonitorOutputLink = link;
   Settings::get().setMonitorOutputLink(link);
   if(mMonitorOutputLink)
-    mGlobal.requestMonitorOutputVolume();
+    globalObj.requestMonitorOutputVolume();
 
   emit linksChanged(noOfLinks());
 }
@@ -117,7 +118,7 @@ void MasterVolume::onDirectOutputLink(bool link)
   mDirectOutputLink = link;
   Settings::get().setDirectOutputLink(link);
   if(mDirectOutputLink)
-    mGlobal.requestDirectOutputVolume();
+    globalObj.requestDirectOutputVolume();
 
   emit linksChanged(noOfLinks());
 }
@@ -127,7 +128,7 @@ void MasterVolume::onHeadPhoneOutputLink(bool link)
   mHeadphoneOutputLink = link;
   Settings::get().setHeadphoneOutputLink(link);
   if(mHeadphoneOutputLink)
-    mGlobal.requestHeadphoneOutputVolume();
+    globalObj.requestHeadphoneOutputVolume();
 
   emit linksChanged(noOfLinks());
 }
@@ -137,7 +138,7 @@ void MasterVolume::onSPDIFOutputLink(bool link)
   mSPDIFOutputLink = link;
   Settings::get().setSPDIFOutputLink(link);
   if(mSPDIFOutputLink)
-    mGlobal.requestSPDIFOutputVlume();
+    globalObj.requestSPDIFOutputVlume();
 
   emit linksChanged(noOfLinks());
 }
@@ -200,7 +201,7 @@ void MasterVolume::onMasterVolume(int value)
   if(mMainOutputLink)
   {
     mMainOutputVolume = mMainOutputVolume + delta > 0x3FFF ? 0x3FFF : mMainOutputVolume + delta;
-    mGlobal.applyMainOutputVolume(mMainOutputVolume > 0 ? mMainOutputVolume : 0);
+    globalObj.applyMainOutputVolume(mMainOutputVolume > 0 ? mMainOutputVolume : 0);
     if(mMainOutputVolume == 0x3FFF)
       mMasterVolume = 0x3FFF;
 
@@ -210,7 +211,7 @@ void MasterVolume::onMasterVolume(int value)
   if(mMonitorOutputLink)
   {
     mMonitorOutputVolume = mMonitorOutputVolume + delta > 0x3FFF ? 0x3FFF : mMonitorOutputVolume + delta;
-    mGlobal.applyMonitorOutputVolume(mMonitorOutputVolume > 0 ? mMonitorOutputVolume : 0);
+    globalObj.applyMonitorOutputVolume(mMonitorOutputVolume > 0 ? mMonitorOutputVolume : 0);
     if(mMonitorOutputVolume == 0x3FFF)
       mMasterVolume = 0x3FFF;
 
@@ -220,7 +221,7 @@ void MasterVolume::onMasterVolume(int value)
   if(mDirectOutputLink)
   {
     mDirectOutputVolume = mDirectOutputVolume + delta > 0x3FFF ? 0x3FFF : mDirectOutputVolume + delta;
-    mGlobal.applyDirectOutputVolume(mDirectOutputVolume > 0 ? mDirectOutputVolume : 0);
+    globalObj.applyDirectOutputVolume(mDirectOutputVolume > 0 ? mDirectOutputVolume : 0);
     if(mDirectOutputVolume == 0x3FFF)
       mMasterVolume = 0x3FFF;
 
@@ -230,7 +231,7 @@ void MasterVolume::onMasterVolume(int value)
   if(mHeadphoneOutputLink)
   {
     mHeadphoneOutputVolume = mHeadphoneOutputVolume + delta > 0x3FFF ? 0x3FFF : mHeadphoneOutputVolume + delta;
-    mGlobal.applyHeadphoneOutputVolume(mHeadphoneOutputVolume > 0 ? mHeadphoneOutputVolume : 0);
+    globalObj.applyHeadphoneOutputVolume(mHeadphoneOutputVolume > 0 ? mHeadphoneOutputVolume : 0);
     if(mHeadphoneOutputVolume == 0x3FFF)
       mMasterVolume = 0x3FFF;
 
@@ -240,7 +241,7 @@ void MasterVolume::onMasterVolume(int value)
   if(mSPDIFOutputLink)
   {
     mSPDIFOutputVolume = mSPDIFOutputVolume + delta > 0x3FFF ? 0x3FFF : mSPDIFOutputVolume + delta;
-    mGlobal.applySPDIFOutputVolume(mSPDIFOutputVolume > 0 ? mSPDIFOutputVolume : 0);
+    globalObj.applySPDIFOutputVolume(mSPDIFOutputVolume > 0 ? mSPDIFOutputVolume : 0);
     if(mSPDIFOutputVolume  == 0x3FFF)
       mMasterVolume = 0x3FFF;
 

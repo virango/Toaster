@@ -18,16 +18,21 @@
 #include <QObject>
 #include "TapMidi.h"
 
+#define tapObj Tap::get()
+
 class Tap : public QObject, public TapMidi
 {
   Q_OBJECT
 public:
-  Tap();
-  ~Tap();
+  static Tap& get();
 
 public slots:
   void applyTapTempo() { midiApplyTapTempo(); }
   void applyTapTempoBeatScanner() { midiApplyTapTempoBeatScanner(); }
+
+private:
+  Tap();
+  ~Tap();
 };
 
 #endif // TAP_H

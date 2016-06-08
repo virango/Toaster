@@ -44,7 +44,7 @@ bool Midi::openPorts(const QString& inPort, const QString& outPort)
   int outPortNo = -1;
 
   getInPorts();
-  for(size_t i = 0; i < mInPorts.size(); ++i)
+  for(int i = 0; i < mInPorts.size(); ++i)
   {
     if(mInPorts[i] == inPort)
     {
@@ -64,7 +64,7 @@ bool Midi::openPorts(const QString& inPort, const QString& outPort)
     mMidiIn.ignoreTypes(false, false, false);
 
     getOutPorts();
-    for(size_t i = 0; i < mOutPorts.size(); ++i)
+    for(int i = 0; i < mOutPorts.size(); ++i)
     {
       if(mOutPorts[i] == outPort)
       {

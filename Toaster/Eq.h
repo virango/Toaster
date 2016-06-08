@@ -18,12 +18,13 @@
 #include <QObject>
 #include "EqMidi.h"
 
+#define eqObj Eq::get()
+
 class Eq : public QObject, public EqMidi
 {
   Q_OBJECT
 public:
-  Eq();
-  ~Eq();
+  static Eq& get();
 
   void requestAllValues();
 
@@ -48,6 +49,10 @@ protected:
   virtual void midiMiddleReceived(unsigned short rawVal);
   virtual void midiTrebleReceived(unsigned short rawVal);
   virtual void midiPresenceReceived(unsigned short rawVal);
+
+private:
+  Eq();
+  ~Eq();
 };
 
 #endif // EQ_H

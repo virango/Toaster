@@ -23,6 +23,12 @@ Input::~Input()
 {
 }
 
+Input& Input::get()
+{
+  static Input input;
+  return input;
+}
+
 void Input::requestAllValues()
 {
   midiRequestNoiseGate();

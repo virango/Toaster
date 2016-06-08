@@ -26,6 +26,12 @@ Global::~Global()
 
 }
 
+Global& Global::get()
+{
+  static Global global;
+  return global;
+}
+
 void Global::requestAllValues()
 {
   midiRequestOperationMode();

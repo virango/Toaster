@@ -24,6 +24,12 @@ Delay::~Delay()
 {
 }
 
+Delay& Delay::get()
+{
+  static Delay delay;
+  return delay;
+}
+
 void Delay::requestAllValues()
 {
   midiRequestType();

@@ -23,7 +23,7 @@ BYTEARRAYDEF(StompMidi, AddressPageB,                         0x33)
 BYTEARRAYDEF(StompMidi, AddressPageC,                         0x34)
 BYTEARRAYDEF(StompMidi, AddressPageD,                         0x35)
 BYTEARRAYDEF(StompMidi, AddressPageX,                         0x38)
-BYTEARRAYDEF(StompMidi, AddressPageMOD,                       0x3A)
+BYTEARRAYDEF(StompMidi, AddressPageMod,                       0x3A)
 BYTEARRAYDEF(StompMidi, AddressPageDelay,                     0x3C)
 
 // parameter
@@ -983,8 +983,8 @@ ByteArray StompMidi::getAddressPage()
       return sAddressPageD;
     case StompX:
       return sAddressPageX;
-    case StompMOD:
-      return sAddressPageMOD;
+    case StompMod:
+      return sAddressPageMod;
     case StompDelay:
       return sAddressPageDelay;
     default:

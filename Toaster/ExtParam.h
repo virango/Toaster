@@ -19,12 +19,13 @@
 #include <QObject>
 #include "ExtParamMidi.h"
 
+#define extParamObj ExtParam::get()
+
 class ExtParam : public QObject, public ExtParamMidi
 {
   Q_OBJECT
 public:
-  explicit ExtParam(QObject *parent = 0);
-  ~ExtParam();
+  static ExtParam& get();
 
   void requestAllValues();
 
@@ -37,6 +38,10 @@ public slots:
 protected:
   // EqMidi
   virtual void midiBrowserViewReceived(unsigned int rawVal);
+
+private:
+  ExtParam();
+  ~ExtParam();
 };
 
 #endif // EXTPARAM_H

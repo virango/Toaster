@@ -15,14 +15,8 @@
 */
 #ifndef BROWSERFRAME_H
 #define BROWSERFRAME_H
-
 #include <QFrame>
-#include "Eq.h"
-#include "Profile.h"
-#include "ExtParam.h"
-#include "Stomp.h"
-#include "Delay.h"
-#include "Reverb.h"
+#include "Commons.h"
 
 namespace Ui {
   class BrowserFrame;
@@ -94,18 +88,6 @@ private slots:
 
 private:
   Ui::BrowserFrame *ui;
-
-  Stomp         mStompA;
-  Stomp         mStompB;
-  Stomp         mStompC;
-  Stomp         mStompD;
-  Stomp         mStompX;
-  Stomp         mStompMod;
-  Delay         mDelay;
-  Reverb        mReverb;
-  Eq            mEq;
-  Profile       mProfile;
-  ExtParam      mExtParam;
 };
 
 #endif // BROWSERFRAME_H

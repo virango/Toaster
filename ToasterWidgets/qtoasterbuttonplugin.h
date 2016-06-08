@@ -16,7 +16,7 @@
 #ifndef QTOASTERBUTTONPLUGIN_H
 #define QTOASTERBUTTONPLUGIN_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class QToasterButtonPlugin : public QObject, public QDesignerCustomWidgetInterface
 {

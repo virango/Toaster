@@ -19,13 +19,13 @@
 #include <QObject>
 #include "InputMidi.h"
 
+#define inputObj Input::get()
+
 class Input : public QObject, public InputMidi
 {
   Q_OBJECT
 public:
-  Input();
-  ~Input();
-
+  static Input& get();
 
   void requestAllValues();
 
@@ -44,6 +44,10 @@ protected:
   virtual void midiNoiseGateReceived(unsigned short rawVal);
   virtual void midiCleanSenseReceived(unsigned short rawVal);
   virtual void midiDistortionSenseReceived(unsigned short rawVal);
+
+private:
+  Input();
+  ~Input();
 };
 
 #endif // INPUT_H

@@ -21,12 +21,13 @@
 
 class QTimer;
 
+#define globalObj Global::get()
+
 class Global : public QObject, public GlobalMidi
 {
   Q_OBJECT
 public:
-  Global();
-  ~Global();
+  static Global& get();
 
   enum OperationMode
   {
@@ -177,6 +178,9 @@ protected slots:
   void sendBeacon();
 
 private:
+  Global();
+  ~Global();
+
   QTimer* mBeaconTimer;
 };
 

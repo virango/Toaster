@@ -25,6 +25,12 @@ Eq::~Eq()
 
 }
 
+Eq& Eq::get()
+{
+  static Eq eq;
+  return eq;
+}
+
 void Eq::requestAllValues()
 {
   midiRequestOnOff();

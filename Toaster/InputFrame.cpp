@@ -1,6 +1,7 @@
 #include "InputFrame.h"
 #include "ui_InputFrame.h"
 #include "LookUpTables.h"
+#include "Global.h"
 
 InputFrame::InputFrame(QWidget *parent)
   : QWidget(parent)
@@ -23,12 +24,12 @@ void InputFrame::activate(QObject& module)
   {
     connect(mpInput, &Input::cleanSenseReceived, this, &InputFrame::OnCleanSens);
     connect(mpInput, &Input::distortionSenseReceived, this, &InputFrame::OnDistortionSens);
-    connect(&mGlobal, &Global::inputSourceReceived, this, &InputFrame::OnInputSource);
-    connect(&mGlobal, &Global::reampSensReceived, this, &InputFrame::OnReampSens);
+    connect(&globalObj, &Global::inputSourceReceived, this, &InputFrame::OnInputSource);
+    connect(&globalObj, &Global::reampSensReceived, this, &InputFrame::OnReampSens);
 
     mpInput->requestAllValues();
-    mGlobal.requestInputSource();
-    mGlobal.requestReampSense();
+    globalObj.requestInputSource();
+    globalObj.requestReampSense();
   }
 }
 
@@ -38,8 +39,8 @@ void InputFrame::deactivate()
   {
     disconnect(mpInput, &Input::cleanSenseReceived, this, &InputFrame::OnCleanSens);
     disconnect(mpInput, &Input::distortionSenseReceived, this, &InputFrame::OnDistortionSens);
-    disconnect(&mGlobal, &Global::inputSourceReceived, this, &InputFrame::OnInputSource);
-    disconnect(&mGlobal, &Global::reampSensReceived, this, &InputFrame::OnReampSens);
+    disconnect(&globalObj, &Global::inputSourceReceived, this, &InputFrame::OnInputSource);
+    disconnect(&globalObj, &Global::reampSensReceived, this, &InputFrame::OnReampSens);
 
     mpInput = nullptr;
   }
@@ -98,12 +99,12 @@ void InputFrame::on_distortionSensDial_valueChanged(double value)
 
 void InputFrame::on_inputSourceDial_valueChanged(int valueIndex)
 {
-  mGlobal.applyInputSource(valueIndex);
+  globalObj.applyInputSource(valueIndex);
 }
 
 void InputFrame::on_reampSensDial_valueChanged(double value)
 {
-  mGlobal.applyReampSense(value);
+  globalObj.applyReampSense(value);
 }
 
 void InputFrame::OnCleanSens(double value)

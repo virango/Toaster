@@ -16,7 +16,7 @@
 #ifndef QToasterLookUpTableDialPlugin_H
 #define QToasterLookUpTableDialPlugin_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class QToasterLookUpTableDialPlugin : public QObject, public QDesignerCustomWidgetInterface
 {

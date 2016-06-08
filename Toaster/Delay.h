@@ -18,12 +18,13 @@
 #include <QObject>
 #include "DelayMidi.h"
 
+#define delayObj Delay::get()
+
 class Delay : public QObject, public DelayMidi
 {
   Q_OBJECT
 public:
-  Delay();
-  ~Delay();
+  static Delay& get();
 
   void requestAllValues();
   void requestType() { midiRequestType(); }
@@ -93,6 +94,10 @@ protected:
   virtual void midiDuckingReceived(unsigned short rawVal);
 
   ::DelayType mDelayType;
+
+private:
+  Delay();
+  ~Delay();
 };
 
 #endif // DELAY_H

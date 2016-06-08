@@ -112,4 +112,6 @@ private:
   static const int mLEDRingSkinNoOfFrames = 15;
 };
 
+Q_DECLARE_METATYPE(QToasterLookUpTableDial::LEDRingType)
+
 #endif

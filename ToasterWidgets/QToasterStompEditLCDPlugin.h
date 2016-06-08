@@ -16,7 +16,7 @@
 #ifndef QTOASTERSTOMPEDITLCDPLUGIN_H
 #define QTOASTERSTOMPEDITLCDPLUGIN_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class QToasterStompEditLCDPlugin : public QObject, public QDesignerCustomWidgetInterface
 {

@@ -22,3 +22,9 @@ Tap::Tap()
 Tap::~Tap()
 {
 }
+
+Tap& Tap::get()
+{
+  static Tap tap;
+  return tap;
+}

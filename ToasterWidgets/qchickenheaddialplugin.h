@@ -16,7 +16,7 @@
 #ifndef QCHICKENHEADDIALPLUGIN_H
 #define QCHICKENHEADDIALPLUGIN_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class QChickenHeadDialPlugin : public QObject, public QDesignerCustomWidgetInterface
 {

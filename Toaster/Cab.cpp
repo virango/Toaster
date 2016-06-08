@@ -23,6 +23,12 @@ Cab::~Cab()
 {
 }
 
+Cab& Cab::get()
+{
+  static Cab cab;
+  return cab;
+}
+
 void Cab::requestAllValues()
 {
   midiRequestOnOff();

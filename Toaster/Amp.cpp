@@ -23,6 +23,12 @@ Amp::~Amp()
 {
 }
 
+Amp& Amp::get()
+{
+  static Amp amp;
+  return amp;
+}
+
 void Amp::requestAllValues()
 {
   midiRequestOnOff();

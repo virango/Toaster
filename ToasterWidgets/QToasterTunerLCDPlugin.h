@@ -16,7 +16,7 @@
 #ifndef QTOASTERTUNERLCDPLUGIN_H
 #define QTOASTERTUNERLCDPLUGIN_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class QToasterTunerLCDPlugin : public QObject, public QDesignerCustomWidgetInterface
 {

@@ -16,16 +16,18 @@
 #include <QString>
 #include "TunerFrame.h"
 #include "ui_TunerFrame.h"
+#include "Global.h"
+#include "Tuner.h"
 
 TunerFrame::TunerFrame(QWidget *parent) :
   QWidget(parent),
   ui(new Ui::TunerFrame)
 {
   ui->setupUi(this);
-  connect(&mTuner, SIGNAL(noteReceived(QString, QString)), this, SLOT(onTunerNote(QString, QString)));
+  connect(&tunerObj, SIGNAL(noteReceived(QString, QString)), this, SLOT(onTunerNote(QString, QString)));
   connect(&mTunerIndex, SIGNAL(indexReceived(int)), this, SLOT(onTunerIndex(int)));
-  connect(&mGlobal, &Global::masterTuneReceived, this, &TunerFrame::onMasterTune);
-  connect(&mTuner, &Tuner::muteSignalReceived, this, &TunerFrame::onMute);
+  connect(&globalObj, &Global::masterTuneReceived, this, &TunerFrame::onMasterTune);
+  connect(&tunerObj, &Tuner::muteSignalReceived, this, &TunerFrame::onMute);
 }
 
 TunerFrame::~TunerFrame()
@@ -35,13 +37,13 @@ TunerFrame::~TunerFrame()
 
 void TunerFrame::on_masterTuneDial_valueChanged(double value)
 {
-  mGlobal.applyMasterTune(value);
+  globalObj.applyMasterTune(value);
 }
 
 void TunerFrame::on_muteDial_valueChanged(int valueIndex)
 {
   ui->toasterTunerLCD->setMuted(valueIndex != 0);
-  mTuner.applyMuteSignal(valueIndex != 0);
+  tunerObj.applyMuteSignal(valueIndex != 0);
 }
 
 void TunerFrame::onTunerNote(QString note, QString octave)

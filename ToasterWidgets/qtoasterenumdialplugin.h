@@ -16,7 +16,7 @@
 #ifndef QTOASTERENUMDIALPLUGIN_H
 #define QTOASTERENUMDIALPLUGIN_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class QToasterEnumDialPlugin : public QObject, public QDesignerCustomWidgetInterface
 {

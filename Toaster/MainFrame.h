@@ -20,20 +20,9 @@
 #include "qtoasterbutton.h"
 #include "qchickenheaddial.h"
 #include "qmulticolorled.h"
-#include "Stomp.h"
-#include "Amp.h"
-#include "Eq.h"
-#include "Cab.h"
-#include "Rig.h"
-#include "Global.h"
-#include "Input.h"
-#include "Delay.h"
-#include "Reverb.h"
-#include "Profile.h"
 #include "StompCtxMenu.h"
 #include "DelayCtxMenu.h"
 #include "ReverbCtxMenu.h"
-#include "Tap.h"
 
 namespace Ui {
 class MainFrame;
@@ -207,31 +196,15 @@ private:
 private:
   Ui::MainFrame *ui;
 
-  Stomp         mStompA;
-  Stomp         mStompB;
-  Stomp         mStompC;
-  Stomp         mStompD;
-  Stomp         mStompX;
-  Stomp         mStompMod;
-  Delay         mDelay;
-  Reverb        mReverb;
-  Amp           mAmp;
-  Eq            mEq;
-  Cab           mCab;
-  Rig           mRig;
-  Global        mGlobal;
-  Input         mInput;
-  Profile       mProfile;
-
   StompCtxMenu  mStompACtxMenu;
   StompCtxMenu  mStompBCtxMenu;
   StompCtxMenu  mStompCCtxMenu;
   StompCtxMenu  mStompDCtxMenu;
   StompCtxMenu  mStompXCtxMenu;
   StompCtxMenu  mStompModCtxMenu;
+  StompCtxMenu  mStompDelayCtxMenu;
   DelayCtxMenu  mDelayCtxMenu;
   ReverbCtxMenu mReverbCtxMenu;
-  Tap           mTap;
 
   OperationMode mOperationMode;
   OperationMode mPreviousOperationMode;

@@ -16,7 +16,7 @@
 #ifndef QTOASTERDIALPLUGIN_H
 #define QTOASTERDIALPLUGIN_H
 
-#include <QDesignerCustomWidgetInterface>
+#include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
 class QToasterDialPlugin : public QObject, public QDesignerCustomWidgetInterface
 {

@@ -26,6 +26,48 @@ Stomp::~Stomp()
 {
 }
 
+Stomp& Stomp::getA()
+{
+  static Stomp stomp(StompA);
+  return stomp;
+}
+
+Stomp& Stomp::getB()
+{
+  static Stomp stomp(StompB);
+  return stomp;
+}
+
+Stomp& Stomp::getC()
+{
+  static Stomp stomp(StompC);
+  return stomp;
+}
+
+Stomp& Stomp::getD()
+{
+  static Stomp stomp(StompD);
+  return stomp;
+}
+
+Stomp& Stomp::getX()
+{
+  static Stomp stomp(StompX);
+  return stomp;
+}
+
+Stomp& Stomp::getMod()
+{
+  static Stomp stomp(StompMod);
+  return stomp;
+}
+
+Stomp& Stomp::getDelay()
+{
+  static Stomp stomp(StompDelay);
+  return stomp;
+}
+
 void Stomp::requestAllValues()
 {
   midiRequestOnOff();

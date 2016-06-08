@@ -15,9 +15,18 @@
 */
 #include "Tuner.h"
 
-Tuner::Tuner(QObject *parent) : QObject(parent)
+Tuner::Tuner()
 {
+}
 
+Tuner::~Tuner()
+{
+}
+
+Tuner& Tuner::get()
+{
+  static Tuner tuner;
+  return tuner;
 }
 
 void Tuner::midiNoteReceived(unsigned short rawVal)

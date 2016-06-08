@@ -17,9 +17,7 @@
 #define TUNERFRAME_H
 
 #include <QWidget>
-#include "Tuner.h"
 #include "TunerIndex.h"
-#include "Global.h"
 
 namespace Ui {
   class TunerFrame;
@@ -46,10 +44,7 @@ private slots:
 
 private:
   Ui::TunerFrame *ui;
-
-  Tuner mTuner;
   TunerIndex mTunerIndex;
-  Global mGlobal;
 };
 
 #endif // TUNERFRAME_H

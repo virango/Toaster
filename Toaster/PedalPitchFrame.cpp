@@ -16,12 +16,12 @@
 #include "PedalPitchFrame.h"
 #include "ui_PedalPitchFrame.h"
 #include "Stomp.h"
+#include "Global.h"
 
 PedalPitchFrame::PedalPitchFrame(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::PedalPitchFrame)
   , mpStomp(nullptr)
-  , mGlobal()
   , mFXType(None)
 {
   ui->setupUi(this);
@@ -52,7 +52,7 @@ void PedalPitchFrame::activate(QObject& stomp)
     connect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
     connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(&mGlobal, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
+    connect(&globalObj, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
 
     mpStomp->requestVoice2Pitch();
     mpStomp->requestVoice1Pitch();
@@ -63,7 +63,7 @@ void PedalPitchFrame::activate(QObject& stomp)
     mpStomp->requestFormantShiftOnOff();
     mpStomp->requestVolume();
     mpStomp->requestDucking();
-    mGlobal.requestWahPedalToPitch();
+    globalObj.requestWahPedalToPitch();
 
     ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
     ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
@@ -85,7 +85,7 @@ void PedalPitchFrame::deactivate()
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
   }
 
-  disconnect(&mGlobal, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
+  disconnect(&globalObj, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
 
   mpStomp = nullptr;
 }
@@ -173,7 +173,7 @@ void PedalPitchFrame::on_duckingDial_valueChanged(double value)
 void PedalPitchFrame::on_wahPedalToPitchDial_valueChanged(int valueIndex)
 {
   if(mpStomp != nullptr)
-    mGlobal.applyWahPedalToPitch(valueIndex != 0);
+    globalObj.applyWahPedalToPitch(valueIndex != 0);
 }
 
 void PedalPitchFrame::on_smoothChordsDial_valueChanged(int valueIndex)

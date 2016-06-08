@@ -31,7 +31,7 @@ protected:
   BYTEARRAYDECL(AddressPageC)
   BYTEARRAYDECL(AddressPageD)
   BYTEARRAYDECL(AddressPageX)
-  BYTEARRAYDECL(AddressPageMOD)
+  BYTEARRAYDECL(AddressPageMod)
   BYTEARRAYDECL(AddressPageDelay)
 
   // parameter

@@ -20,7 +20,7 @@ QMap<StompInstance, QString> LookUpTables::sStompInstanceNames = {{StompA, "Stom
                                                                   {StompC, "Stomp C"},
                                                                   {StompD, "Stomp D"},
                                                                   {StompX, "Effect x"},
-                                                                  {StompMOD, "Modulation Effect"}};
+                                                                  {StompMod, "Modulation Effect"}};
 
 QMap<DelayType, QString> LookUpTables::sDelayTypeNames = {{TapDelay, "Tap Delay"},
                                                           {FreeDelay, "Free Delay"},

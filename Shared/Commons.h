@@ -170,7 +170,7 @@ enum StompInstance
   StompC,
   StompD,
   StompX,
-  StompMOD,
+  StompMod,
   StompDelay
 };
 

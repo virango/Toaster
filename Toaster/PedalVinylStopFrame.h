@@ -18,7 +18,6 @@
 #include <QWidget>
 #include "StompEditorPage.h"
 #include "Stomp.h"
-#include "Global.h"
 
 namespace Ui {
 class PedalVinylStopFrame;
@@ -61,8 +60,6 @@ private:
   Ui::PedalVinylStopFrame *ui;
 
   Stomp* mpStomp;
-  Global mGlobal;
-
   FXType mFXType;
 };
 
