@@ -16,14 +16,19 @@
 #include "AnalogOctaverFrame.h"
 #include "ui_AnalogOctaverFrame.h"
 #include "Stomp.h"
+#include "Settings.h"
 
 AnalogOctaverFrame::AnalogOctaverFrame(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::AnalogOctaverFrame)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
   ui->setupUi(this);
+
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    ui->lcdDisplay->setValue5Title("Voice Balance");
+  }
 }
 
 AnalogOctaverFrame::~AnalogOctaverFrame()
@@ -36,11 +41,15 @@ void AnalogOctaverFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(voiceMixReceived(double)), this, SLOT(onVoiceMix(double)));
-    connect(mpStomp, SIGNAL(IntensityReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onLowCut(double)));
+    connect(mpStomp, &Stomp::volumeReceived, this, &AnalogOctaverFrame::onVolume);
+    connect(mpStomp, &Stomp::duckingReceived, this, &AnalogOctaverFrame::onDucking);
+    connect(mpStomp, &Stomp::voiceMixReceived, this, &AnalogOctaverFrame::onVoiceMix);
+    connect(mpStomp, &Stomp::intensityReceived, this, &AnalogOctaverFrame::onMix);
+    connect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationCrossoverReceived), this, &AnalogOctaverFrame::onLowCut);
+    connect(mpStomp, &Stomp::stereoReceived, this, &AnalogOctaverFrame::onStereo);
+
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestVolume();
     mpStomp->requestDucking();
@@ -48,8 +57,19 @@ void AnalogOctaverFrame::activate(QObject& stomp)
     mpStomp->requestIntensity();
     mpStomp->requestModulationCrossover();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    StompInstance si = mpStomp->getInstance();
+    if(si != StompX && si != StompMod && si != StompDelay)
+    {
+      ui->lcdDisplay->setValue8("");
+      ui->lcdDisplay->setValue8Title("");
+      ui->stereoDial->setIsActive(false);
+    }
+    else
+    {
+      ui->lcdDisplay->setValue8Title("Stereo");
+      ui->stereoDial->setIsActive(true);
+      mpStomp->requestStereo();
+    }
   }
 }
 
@@ -57,11 +77,12 @@ void AnalogOctaverFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(voiceMixReceived(double)), this, SLOT(onVoiceMix(double)));
-    disconnect(mpStomp, SIGNAL(IntensityReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onLowCut(double)));
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &AnalogOctaverFrame::onVolume);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &AnalogOctaverFrame::onDucking);
+    disconnect(mpStomp, &Stomp::voiceMixReceived, this, &AnalogOctaverFrame::onVoiceMix);
+    disconnect(mpStomp, &Stomp::intensityReceived, this, &AnalogOctaverFrame::onMix);
+    disconnect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationCrossoverReceived), this, &AnalogOctaverFrame::onLowCut);
+    disconnect(mpStomp, &Stomp::stereoReceived, this, &AnalogOctaverFrame::onStereo);
   }
   mpStomp = nullptr;
 }
@@ -139,6 +160,12 @@ void AnalogOctaverFrame::on_lowCutDial_valueChanged(double value)
     mpStomp->applyModulationCrossover(value);
 }
 
+void AnalogOctaverFrame::on_stereoDial_valueChanged(double value)
+{
+  if(mpStomp != nullptr)
+    mpStomp->applyStereo(value);
+}
+
 void AnalogOctaverFrame::onVolume(double value)
 {
   ui->volumeDial->setValue(value);
@@ -166,5 +193,11 @@ void AnalogOctaverFrame::onMix(double value)
 void AnalogOctaverFrame::onLowCut(double value)
 {
   ui->lowCutDial->setValue(value);
+  update();
+}
+
+void AnalogOctaverFrame::onStereo(double value)
+{
+  ui->stereoDial->setValue(value);
   update();
 }

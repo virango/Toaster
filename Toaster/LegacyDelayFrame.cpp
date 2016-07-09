@@ -22,7 +22,6 @@ LegacyDelayFrame::LegacyDelayFrame(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::LegacyDelayFrame)
   , mpStomp(nullptr)
-  , mFXType(None)
   , mToTempo(false)
 {
   ui->setupUi(this);
@@ -52,6 +51,9 @@ void LegacyDelayFrame::activate(QObject& stomp)
     connect(mpStomp, &Stomp::delayModulationReceived, this, &LegacyDelayFrame::OnModulation);
     connect(mpStomp, &Stomp::duckingReceived, this, &LegacyDelayFrame::OnDucking);
 
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+
     mpStomp->requestDelayToTempo();
     mpStomp->requestDelayMix();
     mpStomp->requestDelay1Time();
@@ -63,9 +65,6 @@ void LegacyDelayFrame::activate(QObject& stomp)
     mpStomp->requestDistortionBoosterTone();
     mpStomp->requestDelayModulation();
     mpStomp->requestDucking();
-
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 

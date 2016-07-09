@@ -21,7 +21,6 @@ TremoloFrame::TremoloFrame(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::TremoloFrame)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
   ui->setupUi(this);
   ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
@@ -39,11 +38,15 @@ void TremoloFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationRateReceived(int)), this, SLOT(onRate(int)));
-    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationRateReceived), this, &TremoloFrame::onRate);
+    connect(mpStomp, &Stomp::modulationDepthReceived, this, &TremoloFrame::onDepth);
+    connect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &TremoloFrame::onCrossover);
+    connect(mpStomp, &Stomp::volumeReceived, this, &TremoloFrame::onVolume);
+    connect(mpStomp, &Stomp::duckingReceived, this, &TremoloFrame::onDucking);
+    connect(mpStomp, &Stomp::stereoReceived, this, &TremoloFrame::onStereo);
+
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestModulationRate();
     mpStomp->requestModulationDepth();
@@ -51,8 +54,19 @@ void TremoloFrame::activate(QObject& stomp)
     mpStomp->requestVolume();
     mpStomp->requestDucking();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    StompInstance si = mpStomp->getInstance();
+    if(si != StompX && si != StompMod && si != StompDelay)
+    {
+      ui->lcdDisplay->setValue4("");
+      ui->lcdDisplay->setValue4Title("");
+      ui->stereoDial->setIsActive(false);
+    }
+    else
+    {
+      ui->lcdDisplay->setValue4Title("Stereo");
+      ui->stereoDial->setIsActive(true);
+      mpStomp->requestStereo();
+    }
   }
 }
 
@@ -60,11 +74,12 @@ void TremoloFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationRateReceived(int)), this, SLOT(onRate(int)));
-    disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    disconnect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationRateReceived), this, &TremoloFrame::onRate);
+    disconnect(mpStomp, &Stomp::modulationDepthReceived, this, &TremoloFrame::onDepth);
+    disconnect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &TremoloFrame::onCrossover);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &TremoloFrame::onVolume);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &TremoloFrame::onDucking);
+    disconnect(mpStomp, &Stomp::stereoReceived, this, &TremoloFrame::onStereo);
   }
   mpStomp = nullptr;
 }
@@ -142,6 +157,12 @@ void TremoloFrame::on_duckingDial_valueChanged(double value)
     mpStomp->applyDucking(value);
 }
 
+void TremoloFrame::on_stereoDial_valueChanged(double value)
+{
+  if(mpStomp != nullptr)
+    mpStomp->applyStereo(value);
+}
+
 void TremoloFrame::onRate(int value)
 {
   ui->rateDial->setValue(value*128);
@@ -169,5 +190,11 @@ void TremoloFrame::onVolume(double value)
 void TremoloFrame::onDucking(double value)
 {
   ui->duckingDial->setValue(value);
+  update();
+}
+
+void TremoloFrame::onStereo(double value)
+{
+  ui->stereoDial->setValue(value);
   update();
 }

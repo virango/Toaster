@@ -434,7 +434,7 @@ protected:
       (*this)[GraphicEqualizer] =       0x61;
       (*this)[StudioEqualizer] =        0x62;
       (*this)[MetalEqualizer] =         0x63;
-      (*this)[StereoWeidener] =         0x65;
+      (*this)[StereoWidener] =          0x65;
       (*this)[Compressor] =             0x31;
       (*this)[NoiseGate21] =            0x39;
       (*this)[NoiseGate41] =            0x3A;
@@ -500,7 +500,7 @@ protected:
       (*this)[0x61] = GraphicEqualizer;
       (*this)[0x62] = StudioEqualizer;
       (*this)[0x63] = MetalEqualizer;
-      (*this)[0x65] = StereoWeidener;
+      (*this)[0x65] = StereoWidener;
       (*this)[0x31] = Compressor;
       (*this)[0x39] = NoiseGate21;
       (*this)[0x3A] = NoiseGate41;

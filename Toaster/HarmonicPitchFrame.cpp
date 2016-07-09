@@ -15,6 +15,7 @@
 */
 #include "HarmonicPitchFrame.h"
 #include "ui_HarmonicPitchFrame.h"
+#include "Settings.h"
 
 HarmonicPitchFrame::HarmonicPitchFrame(QWidget *parent)
   : QWidget(parent)
@@ -25,6 +26,11 @@ HarmonicPitchFrame::HarmonicPitchFrame(QWidget *parent)
   setCurrentDisplayPage(QToasterLCD::Page1);
   ui->voice1IntervalDial->setLookUpTable(LookUpTables::getVoiceIntervalValues());
   ui->voice2IntervalDial->setLookUpTable(LookUpTables::getVoiceIntervalValues());
+
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    ui->lcdDisplay->setValue9Title("Voice Balance");
+  }
 }
 
 HarmonicPitchFrame::~HarmonicPitchFrame()
@@ -39,16 +45,20 @@ void HarmonicPitchFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(voice1IntervalReceived(int)), this, SLOT(onVoice1Interval(int)));
-    connect(mpStomp, SIGNAL(voice2IntervalReceived(int)), this, SLOT(onVoice2Interval(int)));
-    connect(mpStomp, SIGNAL(formantShiftReceived(double)), this, SLOT(onFormantShift(double)));
-    connect(mpStomp, SIGNAL(keyReceived(int)), this, SLOT(onKey(int)));
-    connect(mpStomp, SIGNAL(voiceMixReceived(double)), this, SLOT(onVoiceMix(double)));
-    connect(mpStomp, SIGNAL(intensityReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(pureTuningReceived(bool)), this, SLOT(onPureTuning(bool)));
-    connect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
+    connect(mpStomp, &Stomp::voice1IntervalReceived, this, &HarmonicPitchFrame::onVoice1Interval);
+    connect(mpStomp, &Stomp::voice2IntervalReceived, this, &HarmonicPitchFrame::onVoice2Interval);
+    connect(mpStomp, &Stomp::formantShiftReceived, this, &HarmonicPitchFrame::onFormantShift);
+    connect(mpStomp, &Stomp::keyReceived, this, &HarmonicPitchFrame::onKey);
+    connect(mpStomp, &Stomp::voiceMixReceived, this, &HarmonicPitchFrame::onVoiceMix);
+    connect(mpStomp, &Stomp::intensityReceived, this, &HarmonicPitchFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &HarmonicPitchFrame::onDucking);
+    connect(mpStomp, &Stomp::volumeReceived, this, &HarmonicPitchFrame::onVolume);
+    connect(mpStomp, &Stomp::pureTuningReceived, this, &HarmonicPitchFrame::onPureTuning);
+    connect(mpStomp, &Stomp::formantShiftOnOffReceived, this, &HarmonicPitchFrame::onFormantShiftOnOff);
+    connect(mpStomp, &Stomp::stereoReceived, this, &HarmonicPitchFrame::onStereo);
+
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestVoice1Interval();
     mpStomp->requestVoice2Interval();
@@ -61,8 +71,20 @@ void HarmonicPitchFrame::activate(QObject& stomp)
     mpStomp->requestPureTuning();
     mpStomp->requestFormantShiftOnOff();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    StompInstance si = mpStomp->getInstance();
+    if(si != StompX && si != StompMod && si != StompDelay)
+    {
+      ui->lcdDisplay->setValue16("");
+      ui->lcdDisplay->setValue16Title("");
+      ui->stereoDial->setIsActive(false);
+    }
+    else
+    {
+      ui->lcdDisplay->setValue16Title("Stereo");
+      ui->stereoDial->setIsActive(true);
+      mpStomp->requestStereo();
+    }
+
   }
 }
 
@@ -70,16 +92,17 @@ void HarmonicPitchFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(voice1IntervalReceived(int)), this, SLOT(onVoice1Interval(int)));
-    disconnect(mpStomp, SIGNAL(voice2IntervalReceived(int)), this, SLOT(onVoice1Interval(int)));
-    disconnect(mpStomp, SIGNAL(formantShiftReceived(double)), this, SLOT(onFormantShift(double)));
-    disconnect(mpStomp, SIGNAL(keyReceived(int)), this, SLOT(onKey(int)));
-    disconnect(mpStomp, SIGNAL(voiceMixReceived(double)), this, SLOT(onVoiceMix(double)));
-    disconnect(mpStomp, SIGNAL(intensityReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(pureTuningReceived(bool)), this, SLOT(onPureTuning(bool)));
-    disconnect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
+    disconnect(mpStomp, &Stomp::voice1IntervalReceived, this, &HarmonicPitchFrame::onVoice1Interval);
+    disconnect(mpStomp, &Stomp::voice2IntervalReceived, this, &HarmonicPitchFrame::onVoice2Interval);
+    disconnect(mpStomp, &Stomp::formantShiftReceived, this, &HarmonicPitchFrame::onFormantShift);
+    disconnect(mpStomp, &Stomp::keyReceived, this, &HarmonicPitchFrame::onKey);
+    disconnect(mpStomp, &Stomp::voiceMixReceived, this, &HarmonicPitchFrame::onVoiceMix);
+    disconnect(mpStomp, &Stomp::intensityReceived, this, &HarmonicPitchFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &HarmonicPitchFrame::onDucking);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &HarmonicPitchFrame::onVolume);
+    disconnect(mpStomp, &Stomp::pureTuningReceived, this, &HarmonicPitchFrame::onPureTuning);
+    disconnect(mpStomp, &Stomp::formantShiftOnOffReceived, this, &HarmonicPitchFrame::onFormantShiftOnOff);
+    disconnect(mpStomp, &Stomp::stereoReceived, this, &HarmonicPitchFrame::onStereo);
   }
 
   mpStomp = nullptr;
@@ -190,6 +213,12 @@ void HarmonicPitchFrame::on_formantShiftOnOffDial_valueChanged(int valueIndex)
     mpStomp->applyFormantShiftOnOff(valueIndex != 0);
 }
 
+void HarmonicPitchFrame::on_stereoDial_valueChanged(double value)
+{
+  if(mpStomp != nullptr)
+    mpStomp->applyStereo(value);
+}
+
 void HarmonicPitchFrame::onVoice1Interval(int value)
 {
   ui->voice1IntervalDial->setValue(value);
@@ -247,5 +276,11 @@ void HarmonicPitchFrame::onPureTuning(bool onOff)
 void HarmonicPitchFrame::onFormantShiftOnOff(bool onOff)
 {
   ui->formantShiftOnOffDial->setValue(onOff ? 1 : 0);
+  update();
+}
+
+void HarmonicPitchFrame::onStereo(double value)
+{
+  ui->stereoDial->setValue(value);
   update();
 }

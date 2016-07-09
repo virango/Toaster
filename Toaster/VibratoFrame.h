@@ -50,11 +50,13 @@ private slots:
   void on_depthDial_valueChanged(double value);
   void on_crossoverDial_valueChanged(double value);
   void on_volumeDial_valueChanged(double value);
+  void on_duckingDial_valueChanged(double value);
   // kpa => ui
   void onRate(double value);
   void onDepth(double value);
   void onCrossover(int value);
   void onVolume(double value);
+  void onDucking(double value);
 
 private:
   Ui::VibratoFrame *ui;

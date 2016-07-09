@@ -49,10 +49,11 @@ private slots:
   // ui => kpa
   void on_volumeDial_valueChanged(double value);
   void on_driveDial_valueChanged(double value);
+  void on_mixDial_valueChanged(double value);
   // kpa => ui
   void onVolume(double value);
   void onDrive(double value);
-
+  void onMix(double value);
 
 private:
   Ui::DriveDSFrame *ui;

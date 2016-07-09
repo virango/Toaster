@@ -69,6 +69,7 @@ private slots:
   void onStompDType(::FXType type);
   void onStompXType(::FXType type);
   void onStompModType(::FXType type);
+  void onStompDelayType(::FXType type);
   void onModRate(int value);
   void onModIntensity(double value);
 

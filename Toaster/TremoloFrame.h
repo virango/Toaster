@@ -51,18 +51,19 @@ private slots:
   void on_crossoverDial_valueChanged(int value);
   void on_volumeDial_valueChanged(double value);
   void on_duckingDial_valueChanged(double value);
+  void on_stereoDial_valueChanged(double value);
   // kpa => ui
   void onRate(int value);
   void onDepth(double value);
   void onCrossover(int value);
   void onVolume(double value);
   void onDucking(double value);
+  void onStereo(double value);
+
 private:
   Ui::TremoloFrame *ui;
 
   Stomp* mpStomp;
-
-  FXType mFXType;
 };
 
 #endif // TREMOLOFRAME_H

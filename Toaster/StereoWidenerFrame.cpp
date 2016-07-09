@@ -13,25 +13,25 @@
 *   You should have received a copy of the GNU General Public License along with Toaster.
 *   If not, see <http://www.gnu.org/licenses/>.
 */
-#include "StereoWeidenerFrame.h"
-#include "ui_StereoWeidenerFrame.h"
+#include "StereoWidenerFrame.h"
+#include "ui_StereoWidenerFrame.h"
 #include "Stomp.h"
 
-StereoWeidenerFrame::StereoWeidenerFrame(QWidget *parent)
+StereoWidenerFrame::StereoWidenerFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::StereoWeidenerFrame)
+  , ui(new Ui::StereoWidenerFrame)
   , mpStomp(nullptr)
   , mFXType(None)
 {
   ui->setupUi(this);
 }
 
-StereoWeidenerFrame::~StereoWeidenerFrame()
+StereoWidenerFrame::~StereoWidenerFrame()
 {
   delete ui;
 }
 
-void StereoWeidenerFrame::activate(QObject& stomp)
+void StereoWidenerFrame::activate(QObject& stomp)
 {
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
@@ -50,7 +50,7 @@ void StereoWeidenerFrame::activate(QObject& stomp)
   }
 }
 
-void StereoWeidenerFrame::deactivate()
+void StereoWidenerFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
@@ -61,17 +61,17 @@ void StereoWeidenerFrame::deactivate()
   mpStomp = nullptr;
 }
 
-QToasterLCD::Page StereoWeidenerFrame::getMaxDisplayPage()
+QToasterLCD::Page StereoWidenerFrame::getMaxDisplayPage()
 {
   return ui->lcdDisplay->maxPage();
 }
 
-QToasterLCD::Page StereoWeidenerFrame::getCurrentDisplayPage()
+QToasterLCD::Page StereoWidenerFrame::getCurrentDisplayPage()
 {
   return ui->lcdDisplay->currentPage();
 }
 
-void StereoWeidenerFrame::setCurrentDisplayPage(QToasterLCD::Page page)
+void StereoWidenerFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
   if(page <= ui->lcdDisplay->maxPage())
   {
@@ -79,62 +79,62 @@ void StereoWeidenerFrame::setCurrentDisplayPage(QToasterLCD::Page page)
   }
 }
 
-void StereoWeidenerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
+void StereoWidenerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
   ui->lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
-void StereoWeidenerFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
+void StereoWidenerFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
   ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
-void StereoWeidenerFrame::displayDelayEnabled(bool enabled)
+void StereoWidenerFrame::displayDelayEnabled(bool enabled)
 {
   ui->lcdDisplay->setDelayEnabled(enabled);
 }
 
-void StereoWeidenerFrame::displayReverbEnabled(bool enabled)
+void StereoWidenerFrame::displayReverbEnabled(bool enabled)
 {
   ui->lcdDisplay->setReverbEnabled(enabled);
 }
 
-void StereoWeidenerFrame::displayAmpName(const QString&  ampName)
+void StereoWidenerFrame::displayAmpName(const QString&  ampName)
 {
   ui->lcdDisplay->setAmpName(ampName);
 }
 
-void StereoWeidenerFrame::on_intensityDial_valueChanged(double value)
+void StereoWidenerFrame::on_intensityDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyModulationDepth(value);
 }
 
-void StereoWeidenerFrame::on_tuneDial_valueChanged(double value)
+void StereoWidenerFrame::on_tuneDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyModulationRate(value);
 }
 
-void StereoWeidenerFrame::on_duckingDial_valueChanged(double value)
+void StereoWidenerFrame::on_duckingDial_valueChanged(double value)
 {
   if(mpStomp != nullptr)
     mpStomp->applyDucking(value);
 }
 
-void StereoWeidenerFrame::onIntensity(double value)
+void StereoWidenerFrame::onIntensity(double value)
 {
   ui->intensityDial->setValue(value);
   update();
 }
 
-void StereoWeidenerFrame::onTune(double value)
+void StereoWidenerFrame::onTune(double value)
 {
   ui->tuneDial->setValue(value);
   update();
 }
 
-void StereoWeidenerFrame::onDucking(double value)
+void StereoWidenerFrame::onDucking(double value)
 {
   ui->duckingDial->setValue(value);
   update();

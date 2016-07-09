@@ -21,7 +21,6 @@ FlangerOnewayFrame::FlangerOnewayFrame(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::FlangerOnewayFrame)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
   ui->setupUi(this);
 }
@@ -37,13 +36,17 @@ void FlangerOnewayFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
-    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
-    connect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationRateReceived), this, &FlangerOnewayFrame::onRate);
+    connect(mpStomp, &Stomp::modulationDepthReceived, this, &FlangerOnewayFrame::onDepth);
+    connect(mpStomp, &Stomp::modulationManualReceived, this, &FlangerOnewayFrame::onManual);
+    connect(mpStomp, &Stomp::modulationFeedbackReceived, this, &FlangerOnewayFrame::onFeedback);
+    connect(mpStomp, &Stomp::mixReceived, this, &FlangerOnewayFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &FlangerOnewayFrame::onDucking);
+    connect(mpStomp, &Stomp::volumeReceived, this, &FlangerOnewayFrame::onVolume);
+    connect(mpStomp, &Stomp::stereoReceived, this, &FlangerOnewayFrame::onStereo);
+
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestModulationRate();
     mpStomp->requestModulationDepth();
@@ -53,10 +56,19 @@ void FlangerOnewayFrame::activate(QObject& stomp)
     mpStomp->requestDucking();
     mpStomp->requestVolume();
 
-    mFXType = mpStomp->getFXType();
-
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mFXType));
+    StompInstance si = mpStomp->getInstance();
+    if(si != StompX && si != StompMod && si != StompDelay)
+    {
+      ui->lcdDisplay->setValue7("");
+      ui->lcdDisplay->setValue7Title("");
+      ui->stereoDial->setIsActive(false);
+    }
+    else
+    {
+      ui->lcdDisplay->setValue7Title("Stereo");
+      ui->stereoDial->setIsActive(true);
+      mpStomp->requestStereo();
+    }
   }
 }
 
@@ -64,15 +76,14 @@ void FlangerOnewayFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
-    disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
-    disconnect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-
-    mFXType = None;
+    disconnect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationRateReceived), this, &FlangerOnewayFrame::onRate);
+    disconnect(mpStomp, &Stomp::modulationDepthReceived, this, &FlangerOnewayFrame::onDepth);
+    disconnect(mpStomp, &Stomp::modulationManualReceived, this, &FlangerOnewayFrame::onManual);
+    disconnect(mpStomp, &Stomp::modulationFeedbackReceived, this, &FlangerOnewayFrame::onFeedback);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &FlangerOnewayFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &FlangerOnewayFrame::onDucking);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &FlangerOnewayFrame::onVolume);
+    disconnect(mpStomp, &Stomp::stereoReceived, this, &FlangerOnewayFrame::onStereo);
   }
 
   mpStomp = nullptr;
@@ -163,6 +174,12 @@ void FlangerOnewayFrame::on_volumeDial_valueChanged(double value)
     mpStomp->applyVolume(value);
 }
 
+void FlangerOnewayFrame::on_stereoDial_valueChanged(double value)
+{
+  if(mpStomp != nullptr)
+    mpStomp->applyStereo(value);
+}
+
 void FlangerOnewayFrame::onRate(double value)
 {
   ui->rateDial->setValue(value - 5.0);
@@ -205,3 +222,8 @@ void FlangerOnewayFrame::onVolume(double value)
   update();
 }
 
+void FlangerOnewayFrame::onStereo(double value)
+{
+  ui->stereoDial->setValue(value);
+  update();
+}

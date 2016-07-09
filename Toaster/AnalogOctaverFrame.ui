@@ -56,7 +56,7 @@
     <string>Low Cut</string>
    </property>
    <property name="value8Title">
-    <string/>
+    <string>Stereo</string>
    </property>
    <property name="value9Title">
     <string/>
@@ -188,7 +188,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QToasterDial" name="dummy8Dial">
+  <widget class="QToasterDial" name="stereoDial">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -204,16 +204,19 @@
     <enum>QToasterDial::None</enum>
    </property>
    <property name="minValue">
-    <double>-12.000000000000000</double>
+    <double>-180.000000000000000</double>
    </property>
    <property name="maxValue">
-    <double>12.000000000000000</double>
+    <double>180.000000000000000</double>
    </property>
    <property name="stepWidth">
-    <double>0.100000000000000</double>
+    <double>1.000000000000000</double>
+   </property>
+   <property name="unit">
+    <string>°</string>
    </property>
    <property name="isActive">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToasterDial" name="dummy2Dial">
@@ -475,6 +478,22 @@
     <hint type="destinationlabel">
      <x>329</x>
      <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stereoDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue8(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>452</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>442</x>
+     <y>127</y>
     </hint>
    </hints>
   </connection>

@@ -80,7 +80,7 @@
     <string/>
    </property>
    <property name="value16Title">
-    <string/>
+    <string>Stereo</string>
    </property>
    <property name="eqBand1Value">
     <double>0.000000000000000</double>
@@ -193,10 +193,10 @@
     </widget>
    </widget>
    <widget class="QWidget" name="page22">
-    <widget class="QToasterDial" name="dummy15Dial">
+    <widget class="QToasterDial" name="stereoDial">
      <property name="geometry">
       <rect>
-       <x>220</x>
+       <x>330</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -208,14 +208,20 @@
      <property name="ledRingType" stdset="0">
       <enum>QToasterDial::None</enum>
      </property>
+     <property name="minValue">
+      <double>-180.000000000000000</double>
+     </property>
      <property name="maxValue">
-      <double>10.000000000000000</double>
+      <double>180.000000000000000</double>
      </property>
      <property name="stepWidth">
-      <double>0.100000000000000</double>
+      <double>1.000000000000000</double>
+     </property>
+     <property name="unit">
+      <string>°</string>
      </property>
      <property name="isActive">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QToasterDial" name="dummy14Dial">
@@ -264,10 +270,10 @@
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QToasterEnumDial" name="dummy16Dial">
+    <widget class="QToasterEnumDial" name="dummy15Dial">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>220</x>
        <y>0</y>
        <width>70</width>
        <height>70</height>
@@ -771,6 +777,22 @@
     <hint type="destinationlabel">
      <x>228</x>
      <y>151</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stereoDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue16(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>446</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>444</x>
+     <y>134</y>
     </hint>
    </hints>
   </connection>

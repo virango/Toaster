@@ -38,12 +38,13 @@ void MetalDSFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
-    connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLow(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddle(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMidFreq(int)));
-    connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHigh(double)));
+    connect(mpStomp, &Stomp::volumeReceived, this, &MetalDSFrame::onVolume);
+    connect(mpStomp, &Stomp::distortionShaperDriveReceived, this, &MetalDSFrame::onDrive);
+    connect(mpStomp, &Stomp::parametricEQLowGainReceived, this, &MetalDSFrame::onLow);
+    connect(mpStomp, &Stomp::parametricEQPeakGainReceived, this, &MetalDSFrame::onMiddle);
+    connect(mpStomp, &Stomp::parametricEQPeakFrequencyReceived, this, &MetalDSFrame::onMidFreq);
+    connect(mpStomp, &Stomp::parametricEQHighGainReceived, this, &MetalDSFrame::onHigh);
+    connect(mpStomp, &Stomp::mixReceived, this, &MetalDSFrame::onMix);
 
     mpStomp->requestVolume();
     mpStomp->requestDistortionShaperDrive();
@@ -51,6 +52,7 @@ void MetalDSFrame::activate(QObject& stomp)
     mpStomp->requestParametricEQPeakGain();
     mpStomp->requestParametricEQPeakFrequency();
     mpStomp->requestParametricEQHighGain();
+    mpStomp->requestMix();
 
     ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
     ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
@@ -61,12 +63,13 @@ void MetalDSFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowDial(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddleDial(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMidFreqDial(int)));
-    disconnect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighDial(double)));
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &MetalDSFrame::onVolume);
+    disconnect(mpStomp, &Stomp::distortionShaperDriveReceived, this, &MetalDSFrame::onDrive);
+    disconnect(mpStomp, &Stomp::parametricEQLowGainReceived, this, &MetalDSFrame::onLow);
+    disconnect(mpStomp, &Stomp::parametricEQPeakGainReceived, this, &MetalDSFrame::onMiddle);
+    disconnect(mpStomp, &Stomp::parametricEQPeakFrequencyReceived, this, &MetalDSFrame::onMidFreq);
+    disconnect(mpStomp, &Stomp::parametricEQHighGainReceived, this, &MetalDSFrame::onHigh);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &MetalDSFrame::onMix);
   }
   mpStomp = nullptr;
 }
@@ -156,6 +159,12 @@ void MetalDSFrame::onVolume(double value)
   update();
 }
 
+void MetalDSFrame::on_mixDial_valueChanged(double value)
+{
+  if(mpStomp != nullptr)
+    mpStomp->applyMix(value);
+}
+
 void MetalDSFrame::onDrive(double value)
 {
   ui->driveDial->setValue(value);
@@ -183,5 +192,11 @@ void MetalDSFrame::onMidFreq(int value)
 void MetalDSFrame::onHigh(double value)
 {
   ui->highDial->setValue(value);
+  update();
+}
+
+void MetalDSFrame::onMix(double value)
+{
+  ui->mixDial->setValue(value);
   update();
 }

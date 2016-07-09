@@ -54,7 +54,16 @@ void StompEditorFrame::init()
   connect(&stompXObj, &Stomp::typeReceived, this, &StompEditorFrame::onStompXType);
   connect(&stompModObj, &Stomp::typeReceived, this, &StompEditorFrame::onStompModType);
   // delay
-  connect(&delayObj, &Delay::onOffCutsTailReceived, this, &StompEditorFrame::onDelayOnOff);
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    connect(&stompDelayObj, &Stomp::onOffReceived, this, &StompEditorFrame::onDelayOnOff);
+    connect(&stompDelayObj, &Stomp::typeReceived, this, &StompEditorFrame::onStompDelayType);
+  }
+  else
+  {
+    connect(&delayObj, &Delay::onOffCutsTailReceived, this, &StompEditorFrame::onDelayOnOff);
+  }
+
   // reverb
   connect(&reverbObj, &Reverb::onOffCutsTailReceived, this, &StompEditorFrame::onReverbOnOff);
   // profile
@@ -232,9 +241,9 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
         mpActivePage = ui->metalEqualizer;
         index = indexOf(ui->metalEqualizer);
         break;
-      case StereoWeidener:
-        mpActivePage = ui->stereoWeidener;
-        index = indexOf(ui->stereoWeidener);
+      case StereoWidener:
+        mpActivePage = ui->stereoWidener;
+        index = indexOf(ui->stereoWidener);
         break;
       case Compressor:
         mpActivePage = ui->compressorFrame;
@@ -511,6 +520,12 @@ void StompEditorFrame::onStompModType(::FXType type)
 {
   if(mpActivePage != nullptr)
     mpActivePage->displayStompType(StompMod, type);
+}
+
+void StompEditorFrame::onStompDelayType(::FXType type)
+{
+  if(mpActivePage != nullptr)
+    mpActivePage->displayStompType(StompDelay, type);
 }
 
 // delay

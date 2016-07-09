@@ -14,6 +14,7 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "Stomp.h"
+#include "Settings.h"
 
 Stomp::Stomp(StompInstance instance)
   : QObject(0)
@@ -144,7 +145,10 @@ void Stomp::applyDistortionShaperDrive(double distortionShaperDrive)
 
 void Stomp::applyDistortionBoosterTone(double distortionBoosterTone)
 {
-  midiApplyDistortionBoosterTone(phys2Raw(distortionBoosterTone, 10, -5));
+  if(Settings::get().getKPAOSVersion() < 0x04000000)
+    midiApplyDistortionBoosterTone(phys2Raw(distortionBoosterTone, 10, -5));
+  else
+    midiApplyDistortionBoosterTone(phys2Raw(distortionBoosterTone, 10, 0));
 }
 
 void Stomp::applyCompressorGateIntensity(double compressorGateIntensity)
@@ -506,7 +510,10 @@ void Stomp::midiDistortionShaperDriveReceived(unsigned short rawVal)
 
 void Stomp::midiDistortionBoosterToneReceived(unsigned short rawVal)
 {
-  emit distortionBoosterToneReceived(raw2Phys(rawVal, 10, -5));
+  if(Settings::get().getKPAOSVersion() < 0x04000000)
+    emit distortionBoosterToneReceived(raw2Phys(rawVal, 10, -5));
+  else
+    emit distortionBoosterToneReceived(raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiCompressorGateIntensityReceived(unsigned short rawVal)

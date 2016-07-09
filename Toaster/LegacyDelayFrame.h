@@ -76,7 +76,6 @@ private:
   void UpdateLCD();
   Ui::LegacyDelayFrame *ui;
   Stomp* mpStomp;
-  FXType mFXType;
   bool mToTempo;
 };
 

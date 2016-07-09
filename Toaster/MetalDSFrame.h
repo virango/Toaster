@@ -52,6 +52,7 @@ private slots:
   void on_middleDial_valueChanged(double value);
   void on_midFreqDial_valueChanged(int value);
   void on_highDial_valueChanged(double value);
+  void on_mixDial_valueChanged(double value);
   // kpa => ui
   void onVolume(double value);
   void onDrive(double value);
@@ -59,6 +60,7 @@ private slots:
   void onMiddle(double value);
   void onMidFreq(int value);
   void onHigh(double value);
+  void onMix(double value);
 
 private:
   Ui::MetalDSFrame *ui;

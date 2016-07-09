@@ -47,6 +47,7 @@ private slots:
   void onStompDType(::FXType type);
   void onStompXType(::FXType type);
   void onStompModType(::FXType type);
+  void onStompDelayType(::FXType type);
 
   // delay
   // kpa => ui

@@ -52,6 +52,7 @@ private slots:
   void on_volumeDial_valueChanged(double value);
   void on_mixDial_valueChanged(double value);
   void on_duckingDial_valueChanged(double value);
+  void on_stereoDial_valueChanged(double value);
   // kpa => ui
   void onDistance(int value);
   void onLowHighBalance(double value);
@@ -59,12 +60,12 @@ private slots:
   void onVolume(double value);
   void onMix(double value);
   void onDucking(double value);
+  void onStereo(double value);
+
 private:
   Ui::RotarySpeakerFrame *ui;
 
   Stomp* mpStomp;
-
-  FXType mFXType;
 };
 
 #endif // ROTARYSPEAKERFRAME_H

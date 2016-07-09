@@ -21,6 +21,7 @@
 #include "Profile.h"
 #include "Stomp.h"
 #include "Reverb.h"
+#include "Settings.h"
 
 BrowserFrame::BrowserFrame(QWidget *parent)
   : QFrame(parent)
@@ -42,7 +43,15 @@ BrowserFrame::BrowserFrame(QWidget *parent)
   connect(&stompXObj, &Stomp::typeReceived, this, &BrowserFrame::onStompXType);
   connect(&stompModObj, &Stomp::typeReceived, this, &BrowserFrame::onStompModType);
   // delay
-  connect(&delayObj, &Delay::onOffCutsTailReceived, this, &BrowserFrame::onDelayOnOff);
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    connect(&stompDelayObj, &Stomp::onOffReceived, this, &BrowserFrame::onDelayOnOff);
+    connect(&stompDelayObj, &Stomp::typeReceived, this, &BrowserFrame::onStompDelayType);
+  }
+  else
+  {
+    connect(&delayObj, &Delay::onOffCutsTailReceived, this, &BrowserFrame::onDelayOnOff);
+  }
   // reverb
   connect(&reverbObj, &Reverb::onOffCutsTailReceived, this, &BrowserFrame::onReverbOnOff);
   // eq
@@ -132,6 +141,12 @@ void BrowserFrame::onStompModType(::FXType type)
 {
   ui->lcdDisplay->setStompModFXType(type);
 }
+
+void BrowserFrame::onStompDelayType(::FXType type)
+{
+  ui->lcdDisplay->setStompDelayFXType(type);
+}
+
 //------------------------------------------------------------------------------------------
 
 // delay

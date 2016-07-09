@@ -16,6 +16,7 @@
 #include "DriveDSFrame.h"
 #include "ui_DriveDSFrame.h"
 #include "Stomp.h"
+#include "Settings.h"
 
 DriveDSFrame::DriveDSFrame(QWidget *parent)
   : QWidget(parent)
@@ -24,6 +25,13 @@ DriveDSFrame::DriveDSFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
+  if(Settings::get().getKPAOSVersion() < 0x04000000)
+  {
+    ui->mixDial->setValue(0);
+    ui->lcdDisplay->setValue3Title("");
+    ui->lcdDisplay->setValue3("");
+    ui->mixDial->setIsActive(false);
+  }
 }
 
 DriveDSFrame::~DriveDSFrame()
@@ -37,8 +45,26 @@ void DriveDSFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
+    connect(mpStomp, &Stomp::volumeReceived, this, &DriveDSFrame::onVolume);
+    connect(mpStomp, &Stomp::distortionShaperDriveReceived, this, &DriveDSFrame::onDrive);
+
+    if(Settings::get().getKPAOSVersion() >= 0x04000000)
+    {
+      if(mpStomp->getFXType() == FuzzDS)
+      {
+        ui->lcdDisplay->setValue3Title("Mix");
+        ui->mixDial->setIsActive(true);
+        connect(mpStomp, &Stomp::mixReceived, this, &DriveDSFrame::onMix);
+        mpStomp->requestMix();
+      }
+      else
+      {
+        ui->lcdDisplay->setValue3Title("");
+        ui->mixDial->setValue(0);
+        ui->lcdDisplay->setValue3("");
+        ui->mixDial->setIsActive(false);
+      }
+    }
 
     mpStomp->requestVolume();
     mpStomp->requestDistortionShaperDrive();
@@ -52,8 +78,11 @@ void DriveDSFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &DriveDSFrame::onVolume);
+    disconnect(mpStomp, &Stomp::distortionShaperDriveReceived, this, &DriveDSFrame::onDrive);
+
+    if((Settings::get().getKPAOSVersion() >= 0x04000000) && (mpStomp->getFXType() == FuzzDS))
+      disconnect(mpStomp, &Stomp::mixReceived, this, &DriveDSFrame::onMix);
   }
   mpStomp = nullptr;
 }
@@ -113,6 +142,12 @@ void DriveDSFrame::on_driveDial_valueChanged(double value)
     mpStomp->applyDistortionShaperDrive(value);
 }
 
+void DriveDSFrame::on_mixDial_valueChanged(double value)
+{
+  if(mpStomp != nullptr)
+    mpStomp->applyMix(value);
+}
+
 void DriveDSFrame::onVolume(double value)
 {
   ui->volumeDial->setValue(value);
@@ -122,5 +157,11 @@ void DriveDSFrame::onVolume(double value)
 void DriveDSFrame::onDrive(double value)
 {
   ui->driveDial->setValue(value);
+  update();
+}
+
+void DriveDSFrame::onMix(double value)
+{
+  ui->mixDial->setValue(value);
   update();
 }

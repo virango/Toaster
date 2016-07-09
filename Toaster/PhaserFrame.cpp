@@ -21,7 +21,6 @@ PhaserFrame::PhaserFrame(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::PhaserFrame)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
   ui->setupUi(this);
   ui->rateDial->setLookUpTable(LookUpTables::getFlangerRateValues());
@@ -39,21 +38,19 @@ void PhaserFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationRateReceived(int)), this, SLOT(onRate(int)));
-    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
-    connect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
-    connect(mpStomp, SIGNAL(modulationPhaserPeakSpreadReceived(double)), this, SLOT(onPeakSpread(double)));
-    connect(mpStomp, SIGNAL(modulationPhaserStagesReceived(double)), this, SLOT(onStages(double)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(stereoReceived(double)), this, SLOT(onStereo(double)));
-
-    mFXType = mpStomp->getFXType();
+    connect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationRateReceived), this, &PhaserFrame::onRate);
+    connect(mpStomp, &Stomp::modulationDepthReceived, this, &PhaserFrame::onDepth);
+    connect(mpStomp, &Stomp::modulationManualReceived, this, &PhaserFrame::onManual);
+    connect(mpStomp, &Stomp::modulationFeedbackReceived, this, &PhaserFrame::onFeedback);
+    connect(mpStomp, &Stomp::modulationPhaserPeakSpreadReceived, this, &PhaserFrame::onPeakSpread);
+    connect(mpStomp, &Stomp::modulationPhaserStagesReceived, this, &PhaserFrame::onStages);
+    connect(mpStomp, &Stomp::mixReceived, this, &PhaserFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &PhaserFrame::onDucking);
+    connect(mpStomp, &Stomp::volumeReceived, this, &PhaserFrame::onVolume);
+    connect(mpStomp, &Stomp::stereoReceived, this, &PhaserFrame::onStereo);
 
     ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mFXType));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestModulationRate();
     mpStomp->requestModulationDepth();
@@ -64,18 +61,19 @@ void PhaserFrame::activate(QObject& stomp)
     mpStomp->requestMix();
     mpStomp->requestDucking();
     mpStomp->requestVolume();
-    mpStomp->requestStereo();
 
-    if(mpStomp->getInstance() != StompX && mpStomp->getInstance() != StompMod)
+    StompInstance si = mpStomp->getInstance();
+    if(si != StompX && si != StompMod && si != StompDelay)
     {
-      ui->stereoDial->setIsActive(false);
       ui->lcdDisplay->setValue7("");
       ui->lcdDisplay->setValue7Title("");
+      ui->stereoDial->setIsActive(false);
     }
     else
     {
-      ui->stereoDial->setIsActive(true);
       ui->lcdDisplay->setValue7Title("Stereo");
+      ui->stereoDial->setIsActive(true);
+      mpStomp->requestStereo();
     }
   }
 }
@@ -84,16 +82,17 @@ void PhaserFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationRateReceived(int)), this, SLOT(onRate(int)));
-    disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
-    disconnect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
-    disconnect(mpStomp, SIGNAL(modulationPhaserPeakSpreadReceived(double)), this, SLOT(onPeakSpread(double)));
-    disconnect(mpStomp, SIGNAL(modulationPhaserStagesReceived(double)), this, SLOT(onStages(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(stereoReceived(double)), this, SLOT(onStereo(double)));
+    disconnect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationRateReceived), this, &PhaserFrame::onRate);
+    disconnect(mpStomp, &Stomp::modulationDepthReceived, this, &PhaserFrame::onDepth);
+    disconnect(mpStomp, &Stomp::modulationManualReceived, this, &PhaserFrame::onManual);
+    disconnect(mpStomp, &Stomp::modulationFeedbackReceived, this, &PhaserFrame::onFeedback);
+    disconnect(mpStomp, &Stomp::modulationPhaserPeakSpreadReceived, this, &PhaserFrame::onPeakSpread);
+    disconnect(mpStomp, &Stomp::modulationPhaserStagesReceived, this, &PhaserFrame::onStages);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &PhaserFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &PhaserFrame::onDucking);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &PhaserFrame::onVolume);
+    disconnect(mpStomp, &Stomp::stereoReceived, this, &PhaserFrame::onStereo);
+
   }
   mpStomp = nullptr;
 }

@@ -16,6 +16,7 @@
 #include "VibratoFrame.h"
 #include "ui_VibratoFrame.h"
 #include "Stomp.h"
+#include "Settings.h"
 
 VibratoFrame::VibratoFrame(QWidget *parent)
   : QWidget(parent)
@@ -38,10 +39,16 @@ void VibratoFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
-    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationRateReceived), this, &VibratoFrame::onRate);
+    connect(mpStomp, &Stomp::modulationDepthReceived, this, &VibratoFrame::onDepth);
+    connect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &VibratoFrame::onCrossover);
+    connect(mpStomp, &Stomp::volumeReceived, this, &VibratoFrame::onVolume);
+
+    if(Settings::get().getKPAOSVersion() >= 0x04000000)
+    {
+      connect(mpStomp, &Stomp::duckingReceived, this, &VibratoFrame::onDucking);
+      mpStomp->requestDucking();
+    }
 
     mpStomp->requestModulationRate();
     mpStomp->requestModulationDepth();
@@ -57,10 +64,14 @@ void VibratoFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
-    disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    disconnect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationRateReceived), this, &VibratoFrame::onRate);
+    disconnect(mpStomp, &Stomp::modulationDepthReceived, this, &VibratoFrame::onDepth);
+    disconnect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &VibratoFrame::onCrossover);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &VibratoFrame::onVolume);
+
+    if(Settings::get().getKPAOSVersion() >= 0x04000000)
+      disconnect(mpStomp, &Stomp::duckingReceived, this, &VibratoFrame::onDucking);
+
   }
   mpStomp = nullptr;
 }
@@ -132,6 +143,12 @@ void VibratoFrame::on_volumeDial_valueChanged(double value)
     mpStomp->applyVolume(value);
 }
 
+void VibratoFrame::on_duckingDial_valueChanged(double value)
+{
+  if(mpStomp != nullptr)
+    mpStomp->applyDucking(value);
+}
+
 void VibratoFrame::onRate(double value)
 {
   ui->rateDial->setValue(value);
@@ -156,3 +173,9 @@ void VibratoFrame::onVolume(double value)
   update();
 }
 
+
+void VibratoFrame::onDucking(double value)
+{
+  ui->duckingDial->setValue(value);
+  update();
+}

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QToasterDial" name="dummy7Dial">
+  <widget class="QToasterDial" name="stereoDial">
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -28,8 +28,17 @@
    <property name="ledRingType" stdset="0">
     <enum>QToasterDial::None</enum>
    </property>
+   <property name="minValue">
+    <double>-180.000000000000000</double>
+   </property>
+   <property name="maxValue">
+    <double>180.000000000000000</double>
+   </property>
+   <property name="unit">
+    <string>°</string>
+   </property>
    <property name="isActive">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToasterDial" name="manualDial">
@@ -118,7 +127,7 @@
     <string>Ducking</string>
    </property>
    <property name="value7Title">
-    <string/>
+    <string>Stereo</string>
    </property>
    <property name="value8Title">
     <string>Volume</string>
@@ -476,6 +485,22 @@
     <hint type="destinationlabel">
      <x>100</x>
      <y>163</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>stereoDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue7(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>337</x>
+     <y>131</y>
     </hint>
    </hints>
   </connection>

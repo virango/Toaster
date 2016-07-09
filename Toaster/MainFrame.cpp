@@ -88,9 +88,17 @@ MainFrame::MainFrame(QWidget *parent)
   connect(&stompModObj, static_cast<void (Stomp::*)(int)>(&Stomp::modulationRateReceived), this, &MainFrame::onModRate);
   connect(&stompModObj, &Stomp::modulationDepthReceived, this, &MainFrame::onModIntensity);
   // delay
-  connect(&delayObj, &Delay::onOffCutsTailReceived, this, &MainFrame::onDelayOnOff);
-  connect(&delayObj, &Delay::feedbackReceived, this, &MainFrame::onDelayFeedback);
-  connect(&delayObj, &Delay::mixReceived, this, &MainFrame::onDelayMix);
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    connect(&stompDelayObj, &Stomp::onOffReceived, this, &MainFrame::onDelayOnOff);
+    connect(&stompDelayObj, &Stomp::typeReceived, this, &MainFrame::onStompDelayType);
+  }
+  else
+  {
+    connect(&delayObj, &Delay::onOffCutsTailReceived, this, &MainFrame::onDelayOnOff);
+    connect(&delayObj, &Delay::feedbackReceived, this, &MainFrame::onDelayFeedback);
+    connect(&delayObj, &Delay::mixReceived, this, &MainFrame::onDelayMix);
+  }
   // reverb
   connect(&reverbObj, &Reverb::onOffCutsTailReceived, this, &MainFrame::onReverbOnOff);
   connect(&reverbObj, &Reverb::timeReceived, this, &MainFrame::onReverbTime);
@@ -187,8 +195,8 @@ void MainFrame::requestValues()
   stompModObj.requestAllValues();
   if(Settings::get().getKPAOSVersion() >= 0x04000000)
     stompDelayObj.requestAllValues();
-
-  delayObj.requestAllValues();
+  else
+    delayObj.requestAllValues();
   reverbObj.requestAllValues();
   ampObj.requestAllValues();
   eqObj.requestAllValues();
@@ -339,6 +347,12 @@ void MainFrame::onStompModType(::FXType type)
   setStompLedColor(type, ui->stompModLed);
 }
 
+void MainFrame::onStompDelayType(::FXType type)
+{
+  setStompLedColor(type, ui->stompDelay1Led);
+  setStompLedColor(type, ui->stompDelay2Led);
+}
+
 void MainFrame::onModIntensity(double value)
 {
   ui->modIntensityDial->setValue(value);
@@ -417,7 +431,7 @@ void MainFrame::on_delayMixDial_valueChanged(int value)
 // kpa => ui
 void MainFrame::onDelayOnOff(bool onOff)
 {
-  if(mOperationMode != StompEdit && Settings::get().getKPAOSVersion() < 0x04000000)
+  if(mOperationMode != StompEdit)
   {
     QToasterButton::State state = onOff ? QToasterButton::On : QToasterButton::Off;
     ui->delayButton->setState(state);
@@ -778,7 +792,7 @@ void MainFrame::setStompLedColor(::FXType type, QMultiColorLed* ledWidget)
     case GraphicEqualizer:
     case StudioEqualizer:
     case MetalEqualizer:
-    case StereoWeidener:
+    case StereoWidener:
       ledWidget->setColor(QMultiColorLed::Yellow);
       break;
     case Compressor:

@@ -67,7 +67,7 @@ enum FXType
   GraphicEqualizer,       // EQ       0x61
   StudioEqualizer,        // EQ       0x62
   MetalEqualizer,         // EQ       0x63
-  StereoWeidener,         // WIDE     0x65
+  StereoWidener,          // WIDE     0x65
 //-----cyan-----------------------
   Compressor,             // COMP     0x31
   NoiseGate21,            // GATE     0x39

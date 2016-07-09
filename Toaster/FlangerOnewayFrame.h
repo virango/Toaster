@@ -53,6 +53,7 @@ private slots:
   void on_mixDial_valueChanged(double value);
   void on_duckingDial_valueChanged(double value);
   void on_volumeDial_valueChanged(double value);
+  void on_stereoDial_valueChanged(double value);
   // kpa => ui
   void onRate(double value);
   void onDepth(double value);
@@ -61,12 +62,12 @@ private slots:
   void onMix(double value);
   void onDucking(double value);
   void onVolume(double value);
+  void onStereo(double value);
+
 private:
   Ui::FlangerOnewayFrame *ui;
 
   Stomp* mpStomp;
-
-  FXType mFXType;
 };
 
 #endif // FlangerOnewayFrame_H

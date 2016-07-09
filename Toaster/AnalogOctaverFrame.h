@@ -51,18 +51,19 @@ private slots:
   void on_voiceMixDial_valueChanged(double value);
   void on_mixDial_valueChanged(double value);
   void on_lowCutDial_valueChanged(double value);
+  void on_stereoDial_valueChanged(double value);
   // kpa => ui
   void onVolume(double value);
   void onDucking(double value);
   void onVoiceMix(double value);
   void onMix(double value);
   void onLowCut(double value);
+  void onStereo(double value);
+
 private:
   Ui::AnalogOctaverFrame *ui;
 
   Stomp* mpStomp;
-
-  FXType mFXType;
 };
 
 #endif // ANALOGOCTAVERFRAME_H

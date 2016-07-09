@@ -57,6 +57,7 @@ private slots:
   void on_smoothChordsDial_valueChanged(int valueIndex);
   void on_pureTuningDial_valueChanged(int valueIndex);
   void on_formantShiftOnOffDial_valueChanged(int valueIndex);
+  void on_stereoDial_valueChanged(double value);
   // kpa => ui
   void onVoice1Pitch(double value);
   void onVoice2Pitch(double value);
@@ -69,13 +70,12 @@ private slots:
   void onSmoothChords(bool onOff);
   void onPureTuning(bool onOff);
   void onFormantShiftOnOff(bool onOff);
+  void onStereo(double value);
 
 private:
   Ui::ChromaticPitchFrame *ui;
 
   Stomp* mpStomp;
-
-  FXType mFXType;
 };
 
 #endif // CHROMATICPITCHFRAME_H

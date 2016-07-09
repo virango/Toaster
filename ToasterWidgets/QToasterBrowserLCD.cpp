@@ -220,6 +220,12 @@ void QToasterBrowserLCD::setStompModFXType(FXType fxType)
   ui->stompModEdit->setCursorPosition(0);
 }
 
+void QToasterBrowserLCD::setStompDelayFXType(FXType fxType)
+{
+  ui->delayEdit->setText(sFXType2ShortNameMap[fxType]);
+  ui->delayEdit->setCursorPosition(0);
+}
+
 void QToasterBrowserLCD::setStompEnabled(StompInstance stompInstance, bool enabled)
 {
   switch(stompInstance)

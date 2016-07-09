@@ -16,15 +16,20 @@
 #include "ChromaticPitchFrame.h"
 #include "ui_ChromaticPitchFrame.h"
 #include "Stomp.h"
+#include "Settings.h"
 
 ChromaticPitchFrame::ChromaticPitchFrame(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::ChromaticPitchFrame)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
   ui->setupUi(this);
   setCurrentDisplayPage(QToasterLCD::Page1);
+
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    ui->lcdDisplay->setValue9Title("Voice Balance");
+  }
 }
 
 ChromaticPitchFrame::~ChromaticPitchFrame()
@@ -38,17 +43,21 @@ void ChromaticPitchFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(voice1PitchReceived(double)), this, SLOT(onVoice1Pitch(double)));
-    connect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onVoice2Pitch(double)));
-    connect(mpStomp, SIGNAL(formantShiftReceived(double)), this, SLOT(onFormantShift(double)));
-    connect(mpStomp, SIGNAL(detuneReceived(double)), this, SLOT(onDetune(double)));
-    connect(mpStomp, SIGNAL(voiceMixReceived(double)), this, SLOT(onVoiceMix(double)));
-    connect(mpStomp, SIGNAL(intensityReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
-    connect(mpStomp, SIGNAL(pureTuningReceived(bool)), this, SLOT(onPureTuning(bool)));
-    connect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
+    connect(mpStomp, &Stomp::voice1PitchReceived, this, &ChromaticPitchFrame::onVoice1Pitch);
+    connect(mpStomp, &Stomp::voice2PitchReceived, this, &ChromaticPitchFrame::onVoice2Pitch);
+    connect(mpStomp, &Stomp::formantShiftReceived, this, &ChromaticPitchFrame::onFormantShift);
+    connect(mpStomp, &Stomp::detuneReceived, this, &ChromaticPitchFrame::onDetune);
+    connect(mpStomp, &Stomp::voiceMixReceived, this, &ChromaticPitchFrame::onVoiceMix);
+    connect(mpStomp, &Stomp::intensityReceived, this, &ChromaticPitchFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &ChromaticPitchFrame::onDucking);
+    connect(mpStomp, &Stomp::volumeReceived, this, &ChromaticPitchFrame::onVolume);
+    connect(mpStomp, &Stomp::smoothChordsReceived, this, &ChromaticPitchFrame::onSmoothChords);
+    connect(mpStomp, &Stomp::pureTuningReceived, this, &ChromaticPitchFrame::onPureTuning);
+    connect(mpStomp, &Stomp::formantShiftOnOffReceived, this, &ChromaticPitchFrame::onFormantShiftOnOff);
+    connect(mpStomp, &Stomp::stereoReceived, this, &ChromaticPitchFrame::onStereo);
+
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestVoice1Pitch();
     mpStomp->requestVoice2Pitch();
@@ -62,8 +71,19 @@ void ChromaticPitchFrame::activate(QObject& stomp)
     mpStomp->requestPureTuning();
     mpStomp->requestFormantShiftOnOff();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    StompInstance si = mpStomp->getInstance();
+    if(si != StompX && si != StompMod && si != StompDelay)
+    {
+      ui->lcdDisplay->setValue16("");
+      ui->lcdDisplay->setValue16Title("");
+      ui->stereoDial->setIsActive(false);
+    }
+    else
+    {
+      ui->lcdDisplay->setValue16Title("Stereo");
+      ui->stereoDial->setIsActive(true);
+      mpStomp->requestStereo();
+    }
   }
 }
 
@@ -71,19 +91,20 @@ void ChromaticPitchFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(voice1PitchReceived(double)), this, SLOT(onVoice1Pitch(double)));
-    disconnect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onVoice2Pitch(double)));
-    disconnect(mpStomp, SIGNAL(formantShiftReceived(double)), this, SLOT(onFormantShift(double)));
-    disconnect(mpStomp, SIGNAL(detuneReceived(double)), this, SLOT(onDetune(double)));
-    disconnect(mpStomp, SIGNAL(voiceMixReceived(double)), this, SLOT(onVoiceMix(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
-    disconnect(mpStomp, SIGNAL(pureTuningReceived(bool)), this, SLOT(onPureTuning(bool)));
-    disconnect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
-  }
+    disconnect(mpStomp, &Stomp::voice1PitchReceived, this, &ChromaticPitchFrame::onVoice1Pitch);
+    disconnect(mpStomp, &Stomp::voice2PitchReceived, this, &ChromaticPitchFrame::onVoice2Pitch);
+    disconnect(mpStomp, &Stomp::formantShiftReceived, this, &ChromaticPitchFrame::onFormantShift);
+    disconnect(mpStomp, &Stomp::detuneReceived, this, &ChromaticPitchFrame::onDetune);
+    disconnect(mpStomp, &Stomp::voiceMixReceived, this, &ChromaticPitchFrame::onVoiceMix);
+    disconnect(mpStomp, &Stomp::intensityReceived, this, &ChromaticPitchFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &ChromaticPitchFrame::onDucking);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &ChromaticPitchFrame::onVolume);
+    disconnect(mpStomp, &Stomp::smoothChordsReceived, this, &ChromaticPitchFrame::onSmoothChords);
+    disconnect(mpStomp, &Stomp::pureTuningReceived, this, &ChromaticPitchFrame::onPureTuning);
+    disconnect(mpStomp, &Stomp::formantShiftOnOffReceived, this, &ChromaticPitchFrame::onFormantShiftOnOff);
+    disconnect(mpStomp, &Stomp::stereoReceived, this, &ChromaticPitchFrame::onStereo);
 
+  }
 
   mpStomp = nullptr;
 }
@@ -199,6 +220,12 @@ void ChromaticPitchFrame::on_formantShiftOnOffDial_valueChanged(int valueIndex)
     mpStomp->applyFormantShiftOnOff(valueIndex != 0);
 }
 
+void ChromaticPitchFrame::on_stereoDial_valueChanged(double value)
+{
+  if(mpStomp != nullptr)
+    mpStomp->applyStereo(value);
+}
+
 void ChromaticPitchFrame::onVoice1Pitch(double value)
 {
   ui->voice1PitchDial->setValue(value);
@@ -262,5 +289,11 @@ void ChromaticPitchFrame::onPureTuning(bool onOff)
 void ChromaticPitchFrame::onFormantShiftOnOff(bool onOff)
 {
   ui->formantShiftOnOffDial->setValue(onOff ? 1 : 0);
+  update();
+}
+
+void ChromaticPitchFrame::onStereo(double value)
+{
+  ui->stereoDial->setValue(value);
   update();
 }

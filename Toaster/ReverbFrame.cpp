@@ -52,7 +52,7 @@ void ReverbFrame::activate(QObject& stomp)
     mpReverb->requestDamping();
     mpReverb->requestVolume();
 
-    ui->lcdDisplay->setStompInstance("Reverb Effect");
+    ui->lcdDisplay->setStompInstance("Reverb module");
     ui->lcdDisplay->setStompName(LookUpTables::reverbTypeName(mpReverb->getReverbType()));
   }
 }

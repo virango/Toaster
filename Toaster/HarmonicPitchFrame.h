@@ -56,6 +56,7 @@ private slots:
   void on_volumeDial_valueChanged(double value);
   void on_pureTuningDial_valueChanged(int valueIndex);
   void on_formantShiftOnOffDial_valueChanged(int valueIndex);
+  void on_stereoDial_valueChanged(double value);
   // kpa => ui
   void onVoice1Interval(int value);
   void onVoice2Interval(int value);
@@ -67,6 +68,7 @@ private slots:
   void onVolume(double value);
   void onPureTuning(bool onOff);
   void onFormantShiftOnOff(bool onOff);
+  void onStereo(double value);
 
 private:
   Ui::HarmonicPitchFrame *ui;

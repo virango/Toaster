@@ -41,7 +41,7 @@
     <string/>
    </property>
    <property name="value3Title">
-    <string/>
+    <string>Mix</string>
    </property>
    <property name="value4Title">
     <string>Volume</string>
@@ -86,7 +86,7 @@
     <enum>QToasterStompEditLCD::Empty</enum>
    </property>
   </widget>
-  <widget class="QToasterDial" name="dummy3Dial">
+  <widget class="QToasterDial" name="mixDial">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -120,16 +120,16 @@
     <double>0.000000000000000</double>
    </property>
    <property name="maxValue">
-    <double>1.000000000000000</double>
+    <double>100.000000000000000</double>
    </property>
    <property name="stepWidth">
     <double>1.000000000000000</double>
    </property>
    <property name="unit">
-    <string/>
+    <string>%</string>
    </property>
    <property name="isActive">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToasterDial" name="lowDial">
@@ -490,6 +490,22 @@
     <hint type="destinationlabel">
      <x>332</x>
      <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mixDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue3(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>276</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>334</x>
+     <y>141</y>
     </hint>
    </hints>
   </connection>

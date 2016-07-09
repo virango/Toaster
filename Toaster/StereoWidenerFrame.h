@@ -13,23 +13,23 @@
 *   You should have received a copy of the GNU General Public License along with Toaster.
 *   If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef STEREOWEIDENERFRAME_H
-#define STEREOWEIDENERFRAME_H
+#ifndef STEREOWIDENERFRAME_H
+#define STEREOWIDENERFRAME_H
 #include <QWidget>
 #include "StompEditorPage.h"
 #include "Stomp.h"
 
 namespace Ui {
-class StereoWeidenerFrame;
+class StereoWidenerFrame;
 }
 
-class StereoWeidenerFrame : public QWidget, public IStompEditorPage
+class StereoWidenerFrame : public QWidget, public IStompEditorPage
 {
   Q_OBJECT
 
 public:
-  explicit StereoWeidenerFrame(QWidget *parent = 0);
-  ~StereoWeidenerFrame();
+  explicit StereoWidenerFrame(QWidget *parent = 0);
+  ~StereoWidenerFrame();
   // IStompEditorPage
   virtual void activate(QObject& stomp);
   virtual void deactivate();
@@ -56,10 +56,10 @@ private slots:
   void onDucking(double value);
 
 private:
-  Ui::StereoWeidenerFrame *ui;
+  Ui::StereoWidenerFrame *ui;
   Stomp* mpStomp;
 
   FXType mFXType;
 };
 
-#endif // STEREOWEIDENERFRAME_H
+#endif // STEREOWIDENERFRAME_H

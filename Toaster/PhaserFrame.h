@@ -72,8 +72,6 @@ private:
   Ui::PhaserFrame *ui;
 
   Stomp* mpStomp;
-
-  FXType mFXType;
 };
 
 #endif // PHASERFRAME_H

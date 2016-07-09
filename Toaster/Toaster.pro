@@ -95,7 +95,6 @@ SOURCES += main.cpp\
     GraphicEqualizerFrame.cpp \
     StudioEqualizerFrame.cpp \
     MetalEqualizerFrame.cpp \
-    StereoWeidenerFrame.cpp \
     CompressorFrame.cpp \
     GateFrame.cpp \
     VintageChorusFrame.cpp \
@@ -136,7 +135,8 @@ SOURCES += main.cpp\
     TapMidi.cpp \
     Tap.cpp \
     LegacyDelayFrame.cpp \
-    MixValuesV4.cpp
+    MixValuesV4.cpp \
+    StereoWidenerFrame.cpp
 
 macx:SOURCES_NOOPTIMIZE = MainVolumeValues.cpp \
     RotaryDistanceValues.cpp \
@@ -220,7 +220,6 @@ HEADERS  += ToasterWindow.h \
     GraphicEqualizerFrame.h \
     StudioEqualizerFrame.h \
     MetalEqualizerFrame.h \
-    StereoWeidenerFrame.h \
     CompressorFrame.h \
     GateFrame.h \
     VintageChorusFrame.h \
@@ -270,7 +269,8 @@ HEADERS  += ToasterWindow.h \
     TapMidi.h \
     Tap.h \
     LegacyDelayFrame.h \
-    MixValuesV4.h
+    MixValuesV4.h \
+    StereoWidenerFrame.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -295,7 +295,6 @@ FORMS    += \
     GraphicEqualizerFrame.ui \
     StudioEqualizerFrame.ui \
     MetalEqualizerFrame.ui \
-    StereoWeidenerFrame.ui \
     CompressorFrame.ui \
     GateFrame.ui \
     VintageChorusFrame.ui \
@@ -328,7 +327,8 @@ FORMS    += \
     CabFrame.ui \
     InputFrame.ui \
     OutputFrame.ui \
-    LegacyDelayFrame.ui
+    LegacyDelayFrame.ui \
+    StereoWidenerFrame.ui
 
 RESOURCES += \
     resources.qrc

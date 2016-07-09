@@ -66,7 +66,7 @@
     <string>Volume</string>
    </property>
    <property name="value5Title">
-    <string/>
+    <string>Ducking</string>
    </property>
    <property name="value6Title">
     <string/>
@@ -238,7 +238,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QToasterDial" name="dummy5Dial">
+  <widget class="QToasterDial" name="duckingDial">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -263,7 +263,7 @@
     <double>0.100000000000000</double>
    </property>
    <property name="isActive">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QToasterDial" name="volumeDial">
@@ -410,6 +410,22 @@
     <hint type="destinationlabel">
      <x>336</x>
      <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>duckingDial</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>lcdDisplay</receiver>
+   <slot>setValue5(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>110</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>117</x>
+     <y>129</y>
     </hint>
    </hints>
   </connection>

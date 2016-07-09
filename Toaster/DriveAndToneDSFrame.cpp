@@ -16,6 +16,7 @@
 #include "DriveAndToneDSFrame.h"
 #include "ui_DriveAndToneDSFrame.h"
 #include "Stomp.h"
+#include "Settings.h"
 
 DriveAndToneDSFrame::DriveAndToneDSFrame(QWidget *parent)
   : QWidget(parent)
@@ -24,6 +25,16 @@ DriveAndToneDSFrame::DriveAndToneDSFrame(QWidget *parent)
   , mFXType(None)
 {
   ui->setupUi(this);
+  if(Settings::get().getKPAOSVersion() < 0x04000000)
+  {
+    ui->mixDial->setValue(0);
+    ui->toneDial->setMinValue(-5);
+    ui->toneDial->setMaxValue(5);
+    ui->toneDial->setLEDRingType(QToasterDial::Bi);
+    ui->lcdDisplay->setValue3Title("");
+    ui->lcdDisplay->setValue3("");
+    ui->mixDial->setIsActive(false);
+  }
 }
 
 DriveAndToneDSFrame::~DriveAndToneDSFrame()
@@ -37,9 +48,27 @@ void DriveAndToneDSFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
-    connect(mpStomp, SIGNAL(distortionBoosterToneReceived(double)), this, SLOT(onTone(double)));
+    connect(mpStomp, &Stomp::volumeReceived, this, &DriveAndToneDSFrame::onVolume);
+    connect(mpStomp, &Stomp::distortionShaperDriveReceived, this, &DriveAndToneDSFrame::onDrive);
+    connect(mpStomp, &Stomp::distortionBoosterToneReceived, this, &DriveAndToneDSFrame::onTone);
+
+    if(Settings::get().getKPAOSVersion() >= 0x04000000)
+    {
+      if(mpStomp->getFXType() == BitShaper)
+      {
+        ui->lcdDisplay->setValue3Title("");
+        ui->mixDial->setValue(0);
+        ui->lcdDisplay->setValue3("");
+        ui->mixDial->setIsActive(false);
+      }
+      else
+      {
+        ui->lcdDisplay->setValue3Title("Mix");
+        ui->mixDial->setIsActive(true);
+        connect(mpStomp, &Stomp::mixReceived, this, &DriveAndToneDSFrame::onMix);
+        mpStomp->requestMix();
+      }
+    }
 
     mpStomp->requestVolume();
     mpStomp->requestDistortionShaperDrive();
@@ -54,9 +83,14 @@ void DriveAndToneDSFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
-    disconnect(mpStomp, SIGNAL(distortionBoosterToneReceived(double)), this, SLOT(onTone(double)));
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &DriveAndToneDSFrame::onVolume);
+    disconnect(mpStomp, &Stomp::distortionShaperDriveReceived, this, &DriveAndToneDSFrame::onDrive);
+    disconnect(mpStomp, &Stomp::distortionBoosterToneReceived, this, &DriveAndToneDSFrame::onTone);
+
+    if((Settings::get().getKPAOSVersion() >= 0x04000000) && (mpStomp->getFXType() != BitShaper))
+    {
+      disconnect(mpStomp, &Stomp::mixReceived, this, &DriveAndToneDSFrame::onMix);
+    }
   }
   mpStomp = nullptr;
 }
@@ -122,6 +156,12 @@ void DriveAndToneDSFrame::on_toneDial_valueChanged(double value)
     mpStomp->applyDistortionBoosterTone(value);
 }
 
+void DriveAndToneDSFrame::on_mixDial_valueChanged(double value)
+{
+  if(mpStomp != nullptr)
+    mpStomp->applyMix(value);
+}
+
 void DriveAndToneDSFrame::onVolume(double value)
 {
   ui->volumeDial->setValue(value);
@@ -137,5 +177,11 @@ void DriveAndToneDSFrame::onDrive(double value)
 void DriveAndToneDSFrame::onTone(double value)
 {
   ui->toneDial->setValue(value);
+  update();
+}
+
+void DriveAndToneDSFrame::onMix(double value)
+{
+  ui->mixDial->setValue(value);
   update();
 }

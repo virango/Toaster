@@ -21,7 +21,6 @@ RotarySpeakerFrame::RotarySpeakerFrame(QWidget *parent)
   : QWidget(parent)
   , ui(new Ui::RotarySpeakerFrame)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
   ui->setupUi(this);
   ui->distanceDial->setLookUpTable(LookUpTables::getRotaryDistanceValues());
@@ -38,12 +37,16 @@ void RotarySpeakerFrame::activate(QObject& stomp)
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(rotaryDistanceReceived(int)), this, SLOT(onDistance(int)));
-    connect(mpStomp, SIGNAL(rotaryBalanceReceived(double)), this, SLOT(onLowHighBalance(double)));
-    connect(mpStomp, SIGNAL(rotarySpeedReceived(::RotarySpeed)), this, SLOT(onRotarySpeed(::RotarySpeed)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, &Stomp::rotaryDistanceReceived, this, &RotarySpeakerFrame::onDistance);
+    connect(mpStomp, &Stomp::rotaryBalanceReceived, this, &RotarySpeakerFrame::onLowHighBalance);
+    connect(mpStomp, &Stomp::rotarySpeedReceived, this, &RotarySpeakerFrame::onRotarySpeed);
+    connect(mpStomp, &Stomp::volumeReceived, this, &RotarySpeakerFrame::onVolume);
+    connect(mpStomp, &Stomp::mixReceived, this, &RotarySpeakerFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &RotarySpeakerFrame::onDucking);
+    connect(mpStomp, &Stomp::stereoReceived, this, &RotarySpeakerFrame::onStereo);
+
+    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestRotaryDistance();
     mpStomp->requestRotaryBalance();
@@ -52,8 +55,20 @@ void RotarySpeakerFrame::activate(QObject& stomp)
     mpStomp->requestMix();
     mpStomp->requestDucking();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+
+    StompInstance si = mpStomp->getInstance();
+    if(si != StompX && si != StompMod && si != StompDelay)
+    {
+      ui->lcdDisplay->setValue7("");
+      ui->lcdDisplay->setValue7Title("");
+      ui->stereoDial->setIsActive(false);
+    }
+    else
+    {
+      ui->lcdDisplay->setValue7Title("Stereo");
+      ui->stereoDial->setIsActive(true);
+      mpStomp->requestStereo();
+    }
   }
 }
 
@@ -61,12 +76,13 @@ void RotarySpeakerFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(rotaryDistanceReceived(int)), this, SLOT(onDistance(int)));
-    disconnect(mpStomp, SIGNAL(rotaryBalanceReceived(double)), this, SLOT(onLowHighBalance(double)));
-    disconnect(mpStomp, SIGNAL(rotarySpeedReceived(::RotarySpeed)), this, SLOT(onRotarySpeed(::RotarySpeed)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    disconnect(mpStomp, &Stomp::rotaryDistanceReceived, this, &RotarySpeakerFrame::onDistance);
+    disconnect(mpStomp, &Stomp::rotaryBalanceReceived, this, &RotarySpeakerFrame::onLowHighBalance);
+    disconnect(mpStomp, &Stomp::rotarySpeedReceived, this, &RotarySpeakerFrame::onRotarySpeed);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &RotarySpeakerFrame::onVolume);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &RotarySpeakerFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &RotarySpeakerFrame::onDucking);
+    disconnect(mpStomp, &Stomp::stereoReceived, this, &RotarySpeakerFrame::onStereo);
   }
   mpStomp = nullptr;
 }
@@ -150,6 +166,12 @@ void RotarySpeakerFrame::on_duckingDial_valueChanged(double value)
     mpStomp->applyDucking(value);
 }
 
+void RotarySpeakerFrame::on_stereoDial_valueChanged(double value)
+{
+  if(mpStomp != nullptr)
+    mpStomp->applyStereo(value);
+}
+
 void RotarySpeakerFrame::onDistance(int value)
 {
   ui->distanceDial->setValue(value);
@@ -183,5 +205,11 @@ void RotarySpeakerFrame::onMix(double value)
 void RotarySpeakerFrame::onDucking(double value)
 {
   ui->duckingDial->setValue(value);
+  update();
+}
+
+void RotarySpeakerFrame::onStereo(double value)
+{
+  ui->stereoDial->setValue(value);
   update();
 }
