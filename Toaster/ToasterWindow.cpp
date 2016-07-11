@@ -226,12 +226,22 @@ void ToasterWindow::on_actionUploadKIPRFile_triggered()
         {
           ByteArray midiCmd;
           midiCmd.push_back(c);
-          unsigned char  len;
-          stream.readRawData((char*)&len, 1);
+          unsigned short  len = 0;
+          stream.readRawData((char*)&c, 1);
+          if((c & 0x80) != 0)
+          {
+            unsigned char d;
+            stream.readRawData((char*)&d, 1);
+            len = (((unsigned short)c & 0x7F) << 7) | ((unsigned short)d & 0x7F);
+          }
+          else
+          {
+            len = c;
+          }
           //midiCmd.push_back(len);
-          unsigned char buf[255];
+          unsigned char buf[0x4000];
           stream.readRawData((char*)buf, len);
-          for(unsigned char i = 0; i < len; ++i)
+          for(unsigned short i = 0; i < len; ++i)
             midiCmd.push_back(buf[i]);
           Midi::get().sendCmd(midiCmd);
         }
