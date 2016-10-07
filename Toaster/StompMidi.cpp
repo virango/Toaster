@@ -14,6 +14,7 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include <vector>
+#include "Utils.h"
 #include "StompMidi.h"
 #include "Midi.h"
 
@@ -111,12 +112,12 @@ StompMidi::~StompMidi()
 {
 }
 
-void StompMidi::consumeSysExMsg(ByteArray* msg)
+void StompMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 12)
+  if(msg.size() >= 12)
   {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char param = msg->at(9);
+    unsigned short rawVal = Utils::extractRawVal(msg[10], msg[11]);
+    const char param = msg[9];
     if(param == sOnOff[0])
       midiOnOffReceived(rawVal);
     else if(param == sType[0])

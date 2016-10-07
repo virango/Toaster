@@ -37,28 +37,27 @@ ByteArray NRPNBase::createNRPNSingleParamSetCmd(const ByteArray& addressPage, co
   ByteArray res;
   if(val.size() == 2 || val.size() == 1)
   {
-    VEC_INSERT(res, sHeader);
-    VEC_INSERT(res, sAddressPageTag);
-    VEC_INSERT(res, addressPage);
-
-    VEC_INSERT(res, sHeader);
-    VEC_INSERT(res, sParameterTag);
-    VEC_INSERT(res, param);
+    res.append(sHeader);
+    res.append(sAddressPageTag);
+    res.append(addressPage);
+    res.append(sHeader);
+    res.append(sParameterTag);
+    res.append(param);
 
     if(val.size() == 2)
     {
-      VEC_INSERT(res, sHeader);
-      VEC_INSERT(res, sMSBValueTag);
+      res.append(sHeader);
+      res.append(sMSBValueTag);
       res.push_back(val[0]);
 
-      VEC_INSERT(res, sHeader);
-      VEC_INSERT(res, sLSBValueTag);
+      res.append(sHeader);
+      res.append(sLSBValueTag);
       res.push_back(val[1]);
     }
     else
     {
-      VEC_INSERT(res, sHeader);
-      VEC_INSERT(res, sLowResValueTag);
+      res.append(sHeader);
+      res.append(sLowResValueTag);
       res.push_back(val[0]);
     }
   }

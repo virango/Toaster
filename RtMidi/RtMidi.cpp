@@ -1897,6 +1897,18 @@ void MidiOutAlsa :: sendMessage( std::vector<unsigned char> *message )
     return;
   }
   snd_seq_drain_output(data->seq);
+
+  // ugly hack for large sysex
+  // according to the alsa developer Clemens Ladisch the sequencer wasn't designed to
+  // handle big sysex
+  // the only solution seems to be to limit the sending rate
+  if(nBytes > 100)
+  {
+    double bytesPerMs = 4; // 31
+    int ms = nBytes / bytesPerMs;
+    struct timespec ts = { ms / 1000, (ms % 1000) * 1000 * 1000 };
+    nanosleep(&ts, NULL);
+  }
 }
 
 #endif // __LINUX_ALSA__

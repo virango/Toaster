@@ -57,7 +57,7 @@ void Delay::applyType(::DelayType type)
 
 void Delay::applyOnOffCutsTail(bool onOffCutsTail)
 {
-  midiApplyOnOffCutsTail(bool2Raw(onOffCutsTail));
+  midiApplyOnOffCutsTail(Utils::bool2Raw(onOffCutsTail));
   midiRequestOnOffCutsTail();
 }
 
@@ -68,12 +68,12 @@ void Delay::applyMix(int mix)
 
 void Delay::applyVolume(double volume)
 {
-  midiApplyVolume(phys2Raw(volume, 10.0, -5.0));
+  midiApplyVolume(Utils::phys2Raw(volume, 10.0, -5.0));
 }
 
 void Delay::applyTime(double time)
 {
-  midiApplyTime(phys2Raw(time, 1280, 0.0));
+  midiApplyTime(Utils::phys2Raw(time, 1280, 0.0));
 }
 
 void Delay::applyRatio(::DelayRatio ratio)
@@ -93,32 +93,32 @@ void Delay::applyClockRight(::DelayClock clockRight)
 
 void Delay::applyFeedback(double feedback)
 {
-  midiApplyFeedback(phys2Raw(feedback, 200.0, 0.0));
+  midiApplyFeedback(Utils::phys2Raw(feedback, 200.0, 0.0));
 }
 
 void Delay::applyBandwidth(double bandwidth)
 {
-  midiApplyBandwidth(phys2Raw(bandwidth, 10.0, 0.0));
+  midiApplyBandwidth(Utils::phys2Raw(bandwidth, 10.0, 0.0));
 }
 
 void Delay::applyCenterFrequency(double centerFrequency)
 {
-  midiApplyCenterFrequency(phys2Raw(centerFrequency, 10.0, -5));
+  midiApplyCenterFrequency(Utils::phys2Raw(centerFrequency, 10.0, -5));
 }
 
 void Delay::applyModulation(double modulation)
 {
-  midiApplyModulation(phys2Raw(modulation, 10.0, 0.0));
+  midiApplyModulation(Utils::phys2Raw(modulation, 10.0, 0.0));
 }
 
 void Delay::applyOnOffKeepsTail(bool onOffKeepsTail)
 {
-  midiApplyOnOffKeepsTail(bool2Raw(onOffKeepsTail));
+  midiApplyOnOffKeepsTail(Utils::bool2Raw(onOffKeepsTail));
 }
 
 void Delay::applyDucking(double ducking)
 {
-  midiApplyDucking(phys2Raw(ducking, 10.0, -5.0));
+  midiApplyDucking(Utils::phys2Raw(ducking, 10.0, -5.0));
 }
 
 // DelayMidi
@@ -130,7 +130,7 @@ void Delay::midiTypeReceived(unsigned short rawVal)
 
 void Delay::midiOnOffCutsTailReceived(unsigned short rawVal)
 {
-  emit onOffCutsTailReceived(raw2Bool(rawVal));
+  emit onOffCutsTailReceived(Utils::raw2Bool(rawVal));
 }
 
 void Delay::midiMixReceived(unsigned short rawVal)
@@ -140,12 +140,12 @@ void Delay::midiMixReceived(unsigned short rawVal)
 
 void Delay::midiVolumeReceived(unsigned short rawVal)
 {
-  emit volumeReceived(raw2Phys(rawVal, 10.0, -5.0));
+  emit volumeReceived(Utils::raw2Phys(rawVal, 10.0, -5.0));
 }
 
 void Delay::midiTimeReceived(unsigned short rawVal)
 {
-  emit timeReceived(raw2Phys(rawVal, 1280.0, 0.0));
+  emit timeReceived(Utils::raw2Phys(rawVal, 1280.0, 0.0));
 }
 
 void Delay::midiRatioReceived(unsigned short rawVal)
@@ -165,30 +165,30 @@ void Delay::midiClockRightReceived(unsigned short rawVal)
 
 void Delay::midiFeedbackReceived(unsigned short rawVal)
 {
-  emit feedbackReceived(raw2Phys(rawVal, 200.0, 0.0));
+  emit feedbackReceived(Utils::raw2Phys(rawVal, 200.0, 0.0));
 }
 
 void Delay::midiBandwidthReceived(unsigned short rawVal)
 {
-  emit bandwidthReceived(raw2Phys(rawVal, 10.0, 0.0));
+  emit bandwidthReceived(Utils::raw2Phys(rawVal, 10.0, 0.0));
 }
 
 void Delay::midiCenterFrequencyReceived(unsigned short rawVal)
 {
-  emit centerFrequencyReceived(raw2Phys(rawVal, 10.0, -5.0));
+  emit centerFrequencyReceived(Utils::raw2Phys(rawVal, 10.0, -5.0));
 }
 
 void Delay::midiModulationReceived(unsigned short rawVal)
 {
-  emit modulationReceived(raw2Phys(rawVal, 10.0, 0.0));
+  emit modulationReceived(Utils::raw2Phys(rawVal, 10.0, 0.0));
 }
 
 void Delay::midiOnOffKeepsTailReceived(unsigned short rawVal)
 {
-  emit onOffKeepsTailReceived(raw2Bool(rawVal));
+  emit onOffKeepsTailReceived(Utils::raw2Bool(rawVal));
 }
 
 void Delay::midiDuckingReceived(unsigned short rawVal)
 {
-  emit duckingReceived(raw2Phys(rawVal, 10.0, -5.0));
+  emit duckingReceived(Utils::raw2Phys(rawVal, 10.0, -5.0));
 }

@@ -16,6 +16,7 @@
 #include "HarmonicPitchFrame.h"
 #include "ui_HarmonicPitchFrame.h"
 #include "Settings.h"
+#include "LookUpTables.h"
 
 HarmonicPitchFrame::HarmonicPitchFrame(QWidget *parent)
   : QWidget(parent)

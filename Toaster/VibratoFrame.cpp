@@ -17,6 +17,7 @@
 #include "ui_VibratoFrame.h"
 #include "Stomp.h"
 #include "Settings.h"
+#include "LookUpTables.h"
 
 VibratoFrame::VibratoFrame(QWidget *parent)
   : QWidget(parent)

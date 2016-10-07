@@ -17,6 +17,7 @@
 #include "ui_DriveAndToneDSFrame.h"
 #include "Stomp.h"
 #include "Settings.h"
+#include "LookUpTables.h"
 
 DriveAndToneDSFrame::DriveAndToneDSFrame(QWidget *parent)
   : QWidget(parent)

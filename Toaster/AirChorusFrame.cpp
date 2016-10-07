@@ -16,6 +16,7 @@
 #include "AirChorusFrame.h"
 #include "ui_AirChorusFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 AirChorusFrame::AirChorusFrame(QWidget *parent)
   : QWidget(parent)

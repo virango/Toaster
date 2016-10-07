@@ -44,12 +44,12 @@ unsigned char CabMidi::getId()
   return ret;
 }
 
-void CabMidi::consumeSysExMsg(ByteArray* msg)
+void CabMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 12)
+  if(msg.size() >= 12)
   {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char param = msg->at(9);
+    unsigned short rawVal = Utils::extractRawVal(msg[10], msg[11]);
+    const char param = msg[9];
     if(param == sOnOff[0])
       midiOnOffReceived(rawVal);
     else if(param == sVolume[0])

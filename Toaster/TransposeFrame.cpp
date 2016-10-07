@@ -16,6 +16,7 @@
 #include "TransposeFrame.h"
 #include "ui_TransposeFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 TransposeFrame::TransposeFrame(QWidget *parent)
   : QWidget(parent)

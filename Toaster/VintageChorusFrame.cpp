@@ -16,6 +16,7 @@
 #include "VintageChorusFrame.h"
 #include "ui_VintageChorusFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 VintageChorusFrame::VintageChorusFrame(QWidget *parent)
   : QWidget(parent)

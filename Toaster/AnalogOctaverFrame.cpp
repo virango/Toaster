@@ -17,6 +17,7 @@
 #include "ui_AnalogOctaverFrame.h"
 #include "Stomp.h"
 #include "Settings.h"
+#include "LookUpTables.h"
 
 AnalogOctaverFrame::AnalogOctaverFrame(QWidget *parent)
   : QWidget(parent)

@@ -61,6 +61,10 @@ public:
   void setMasterVolume(int volume);
 
   unsigned int getKPAOSVersion();
+  void setKPAOSVersion(unsigned int version);
+
+private:
+  unsigned int mKPAOSVersion;
 };
 
 #endif // SETTINGS_H

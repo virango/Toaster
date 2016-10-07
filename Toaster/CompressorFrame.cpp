@@ -16,6 +16,7 @@
 #include "CompressorFrame.h"
 #include "ui_CompressorFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 CompressorFrame::CompressorFrame(QWidget *parent)
   : QWidget(parent)

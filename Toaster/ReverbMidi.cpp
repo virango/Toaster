@@ -52,12 +52,12 @@ unsigned char ReverbMidi::getId()
   return ret;
 }
 
-void ReverbMidi::consumeSysExMsg(ByteArray* msg)
+void ReverbMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 12)
+  if(msg.size() >= 12)
   {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char param = msg->at(9);
+    unsigned short rawVal = Utils::extractRawVal(msg[10], msg[11]);
+    const char param = msg[9];
     if(param == sType[0])
       midiTypeReceived(rawVal);
     else if(param == sOnOffCutsTail[0])

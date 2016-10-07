@@ -17,6 +17,7 @@
 
 Settings::Settings()
   : QSettings(IniFormat, UserScope, "Toaster", "Toaster")
+  , mKPAOSVersion(0)
 {
 }
 
@@ -143,5 +144,13 @@ void Settings::setMasterVolume(int volume)
 
 unsigned int Settings::getKPAOSVersion()
 {
-  return 0x04000200;
+  if(mKPAOSVersion == 0)
+    mKPAOSVersion = value("Global/KPAOSVersion", QVariant(0x03000000)).toUInt();
+  return mKPAOSVersion;
+}
+
+void Settings::setKPAOSVersion(unsigned int version)
+{
+  mKPAOSVersion = version;
+  setValue("Global/KPAOSVersion", QVariant(mKPAOSVersion));
 }

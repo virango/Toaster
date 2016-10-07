@@ -36,7 +36,7 @@ protected:
 
   // ISysExConsumer
   unsigned char getId();
-  void consumeSysExMsg(ByteArray* msg);
+  void consumeSysExMsg(const ByteArray& msg);
 
   // receive callbacks for derived class
   virtual void midiNoteReceived(unsigned short rawVal) = 0;

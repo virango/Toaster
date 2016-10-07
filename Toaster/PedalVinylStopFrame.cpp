@@ -17,6 +17,7 @@
 #include "ui_PedalVinylStopFrame.h"
 #include "Stomp.h"
 #include "Global.h"
+#include "LookUpTables.h"
 
 PedalVinylStopFrame::PedalVinylStopFrame(QWidget *parent)
   : QWidget(parent)

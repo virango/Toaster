@@ -17,7 +17,7 @@
 #include "Midi.h"
 
 // address page
-BYTEARRAYDEF(DelayMidi, AddressPage,      0x4A)
+BYTEARRAYDEF(DelayMidi, AddressPage,     0x4A)
 // parameter
 BYTEARRAYDEF(DelayMidi, Type,            0x00)
 BYTEARRAYDEF(DelayMidi, OnOffCutsTail,   0x02)
@@ -53,12 +53,12 @@ unsigned char DelayMidi::getId()
   return ret;
 }
 
-void DelayMidi::consumeSysExMsg(ByteArray* msg)
+void DelayMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 12)
+  if(msg.size() >= 12)
   {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char param = msg->at(9);
+    unsigned short rawVal = Utils::extractRawVal(msg[10], msg[11]);
+    const char param = msg[9];
     if(param == sType[0])
       midiTypeReceived(rawVal);
     if(param == sOnOffCutsTail[0])

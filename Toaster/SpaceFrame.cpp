@@ -16,6 +16,7 @@
 #include "SpaceFrame.h"
 #include "ui_SpaceFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 SpaceFrame::SpaceFrame(QWidget *parent)
   : QWidget(parent)

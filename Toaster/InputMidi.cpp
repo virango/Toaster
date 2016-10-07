@@ -32,12 +32,12 @@ InputMidi::~InputMidi()
 {
 }
 
-void InputMidi::consumeSysExMsg(ByteArray* msg)
+void InputMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 12)
+  if(msg.size() >= 12)
   {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char param = msg->at(9);
+    unsigned short rawVal = Utils::extractRawVal(msg[10], msg[11]);
+    const char param = msg[9];
     if(param == sNoiseGate[0])
       midiNoiseGateReceived(rawVal);
     else if(param == sCleanSense[0])
@@ -65,7 +65,7 @@ void InputMidi::midiRequestNoiseGate()
 void InputMidi::midiApplyNoiseGate(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sNoiseGate, rawVal));
-  Midi::get().sendCmd(createNRPNSingleParamSetCmd(getAddressPage(), sNoiseGate, packRawVal(rawVal)));
+  Midi::get().sendCmd(createNRPNSingleParamSetCmd(getAddressPage(), sNoiseGate, Utils::packRawVal(rawVal)));
 }
 
 void InputMidi::midiRequestCleanSense()
@@ -76,7 +76,7 @@ void InputMidi::midiRequestCleanSense()
 void InputMidi::midiApplyCleanSense(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sCleanSense, rawVal));
-  Midi::get().sendCmd(createNRPNSingleParamSetCmd(getAddressPage(), sCleanSense, packRawVal(rawVal)));
+  Midi::get().sendCmd(createNRPNSingleParamSetCmd(getAddressPage(), sCleanSense, Utils::packRawVal(rawVal)));
 }
 
 void InputMidi::midiRequestDistortionSense()
@@ -87,7 +87,7 @@ void InputMidi::midiRequestDistortionSense()
 void InputMidi::midiApplyDistortionSense(unsigned short rawVal)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sDistortionSense, rawVal));
-  Midi::get().sendCmd(createNRPNSingleParamSetCmd(getAddressPage(), sDistortionSense, packRawVal(rawVal)));
+  Midi::get().sendCmd(createNRPNSingleParamSetCmd(getAddressPage(), sDistortionSense, Utils::packRawVal(rawVal)));
 }
 
 ByteArray InputMidi::getAddressPage()

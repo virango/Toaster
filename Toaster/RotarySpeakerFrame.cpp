@@ -16,6 +16,7 @@
 #include "RotarySpeakerFrame.h"
 #include "ui_RotarySpeakerFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 RotarySpeakerFrame::RotarySpeakerFrame(QWidget *parent)
   : QWidget(parent)

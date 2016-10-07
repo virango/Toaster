@@ -15,6 +15,7 @@
 */
 #include "TapDelayFrame.h"
 #include "ui_TapDelayFrame.h"
+#include "LookUpTables.h"
 
 TapDelayFrame::TapDelayFrame(QWidget *parent)
   : QWidget(parent)

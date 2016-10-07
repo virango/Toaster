@@ -16,6 +16,7 @@
 #include "GateFrame.h"
 #include "ui_GateFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 GateFrame::GateFrame(QWidget *parent)
   : QWidget(parent)

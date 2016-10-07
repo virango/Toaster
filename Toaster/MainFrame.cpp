@@ -31,6 +31,7 @@
 #include "Reverb.h"
 #include "Profile.h"
 #include "Tap.h"
+#include "LookUpTables.h"
 
 MainFrame::MainFrame(QWidget *parent)
   : QFrame(parent)
@@ -157,7 +158,7 @@ MainFrame::MainFrame(QWidget *parent)
           [=](int value) {ui->masterVolumeDBDial->setValue(value);} );
 
   connect(&mv, &MasterVolume::masterVolumeChanged,
-          [=](int value) {ui->masterVolumeDial->setValue(raw2Phys(value, 10.0, 0));} );
+          [=](int value) {ui->masterVolumeDial->setValue(Utils::raw2Phys(value, 10.0, 0));} );
 
   connect(&mv, &MasterVolume::linksChanged,
           [=](int noOfLinks) { ui->masterVolumeWidget->setCurrentIndex(noOfLinks == 1 ? 0 : 1);});
@@ -896,7 +897,7 @@ void MainFrame::on_outputButton_clicked(QToasterButton &bt, bool /*longClick*/)
 void MainFrame::on_masterVolumeDBDial_valueChanged(int value)
 {
   MasterVolume::get().onMasterVolume(value);
-  ui->masterVolumeDial->setValue(raw2Phys(value, 10.0, 0));
+  ui->masterVolumeDial->setValue(Utils::raw2Phys(value, 10.0, 0));
 }
 
 void MainFrame::on_masterVolumeDial_valueChanged(double value)

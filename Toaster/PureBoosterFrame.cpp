@@ -16,6 +16,7 @@
 #include "PureBoosterFrame.h"
 #include "ui_PureBoosterFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 PureBoosterFrame::PureBoosterFrame(QWidget *parent)
   : QWidget(parent)

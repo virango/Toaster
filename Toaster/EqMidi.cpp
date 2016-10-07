@@ -20,11 +20,11 @@
 BYTEARRAYDEF(EqMidi, AddressPage,     0x0B)
 
 // parameter
-BYTEARRAYDEF(EqMidi, OnOff,          0x02)
-BYTEARRAYDEF(EqMidi, Bass,           0x04)
-BYTEARRAYDEF(EqMidi, Middle,         0x05)
-BYTEARRAYDEF(EqMidi, Treble,         0x06)
-BYTEARRAYDEF(EqMidi, Presence,       0x07)
+BYTEARRAYDEF(EqMidi, OnOff,           0x02)
+BYTEARRAYDEF(EqMidi, Bass,            0x04)
+BYTEARRAYDEF(EqMidi, Middle,          0x05)
+BYTEARRAYDEF(EqMidi, Treble,          0x06)
+BYTEARRAYDEF(EqMidi, Presence,        0x07)
 
 EqMidi::EqMidi()
 {
@@ -46,12 +46,12 @@ unsigned char EqMidi::getId()
   return ret;
 }
 
-void EqMidi::consumeSysExMsg(ByteArray* msg)
+void EqMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 12)
+  if(msg.size() >= 12)
   {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char param = msg->at(9);
+    unsigned short rawVal = Utils::extractRawVal(msg[10], msg[11]);
+    const char param = msg[9];
     if(param == sOnOff[0])
       midiOnOffReceived(rawVal);
     else if(param == sBass[0])

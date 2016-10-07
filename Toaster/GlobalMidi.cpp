@@ -18,7 +18,7 @@
 
 
 // address page
-BYTEARRAYDEF(GlobalMidi, AddressPage,     0x7F)
+BYTEARRAYDEF(GlobalMidi, AddressPage,             0x7F)
 // parameter
 BYTEARRAYDEF(GlobalMidi, MainOutputVolume,        0x00)
 BYTEARRAYDEF(GlobalMidi, HeadphoneOutputVolume,   0x01)
@@ -75,12 +75,12 @@ unsigned char GlobalMidi::getId()
   return ret;
 }
 
-void GlobalMidi::consumeSysExMsg(ByteArray* msg)
+void GlobalMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 12)
+  if(msg.size() >= 12)
   {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char param = msg->at(9);
+    unsigned short rawVal = Utils::extractRawVal(msg[10], msg[11]);
+    const char param = msg[9];
     if(param == sMainOutputVolume[0])
       midiMainOutputVolumeReceived(rawVal);
     else if(param == sHeadphoneOutputVolume[0])
@@ -466,7 +466,7 @@ void GlobalMidi::midiApplyOperationMode(unsigned short rawVal)
     ByteArray cc;
     cc.push_back(0xB0);
     cc.push_back(31);
-    cc.push_back(0);
+    cc.push_back((char)0);
     Midi::get().sendCmd(cc);
     Midi::get().sendCmd(createSingleParamSetCmd(getAddressPage(), sOperationMode, rawVal));
   }

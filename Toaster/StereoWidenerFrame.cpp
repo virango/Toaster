@@ -16,6 +16,7 @@
 #include "StereoWidenerFrame.h"
 #include "ui_StereoWidenerFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 StereoWidenerFrame::StereoWidenerFrame(QWidget *parent)
   : QWidget(parent)

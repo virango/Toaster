@@ -150,6 +150,8 @@
     </property>
     <addaction name="actionUploadKIPRFile"/>
     <addaction name="separator"/>
+    <addaction name="actionEditKIPRFile"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuConnection">
@@ -286,6 +288,14 @@
    </property>
    <property name="menuRole">
     <enum>QAction::AboutRole</enum>
+   </property>
+  </action>
+  <action name="actionEditKIPRFile">
+   <property name="text">
+    <string>Edit KIPR File...</string>
+   </property>
+   <property name="toolTip">
+    <string>Edit KIPR File</string>
    </property>
   </action>
  </widget>

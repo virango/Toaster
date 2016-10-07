@@ -14,6 +14,7 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "Tuner.h"
+#include "LookUpTables.h"
 
 Tuner::Tuner()
 {
@@ -31,7 +32,7 @@ Tuner& Tuner::get()
 
 void Tuner::midiNoteReceived(unsigned short rawVal)
 {
-  emit noteReceived(raw2Note(rawVal), raw2Octave(rawVal));
+  emit noteReceived(LookUpTables::raw2Note(rawVal), Utils::raw2Octave(rawVal));
 }
 
 void Tuner::midiMuteSignalReceived(unsigned short rawVal)

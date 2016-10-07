@@ -16,15 +16,11 @@
 #ifndef COMMONDEFS_H
 #define COMMONDEFS_H
 
-#include <vector>
 #include <QString>
 #include <QtCore>
+#include <QVector>
 
-using namespace std;
-
-typedef vector<unsigned char> ByteArray;
-#define INIT_FROM(x) x, x + sizeof(x)
-#define VEC_INSERT(x, y) x.insert(x.end(), y.begin(), y.end())
+typedef QVector<unsigned char> ByteArray;
 
 #define BYTEARRAYDECL(Name) \
   static const ByteArray s##Name;

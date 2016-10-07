@@ -16,6 +16,7 @@
 #include "RectiShaperFrame.h"
 #include "ui_RectiShaperFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 RectiShaperFrame::RectiShaperFrame(QWidget *parent)
   : QWidget(parent)

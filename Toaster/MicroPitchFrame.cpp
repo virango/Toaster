@@ -16,6 +16,7 @@
 #include "MicroPitchFrame.h"
 #include "ui_MicroPitchFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 MicroPitchFrame::MicroPitchFrame(QWidget *parent)
   : QWidget(parent)

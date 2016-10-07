@@ -63,7 +63,7 @@ public:
 
   // ISysExConsumer
   unsigned char getId();
-  void consumeSysExMsg(ByteArray* msg);
+  void consumeSysExMsg(const ByteArray& msg);
 
 protected:
   // parameter

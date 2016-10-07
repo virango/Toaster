@@ -78,7 +78,7 @@ void Stomp::requestAllValues()
 // slots
 void Stomp::applyOnOff(bool onOff)
 {
-  midiApplyOnOff(bool2Raw(onOff));
+  midiApplyOnOff(Utils::bool2Raw(onOff));
   midiRequestOnOff();
 }
 
@@ -90,32 +90,32 @@ void Stomp::applyType(FXType type)
 
 void Stomp::applyMix(double mix)
 {
-  midiApplyMix(phys2Raw(mix, 100, 0));
+  midiApplyMix(Utils::phys2Raw(mix, 100, 0));
 }
 
 void Stomp::applyVolume(double volume)
 {
-  midiApplyVolume(phys2Raw(volume, 10, -5));
+  midiApplyVolume(Utils::phys2Raw(volume, 10, -5));
 }
 
 void Stomp::applyStereo(double stereo)
 {
-  midiApplyStereo(phys2Raw(stereo, 360, -180));
+  midiApplyStereo(Utils::phys2Raw(stereo, 360, -180));
 }
 
 void Stomp::applyWahManual(double wahManual)
 {
-  midiApplyWahManual(phys2Raw(wahManual, 10, 0));
+  midiApplyWahManual(Utils::phys2Raw(wahManual, 10, 0));
 }
 
 void Stomp::applyWahPeak(double wahPeak)
 {
-  midiApplyWahPeak(phys2Raw(wahPeak, 10, 0));
+  midiApplyWahPeak(Utils::phys2Raw(wahPeak, 10, 0));
 }
 
 void Stomp::applyWahRange(double wahRange)
 {
-  midiApplyWahRange(phys2Raw(wahRange, 200, -100));
+  midiApplyWahRange(Utils::phys2Raw(wahRange, 200, -100));
 }
 
 void Stomp::applyWahPedalMode(::WahPedalMode wahPedalMode)
@@ -125,45 +125,45 @@ void Stomp::applyWahPedalMode(::WahPedalMode wahPedalMode)
 
 void Stomp::applyWahTouchAttack(double wahTouchAttack)
 {
-  midiApplyWahTouchAttack(phys2Raw(wahTouchAttack, 10, 0));
+  midiApplyWahTouchAttack(Utils::phys2Raw(wahTouchAttack, 10, 0));
 }
 
 void Stomp::applyWahTouchRelease(double wahTouchRelease)
 {
-  midiApplyWahTouchRelease(phys2Raw(wahTouchRelease, 10, 0));
+  midiApplyWahTouchRelease(Utils::phys2Raw(wahTouchRelease, 10, 0));
 }
 
 void Stomp::applyWahTouchBoost(double wahTouchBoost)
 {
-  midiApplyWahTouchBoost(phys2Raw(wahTouchBoost, 10, 0));
+  midiApplyWahTouchBoost(Utils::phys2Raw(wahTouchBoost, 10, 0));
 }
 
 void Stomp::applyDistortionShaperDrive(double distortionShaperDrive)
 {
-  midiApplyDistortionShaperDrive(phys2Raw(distortionShaperDrive, 10, 0));
+  midiApplyDistortionShaperDrive(Utils::phys2Raw(distortionShaperDrive, 10, 0));
 }
 
 void Stomp::applyDistortionBoosterTone(double distortionBoosterTone)
 {
   if(Settings::get().getKPAOSVersion() < 0x04000000)
-    midiApplyDistortionBoosterTone(phys2Raw(distortionBoosterTone, 10, -5));
+    midiApplyDistortionBoosterTone(Utils::phys2Raw(distortionBoosterTone, 10, -5));
   else
-    midiApplyDistortionBoosterTone(phys2Raw(distortionBoosterTone, 10, 0));
+    midiApplyDistortionBoosterTone(Utils::phys2Raw(distortionBoosterTone, 10, 0));
 }
 
 void Stomp::applyCompressorGateIntensity(double compressorGateIntensity)
 {
-  midiApplyCompressorGateIntensity(phys2Raw(compressorGateIntensity, 10, 0));
+  midiApplyCompressorGateIntensity(Utils::phys2Raw(compressorGateIntensity, 10, 0));
 }
 
 void Stomp::applyCompressorAttack(double compressorAttack)
 {
-  midiApplyCompressorAttack(phys2Raw(compressorAttack, 10 , 0));
+  midiApplyCompressorAttack(Utils::phys2Raw(compressorAttack, 10 , 0));
 }
 
 void Stomp::applyModulationRate(double modulationRate)
 {
-  midiApplyModulationRate(phys2Raw(modulationRate, 10, 0));
+  midiApplyModulationRate(Utils::phys2Raw(modulationRate, 10, 0));
 }
 
 void Stomp::applyModulationRate(int modulationRate)
@@ -173,17 +173,17 @@ void Stomp::applyModulationRate(int modulationRate)
 
 void Stomp::applyModulationDepth(double modulationDepth)
 {
-  midiApplyModulationDepth(phys2Raw(modulationDepth, 10, 0));
+  midiApplyModulationDepth(Utils::phys2Raw(modulationDepth, 10, 0));
 }
 
 void Stomp::applyModulationFeedback(double modulationFeedback)
 {
-  midiApplyModulationFeedback(phys2Raw(modulationFeedback, 100, 0));
+  midiApplyModulationFeedback(Utils::phys2Raw(modulationFeedback, 100, 0));
 }
 
 void Stomp::applyModulationCrossover(double modulationCrossover)
 {
-  midiApplyModulationCrossover(phys2Raw(modulationCrossover, 10, 0));
+  midiApplyModulationCrossover(Utils::phys2Raw(modulationCrossover, 10, 0));
 }
 
 void Stomp::applyModulationCrossover(int modulationCrossover)
@@ -193,17 +193,17 @@ void Stomp::applyModulationCrossover(int modulationCrossover)
 
 void Stomp::applyModulationHyperChorusAmount(double modulationHyperChorusAmount)
 {
-  midiApplyModulationHyperChorusAmount(phys2Raw(modulationHyperChorusAmount, 2, 1));
+  midiApplyModulationHyperChorusAmount(Utils::phys2Raw(modulationHyperChorusAmount, 2, 1));
 }
 
 void Stomp::applyModulationManual(double modulationManual)
 {
-  midiApplyModulationManual(phys2Raw(modulationManual, 10, 0));
+  midiApplyModulationManual(Utils::phys2Raw(modulationManual, 10, 0));
 }
 
 void Stomp::applyModulationPhaserPeakSpread(double modulationPhaserPeakSpread)
 {
-  midiApplyModulationPhaserPeakSpread(phys2Raw(modulationPhaserPeakSpread, 10, -5));
+  midiApplyModulationPhaserPeakSpread(Utils::phys2Raw(modulationPhaserPeakSpread, 10, -5));
 }
 
 void Stomp::applyModulationPhaserStages(double modulationPhaserStages)
@@ -223,57 +223,57 @@ void Stomp::applyRotaryDistance(int rotaryDistance)
 
 void Stomp::applyRotaryBalance(double rotaryBalance)
 {
-  midiApplyRotaryBalance(phys2Raw(rotaryBalance, 200, -100));
+  midiApplyRotaryBalance(Utils::phys2Raw(rotaryBalance, 200, -100));
 }
 
 void Stomp::applyCompressorSquash(double compressorSquash)
 {
-  midiApplyCompressorSquash(phys2Raw(compressorSquash, 10, -5));
+  midiApplyCompressorSquash(Utils::phys2Raw(compressorSquash, 10, -5));
 }
 
 void Stomp::applyGraphicEQBand1(double graphicEQBand)
 {
-  midiApplyGraphicEQBand1(phys2Raw(graphicEQBand, 24, -12));
+  midiApplyGraphicEQBand1(Utils::phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand2(double graphicEQBand)
 {
-  midiApplyGraphicEQBand2(phys2Raw(graphicEQBand, 24, -12));
+  midiApplyGraphicEQBand2(Utils::phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand3(double graphicEQBand)
 {
-  midiApplyGraphicEQBand3(phys2Raw(graphicEQBand, 24, -12));
+  midiApplyGraphicEQBand3(Utils::phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand4(double graphicEQBand)
 {
-  midiApplyGraphicEQBand4(phys2Raw(graphicEQBand, 24, -12));
+  midiApplyGraphicEQBand4(Utils::phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand5(double graphicEQBand)
 {
-  midiApplyGraphicEQBand5(phys2Raw(graphicEQBand, 24, -12));
+  midiApplyGraphicEQBand5(Utils::phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand6(double graphicEQBand)
 {
-  midiApplyGraphicEQBand6(phys2Raw(graphicEQBand, 24, -12));
+  midiApplyGraphicEQBand6(Utils::phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand7(double graphicEQBand)
 {
-  midiApplyGraphicEQBand7(phys2Raw(graphicEQBand, 24, -12));
+  midiApplyGraphicEQBand7(Utils::phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyGraphicEQBand8(double graphicEQBand)
 {
-  midiApplyGraphicEQBand8(phys2Raw(graphicEQBand, 24, -12));
+  midiApplyGraphicEQBand8(Utils::phys2Raw(graphicEQBand, 24, -12));
 }
 
 void Stomp::applyParametricEQLowGain(double gain)
 {
-  midiApplyParametricEQLowGain(phys2Raw(gain, 24, -12));
+  midiApplyParametricEQLowGain(Utils::phys2Raw(gain, 24, -12));
 }
 
 void Stomp::applyParametricEQLowFrequency(int frequency)
@@ -283,7 +283,7 @@ void Stomp::applyParametricEQLowFrequency(int frequency)
 
 void Stomp::applyParametricEQHighGain(double gain)
 {
-  midiApplyParametricEQHighGain(phys2Raw(gain, 24, -12));
+  midiApplyParametricEQHighGain(Utils::phys2Raw(gain, 24, -12));
 }
 
 void Stomp::applyParametricEQHighFrequency(int frequency)
@@ -293,7 +293,7 @@ void Stomp::applyParametricEQHighFrequency(int frequency)
 
 void Stomp::applyParametricEQPeakGain(double gain)
 {
-  midiApplyParametricEQPeakGain(phys2Raw(gain, 24, -12));
+  midiApplyParametricEQPeakGain(Utils::phys2Raw(gain, 24, -12));
 }
 
 void Stomp::applyParametricEQPeakFrequency(int frequency)
@@ -308,7 +308,7 @@ void Stomp::applyParametricEQPeakQFactor(int factor)
 
 void Stomp::applyParametricEQPeakGain2(double gain)
 {
-  midiApplyParametricEQPeakGain2(phys2Raw(gain, 24, -12));
+  midiApplyParametricEQPeakGain2(Utils::phys2Raw(gain, 24, -12));
 }
 
 void Stomp::applyParametricEQPeakFrequency2(int frequency)
@@ -323,22 +323,22 @@ void Stomp::applyParametricEQPeakQFactor2(int factor)
 
 void Stomp::applyWahPeakRange(double wahPeakRange)
 {
-  midiApplyWahPeakRange(phys2Raw(wahPeakRange, 200, -100));
+  midiApplyWahPeakRange(Utils::phys2Raw(wahPeakRange, 200, -100));
 }
 
 void Stomp::applyDucking(double ducking)
 {
-  midiApplyDucking(phys2Raw(ducking, 10, -5));
+  midiApplyDucking(Utils::phys2Raw(ducking, 10, -5));
 }
 
 void Stomp::applyIntensity(double mix)
 {
-  midiApplyIntensity(phys2Raw(mix, 100, 0));
+  midiApplyIntensity(Utils::phys2Raw(mix, 100, 0));
 }
 
 void Stomp::applyVoiceMix(double voiceMix)
 {
-  midiApplyVoiceMix(phys2Raw(voiceMix, 10, -5));
+  midiApplyVoiceMix(Utils::phys2Raw(voiceMix, 10, -5));
 }
 
 void Stomp::applyVoice1Pitch(double voice1Pitch)
@@ -353,17 +353,17 @@ void Stomp::applyVoice2Pitch(double voice2Pitch)
 
 void Stomp::applyDetune(double detune)
 {
-  midiApplyDetune(phys2Raw(detune, 10, 0));
+  midiApplyDetune(Utils::phys2Raw(detune, 10, 0));
 }
 
 void Stomp::applySmoothChords(bool onOff)
 {
-  midiApplySmoothChords(bool2Raw(onOff));
+  midiApplySmoothChords(Utils::bool2Raw(onOff));
 }
 
 void Stomp::applyPureTuning(bool onOff)
 {
-  midiApplyPureTuning(bool2Raw(onOff));
+  midiApplyPureTuning(Utils::bool2Raw(onOff));
 }
 
 void Stomp::applyVoice1Interval(int voice1Interval)
@@ -383,12 +383,12 @@ void Stomp::applyKey(int key)
 
 void Stomp::applyFormantShiftOnOff(bool onOff)
 {
-  midiApplyFormantShiftOnOff(bool2Raw(onOff));
+  midiApplyFormantShiftOnOff(Utils::bool2Raw(onOff));
 }
 
 void Stomp::applyFormantShift(double shift)
 {
-  midiApplyFormantShift(phys2Raw(shift, 10, -5));
+  midiApplyFormantShift(Utils::phys2Raw(shift, 10, -5));
 }
 
 void Stomp::applyLowCut(int lowCut)
@@ -408,12 +408,12 @@ void Stomp::applyDelayMix(int mix)
 
 void Stomp::applyDelay1Time(double time)
 {
-  midiApplyDelay1Time(phys2Raw(time, 2000, 0));
+  midiApplyDelay1Time(Utils::phys2Raw(time, 2000, 0));
 }
 
 void Stomp::applyDelay2Ratio(double ratio)
 {
-  midiApplyDelay2Ratio(phys2Raw(ratio, 100, 0));
+  midiApplyDelay2Ratio(Utils::phys2Raw(ratio, 100, 0));
 }
 
 void Stomp::applyDelayNoteValue1(int noteValue)
@@ -428,7 +428,7 @@ void Stomp::applyDelayNoteValue2(int noteValue)
 
 void Stomp::applyDelayFeedback(double feedback)
 {
-  midiApplyDelayFeedback(phys2Raw(feedback, 100, 0));
+  midiApplyDelayFeedback(Utils::phys2Raw(feedback, 100, 0));
 }
 
 void Stomp::applyDelayToTempo(int toTempo)
@@ -438,7 +438,7 @@ void Stomp::applyDelayToTempo(int toTempo)
 
 void Stomp::applyDelayModulation(double modulation)
 {
-  midiApplyDelayModulation(phys2Raw(modulation, 10, 0));
+  midiApplyDelayModulation(Utils::phys2Raw(modulation, 10, 0));
 }
 
 // StompMidi callbacks
@@ -450,37 +450,37 @@ void Stomp::midiTypeReceived(unsigned short rawVal)
 
 void Stomp::midiOnOffReceived(unsigned short rawVal)
 {
-  emit onOffReceived(raw2Bool(rawVal));
+  emit onOffReceived(Utils::raw2Bool(rawVal));
 }
 
 void Stomp::midiMixReceived(unsigned short rawVal)
 {
-  emit mixReceived(raw2Phys(rawVal, 100, 0));
+  emit mixReceived(Utils::raw2Phys(rawVal, 100, 0));
 }
 
 void Stomp::midiVolumeReceived(unsigned short rawVal)
 {
-  emit volumeReceived(raw2Phys(rawVal, 10, -5));
+  emit volumeReceived(Utils::raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiStereoReceived(unsigned short rawVal)
 {
-  emit stereoReceived(raw2Phys(rawVal, 360, -180));
+  emit stereoReceived(Utils::raw2Phys(rawVal, 360, -180));
 }
 
 void Stomp::midiWahManualReceived(unsigned short rawVal)
 {
-  emit wahManualReceived(raw2Phys(rawVal, 10, 0));
+  emit wahManualReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiWahPeakReceived(unsigned short rawVal)
 {
-  emit wahPeakReceived(raw2Phys(rawVal, 10, 0));
+  emit wahPeakReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiWahRangeReceived(unsigned short rawVal)
 {
-  emit wahRangeReceived(raw2Phys(rawVal, 200, -100));
+  emit wahRangeReceived(Utils::raw2Phys(rawVal, 200, -100));
 }
 
 void Stomp::midiWahPedalModeReceived(unsigned short rawVal)
@@ -490,40 +490,40 @@ void Stomp::midiWahPedalModeReceived(unsigned short rawVal)
 
 void Stomp::midiWahTouchAttackReceived(unsigned short rawVal)
 {
-  emit wahTouchAttackReceived(raw2Phys(rawVal, 10, 0));
+  emit wahTouchAttackReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiWahTouchReleaseReceived(unsigned short rawVal)
 {
-  emit wahTouchReleaseReceived(raw2Phys(rawVal, 10, 0));
+  emit wahTouchReleaseReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiWahTouchBoostReceived(unsigned short rawVal)
 {
-  emit wahTouchBoostReceived(raw2Phys(rawVal, 10, 0));
+  emit wahTouchBoostReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiDistortionShaperDriveReceived(unsigned short rawVal)
 {
-  emit distortionShaperDriveReceived(raw2Phys(rawVal, 10, 0));
+  emit distortionShaperDriveReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiDistortionBoosterToneReceived(unsigned short rawVal)
 {
   if(Settings::get().getKPAOSVersion() < 0x04000000)
-    emit distortionBoosterToneReceived(raw2Phys(rawVal, 10, -5));
+    emit distortionBoosterToneReceived(Utils::raw2Phys(rawVal, 10, -5));
   else
-    emit distortionBoosterToneReceived(raw2Phys(rawVal, 10, 0));
+    emit distortionBoosterToneReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiCompressorGateIntensityReceived(unsigned short rawVal)
 {
-  emit compressorGateIntensityReceived(raw2Phys(rawVal, 10, 0));
+  emit compressorGateIntensityReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiCompressorAttackReceived(unsigned short rawVal)
 {
-  emit compressorAttackReceived(raw2Phys(rawVal, 10, 0));
+  emit compressorAttackReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiModulationRateReceived(unsigned short rawVal)
@@ -536,33 +536,33 @@ void Stomp::midiModulationRateReceived(unsigned short rawVal)
 
 void Stomp::midiModulationDepthReceived(unsigned short rawVal)
 {
-  emit modulationDepthReceived(raw2Phys(rawVal, 10, 0));
+  emit modulationDepthReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiModulationFeedbackReceived(unsigned short rawVal)
 {
-  emit modulationFeedbackReceived(raw2Phys(rawVal, 100, 0));
+  emit modulationFeedbackReceived(Utils::raw2Phys(rawVal, 100, 0));
 }
 
 void Stomp::midiModulationCrossoverReceived(unsigned short rawVal)
 {
-  emit modulationCrossoverReceived(raw2Phys(rawVal, 10, 0));
+  emit modulationCrossoverReceived(Utils::raw2Phys(rawVal, 10, 0));
   emit modulationCrossoverReceived((int)rawVal);
 }
 
 void Stomp::midiModulationHyperChorusAmountReceived(unsigned short rawVal)
 {
-  emit modulationHyperChorusAmountReceived(raw2Phys(rawVal, 2, 1));
+  emit modulationHyperChorusAmountReceived(Utils::raw2Phys(rawVal, 2, 1));
 }
 
 void Stomp::midiModulationManualReceived(unsigned short rawVal)
 {
-  emit modulationManualReceived(raw2Phys(rawVal, 10, 0));
+  emit modulationManualReceived(Utils::raw2Phys(rawVal, 10, 0));
 }
 
 void Stomp::midiModulationPhaserPeakSpreadReceived(unsigned short rawVal)
 {
-  emit modulationPhaserPeakSpreadReceived(raw2Phys(rawVal, 10, -5));
+  emit modulationPhaserPeakSpreadReceived(Utils::raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiModulationPhaserStagesReceived(unsigned short rawVal)
@@ -582,57 +582,57 @@ void Stomp::midiRotaryDistanceReceived(unsigned short rawVal)
 
 void Stomp::midiRotaryBalanceReceived(unsigned short rawVal)
 {
-  emit rotaryBalanceReceived(raw2Phys(rawVal, 200, -100));
+  emit rotaryBalanceReceived(Utils::raw2Phys(rawVal, 200, -100));
 }
 
 void Stomp::midiCompressorSquashReceived(unsigned short rawVal)
 {
-  emit compressorSquashReceived(raw2Phys(rawVal, 10, -5));
+  emit compressorSquashReceived(Utils::raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiGraphicEQBand1Received(unsigned short rawVal)
 {
-  emit graphicEQBand1Received(raw2Phys(rawVal, 24, -12));
+  emit graphicEQBand1Received(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand2Received(unsigned short rawVal)
 {
-  emit graphicEQBand2Received(raw2Phys(rawVal, 24, -12));
+  emit graphicEQBand2Received(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand3Received(unsigned short rawVal)
 {
-  emit graphicEQBand3Received(raw2Phys(rawVal, 24, -12));
+  emit graphicEQBand3Received(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand4Received(unsigned short rawVal)
 {
-  emit graphicEQBand4Received(raw2Phys(rawVal, 24, -12));
+  emit graphicEQBand4Received(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand5Received(unsigned short rawVal)
 {
-  emit graphicEQBand5Received(raw2Phys(rawVal, 24, -12));
+  emit graphicEQBand5Received(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand6Received(unsigned short rawVal)
 {
-  emit graphicEQBand6Received(raw2Phys(rawVal, 24, -12));
+  emit graphicEQBand6Received(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand7Received(unsigned short rawVal)
 {
-  emit graphicEQBand7Received(raw2Phys(rawVal, 24, -12));
+  emit graphicEQBand7Received(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiGraphicEQBand8Received(unsigned short rawVal)
 {
-  emit graphicEQBand8Received(raw2Phys(rawVal, 24, -12));
+  emit graphicEQBand8Received(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiParametricEQLowGainReceived(unsigned short rawVal)
 {
-  emit parametricEQLowGainReceived(raw2Phys(rawVal, 24, -12));
+  emit parametricEQLowGainReceived(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiParametricEQLowFrequencyReceived(unsigned short rawVal)
@@ -642,7 +642,7 @@ void Stomp::midiParametricEQLowFrequencyReceived(unsigned short rawVal)
 
 void Stomp::midiParametricEQHighGainReceived(unsigned short rawVal)
 {
-  emit parametricEQHighGainReceived(raw2Phys(rawVal, 24, -12));
+  emit parametricEQHighGainReceived(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiParametricEQHighFrequencyReceived(unsigned short rawVal)
@@ -652,7 +652,7 @@ void Stomp::midiParametricEQHighFrequencyReceived(unsigned short rawVal)
 
 void Stomp::midiParametricEQPeakGainReceived(unsigned short rawVal)
 {
-  emit parametricEQPeakGainReceived(raw2Phys(rawVal, 24, -12));
+  emit parametricEQPeakGainReceived(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiParametricEQPeakFrequencyReceived(unsigned short rawVal)
@@ -667,7 +667,7 @@ void Stomp::midiParametricEQPeakQFactorReceived(unsigned short rawVal)
 
 void Stomp::midiParametricEQPeakGain2Received(unsigned short rawVal)
 {
-  emit parametricEQPeakGain2Received(raw2Phys(rawVal, 24, -12));
+  emit parametricEQPeakGain2Received(Utils::raw2Phys(rawVal, 24, -12));
 }
 
 void Stomp::midiParametricEQPeakFrequency2Received(unsigned short rawVal)
@@ -682,22 +682,22 @@ void Stomp::midiParametricEQPeakQFactor2Received(unsigned short rawVal)
 
 void Stomp::midiWahPeakRangeReceived(unsigned short rawVal)
 {
-  emit wahPeakRangeReceived(raw2Phys(rawVal, 200, -100));
+  emit wahPeakRangeReceived(Utils::raw2Phys(rawVal, 200, -100));
 }
 
 void Stomp::midiDuckingReceived(unsigned short rawVal)
 {
-  emit duckingReceived(raw2Phys(rawVal, 10, -5));
+  emit duckingReceived(Utils::raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiIntensityReceived(unsigned short rawVal)
 {
-  emit intensityReceived(raw2Phys(rawVal, 100, 0));
+  emit intensityReceived(Utils::raw2Phys(rawVal, 100, 0));
 }
 
 void Stomp::midiVoiceMixReceived(unsigned short rawVal)
 {
-  emit voiceMixReceived(raw2Phys(rawVal, 10, -5));
+  emit voiceMixReceived(Utils::raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiVoice1PitchReceived(unsigned short rawVal)
@@ -712,17 +712,17 @@ void Stomp::midiVoice2PitchReceived(unsigned short rawVal)
 
 void Stomp::midiDetuneReceived(unsigned short rawVal)
 {
-  emit detuneReceived(raw2Phys(rawVal, 10, 0));void applyModulationCrossover(int modulationCrossover);
+  emit detuneReceived(Utils::raw2Phys(rawVal, 10, 0));void applyModulationCrossover(int modulationCrossover);
 }
 
 void Stomp::midiSmoothChordsReceived(unsigned short rawVal)
 {
-  emit smoothChordsReceived(raw2Bool(rawVal));
+  emit smoothChordsReceived(Utils::raw2Bool(rawVal));
 }
 
 void Stomp::midiPureTuningReceived(unsigned short rawVal)
 {
-  emit pureTuningReceived(raw2Bool(rawVal));
+  emit pureTuningReceived(Utils::raw2Bool(rawVal));
 }
 
 void Stomp::midiVoice1IntervalReceived(unsigned short rawVal)
@@ -742,12 +742,12 @@ void Stomp::midiKeyReceived(unsigned short rawVal)
 
 void Stomp::midiFormantShiftOnOffReceived(unsigned short rawVal)
 {
-  emit formantShiftOnOffReceived(raw2Bool(rawVal));
+  emit formantShiftOnOffReceived(Utils::raw2Bool(rawVal));
 }
 
 void Stomp::midiFormantShiftReceived(unsigned short rawVal)
 {
-  emit formantShiftReceived(raw2Phys(rawVal, 10, -5));
+  emit formantShiftReceived(Utils::raw2Phys(rawVal, 10, -5));
 }
 
 void Stomp::midiLowCutReceived(unsigned short rawVal)
@@ -767,12 +767,12 @@ void Stomp::midiDelayMixReceived(unsigned short rawVal)
 
 void Stomp::midiDelay1TimeReceived(unsigned short rawVal)
 {
-  emit delay1TimeReceived(raw2Phys(rawVal, 2000, 0));
+  emit delay1TimeReceived(Utils::raw2Phys(rawVal, 2000, 0));
 }
 
 void Stomp::midiDelay2RatioReceived(unsigned short rawVal)
 {
-  emit delay2RatioReceived(raw2Phys(rawVal, 100, 0));
+  emit delay2RatioReceived(Utils::raw2Phys(rawVal, 100, 0));
 }
 
 void Stomp::midiDelayNoteValue1Received(unsigned short rawVal)
@@ -787,7 +787,7 @@ void Stomp::midiDelayNoteValue2Received(unsigned short rawVal)
 
 void Stomp::midiDelayFeedbackReceived(unsigned short rawVal)
 {
-  emit delayFeedbackReceived(raw2Phys(rawVal, 100, 0));
+  emit delayFeedbackReceived(Utils::raw2Phys(rawVal, 100, 0));
 }
 
 void Stomp::midiDelayToTempoReceived(unsigned short rawVal)
@@ -797,5 +797,5 @@ void Stomp::midiDelayToTempoReceived(unsigned short rawVal)
 
 void Stomp::midiDelayModulationReceived(unsigned short rawVal)
 {
-  emit delayModulationReceived(raw2Phys(rawVal, 10, 0));
+  emit delayModulationReceived(Utils::raw2Phys(rawVal, 10, 0));
 }

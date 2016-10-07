@@ -15,10 +15,37 @@
 */
 #include "ToasterWindow.h"
 #include <QApplication>
+#include "KPAOS4Checker.h"
+
+/*
+void TryToGetKPAOSVersion()
+{
+  QString inPort(Settings::get().getMidiInPort());
+  QString outPort(Settings::get().getMidiOutPort());
+
+  if(inPort.isEmpty() || outPort.isEmpty())
+  {
+    SettingsDialog settingsDialog(nullptr);
+    settingsDialog.exec();
+    inPort = Settings::get().getMidiInPort();
+    outPort = Settings::get().getMidiOutPort();
+  }
+
+  if(Midi::get().openPorts(inPort, outPort))
+  {
+    connect
+    stompDelayObj.requestOnOff();
+  }
+}
+*/
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    KPAOS4Checker osChecker;
+    osChecker.check();
+
     ToasterWindow w;
     w.show();
 

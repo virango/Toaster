@@ -16,6 +16,7 @@
 #include "MetalDSFrame.h"
 #include "ui_MetalDSFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 MetalDSFrame::MetalDSFrame(QWidget *parent)
   : QWidget(parent)

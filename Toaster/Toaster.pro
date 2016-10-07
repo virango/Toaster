@@ -38,11 +38,11 @@ CONFIG(debug, debug|release) {
 
 INCLUDEPATH += $$PWD/../ToasterWidgets \
                $$PWD/../RtMidi \
-               $$PWD/../Shared
+               $$PWD/../Shared \
+               $$PWD/../VirtualKPA
 
 SOURCES += main.cpp\
     ToasterWindow.cpp \
-    SysExBase.cpp \
     Midi.cpp \
     SysExMsgDispatcher.cpp \
     StompMidi.cpp \
@@ -136,7 +136,8 @@ SOURCES += main.cpp\
     Tap.cpp \
     LegacyDelayFrame.cpp \
     MixValuesV4.cpp \
-    StereoWidenerFrame.cpp
+    StereoWidenerFrame.cpp \
+    KPAOS4Checker.cpp
 
 macx:SOURCES_NOOPTIMIZE = MainVolumeValues.cpp \
     RotaryDistanceValues.cpp \
@@ -166,7 +167,6 @@ macx:nooptimize.commands = $${QMAKE_CXX} $(CXXFLAGS) -O0 $(INCPATH) -c ${QMAKE_F
 macx:QMAKE_EXTRA_COMPILERS += nooptimize
 
 HEADERS  += ToasterWindow.h \
-    SysExBase.h \
     Midi.h \
     SysExMsgDispatcher.h \
     StompMidi.h \
@@ -270,7 +270,12 @@ HEADERS  += ToasterWindow.h \
     Tap.h \
     LegacyDelayFrame.h \
     MixValuesV4.h \
-    StereoWidenerFrame.h
+    StereoWidenerFrame.h \
+    KPAOS4Checker.h \
+    ../Shared/Commons.h \
+    ../Shared/Utils.h \
+    ../Shared/SysExBase.h \
+    ../Shared/MidiConsumer.h
 
 FORMS    += \
     ToasterWindow.ui \
@@ -334,10 +339,9 @@ RESOURCES += \
     resources.qrc
 
 
-
 DEPENDPATH += $$PWD/../ToasterWidgets \
-              $$PWD/../RtMidi
-
+              $$PWD/../RtMidi \
+              $$PWD/../VirtualKPA
 
 CONFIG(release, debug|release):LIBS += -L$$OUT_PWD/../RtMidi/release/ -lRtMidi
 CONFIG(debug, debug|release):LIBS += -L$$OUT_PWD/../RtMidi/debug/ -lRtMidi
@@ -349,6 +353,8 @@ else:macx: CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/d
 else:unix: CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/release -lqtoasterwidgetsplugin
 else:unix: CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../ToasterWidgets/debug -lqtoasterwidgetsplugin
 
+CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../VirtualKPA/release -lVirtualKPA
+CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../VirtualKPA/debug -lVirtualKPA
 
 unix:!macx:LIBS += -lasound -ljack
 macx:LIBS += -framework CoreMIDI -framework CoreAudio -framework CoreFoundation

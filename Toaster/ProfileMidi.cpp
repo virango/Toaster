@@ -43,12 +43,12 @@ ProfileMidi::~ProfileMidi()
 }
 
 // ISysExConsumer
-void ProfileMidi::consumeSysExMsg(ByteArray* msg)
+void ProfileMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 12)
+  if(msg.size() >= 12)
   {
-    QString strVal = extractString(ByteArray(msg->begin() + 10, msg->end()));
-    const char param = msg->at(9);
+    QString strVal = Utils::extractString(msg.mid(10));
+    const char param = msg[9];
     if(param == sRigName[0])
       midiRigNameReceived(strVal);
     else if(param == sRigAuthor[0])

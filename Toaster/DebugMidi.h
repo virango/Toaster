@@ -24,7 +24,7 @@ class DebugMidi : public SysExBase, public SysExMsgDispatcher::ISysExConsumer
 public:
   // ISysExConsumer
   unsigned char getId() { return 0xFF; }
-  void consumeSysExMsg(ByteArray* msg);
+  void consumeSysExMsg(const ByteArray& msg);
 
   static DebugMidi& get() { return mSingleton; }
 
@@ -36,17 +36,19 @@ public:
 
   void debugRequestExtStringParam(unsigned int param);
 
-  void debugSendSingleParam(ByteArray addressPage, ByteArray param, ByteArray value);
+  void debugSendSingleParam(const ByteArray& addressPage, const ByteArray& param, const ByteArray& value);
 
-  void debugSendStringParam(ByteArray addressPage, ByteArray param, ByteArray value);
+  void debugSendStringParam(const ByteArray& addressPage, const ByteArray& param, const ByteArray& value);
 
   void debugSendExtParam(unsigned int param, unsigned int value);
 
-  void debugSendReserveFct7E(ByteArray addressPage, ByteArray param, ByteArray value);
+  void debugSendReserveFct7E(const ByteArray& addressPage, const ByteArray& param, const ByteArray& value);
 
-  void debugWriteStringValues(ByteArray* msg);
+  void debugSendReserveFct7F(const ByteArray& addressPage, const ByteArray& param, const ByteArray& value);
 
-  void debugPrintValues(ByteArray* msg);
+  void debugWriteStringValues(const ByteArray& msg);
+
+  void debugPrintValues(const ByteArray& msg);
 
   bool mPrintValues;
 

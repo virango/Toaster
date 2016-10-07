@@ -16,6 +16,7 @@
 #include "LoopDistortionFrame.h"
 #include "ui_LoopDistortionFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 LoopDistortionFrame::LoopDistortionFrame(QWidget *parent)
   : QWidget(parent)

@@ -31,9 +31,9 @@ DebugMidi::~DebugMidi()
 
 }
 
-void DebugMidi::consumeSysExMsg(ByteArray* msg)
+void DebugMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 10)  // set to 10 to receive ack msgs (fct==0x7e, ap==0x7f)
+  if(msg.size() >= 10)  // set to 10 to receive ack msgs (fct==0x7e, ap==0x7f)
   {
     if(mPrintValues)
       debugPrintValues(msg);
@@ -43,7 +43,7 @@ void DebugMidi::consumeSysExMsg(ByteArray* msg)
   }
 }
 
-void DebugMidi::debugWriteStringValues(ByteArray* msg)
+void DebugMidi::debugWriteStringValues(const ByteArray& msg)
 {
 #if 0
   QString strVal;
@@ -51,8 +51,8 @@ void DebugMidi::debugWriteStringValues(ByteArray* msg)
   static unsigned short val2 = 0;
   static QString lastVal("");
 
-  for(int i = 12; (i < msg->size() && msg->at(i) != 0); ++i)
-    strVal.append(msg->at(i));
+  for(int i = 12; (i < msg->size() && msg[i) != 0); ++i)
+    strVal.append(msg[i));
   qDebug() << QString::number(val2) << strVal;
 
   QFile outFile1(mRaw2ValFileName);
@@ -86,10 +86,10 @@ void DebugMidi::debugWriteStringValues(ByteArray* msg)
   }
 #else
   QString strVal;
-  unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
+  unsigned short rawVal = Utils::extractRawVal(msg[10], msg[11]);
 
-  for(unsigned int i = 12; (i < msg->size() && msg->at(i) != 0); ++i)
-    strVal.append(msg->at(i));
+  for(int i = 12; (i < msg.size() && msg[i] != 0); ++i)
+    strVal.append(msg[i]);
   qDebug() << QString::number(rawVal) << strVal;
 
   QFile outFile1(mRaw2ValFileName);
@@ -123,61 +123,61 @@ void DebugMidi::debugWriteStringValues(ByteArray* msg)
 #endif
 }
 
-void DebugMidi::debugPrintValues(ByteArray* msg)
+void DebugMidi::debugPrintValues(const ByteArray& msg)
 {
   unsigned int rawVal = -1;
-  const char fct = msg->at(6);
+  const char fct = msg[6];
 
   //if(fct == 0x7e)
   //  return;
 
-  unsigned short ap = msg->at(8);
-  unsigned short param = msg->at(9);
+  unsigned short ap = msg[8];
+  unsigned short param = msg[9];
 
   QString strVal("");
 
-  if(fct == sSingleParamChange[0])
+  if(fct == SingleParamChange()[0])
   {
-    rawVal = extractRawVal(msg->at(10), msg->at(11));
+    rawVal = Utils::extractRawVal(msg[10], msg[11]);
     strVal = QString::number(rawVal, 16);
   }
 
-  else if(fct == sStringParam[0])
+  else if(fct == StringParam()[0])
   {
-    strVal = extractString(ByteArray(msg->begin() + 10, msg->end()));
+    strVal = Utils::extractString(msg.mid(10));
   }
-  else if(fct == sExtParamChange[0])
+  else if(fct == ExtParamChange()[0])
   {
-    rawVal = extractRawVal(ByteArray(msg->begin() + 8, msg->end()));
+    rawVal = Utils::extractRawVal(msg.mid(8));
     ap = (rawVal >> 16) & 0xFFFF;
     param = rawVal & 0xFFFF;
-    rawVal = extractRawVal(ByteArray(msg->begin() + 13, msg->end()));
+    rawVal = Utils::extractRawVal(msg.mid(13));
     strVal = QString::number(rawVal, 16);
   }
-  else if(fct == sExtStringParamChange[0])
+  else if(fct == ExtStringParamChange()[0])
   {
-    rawVal = extractRawVal(ByteArray(msg->begin() + 8, msg->end()));
+    rawVal = Utils::extractRawVal(msg.mid(8));
     ap = (rawVal >> 16) & 0xFFFF;
     param = rawVal & 0xFFFF;
-    strVal = extractString(ByteArray(msg->begin() + 13, msg->end()));
+    strVal = Utils::extractString(msg.mid(13));
   }
   else
   {
-    for(unsigned int i=10; i < msg->size(); ++i)
+    for(int i=10; i < msg.size(); ++i)
     {
       strVal += "0x";
-      strVal += QString::number(msg->at(i), 16);
+      strVal += QString::number(msg[i], 16);
       strVal += " ";
-      //rawValArray.push_back(msg->at(i));
+      //rawValArray.push_back(msg[i));
     }
   }
 
-  if(ap != 0x38)
-      return;
+  //if(ap != 0x38)
+  //    return;
 
   //if(mod == 0x00)
 
-    qDebug() << "Message size "     <<  QString::number(msg->size())
+    qDebug() << "Message size "     <<  QString::number(msg.size())
              << ", function: "      <<  QString::number(fct, 16)
              << ", address page: "  <<  QString::number(ap, 16)
              << ", parameter: "     <<  QString::number(param, 16)
@@ -218,12 +218,12 @@ void DebugMidi::debugRequestExtStringParam(unsigned int param)
   Midi::get().sendCmd(createExtStringParamGetCmd(param));
 }
 
-void DebugMidi::debugSendSingleParam(ByteArray addressPage, ByteArray param, ByteArray value)
+void DebugMidi::debugSendSingleParam(const ByteArray& addressPage, const ByteArray& param, const ByteArray& value)
 {
   Midi::get().sendCmd(createSingleParamSetCmd(addressPage, param, value));
 }
 
-void DebugMidi::debugSendStringParam(ByteArray addressPage, ByteArray param, ByteArray value)
+void DebugMidi::debugSendStringParam(const ByteArray& addressPage, const ByteArray& param, const ByteArray& value)
 {
   Midi::get().sendCmd(createStringParamSetCmd(addressPage, param, value));
 }
@@ -233,7 +233,12 @@ void DebugMidi::debugSendExtParam(unsigned int param, unsigned int value)
   Midi::get().sendCmd(createExtParamSetCmd(param, value));
 }
 
-void DebugMidi::debugSendReserveFct7E(ByteArray addressPage, ByteArray param, ByteArray value)
+void DebugMidi::debugSendReserveFct7E(const ByteArray& addressPage, const ByteArray& param, const ByteArray& value)
 {
   Midi::get().sendCmd(createReservedFct7E(addressPage, param, value));
+}
+
+void DebugMidi::debugSendReserveFct7F(const ByteArray& addressPage, const ByteArray& param, const ByteArray& value)
+{
+  Midi::get().sendCmd(createReservedFct7F(addressPage, param, value));
 }

@@ -16,6 +16,7 @@
 #include "ReverbFrame.h"
 #include "ui_ReverbFrame.h"
 #include "Reverb.h"
+#include "LookUpTables.h"
 
 ReverbFrame::ReverbFrame(QWidget *parent)
   : QWidget(parent)

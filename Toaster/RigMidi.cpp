@@ -45,12 +45,12 @@ unsigned char RigMidi::getId()
   return ret;
 }
 
-void RigMidi::consumeSysExMsg(ByteArray* msg)
+void RigMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 12)
+  if(msg.size() >= 12)
   {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char param = msg->at(9);
+    unsigned short rawVal = Utils::extractRawVal(msg[10], msg[11]);
+    const char param = msg[9];
     if(param == sTempo[0])
       midiTempoReceived(rawVal);
     else if(param == sVolume[0])

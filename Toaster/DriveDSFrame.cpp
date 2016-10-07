@@ -17,6 +17,7 @@
 #include "ui_DriveDSFrame.h"
 #include "Stomp.h"
 #include "Settings.h"
+#include "LookUpTables.h"
 
 DriveDSFrame::DriveDSFrame(QWidget *parent)
   : QWidget(parent)

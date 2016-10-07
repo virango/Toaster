@@ -35,7 +35,7 @@ protected:
   ~EqMidi();
 
   // ISysExConsumer
-  void consumeSysExMsg(ByteArray* msg);
+  void consumeSysExMsg(const ByteArray& msg);
   unsigned char getId();
 
   // parameter

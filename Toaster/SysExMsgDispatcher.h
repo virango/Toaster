@@ -19,7 +19,7 @@
 #include "Midi.h"
 #include "SysExBase.h"
 
-class SysExMsgDispatcher : public Midi::IMidiConsumer, public SysExBase
+class SysExMsgDispatcher : public IMidiConsumer, public SysExBase
 {
 private:
   SysExMsgDispatcher();
@@ -29,20 +29,20 @@ public:
   class ISysExConsumer
   {
   public:
-    virtual void consumeSysExMsg(ByteArray* msg) = 0;
+    virtual void consumeSysExMsg(const ByteArray& msg) = 0;
     virtual unsigned char getId() = 0;
   };
 
   static SysExMsgDispatcher& get();
 
-  virtual void consume(ByteArray* msg);
-  virtual unsigned char getStatusByte() { return 0xF0; }
+  void consume(const ByteArray& msg) override;
+  unsigned char getStatusByte() override { return 0xF0; }
 
   void addConsumer(ISysExConsumer* consumer);
   void removeConsumer(ISysExConsumer* consumer);
 
 private:
-  list<ISysExConsumer*> mConsumer;
+  QList<ISysExConsumer*> mConsumer;
 };
 
 #endif // SYSEXMSGDISPATSCHER_H

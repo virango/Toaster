@@ -17,6 +17,7 @@
 #include "ui_PedalPitchFrame.h"
 #include "Stomp.h"
 #include "Global.h"
+#include "LookUpTables.h"
 
 PedalPitchFrame::PedalPitchFrame(QWidget *parent)
   : QWidget(parent)

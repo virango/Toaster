@@ -20,21 +20,13 @@
 #include <QString>
 #include <RtMidi.h>
 #include <QStringList>
+#include "Commons.h"
+#include "MidiConsumer.h"
 
 using namespace std;
 
-typedef vector<unsigned char> ByteArray;
-
-
 class Midi
 {
-public:
-  class IMidiConsumer
-  {
-  public:
-    virtual void consume(ByteArray* msg) = 0;
-    virtual unsigned char getStatusByte() = 0;
-  };
 
 private:
   Midi();
@@ -46,12 +38,14 @@ public:
   bool openPorts(const QString& inPort, const QString& outPort);
   void closePorts();
 
-  void processMidiInput(ByteArray* msg);
+  bool arePortsOpen() { return mMidiIn.isPortOpen() &&  mMidiOut.isPortOpen(); }
+
+  void processMidiInput(std::vector<unsigned char>* msg);
 
   const QStringList getInPorts();
   const QStringList getOutPorts();
 
-  void sendCmd(ByteArray cmd);
+  void sendCmd(const ByteArray& cmd);
 
   void addConsumer(IMidiConsumer* consumer);
   void removeConsumer(IMidiConsumer* consumer);
@@ -64,7 +58,7 @@ private:
   QList<QString>  mInPorts;
   QList<QString>  mOutPorts;
 
-  list<IMidiConsumer*> mConsumer;
+  QList<IMidiConsumer*> mConsumer;
 };
 
 #endif // MIDICLIENT_H

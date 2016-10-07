@@ -16,6 +16,7 @@
 #include "WahPedalBoosterFrame.h"
 #include "ui_WahPedalBoosterFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 WahPedalBoosterFrame::WahPedalBoosterFrame(QWidget *parent)
   : QWidget(parent)

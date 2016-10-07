@@ -16,6 +16,7 @@
 #include "ToneAndDuckingDSFrame.h"
 #include "ui_ToneAndDuckingDSFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 ToneAndDuckingDSFrame::ToneAndDuckingDSFrame(QWidget *parent)
   : QWidget(parent)

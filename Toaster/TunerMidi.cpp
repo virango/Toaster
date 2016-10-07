@@ -40,12 +40,12 @@ unsigned char TunerMidi::getId()
   return ret;
 }
 
-void TunerMidi::consumeSysExMsg(ByteArray* msg)
+void TunerMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 12)
+  if(msg.size() >= 12)
   {
-    unsigned short rawVal = extractRawVal(msg->at(10), msg->at(11));
-    const char param = msg->at(9);
+    unsigned short rawVal = Utils::extractRawVal(msg[10], msg[11]);
+    const char param = msg[9];
     if(param == sNote[0])
       midiNoteReceived(rawVal);
     else if(param == sMuteSignal[0])

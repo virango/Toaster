@@ -16,6 +16,7 @@
 #include "HyperChorusFrame.h"
 #include "ui_HyperChorusFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 HyperChorusFrame::HyperChorusFrame(QWidget *parent)
   : QWidget(parent)

@@ -30,15 +30,15 @@ ExtParamMidi::~ExtParamMidi()
 
 unsigned char ExtParamMidi::getId()
 {
-  return sExtParamChange[0];
+  return ExtParamChange()[0];
 }
 
-void ExtParamMidi::consumeSysExMsg(ByteArray* msg)
+void ExtParamMidi::consumeSysExMsg(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 19)
+  if(msg.size() >= 19)
   {
-    unsigned int param = extractRawVal(ByteArray(msg->begin() + 9, msg->end()));
-    unsigned int rawVal = extractRawVal(ByteArray(msg->begin() + 14, msg->end()));
+    unsigned int param = Utils::extractRawVal(msg.mid(8));
+    unsigned int rawVal = Utils::extractRawVal(msg.mid(13));
     if(param == sBrowserView)
       midiBrowserViewReceived(rawVal);
   }
@@ -46,7 +46,7 @@ void ExtParamMidi::consumeSysExMsg(ByteArray* msg)
 
 void ExtParamMidi::midiRequestBrowserView()
 {
-  Midi::get().sendCmd(createExtParamGetCmd(sBrowserView));
+  Midi::get().sendCmd(createExtStringParamGetCmd(sBrowserView));
 }
 
 void ExtParamMidi::midiApplyBrowserView(unsigned int rawVal)

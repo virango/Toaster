@@ -16,6 +16,7 @@
 #include "PhaserFrame.h"
 #include "ui_PhaserFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 PhaserFrame::PhaserFrame(QWidget *parent)
   : QWidget(parent)

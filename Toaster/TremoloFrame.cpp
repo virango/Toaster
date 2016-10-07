@@ -16,6 +16,7 @@
 #include "TremoloFrame.h"
 #include "ui_TremoloFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 TremoloFrame::TremoloFrame(QWidget *parent)
   : QWidget(parent)

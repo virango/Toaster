@@ -16,6 +16,7 @@
 #include "FlangerOnewayFrame.h"
 #include "ui_FlangerOnewayFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 FlangerOnewayFrame::FlangerOnewayFrame(QWidget *parent)
   : QWidget(parent)

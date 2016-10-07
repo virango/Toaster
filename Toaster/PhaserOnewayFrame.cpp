@@ -16,6 +16,7 @@
 #include "PhaserOnewayFrame.h"
 #include "ui_PhaserOnewayFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 PhaserOnewayFrame::PhaserOnewayFrame(QWidget *parent)
   : QWidget(parent)

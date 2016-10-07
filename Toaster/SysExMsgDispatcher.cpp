@@ -14,15 +14,18 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "SysExMsgDispatcher.h"
+#include "VirtualKPA.h"
 
 SysExMsgDispatcher::SysExMsgDispatcher()
 {
   Midi::get().addConsumer(this);
+  VirtualKPA::get().addMidiConsumer(this);
 }
 
 SysExMsgDispatcher::~SysExMsgDispatcher()
 {
   Midi::get().removeConsumer(this);
+  VirtualKPA::get().removeMidiConsumer(this);
 }
 
 SysExMsgDispatcher& SysExMsgDispatcher::get()
@@ -31,18 +34,20 @@ SysExMsgDispatcher& SysExMsgDispatcher::get()
   return singleton;
 }
 
-void SysExMsgDispatcher::consume(ByteArray* msg)
+void SysExMsgDispatcher::consume(const ByteArray& msg)
 {
-  if(msg && msg->size() >= 8)
+  if(msg.size() >= 8)
   {
-    if(sHeader[0] == (*msg)[0]  && sHeader[1] == (*msg)[1] && sHeader[2] == (*msg)[2] && sHeader[3] == (*msg)[3])
+    const ByteArray& header = Header();
+    if(header[0] == (msg)[0]  && header[1] == (msg)[1] && header[2] == (msg)[2] && header[3] == (msg)[3])
     {
-      for(list<ISysExConsumer*>::iterator it = mConsumer.begin(); it != mConsumer.end(); ++it)
+      for(ISysExConsumer* consumer : mConsumer)
       {
-        ISysExConsumer* consumer = (*it);
-        if((sExtParamChange[0] == (*msg)[6] && consumer->getId() == (*msg)[6]))   // special handling for extended parameter function
+        if((ExtParamChange()[0] == (msg)[6] && consumer->getId() == (msg)[6]))   // special handling for extended parameter function
           consumer->consumeSysExMsg(msg);
-        else if(consumer && (consumer->getId() == (*msg)[8] || consumer->getId() == 0xFF))
+        else if((ExtParamChange()[0] == (msg)[7] && consumer->getId() == (msg)[6]))   // special handling for extended parameter function
+          consumer->consumeSysExMsg(msg);
+        else if(consumer && (consumer->getId() == (msg)[8] || consumer->getId() == 0xFF))
           consumer->consumeSysExMsg(msg);
       }
     }
@@ -58,6 +63,6 @@ void SysExMsgDispatcher::addConsumer(ISysExConsumer* consumer)
 void SysExMsgDispatcher::removeConsumer(ISysExConsumer* consumer)
 {
   if(consumer)
-    mConsumer.remove(consumer);
+    mConsumer.removeOne(consumer);
 }
 

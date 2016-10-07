@@ -15,6 +15,7 @@
 */
 #include "DelayFrame.h"
 #include "ui_DelayFrame.h"
+#include "LookUpTables.h"
 
 DelayFrame::DelayFrame(QWidget *parent)
   : QWidget(parent)

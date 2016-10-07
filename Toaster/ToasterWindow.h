@@ -52,10 +52,13 @@ private slots:
 
   void on_actionAbout_triggered();
 
+  void on_actionEditKIPRFile_triggered();
+
 private:
   //QTimer* timer;
   void showSettingsDialog();
   void openMidiPorts();
+
   Ui::ToasterWindow *ui;
 
   bool mIsConnected2Midi;

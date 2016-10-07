@@ -115,9 +115,9 @@ QVector<QString> LookUpTables::sNotes =
 
 QString LookUpTables::raw2Note(unsigned short rawVal)
 {
-  if(rawVal <= 12)
+  if(rawVal >= 12)
   {
-    return sNotes[rawVal];
+    return sNotes[rawVal%12];
   }
   return "_";
 }

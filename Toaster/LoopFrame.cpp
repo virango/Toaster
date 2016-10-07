@@ -16,6 +16,7 @@
 #include "LoopFrame.h"
 #include "ui_LoopFrame.h"
 #include "Stomp.h"
+#include "LookUpTables.h"
 
 LoopFrame::LoopFrame(QWidget *parent)
   : QWidget(parent)

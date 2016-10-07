@@ -17,6 +17,7 @@
 #include "ui_ChromaticPitchFrame.h"
 #include "Stomp.h"
 #include "Settings.h"
+#include "LookUpTables.h"
 
 ChromaticPitchFrame::ChromaticPitchFrame(QWidget *parent)
   : QWidget(parent)

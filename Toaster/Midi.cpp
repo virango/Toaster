@@ -14,10 +14,16 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "Midi.h"
+#include "VirtualKPA.h"
 
 void cbProcessMidiInput(double , std::vector<unsigned char> *message, void*)
 {
   Midi::get().processMidiInput(message);
+}
+
+void cbMidiOutputError(RtMidiError::Type type, const std::string &errorText)
+{
+  //Midi::get().midiOutputError(type, errorText);
 }
 
 Midi::Midi()
@@ -79,7 +85,10 @@ bool Midi::openPorts(const QString& inPort, const QString& outPort)
       mMidiOut.openVirtualPort("out");
 
     if(mMidiOut.isPortOpen())
+    {
+      mMidiOut.setErrorCallback(&cbMidiOutputError);
       return true;
+    }
 
     mMidiIn.closePort();
   }
@@ -92,15 +101,14 @@ void Midi::closePorts()
   mMidiOut.closePort();
 }
 
-void Midi::processMidiInput(ByteArray* msg)
+void Midi::processMidiInput(std::vector<unsigned char> *msg)
 {
   if(msg && msg->size() > 0)
   {
-    for(list<IMidiConsumer*>::iterator it = mConsumer.begin(); it != mConsumer.end(); ++it)
+    for(IMidiConsumer* consumer : mConsumer)
     {
-      IMidiConsumer* consumer = (*it);
       if((*msg)[0] == consumer->getStatusByte())
-        consumer->consume(msg);
+        consumer->consume(ByteArray::fromStdVector(*msg));
     }
   }
 }
@@ -125,22 +133,30 @@ const QStringList Midi::getOutPorts()
   return mOutPorts;
 }
 
-void Midi::sendCmd(ByteArray cmd)
+void Midi::sendCmd(const ByteArray& cmd)
 {
-  if(cmd.size() > 0 && mMidiOut.isPortOpen())
+  if(cmd.size() > 0)
   {
-    if(cmd[0] != 0xB0)
-      mMidiOut.sendMessage(&cmd);
-    else if(cmd.size()%3 == 0)
+    if( mMidiOut.isPortOpen())
     {
-      ByteArray::iterator it = cmd.begin();
-      for(unsigned int i = 0; i < cmd.size() / 3; ++i)
+      if(cmd[0] != 0xB0)
       {
-        ByteArray tmp(it, it + 3);
-        mMidiOut.sendMessage(&tmp);
-        it += 3;
+        std::vector<unsigned char> msg = cmd.toStdVector();
+        mMidiOut.sendMessage(&msg);
+      }
+      else if(cmd.size()%3 == 0)
+      {
+        ByteArray::const_iterator it = cmd.begin();
+        for(int i = 0; i < cmd.size() / 3; ++i)
+        {
+          std::vector<unsigned char> tmp(it, it + 3);
+          mMidiOut.sendMessage(&tmp);
+          it += 3;
+        }
       }
     }
+
+    VirtualKPA::get().midiIn(cmd);
   }
 }
 
@@ -152,5 +168,5 @@ void Midi::addConsumer(IMidiConsumer* consumer)
 
 void Midi::removeConsumer(IMidiConsumer* consumer)
 {
-  mConsumer.remove(consumer);
+  mConsumer.removeOne(consumer);
 }
