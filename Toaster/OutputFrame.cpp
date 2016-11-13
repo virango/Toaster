@@ -20,41 +20,35 @@
 
 OutputFrame::OutputFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::OutputFrame)
+  , ui(nullptr)
   , mpGlobal(nullptr)
 {
+}
+
+OutputFrame::~OutputFrame()
+{
+  if(ui != nullptr)
+    delete ui;
+}
+
+void OutputFrame::activate(QObject& module)
+{
+  ui = new Ui::OutputFrame();
   ui->setupUi(this);
   ui->mainVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->monitorVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->directVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
   ui->spdifVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  setCurrentDisplayPage(mCurrentPage);
 
   MasterVolume& mv = MasterVolume::get();
+  connect(&mv, &MasterVolume::mainOutputVolumeChanged, this, &OutputFrame::OnMainVolume);
+  connect(&mv, &MasterVolume::monitorOutputVolumeChanged, this, &OutputFrame::OnMonitorVolume);
+  connect(&mv, &MasterVolume::directOutputVolumeChanged, this, &OutputFrame::OnDirectVolume);
+  connect(&mv, &MasterVolume::headphoneOutputVolumeChanged, this, &OutputFrame::OnHeadphoneVolume);
+  connect(&mv, &MasterVolume::spdifOutputVolumeChanged, this, &OutputFrame::OnSPDIFVolume);
 
-  connect(&mv, &MasterVolume::mainOutputVolumeChanged,
-          [=](int value) { ui->mainVolumeDial->setValue(value);});
-
-  connect(&mv, &MasterVolume::monitorOutputVolumeChanged,
-          [=](int value) { ui->monitorVolumeDial->setValue(value);});
-
-  connect(&mv, &MasterVolume::directOutputVolumeChanged,
-          [=](int value) { ui->directVolumeDial->setValue(value);});
-
-  connect(&mv, &MasterVolume::headphoneOutputVolumeChanged,
-          [=](int value) { ui->headphoneVolumeDial->setValue(value);});
-
-  connect(&mv, &MasterVolume::spdifOutputVolumeChanged,
-          [=](int value) {ui->spdifVolumeDial->setValue(value);});
-}
-
-OutputFrame::~OutputFrame()
-{
-  delete ui;
-}
-
-void OutputFrame::activate(QObject& module)
-{
   mpGlobal = qobject_cast<Global*>(&module);
 
   if(mpGlobal != nullptr)
@@ -116,13 +110,18 @@ void OutputFrame::activate(QObject& module)
     ui->directOutLinkDial->setValue(MasterVolume::get().getDirectOutputLink() ? 1 : 0);
     ui->headphoneLinkDial->setValue(MasterVolume::get().getHeadphoneOutputLink() ? 1 : 0);
     ui->spdifOutLinkDial->setValue(MasterVolume::get().getSPDIFOutputLink() ? 1 : 0);
-
-
   }
 }
 
 void OutputFrame::deactivate()
 {
+  MasterVolume& mv = MasterVolume::get();
+  disconnect(&mv, &MasterVolume::mainOutputVolumeChanged, this, &OutputFrame::OnMainVolume);
+  disconnect(&mv, &MasterVolume::monitorOutputVolumeChanged, this, &OutputFrame::OnMonitorVolume);
+  disconnect(&mv, &MasterVolume::directOutputVolumeChanged, this, &OutputFrame::OnDirectVolume);
+  disconnect(&mv, &MasterVolume::headphoneOutputVolumeChanged, this, &OutputFrame::OnHeadphoneVolume);
+  disconnect(&mv, &MasterVolume::spdifOutputVolumeChanged, this, &OutputFrame::OnSPDIFVolume);
+
   if(mpGlobal != nullptr)
   {
     disconnect(mpGlobal, &Global::mainOutputSourceReceived, this, &OutputFrame::OnMainOutputSource);
@@ -151,6 +150,13 @@ void OutputFrame::deactivate()
     disconnect(mpGlobal, &Global::auxInToHeadphoneReceived, this, &OutputFrame::OnAuxInHeadphone);
     disconnect(mpGlobal, &Global::constantLatencyOnOffReceived, this, &OutputFrame::OnConstantLatency);
     mpGlobal = nullptr;
+  }
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
   }
 }
 

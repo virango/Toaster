@@ -61,10 +61,9 @@ private slots:
   void onDucking(double value);
 private:
   Ui::HyperChorusFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // HYPERCHORUSFRAME_H

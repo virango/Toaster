@@ -26,7 +26,8 @@ DebugSettingsDialog::DebugSettingsDialog(QWidget *parent) :
 
 DebugSettingsDialog::~DebugSettingsDialog()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void DebugSettingsDialog::on_printValuesCheckBox_clicked(bool checked)

@@ -21,11 +21,23 @@
 
 DriveDSFrame::DriveDSFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::DriveDSFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
+}
+
+DriveDSFrame::~DriveDSFrame()
+{
+  if(ui != nullptr)
+    delete ui;
+}
+
+void DriveDSFrame::activate(QObject& stomp)
+{
+  ui = new Ui::DriveDSFrame();
   ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   if(Settings::get().getKPAOSVersion() < 0x04000000)
   {
     ui->mixDial->setValue(0);
@@ -33,15 +45,6 @@ DriveDSFrame::DriveDSFrame(QWidget *parent)
     ui->lcdDisplay->setValue3("");
     ui->mixDial->setIsActive(false);
   }
-}
-
-DriveDSFrame::~DriveDSFrame()
-{
-  delete ui;
-}
-
-void DriveDSFrame::activate(QObject& stomp)
-{
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -86,6 +89,13 @@ void DriveDSFrame::deactivate()
       disconnect(mpStomp, &Stomp::mixReceived, this, &DriveDSFrame::onMix);
   }
   mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page DriveDSFrame::getMaxDisplayPage()

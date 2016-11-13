@@ -67,6 +67,7 @@ private slots:
 private:
   Ui::ReverbFrame *ui;
   Reverb* mpReverb;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // REVERBFRAME_H

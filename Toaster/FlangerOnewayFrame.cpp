@@ -20,19 +20,23 @@
 
 FlangerOnewayFrame::FlangerOnewayFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::FlangerOnewayFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
 {
-  ui->setupUi(this);
 }
 
 FlangerOnewayFrame::~FlangerOnewayFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void FlangerOnewayFrame::activate(QObject& stomp)
 {
+  ui = new Ui::FlangerOnewayFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -88,6 +92,13 @@ void FlangerOnewayFrame::deactivate()
   }
 
   mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page FlangerOnewayFrame::getMaxDisplayPage()

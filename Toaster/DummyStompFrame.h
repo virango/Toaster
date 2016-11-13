@@ -48,13 +48,11 @@ public:
   virtual void displayReverbEnabled(bool enabled);
   virtual void displayAmpName(const QString&  ampName);
 
-
 private:
   Ui::DummyStompFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // DUMMYSTOMPFRAME_H

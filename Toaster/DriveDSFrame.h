@@ -57,10 +57,9 @@ private slots:
 
 private:
   Ui::DriveDSFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // DRIVEDSFRAME_H

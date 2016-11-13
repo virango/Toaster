@@ -20,12 +20,20 @@
 
 StudioEqualizerFrame::StudioEqualizerFrame(QWidget *parent)
   : QWidget(parent)
-  ,ui(new Ui::StudioEqualizerFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
+}
+
+StudioEqualizerFrame::~StudioEqualizerFrame()
+{
+  if(ui != nullptr)
+    delete ui;
+}
+void StudioEqualizerFrame::activate(QObject& stomp)
+{
+  ui = new Ui::StudioEqualizerFrame();
   ui->setupUi(this);
-  setCurrentDisplayPage(QToasterLCD::Page1);
   ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
   ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
   ui->lowFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
@@ -34,14 +42,8 @@ StudioEqualizerFrame::StudioEqualizerFrame(QWidget *parent)
   ui->highFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
   ui->mid1QFactorDial->setLookUpTable(LookUpTables::getQFactorValues());
   ui->mid2QFactorDial->setLookUpTable(LookUpTables::getQFactorValues());
-}
+  setCurrentDisplayPage(mCurrentPage);
 
-StudioEqualizerFrame::~StudioEqualizerFrame()
-{
-  delete ui;
-}
-void StudioEqualizerFrame::activate(QObject& stomp)
-{
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -102,8 +104,15 @@ void StudioEqualizerFrame::deactivate()
     disconnect(mpStomp, SIGNAL(parametricEQPeakGain2Received(double)), this, SLOT(onMid2Gain(double)));
     disconnect(mpStomp, SIGNAL(parametricEQPeakFrequency2Received(int)), this, SLOT(onMid2Freq(int)));
     disconnect(mpStomp, SIGNAL(parametricEQPeakQFactor2Received(int)), this, SLOT(onMid2QFactor(int)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page StudioEqualizerFrame::getMaxDisplayPage()

@@ -19,18 +19,22 @@
 
 TapDelayFrame::TapDelayFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::TapDelayFrame)
+  , ui(nullptr)
   , mpDelay(nullptr)
 {
-  ui->setupUi(this);
 }
 
 TapDelayFrame::~TapDelayFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 void TapDelayFrame::activate(QObject& stomp)
 {
+  ui = new Ui::TapDelayFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpDelay = qobject_cast<Delay*>(&stomp);
 
   if(mpDelay != nullptr)
@@ -67,8 +71,15 @@ void TapDelayFrame::deactivate()
     disconnect(mpDelay, SIGNAL(timeReceived(double)), this, SLOT(onTime(double)));
     disconnect(mpDelay, SIGNAL(ratioReceived(::DelayRatio)), this, SLOT(onRatio(::DelayRatio)));
     disconnect(mpDelay, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    mpDelay = nullptr;
   }
-  mpDelay = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page TapDelayFrame::getMaxDisplayPage()

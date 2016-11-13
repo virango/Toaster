@@ -19,30 +19,34 @@
 
 DelayFrame::DelayFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::DelayFrame)
+  , ui(nullptr)
   , mpDelay(nullptr)
 {
-  ui->setupUi(this);
 }
 
 DelayFrame::~DelayFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void DelayFrame::activate(QObject& stomp)
 {
+  ui = new Ui::DelayFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpDelay = qobject_cast<Delay*>(&stomp);
 
   if(mpDelay != nullptr)
   {
-    connect(mpDelay, SIGNAL(bandwidthReceived(double)), this, SLOT(onBandwidth(double)));
-    connect(mpDelay, SIGNAL(centerFrequencyReceived(double)), this, SLOT(onCenterFrequency(double)));
-    connect(mpDelay, SIGNAL(modulationReceived(double)), this, SLOT(onModulation(double)));
-    connect(mpDelay, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpDelay, SIGNAL(timeReceived(double)), this, SLOT(onTime(double)));
-    connect(mpDelay, SIGNAL(ratioReceived(::DelayRatio)), this, SLOT(onRatio(::DelayRatio)));
-    connect(mpDelay, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpDelay, &Delay::bandwidthReceived, this, &DelayFrame::onBandwidth);
+    connect(mpDelay, &Delay::centerFrequencyReceived, this, &DelayFrame::onCenterFrequency);
+    connect(mpDelay, &Delay::modulationReceived, this, &DelayFrame::onModulation);
+    connect(mpDelay, &Delay::duckingReceived, this, &DelayFrame::onDucking);
+    connect(mpDelay, &Delay::timeReceived, this, &DelayFrame::onTime);
+    connect(mpDelay, &Delay::ratioReceived, this, &DelayFrame::onRatio);
+    connect(mpDelay, &Delay::volumeReceived, this, &DelayFrame::onVolume);
 
     mpDelay->requestBandwidth();
     mpDelay->requestCenterFrequency();
@@ -61,15 +65,22 @@ void DelayFrame::deactivate()
 {
   if(mpDelay != nullptr)
   {
-    disconnect(mpDelay, SIGNAL(bandwidthReceived(double)), this, SLOT(onBandwidth(double)));
-    disconnect(mpDelay, SIGNAL(centerFrequencyReceived(double)), this, SLOT(onCenterFrequency(double)));
-    disconnect(mpDelay, SIGNAL(modulationReceived(double)), this, SLOT(onModulation(double)));
-    disconnect(mpDelay, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpDelay, SIGNAL(timeReceived(double)), this, SLOT(onTime(double)));
-    disconnect(mpDelay, SIGNAL(ratioReceived(::DelayRatio)), this, SLOT(onRatio(::DelayRatio)));
-    disconnect(mpDelay, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    disconnect(mpDelay, &Delay::bandwidthReceived, this, &DelayFrame::onBandwidth);
+    disconnect(mpDelay, &Delay::centerFrequencyReceived, this, &DelayFrame::onCenterFrequency);
+    disconnect(mpDelay, &Delay::modulationReceived, this, &DelayFrame::onModulation);
+    disconnect(mpDelay, &Delay::duckingReceived, this, &DelayFrame::onDucking);
+    disconnect(mpDelay, &Delay::timeReceived, this, &DelayFrame::onTime);
+    disconnect(mpDelay, &Delay::ratioReceived, this, &DelayFrame::onRatio);
+    disconnect(mpDelay, &Delay::volumeReceived, this, &DelayFrame::onVolume);
   }
   mpDelay = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page DelayFrame::getMaxDisplayPage()

@@ -20,20 +20,23 @@
 
 SpaceFrame::SpaceFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::SpaceFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 SpaceFrame::~SpaceFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void SpaceFrame::activate(QObject& stomp)
 {
+  ui = new Ui::SpaceFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -52,8 +55,15 @@ void SpaceFrame::deactivate()
   if(mpStomp != nullptr)
   {
     disconnect(mpStomp, SIGNAL(intensityReceived(double)), this, SLOT(onIntensity(double)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page SpaceFrame::getMaxDisplayPage()

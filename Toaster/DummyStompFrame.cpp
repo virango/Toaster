@@ -20,19 +20,23 @@
 
 DummyStompFrame::DummyStompFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::DummyStompFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
 {
-  ui->setupUi(this);
 }
 
 DummyStompFrame::~DummyStompFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void DummyStompFrame::activate(QObject& stomp)
 {
+  ui = new Ui::DummyStompFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -45,6 +49,12 @@ void DummyStompFrame::activate(QObject& stomp)
 void DummyStompFrame::deactivate()
 {
   mpStomp = nullptr;
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page DummyStompFrame::getMaxDisplayPage()

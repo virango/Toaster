@@ -67,8 +67,8 @@ private slots:
 
 private:
   Ui::AmpFrame *ui;
-
   Amp* mpAmp;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // AMPFRAME_H

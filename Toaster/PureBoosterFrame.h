@@ -55,10 +55,9 @@ private slots:
 
 private:
   Ui::PureBoosterFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // PUREBOOSTERFRAME_H

@@ -20,20 +20,23 @@
 
 ToneAndDuckingDSFrame::ToneAndDuckingDSFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::ToneAndDuckingDSFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 ToneAndDuckingDSFrame::~ToneAndDuckingDSFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void ToneAndDuckingDSFrame::activate(QObject& stomp)
 {
+  ui = new Ui::ToneAndDuckingDSFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -58,8 +61,15 @@ void ToneAndDuckingDSFrame::deactivate()
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     disconnect(mpStomp, SIGNAL(distortionBoosterToneReceived(double)), this, SLOT(onTone(double)));
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page ToneAndDuckingDSFrame::getMaxDisplayPage()

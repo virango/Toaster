@@ -18,19 +18,23 @@
 
 AmpFrame::AmpFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::AmpFrame)
+  , ui(nullptr)
   , mpAmp(nullptr)
 {
-  ui->setupUi(this);
 }
 
 AmpFrame::~AmpFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void AmpFrame::activate(QObject& amp)
 {
+  ui = new Ui::AmpFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpAmp = qobject_cast<Amp*>(&amp);
 
   if(mpAmp != nullptr)
@@ -68,6 +72,13 @@ void AmpFrame::deactivate()
     disconnect(mpAmp, &Amp::tubeBiasReceived, this, &AmpFrame::onTubeBias);
     disconnect(mpAmp, &Amp::directMixReceived, this, &AmpFrame::onDirectMix);
     mpAmp = nullptr;
+  }
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
   }
 }
 

@@ -20,21 +20,23 @@
 
 TransposeFrame::TransposeFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::TransposeFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 TransposeFrame::~TransposeFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void TransposeFrame::activate(QObject& stomp)
 {
+  ui = new Ui::TransposeFrame();
+  ui->setupUi(this);
   mpStomp = qobject_cast<Stomp*>(&stomp);
+  setCurrentDisplayPage(mCurrentPage);
 
   if(mpStomp != nullptr)
   {
@@ -54,9 +56,16 @@ void TransposeFrame::deactivate()
   if(mpStomp != nullptr)
   {
     disconnect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onPitch(double)));
-    disconnect(mpStomp, SIGNAL(smoothChordsReceived(unsigned short)), this, SLOT(onSmoothChords(unsigned short)));
+    disconnect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page TransposeFrame::getMaxDisplayPage()

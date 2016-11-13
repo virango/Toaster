@@ -67,6 +67,7 @@ private slots:
 private:
   Ui::TapDelayFrame *ui;
   Delay* mpDelay;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // TAPDELAYFRAME_H

@@ -77,6 +77,7 @@ private:
   Ui::LegacyDelayFrame *ui;
   Stomp* mpStomp;
   bool mToTempo;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // LEGACYDELAYFRAME_H

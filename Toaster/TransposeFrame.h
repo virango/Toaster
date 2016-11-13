@@ -53,10 +53,9 @@ private slots:
 
 private:
   Ui::TransposeFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // TRANSPOSEFRAME_H

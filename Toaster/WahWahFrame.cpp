@@ -20,21 +20,23 @@
 
 WahWahFrame::WahWahFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::WahWahFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  setCurrentDisplayPage(QToasterLCD::Page1);
 }
 
 WahWahFrame::~WahWahFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void WahWahFrame::activate(QObject& stomp)
 {
+  ui = new Ui::WahWahFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -76,15 +78,22 @@ void WahWahFrame::deactivate()
     disconnect(mpStomp, SIGNAL(wahPeakReceived(double)), this, SLOT(onPeak(double)));
     disconnect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
     disconnect(mpStomp, SIGNAL(wahPeakRangeReceived(double)), this, SLOT(onPeakRange(double)));
-    disconnect(mpStomp, SIGNAL(wahPedalModeReceived(::WahPedalMode)), this, SLOT(onPedalMode(double)));
+    disconnect(mpStomp, SIGNAL(wahPedalModeReceived(::WahPedalMode)), this, SLOT(onPedalMode(::WahPedalMode)));
     disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     disconnect(mpStomp, SIGNAL(wahTouchAttackReceived(double)), this, SLOT(onTouchAttack(double)));
     disconnect(mpStomp, SIGNAL(wahTouchReleaseReceived(double)), this, SLOT(onTouchRelease(double)));
     disconnect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page WahWahFrame::getMaxDisplayPage()

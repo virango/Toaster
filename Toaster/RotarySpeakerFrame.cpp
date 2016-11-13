@@ -20,20 +20,24 @@
 
 RotarySpeakerFrame::RotarySpeakerFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::RotarySpeakerFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
 {
-  ui->setupUi(this);
-  ui->distanceDial->setLookUpTable(LookUpTables::getRotaryDistanceValues());
 }
 
 RotarySpeakerFrame::~RotarySpeakerFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void RotarySpeakerFrame::activate(QObject& stomp)
 {
+  ui = new Ui::RotarySpeakerFrame();
+  ui->setupUi(this);
+  ui->distanceDial->setLookUpTable(LookUpTables::getRotaryDistanceValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -84,8 +88,15 @@ void RotarySpeakerFrame::deactivate()
     disconnect(mpStomp, &Stomp::mixReceived, this, &RotarySpeakerFrame::onMix);
     disconnect(mpStomp, &Stomp::duckingReceived, this, &RotarySpeakerFrame::onDucking);
     disconnect(mpStomp, &Stomp::stereoReceived, this, &RotarySpeakerFrame::onStereo);
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page RotarySpeakerFrame::getMaxDisplayPage()

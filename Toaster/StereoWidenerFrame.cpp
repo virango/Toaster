@@ -20,20 +20,23 @@
 
 StereoWidenerFrame::StereoWidenerFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::StereoWidenerFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 StereoWidenerFrame::~StereoWidenerFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void StereoWidenerFrame::activate(QObject& stomp)
 {
+  ui = new Ui::StereoWidenerFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -58,8 +61,15 @@ void StereoWidenerFrame::deactivate()
     disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onIntensity(double)));
     disconnect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onTune(double)));
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page StereoWidenerFrame::getMaxDisplayPage()

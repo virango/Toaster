@@ -5,19 +5,23 @@
 
 InputFrame::InputFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::InputFrame)
+  , ui(nullptr)
   , mpInput(nullptr)
 {
-  ui->setupUi(this);
 }
 
 InputFrame::~InputFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void InputFrame::activate(QObject& module)
 {
+  ui = new Ui::InputFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpInput = qobject_cast<Input*>(&module);
 
   if(mpInput != nullptr)
@@ -43,6 +47,13 @@ void InputFrame::deactivate()
     disconnect(&globalObj, &Global::reampSensReceived, this, &InputFrame::OnReampSens);
 
     mpInput = nullptr;
+  }
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
   }
 }
 

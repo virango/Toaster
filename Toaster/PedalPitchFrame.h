@@ -73,9 +73,9 @@ private slots:
 
 private:
   Ui::PedalPitchFrame *ui;
-
   Stomp* mpStomp;
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // PEDALPITCHFRAME_H

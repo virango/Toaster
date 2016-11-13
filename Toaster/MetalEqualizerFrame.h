@@ -70,8 +70,8 @@ private slots:
 private:
   Ui::MetalEqualizerFrame *ui;
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // METALEQUALIZERFRAME_H

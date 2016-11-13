@@ -72,8 +72,8 @@ private slots:
 
 private:
   Ui::HarmonicPitchFrame *ui;
-
   Stomp* mpStomp;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // HARMONICPITCHFRAME_H

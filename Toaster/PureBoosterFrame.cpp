@@ -20,20 +20,23 @@
 
 PureBoosterFrame::PureBoosterFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::PureBoosterFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 PureBoosterFrame::~PureBoosterFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void PureBoosterFrame::activate(QObject& stomp)
 {
+  ui = new Ui::PureBoosterFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -52,8 +55,15 @@ void PureBoosterFrame::deactivate()
   if(mpStomp != nullptr)
   {
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page PureBoosterFrame::getMaxDisplayPage()

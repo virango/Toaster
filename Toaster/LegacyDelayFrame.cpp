@@ -20,21 +20,25 @@
 
 LegacyDelayFrame::LegacyDelayFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::LegacyDelayFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
   , mToTempo(false)
 {
-  ui->setupUi(this);
-  ui->mixDial->setLookUpTable(LookUpTables::getMixValuesV4());
 }
 
 LegacyDelayFrame::~LegacyDelayFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void LegacyDelayFrame::activate(QObject& stomp)
 {
+  ui = new Ui::LegacyDelayFrame();
+  ui->setupUi(this);
+  ui->mixDial->setLookUpTable(LookUpTables::getMixValuesV4());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -85,6 +89,13 @@ void LegacyDelayFrame::deactivate()
     disconnect(mpStomp, &Stomp::duckingReceived, this, &LegacyDelayFrame::OnDucking);
   }
   mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page LegacyDelayFrame::getMaxDisplayPage()

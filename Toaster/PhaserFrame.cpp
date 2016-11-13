@@ -20,21 +20,25 @@
 
 PhaserFrame::PhaserFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::PhaserFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
 {
-  ui->setupUi(this);
-  ui->rateDial->setLookUpTable(LookUpTables::getFlangerRateValues());
-  setCurrentDisplayPage(QToasterLCD::Page1);
+
 }
 
 PhaserFrame::~PhaserFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void PhaserFrame::activate(QObject& stomp)
 {
+  ui = new Ui::PhaserFrame();
+  ui->setupUi(this);
+  ui->rateDial->setLookUpTable(LookUpTables::getFlangerRateValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -93,9 +97,15 @@ void PhaserFrame::deactivate()
     disconnect(mpStomp, &Stomp::duckingReceived, this, &PhaserFrame::onDucking);
     disconnect(mpStomp, &Stomp::volumeReceived, this, &PhaserFrame::onVolume);
     disconnect(mpStomp, &Stomp::stereoReceived, this, &PhaserFrame::onStereo);
-
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page PhaserFrame::getMaxDisplayPage()

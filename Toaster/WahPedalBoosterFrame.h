@@ -54,10 +54,9 @@ private slots:
 
 private:
   Ui::WahPedalBoosterFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // WAHPEDALBOOSTERFRAME_H

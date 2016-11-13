@@ -20,19 +20,24 @@
 
 FlangerFrame::FlangerFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::FlangerFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
 {
-  ui->setupUi(this);
-  ui->rateDial->setLookUpTable(LookUpTables::getFlangerRateValues());
 }
 
 FlangerFrame::~FlangerFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
+
 void FlangerFrame::activate(QObject& stomp)
 {
+  ui = new Ui::FlangerFrame();
+  ui->setupUi(this);
+  ui->rateDial->setLookUpTable(LookUpTables::getFlangerRateValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -88,6 +93,13 @@ void FlangerFrame::deactivate()
   }
 
   mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page FlangerFrame::getMaxDisplayPage()

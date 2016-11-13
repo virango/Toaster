@@ -25,7 +25,8 @@ ConnectionStatusFrame::ConnectionStatusFrame(QWidget *parent)
 
 ConnectionStatusFrame::~ConnectionStatusFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void ConnectionStatusFrame::setMidiStatus(bool isConnected)

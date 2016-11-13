@@ -54,7 +54,8 @@ QToasterStompEditLCD::QToasterStompEditLCD(QWidget *parent)
 
 QToasterStompEditLCD::~QToasterStompEditLCD()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 QString QToasterStompEditLCD::stompInstance() const

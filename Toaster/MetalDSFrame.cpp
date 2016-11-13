@@ -20,21 +20,23 @@
 
 MetalDSFrame::MetalDSFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::MetalDSFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  ui->midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 MetalDSFrame::~MetalDSFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void MetalDSFrame::activate(QObject& stomp)
 {
+  ui->setupUi(this);
+  ui->midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -71,8 +73,16 @@ void MetalDSFrame::deactivate()
     disconnect(mpStomp, &Stomp::parametricEQPeakFrequencyReceived, this, &MetalDSFrame::onMidFreq);
     disconnect(mpStomp, &Stomp::parametricEQHighGainReceived, this, &MetalDSFrame::onHigh);
     disconnect(mpStomp, &Stomp::mixReceived, this, &MetalDSFrame::onMix);
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page MetalDSFrame::getMaxDisplayPage()

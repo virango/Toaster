@@ -30,7 +30,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
 SettingsDialog::~SettingsDialog()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void SettingsDialog::init()

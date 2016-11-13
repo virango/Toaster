@@ -62,8 +62,8 @@ private slots:
 
 private:
   Ui::TremoloFrame *ui;
-
   Stomp* mpStomp;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // TREMOLOFRAME_H

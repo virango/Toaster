@@ -20,40 +20,40 @@
 
 PhaserOnewayFrame::PhaserOnewayFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::PhaserOnewayFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  setCurrentDisplayPage(QToasterLCD::Page1);
 }
 
 PhaserOnewayFrame::~PhaserOnewayFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void PhaserOnewayFrame::activate(QObject& stomp)
 {
+  ui = new Ui::PhaserOnewayFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
-    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
-    connect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
-    connect(mpStomp, SIGNAL(modulationPhaserPeakSpreadReceived(double)), this, SLOT(onPeakSpread(double)));
-    connect(mpStomp, SIGNAL(modulationPhaserStagesReceived(double)), this, SLOT(onStages(double)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(stereoReceived(double)), this, SLOT(onStereo(double)));
-
-    mFXType = mpStomp->getFXType();
+    connect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationRateReceived), this, &PhaserOnewayFrame::onRate);
+    connect(mpStomp, &Stomp::modulationDepthReceived, this, &PhaserOnewayFrame::onDepth);
+    connect(mpStomp, &Stomp::modulationManualReceived, this, &PhaserOnewayFrame::onManual);
+    connect(mpStomp, &Stomp::modulationFeedbackReceived, this, &PhaserOnewayFrame::onFeedback);
+    connect(mpStomp, &Stomp::modulationPhaserPeakSpreadReceived, this, &PhaserOnewayFrame::onPeakSpread);
+    connect(mpStomp, &Stomp::modulationPhaserStagesReceived, this, &PhaserOnewayFrame::onStages);
+    connect(mpStomp, &Stomp::mixReceived, this, &PhaserOnewayFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &PhaserOnewayFrame::onDucking);
+    connect(mpStomp, &Stomp::volumeReceived, this, &PhaserOnewayFrame::onVolume);
+    connect(mpStomp, &Stomp::stereoReceived, this, &PhaserOnewayFrame::onStereo);
 
     ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mFXType));
+    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestModulationRate();
     mpStomp->requestModulationDepth();
@@ -84,18 +84,25 @@ void PhaserOnewayFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
-    disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationManualReceived(double)), this, SLOT(onManual(double)));
-    disconnect(mpStomp, SIGNAL(modulationFeedbackReceived(double)), this, SLOT(onFeedback(double)));
-    disconnect(mpStomp, SIGNAL(modulationPhaserPeakSpreadReceived(double)), this, SLOT(onPeakSpread(double)));
-    disconnect(mpStomp, SIGNAL(modulationPhaserStagesReceived(double)), this, SLOT(onStages(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(stereoReceived(double)), this, SLOT(onStereo(double)));
+    disconnect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationRateReceived), this, &PhaserOnewayFrame::onRate);
+    disconnect(mpStomp, &Stomp::modulationDepthReceived, this, &PhaserOnewayFrame::onDepth);
+    disconnect(mpStomp, &Stomp::modulationManualReceived, this, &PhaserOnewayFrame::onManual);
+    disconnect(mpStomp, &Stomp::modulationFeedbackReceived, this, &PhaserOnewayFrame::onFeedback);
+    disconnect(mpStomp, &Stomp::modulationPhaserPeakSpreadReceived, this, &PhaserOnewayFrame::onPeakSpread);
+    disconnect(mpStomp, &Stomp::modulationPhaserStagesReceived, this, &PhaserOnewayFrame::onStages);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &PhaserOnewayFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &PhaserOnewayFrame::onDucking);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &PhaserOnewayFrame::onVolume);
+    disconnect(mpStomp, &Stomp::stereoReceived, this, &PhaserOnewayFrame::onStereo);
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page PhaserOnewayFrame::getMaxDisplayPage()

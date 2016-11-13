@@ -70,8 +70,8 @@ private slots:
 
 private:
   Ui::PhaserFrame *ui;
-
   Stomp* mpStomp;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // PHASERFRAME_H

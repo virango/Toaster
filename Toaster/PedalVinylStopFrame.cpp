@@ -21,27 +21,30 @@
 
 PedalVinylStopFrame::PedalVinylStopFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::PedalVinylStopFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 PedalVinylStopFrame::~PedalVinylStopFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void PedalVinylStopFrame::activate(QObject& stomp)
 {
+  ui = new Ui::PedalVinylStopFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(&globalObj, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
+    connect(mpStomp, &Stomp::volumeReceived, this, &PedalVinylStopFrame::onVolume);
+    connect(mpStomp, &Stomp::mixReceived, this, &PedalVinylStopFrame::onMix);
+    connect(&globalObj, &Global::wahPedalToPitchReceived, this, &PedalVinylStopFrame::onWahPedalToPitch);
 
     mpStomp->requestVolume();
     mpStomp->requestMix();
@@ -56,11 +59,20 @@ void PedalVinylStopFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(&globalObj, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &PedalVinylStopFrame::onVolume);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &PedalVinylStopFrame::onMix);
+
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  disconnect(&globalObj, &Global::wahPedalToPitchReceived, this, &PedalVinylStopFrame::onWahPedalToPitch);
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page PedalVinylStopFrame::getMaxDisplayPage()

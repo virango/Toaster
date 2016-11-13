@@ -75,7 +75,7 @@ protected:
   void contextMenuEvent(QContextMenuEvent * cme);
 
 private:
-  QList<QPixmap> mSkinPixmaps;
+  QList<QPixmap>* mSkinPixmaps;
 
   Type    mType;
   State   mGlobalState;
@@ -83,15 +83,15 @@ private:
 
   bool    mClickEmited;
   QTimer  mLongClickTimer;
-
   QLabel  mAnimLabel;
-  QMovie  mMovie;
 
   ICtxMenuProvider* mpCtxMenuProvider;
 
-  QMap<Type, QString> mSkins;
-  QMap<Type, QString> mAnims;
-  static const int mSkinNoOfFrames = 2;
+  static QList<QPixmap> sBigButtonSkinPixmaps;
+  static QList<QPixmap> sSmallButtonSkinPixmaps;
+  static QMovie* sSmallButtonMovie;
+  static QMovie* sBigButtonMovie;
+  static const int sSkinNoOfFrames = 2;
 };
 
 #endif

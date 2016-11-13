@@ -45,6 +45,7 @@ private slots:
 private:
   Ui::InputFrame *ui;
   Input* mpInput;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // INPUTFRAME_H

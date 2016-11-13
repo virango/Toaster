@@ -74,8 +74,8 @@ private slots:
 
 private:
   Ui::ChromaticPitchFrame *ui;
-
   Stomp* mpStomp;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // CHROMATICPITCHFRAME_H

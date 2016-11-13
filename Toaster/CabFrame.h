@@ -58,8 +58,8 @@ private slots:
 
 private:
   Ui::CabFrame *ui;
-
   Cab* mpCab;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // CABFRAME_H

@@ -36,14 +36,7 @@ MasterVolume::MasterVolume(QObject *parent)
 }
 
 MasterVolume::~MasterVolume()
-{
-  Settings::get().setMasterVolume(mMasterVolume);
-
-  disconnect(&globalObj, &Global::mainOutputVolumeReceived, this, &MasterVolume::onMainOutputVolume);
-  disconnect(&globalObj, &Global::monitorOutputVolumeReceived, this, &MasterVolume::onMonitorOutputVolume);
-  disconnect(&globalObj, &Global::directOutputVolumeReceived, this, &MasterVolume::onDirectOutputVolume);
-  disconnect(&globalObj, &Global::headphoneOutputVolumeReceived, this, &MasterVolume::onHeadPhoneOutputVolume);
-  disconnect(&globalObj, &Global::spdifOutputVolumeReceived, this, &MasterVolume::onSPDIFOutputVolume);
+{ 
 }
 
 void MasterVolume::init()
@@ -54,6 +47,17 @@ void MasterVolume::init()
   connect(&globalObj, &Global::headphoneOutputVolumeReceived, this, &MasterVolume::onHeadPhoneOutputVolume);
   connect(&globalObj, &Global::spdifOutputVolumeReceived, this, &MasterVolume::onSPDIFOutputVolume);
   emit masterVolumeChanged(mMasterVolume);
+}
+
+void MasterVolume::dispose()
+{
+  Settings::get().setMasterVolume(mMasterVolume);
+
+  disconnect(&globalObj, &Global::mainOutputVolumeReceived, this, &MasterVolume::onMainOutputVolume);
+  disconnect(&globalObj, &Global::monitorOutputVolumeReceived, this, &MasterVolume::onMonitorOutputVolume);
+  disconnect(&globalObj, &Global::directOutputVolumeReceived, this, &MasterVolume::onDirectOutputVolume);
+  disconnect(&globalObj, &Global::headphoneOutputVolumeReceived, this, &MasterVolume::onHeadPhoneOutputVolume);
+  disconnect(&globalObj, &Global::spdifOutputVolumeReceived, this, &MasterVolume::onSPDIFOutputVolume);
 }
 
 int MasterVolume::noOfLinks()

@@ -20,21 +20,24 @@
 
 VintageChorusFrame::VintageChorusFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::VintageChorusFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 VintageChorusFrame::~VintageChorusFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void VintageChorusFrame::activate(QObject& stomp)
 {
+  ui = new Ui::VintageChorusFrame();
+  ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -68,8 +71,15 @@ void VintageChorusFrame::deactivate()
     disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page VintageChorusFrame::getMaxDisplayPage()

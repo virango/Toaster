@@ -21,39 +21,42 @@
 
 PedalPitchFrame::PedalPitchFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::PedalPitchFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
+
 {
-  ui->setupUi(this);
-  setCurrentDisplayPage(QToasterLCD::Page1);
-  ui->smoothChordsDial->setValue(0);
-  ui->pureTuningDial->setValue(0);
-  ui->formantShiftOnOffDial->setValue(0);
-  ui->wahPedalToPitchDial->setValue(0);
 }
 
 PedalPitchFrame::~PedalPitchFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void PedalPitchFrame::activate(QObject& stomp)
 {
+  ui = new Ui::PedalPitchFrame();
+  ui->setupUi(this);
+  ui->smoothChordsDial->setValue(0);
+  ui->pureTuningDial->setValue(0);
+  ui->formantShiftOnOffDial->setValue(0);
+  ui->wahPedalToPitchDial->setValue(0);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onHeelPitch(double)));
-    connect(mpStomp, SIGNAL(voice1PitchReceived(double)), this, SLOT(onToePitch(double)));
-    connect(mpStomp, SIGNAL(formantShiftReceived(double)), this, SLOT(onFormantShift(double)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
-    connect(mpStomp, SIGNAL(pureTuningReceived(bool)), this, SLOT(onPureTuning(bool)));
-    connect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(&globalObj, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
+    connect(mpStomp, &Stomp::voice2PitchReceived, this, &PedalPitchFrame::onHeelPitch);
+    connect(mpStomp, &Stomp::voice1PitchReceived, this, &PedalPitchFrame::onToePitch);
+    connect(mpStomp, &Stomp::formantShiftReceived, this, &PedalPitchFrame::onFormantShift);
+    connect(mpStomp, &Stomp::mixReceived, this, &PedalPitchFrame::onMix);
+    connect(mpStomp, &Stomp::smoothChordsReceived, this, &PedalPitchFrame::onSmoothChords);
+    connect(mpStomp, &Stomp::pureTuningReceived, this, &PedalPitchFrame::onPureTuning);
+    connect(mpStomp, &Stomp::formantShiftOnOffReceived, this, &PedalPitchFrame::onFormantShiftOnOff);
+    connect(mpStomp, &Stomp::volumeReceived, this, &PedalPitchFrame::onVolume);
+    connect(mpStomp, &Stomp::duckingReceived, this, &PedalPitchFrame::onDucking);
+    connect(&globalObj, &Global::wahPedalToPitchReceived, this, &PedalPitchFrame::onWahPedalToPitch);
 
     mpStomp->requestVoice2Pitch();
     mpStomp->requestVoice1Pitch();
@@ -75,20 +78,26 @@ void PedalPitchFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onHeelPitch(double)));
-    disconnect(mpStomp, SIGNAL(voice1PitchReceived(double)), this, SLOT(onToePitch(double)));
-    disconnect(mpStomp, SIGNAL(formantShiftReceived(double)), this, SLOT(onFormantShift(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
-    disconnect(mpStomp, SIGNAL(pureTuningReceived(bool)), this, SLOT(onPureTuning(bool)));
-    disconnect(mpStomp, SIGNAL(formantShiftOnOffReceived(bool)), this, SLOT(onFormantShiftOnOff(bool)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    disconnect(mpStomp, &Stomp::voice2PitchReceived, this, &PedalPitchFrame::onHeelPitch);
+    disconnect(mpStomp, &Stomp::voice1PitchReceived, this, &PedalPitchFrame::onToePitch);
+    disconnect(mpStomp, &Stomp::formantShiftReceived, this, &PedalPitchFrame::onFormantShift);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &PedalPitchFrame::onMix);
+    disconnect(mpStomp, &Stomp::smoothChordsReceived, this, &PedalPitchFrame::onSmoothChords);
+    disconnect(mpStomp, &Stomp::pureTuningReceived, this, &PedalPitchFrame::onPureTuning);
+    disconnect(mpStomp, &Stomp::formantShiftOnOffReceived, this, &PedalPitchFrame::onFormantShiftOnOff);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &PedalPitchFrame::onVolume);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &PedalPitchFrame::onDucking);
+    mpStomp = nullptr;
   }
 
-  disconnect(&globalObj, SIGNAL(wahPedalToPitchReceived(bool)), this, SLOT(onWahPedalToPitch(bool)));
+  disconnect(&globalObj, &Global::wahPedalToPitchReceived, this, &PedalPitchFrame::onWahPedalToPitch);
 
-  mpStomp = nullptr;
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page PedalPitchFrame::getMaxDisplayPage()

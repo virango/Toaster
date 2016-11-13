@@ -18,19 +18,23 @@
 
 CabFrame::CabFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::CabFrame)
+  , ui(nullptr)
   , mpCab(nullptr)
-{
-  ui->setupUi(this);
+{ 
 }
 
 CabFrame::~CabFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void CabFrame::activate(QObject& amp)
 {
+  ui = new Ui::CabFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpCab = qobject_cast<Cab*>(&amp);
 
   if(mpCab != nullptr)
@@ -56,6 +60,13 @@ void CabFrame::deactivate()
     disconnect(mpCab, &Cab::characterReceived, this, &CabFrame::onCharacter);
     disconnect(mpCab, &Cab::volumeReceived, this, &CabFrame::onVolume);
     mpCab = nullptr;
+  }
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
   }
 }
 

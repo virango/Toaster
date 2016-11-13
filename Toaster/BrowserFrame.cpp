@@ -69,7 +69,8 @@ BrowserFrame::BrowserFrame(QWidget *parent)
 
 BrowserFrame::~BrowserFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void BrowserFrame::requestValues()

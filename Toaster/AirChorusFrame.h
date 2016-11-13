@@ -55,10 +55,9 @@ private slots:
   void onVolume(double value);
 private:
   Ui::AirChorusFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // AIRCHORUSFRAME_H

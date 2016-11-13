@@ -55,10 +55,9 @@ private slots:
   void onDucking(double value);
 private:
   Ui::LoopFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // LOOPFRAME_H

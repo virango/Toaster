@@ -66,8 +66,8 @@ private slots:
 
 private:
   Ui::FlangerOnewayFrame *ui;
-
   Stomp* mpStomp;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // FlangerOnewayFrame_H

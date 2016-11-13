@@ -20,40 +20,42 @@
 
 GraphicEqualizerFrame::GraphicEqualizerFrame(QWidget *parent)
   : QWidget(parent)
-  ,ui(new Ui::GraphicEqualizerFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  setCurrentDisplayPage(QToasterLCD::Page1);
-  ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 GraphicEqualizerFrame::~GraphicEqualizerFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void GraphicEqualizerFrame::activate(QObject& stomp)
 {
+  ui = new Ui::GraphicEqualizerFrame();
+  ui->setupUi(this);
+  ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(graphicEQBand1Received(double)), this, SLOT(onBand1(double)));
-    connect(mpStomp, SIGNAL(graphicEQBand2Received(double)), this, SLOT(onBand2(double)));
-    connect(mpStomp, SIGNAL(graphicEQBand3Received(double)), this, SLOT(onBand3(double)));
-    connect(mpStomp, SIGNAL(graphicEQBand4Received(double)), this, SLOT(onBand4(double)));
-    connect(mpStomp, SIGNAL(graphicEQBand5Received(double)), this, SLOT(onBand5(double)));
-    connect(mpStomp, SIGNAL(graphicEQBand6Received(double)), this, SLOT(onBand6(double)));
-    connect(mpStomp, SIGNAL(graphicEQBand7Received(double)), this, SLOT(onBand7(double)));
-    connect(mpStomp, SIGNAL(graphicEQBand8Received(double)), this, SLOT(onBand8(double)));
-    connect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
-    connect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onHighCut(int)));
+    connect(mpStomp, &Stomp::mixReceived, this, &GraphicEqualizerFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &GraphicEqualizerFrame::onDucking);
+    connect(mpStomp, &Stomp::volumeReceived, this, &GraphicEqualizerFrame::onVolume);
+    connect(mpStomp, &Stomp::graphicEQBand1Received, this, &GraphicEqualizerFrame::onBand1);
+    connect(mpStomp, &Stomp::graphicEQBand2Received, this, &GraphicEqualizerFrame::onBand2);
+    connect(mpStomp, &Stomp::graphicEQBand3Received, this, &GraphicEqualizerFrame::onBand3);
+    connect(mpStomp, &Stomp::graphicEQBand4Received, this, &GraphicEqualizerFrame::onBand4);
+    connect(mpStomp, &Stomp::graphicEQBand5Received, this, &GraphicEqualizerFrame::onBand5);
+    connect(mpStomp, &Stomp::graphicEQBand6Received, this, &GraphicEqualizerFrame::onBand6);
+    connect(mpStomp, &Stomp::graphicEQBand7Received, this, &GraphicEqualizerFrame::onBand7);
+    connect(mpStomp, &Stomp::graphicEQBand8Received, this, &GraphicEqualizerFrame::onBand8);
+    connect(mpStomp, &Stomp::lowCutReceived, this, &GraphicEqualizerFrame::onLowCut);
+    connect(mpStomp, &Stomp::highCutReceived, this, &GraphicEqualizerFrame::onHighCut);
 
     mpStomp->requestMix();
     mpStomp->requestDucking();
@@ -77,21 +79,28 @@ void GraphicEqualizerFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(graphicEQBand1Received(double)), this, SLOT(onBand1(double)));
-    disconnect(mpStomp, SIGNAL(graphicEQBand2Received(double)), this, SLOT(onBand2(double)));
-    disconnect(mpStomp, SIGNAL(graphicEQBand3Received(double)), this, SLOT(onBand3(double)));
-    disconnect(mpStomp, SIGNAL(graphicEQBand4Received(double)), this, SLOT(onBand4(double)));
-    disconnect(mpStomp, SIGNAL(graphicEQBand5Received(double)), this, SLOT(onBand5(double)));
-    disconnect(mpStomp, SIGNAL(graphicEQBand6Received(double)), this, SLOT(onBand6(double)));
-    disconnect(mpStomp, SIGNAL(graphicEQBand7Received(double)), this, SLOT(onBand7(double)));
-    disconnect(mpStomp, SIGNAL(graphicEQBand8Received(double)), this, SLOT(onBand8(double)));
-    disconnect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
-    disconnect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onhighCut(int)));
+    disconnect(mpStomp, &Stomp::mixReceived, this, &GraphicEqualizerFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &GraphicEqualizerFrame::onDucking);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &GraphicEqualizerFrame::onVolume);
+    disconnect(mpStomp, &Stomp::graphicEQBand1Received, this, &GraphicEqualizerFrame::onBand1);
+    disconnect(mpStomp, &Stomp::graphicEQBand2Received, this, &GraphicEqualizerFrame::onBand2);
+    disconnect(mpStomp, &Stomp::graphicEQBand3Received, this, &GraphicEqualizerFrame::onBand3);
+    disconnect(mpStomp, &Stomp::graphicEQBand4Received, this, &GraphicEqualizerFrame::onBand4);
+    disconnect(mpStomp, &Stomp::graphicEQBand5Received, this, &GraphicEqualizerFrame::onBand5);
+    disconnect(mpStomp, &Stomp::graphicEQBand6Received, this, &GraphicEqualizerFrame::onBand6);
+    disconnect(mpStomp, &Stomp::graphicEQBand7Received, this, &GraphicEqualizerFrame::onBand7);
+    disconnect(mpStomp, &Stomp::graphicEQBand8Received, this, &GraphicEqualizerFrame::onBand8);
+    disconnect(mpStomp, &Stomp::lowCutReceived, this, &GraphicEqualizerFrame::onLowCut);
+    disconnect(mpStomp, &Stomp::highCutReceived, this, &GraphicEqualizerFrame::onHighCut);
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page GraphicEqualizerFrame::getMaxDisplayPage()

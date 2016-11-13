@@ -33,7 +33,8 @@ QToasterTunerLCD::QToasterTunerLCD(QWidget *parent)
 
 QToasterTunerLCD::~QToasterTunerLCD()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void QToasterTunerLCD::createIndexSkin()

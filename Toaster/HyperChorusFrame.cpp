@@ -20,31 +20,34 @@
 
 HyperChorusFrame::HyperChorusFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::HyperChorusFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 HyperChorusFrame::~HyperChorusFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void HyperChorusFrame::activate(QObject& stomp)
 {
+  ui = new Ui::HyperChorusFrame();
+  ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationHyperChorusAmountReceived(double)), this, SLOT(onAmount(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, &Stomp::modulationDepthReceived, this, &HyperChorusFrame::onDepth);
+    connect(mpStomp, &Stomp::modulationHyperChorusAmountReceived, this, &HyperChorusFrame::onAmount);
+    connect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &HyperChorusFrame::onCrossover);
+    connect(mpStomp, &Stomp::mixReceived, this, &HyperChorusFrame::onMix);
+    connect(mpStomp, &Stomp::volumeReceived, this, &HyperChorusFrame::onVolume);
+    connect(mpStomp, &Stomp::duckingReceived, this, &HyperChorusFrame::onDucking);
 
     mpStomp->requestModulationDepth();
     mpStomp->requestModulationHyperChorusAmount();
@@ -62,14 +65,21 @@ void HyperChorusFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationHyperChorusAmountReceived(double)), this, SLOT(onAmount(double)));
-    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    disconnect(mpStomp, &Stomp::modulationDepthReceived, this, &HyperChorusFrame::onDepth);
+    disconnect(mpStomp, &Stomp::modulationHyperChorusAmountReceived, this, &HyperChorusFrame::onAmount);
+    disconnect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &HyperChorusFrame::onCrossover);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &HyperChorusFrame::onMix);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &HyperChorusFrame::onVolume);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &HyperChorusFrame::onDucking);
   }
   mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page HyperChorusFrame::getMaxDisplayPage()

@@ -20,37 +20,39 @@
 
 MetalEqualizerFrame::MetalEqualizerFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::MetalEqualizerFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  setCurrentDisplayPage(QToasterLCD::Page1);
-  ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 MetalEqualizerFrame::~MetalEqualizerFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void MetalEqualizerFrame::activate(QObject& stomp)
 {
+  ui = new Ui::MetalEqualizerFrame();
+  ui->setupUi(this);
+  ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowDial(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddleDial(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMidFreqDial(int)));
-    connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighDial(double)));
-    connect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
-    connect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onHighCut(int)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, &Stomp::parametricEQLowGainReceived, this, &MetalEqualizerFrame::onLowDial);
+    connect(mpStomp, &Stomp::parametricEQPeakGainReceived, this, &MetalEqualizerFrame::onMiddleDial);
+    connect(mpStomp, &Stomp::parametricEQPeakFrequencyReceived, this, &MetalEqualizerFrame::onMidFreqDial);
+    connect(mpStomp, &Stomp::parametricEQHighGainReceived, this, &MetalEqualizerFrame::onHighDial);
+    connect(mpStomp, &Stomp::lowCutReceived, this, &MetalEqualizerFrame::onLowCut);
+    connect(mpStomp, &Stomp::highCutReceived, this, &MetalEqualizerFrame::onHighCut);
+    connect(mpStomp, &Stomp::mixReceived, this, &MetalEqualizerFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &MetalEqualizerFrame::onDucking);
+    connect(mpStomp, &Stomp::volumeReceived, this, &MetalEqualizerFrame::onVolume);
 
     mpStomp->requestParametricEQLowGain();
     mpStomp->requestParametricEQPeakGain();
@@ -71,17 +73,24 @@ void MetalEqualizerFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowDial(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMiddleDial(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMidFreqDial(int)));
-    disconnect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighDial(double)));
-    disconnect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
-    disconnect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onHighCut(int)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    disconnect(mpStomp, &Stomp::parametricEQLowGainReceived, this, &MetalEqualizerFrame::onLowDial);
+    disconnect(mpStomp, &Stomp::parametricEQPeakGainReceived, this, &MetalEqualizerFrame::onMiddleDial);
+    disconnect(mpStomp, &Stomp::parametricEQPeakFrequencyReceived, this, &MetalEqualizerFrame::onMidFreqDial);
+    disconnect(mpStomp, &Stomp::parametricEQHighGainReceived, this, &MetalEqualizerFrame::onHighDial);
+    disconnect(mpStomp, &Stomp::lowCutReceived, this, &MetalEqualizerFrame::onLowCut);
+    disconnect(mpStomp, &Stomp::highCutReceived, this, &MetalEqualizerFrame::onHighCut);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &MetalEqualizerFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &MetalEqualizerFrame::onDucking);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &MetalEqualizerFrame::onVolume);
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page MetalEqualizerFrame::getMaxDisplayPage()

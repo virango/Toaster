@@ -20,63 +20,99 @@
 #include "CtxMenuProvider.h"
 #include "qtoasterbutton.h"
 
+QList<QPixmap> QToasterButton::sBigButtonSkinPixmaps;
+QList<QPixmap> QToasterButton::sSmallButtonSkinPixmaps;
+QMovie* QToasterButton::sSmallButtonMovie = nullptr;
+QMovie* QToasterButton::sBigButtonMovie = nullptr;
+
 QToasterButton::QToasterButton(QWidget *parent)
   : QWidget(parent)
+  , mSkinPixmaps(&sSmallButtonSkinPixmaps)
   , mType(Small)
   , mGlobalState(Off)
   , mOnOffState(Off)
   , mClickEmited(false)
   , mAnimLabel(this)
-  , mMovie()
   , mpCtxMenuProvider(NULL)
 {
-  mAnimLabel.setMovie(&mMovie);
-  mAnimLabel.hide();
-  MAP_INSERT(mSkins, Big,      ":/resources/BigButton.png");
-  MAP_INSERT(mSkins, Small,    ":/resources/SmallButton.png");
 
-  MAP_INSERT(mAnims, Big,      ":/resources/BigButtonAnim.gif");
-  MAP_INSERT(mAnims, Small,    ":/resources/SmallButtonAnim.gif");
+
   createSkin();
 
+  mAnimLabel.setMovie(sSmallButtonMovie);
+  mAnimLabel.hide();
   mLongClickTimer.setSingleShot(true);
   connect(&mLongClickTimer, SIGNAL(timeout()), this, SLOT(longClick()));
 }
 
 void QToasterButton::createSkin()
 {
-  if(!mSkinPixmaps.isEmpty())
-    mSkinPixmaps.clear();
+  if(sSmallButtonMovie == nullptr)
+    sSmallButtonMovie = new QMovie(":/resources/SmallButtonAnim.gif");
 
-  QString skin = mSkins[mType];
+  if(sBigButtonMovie == nullptr)
+    sBigButtonMovie = new QMovie(":/resources/BigButtonAnim.gif");
 
-  QPixmap masterPixmap(skin);
-
-  int width = masterPixmap.height();
-  int height = masterPixmap.height();
-
-  if(mSkinNoOfFrames)
-    width = masterPixmap.width() / mSkinNoOfFrames;
-
-  if(!masterPixmap.isNull())
+  if(sSmallButtonSkinPixmaps.isEmpty())
   {
-    int x = 0;
-    int y = 0;
-    for(int i = 0; i < mSkinNoOfFrames; i++)
+    QPixmap masterPixmap(":/resources/SmallButton.png");
+
+    int width = masterPixmap.height();
+    int height = masterPixmap.height();
+
+    if(sSkinNoOfFrames)
+      width = masterPixmap.width() / sSkinNoOfFrames;
+
+    if(!masterPixmap.isNull())
     {
-      x = i * width;
-      mSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      int x = 0;
+      int y = 0;
+      for(int i = 0; i < sSkinNoOfFrames; i++)
+      {
+        x = i * width;
+        sSmallButtonSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      }
     }
   }
 
-  QString anim = mAnims[mType];
-  mMovie.setFileName(anim);
+  if(sBigButtonSkinPixmaps.isEmpty())
+  {
+    QPixmap masterPixmap(":/resources/BigButton.png");
+
+    int width = masterPixmap.height();
+    int height = masterPixmap.height();
+
+    if(sSkinNoOfFrames)
+      width = masterPixmap.width() / sSkinNoOfFrames;
+
+    if(!masterPixmap.isNull())
+    {
+      int x = 0;
+      int y = 0;
+      for(int i = 0; i < sSkinNoOfFrames; i++)
+      {
+        x = i * width;
+        sBigButtonSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      }
+    }
+
+
+  }
 }
 
 void QToasterButton::setType(Type type)
 {
   mType = type;
-  createSkin();
+  if(mType == Small)
+  {
+    mSkinPixmaps = &sSmallButtonSkinPixmaps;
+    mAnimLabel.setMovie(sSmallButtonMovie);
+  }
+  else if(mType == Big)
+  {
+    mSkinPixmaps = &sBigButtonSkinPixmaps;
+    mAnimLabel.setMovie(sBigButtonMovie);
+  }
 }
 
 void QToasterButton::setState(State state)
@@ -99,7 +135,7 @@ void QToasterButton::paintEvent(QPaintEvent* /* pe */)
   if(mGlobalState < Blinking)
   {
     mAnimLabel.hide();
-    QPixmap pm = mSkinPixmaps[mGlobalState];
+    QPixmap pm = mSkinPixmaps->at(mGlobalState);
     painter.setWindow(0, 0, pm.width(), pm.height());
     painter.drawPixmap(0, 0, pm);
   }
@@ -107,7 +143,8 @@ void QToasterButton::paintEvent(QPaintEvent* /* pe */)
   {
     mAnimLabel.show();
     mAnimLabel.adjustSize();
-    mMovie.start();
+    if(mAnimLabel.movie() != nullptr)
+      mAnimLabel.movie()->start();
   }
 }
 

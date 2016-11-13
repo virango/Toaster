@@ -21,23 +21,32 @@
 
 AnalogOctaverFrame::AnalogOctaverFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::AnalogOctaverFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
 {
+}
+
+AnalogOctaverFrame::~AnalogOctaverFrame()
+{
+  if(ui != nullptr)
+    delete ui;
+}
+
+void AnalogOctaverFrame::activate(QObject& stomp)
+{
+  ui = new Ui::AnalogOctaverFrame();
   ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
 
   if(Settings::get().getKPAOSVersion() >= 0x04000000)
   {
     ui->lcdDisplay->setValue5Title("Voice Balance");
   }
-}
+  else
+  {
+    ui->lcdDisplay->setValue5Title("Voice Mix");
+  }
 
-AnalogOctaverFrame::~AnalogOctaverFrame()
-{
-  delete ui;
-}
-void AnalogOctaverFrame::activate(QObject& stomp)
-{
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -86,6 +95,13 @@ void AnalogOctaverFrame::deactivate()
     disconnect(mpStomp, &Stomp::stereoReceived, this, &AnalogOctaverFrame::onStereo);
   }
   mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page AnalogOctaverFrame::getMaxDisplayPage()

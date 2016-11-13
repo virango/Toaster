@@ -20,20 +20,23 @@
 
 RectiShaperFrame::RectiShaperFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::RectiShaperFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 RectiShaperFrame::~RectiShaperFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void RectiShaperFrame::activate(QObject& stomp)
 {
+  ui = new Ui::RectiShaperFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
@@ -55,8 +58,15 @@ void RectiShaperFrame::deactivate()
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     disconnect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
     disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page RectiShaperFrame::getMaxDisplayPage()

@@ -58,8 +58,8 @@ private slots:
 private:
   Ui::StereoWidenerFrame *ui;
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // STEREOWIDENERFRAME_H

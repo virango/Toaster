@@ -70,9 +70,9 @@ private slots:
 
 private:
   Ui::WahNoPeakFrame *ui;
-
   Stomp* mpStomp;
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // WAHNOPEAKFRAME_H

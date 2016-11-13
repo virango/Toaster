@@ -84,8 +84,6 @@ protected:
   void updateLEDRing();
 
 private:
-  QList<QPixmap> mKnobSkinPixmaps;
-  QList<QPixmap> mLEDRingSkinPixmaps;
   int mCurrKnobFrameNo;
   int mCurrLEDRingFrameNo;
 
@@ -105,11 +103,15 @@ private:
   int      mAcceleration;
   QTimer   mAccelerationTimer;
   QVector<QPair<int,QString>>* mLookUpTable;
+  QList<QPixmap>* mKnobSkinPixmaps;
+  QList<QPixmap>* mLEDRingSkinPixmaps;
 
-  QMap<KnobSize, QString> mKnobSkins;
-  QMap<LEDRingType, QString> mLEDRingSkins;
-  static const int mKnobSkinNoOfFrames = 40;
-  static const int mLEDRingSkinNoOfFrames = 15;
+  static QList<QPixmap> sSmallKnobSkinPixmaps;
+  static QList<QPixmap> sBigKnobSkinPixmaps;
+  static QList<QPixmap> sUniLEDRingSkinPixmaps;
+  static QList<QPixmap> sBiLEDRingSkinPixmaps;
+  static const int sKnobSkinNoOfFrames = 40;
+  static const int sLEDRingSkinNoOfFrames = 15;
 };
 
 Q_DECLARE_METATYPE(QToasterLookUpTableDial::LEDRingType)

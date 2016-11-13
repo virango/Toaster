@@ -35,7 +35,8 @@ StompEditorFrame::StompEditorFrame(QWidget *parent)
 
 StompEditorFrame::~StompEditorFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void StompEditorFrame::init()
@@ -348,9 +349,9 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
 
     if(mpActivePage != nullptr && !mpActivePage->isActive())
     {
-      setCurrentIndex(index);
       mActiveStompType = fxType;
       mpActivePage->activate(*pActiveStomp);
+      setCurrentIndex(index);
       emit editorPageChanged(mpActivePage);
       requestValues();
     }
@@ -395,9 +396,9 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
 
     if(mpActivePage != nullptr && !mpActivePage->isActive())
     {
-      setCurrentIndex(index);
       mActiveStompType = delayType;
       mpActivePage->activate(*pActiveDelay);
+      setCurrentIndex(index);
       emit editorPageChanged(mpActivePage);
       requestValues();
     }
@@ -441,9 +442,9 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
 
     if(mpActivePage != nullptr && !mpActivePage->isActive())
     {
-      setCurrentIndex(index);
       mActiveStompType = reverbType;
       mpActivePage->activate(*pActiveReverb);
+      setCurrentIndex(index);
       emit editorPageChanged(mpActivePage);
       requestValues();
     }
@@ -625,8 +626,8 @@ void StompEditorFrame::activatePage(IStompEditorPage* page, int index)
   mpActivePage = page;
   if(mpActivePage != nullptr && !mpActivePage->isActive())
   {
-    setCurrentIndex(index);
     mpActivePage->activate(*mpActiveStomp);
+    setCurrentIndex(index);
     emit editorPageChanged(mpActivePage);
     requestValues();
   }

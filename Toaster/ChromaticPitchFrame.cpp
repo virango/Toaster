@@ -21,25 +21,28 @@
 
 ChromaticPitchFrame::ChromaticPitchFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::ChromaticPitchFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
 {
+}
+
+ChromaticPitchFrame::~ChromaticPitchFrame()
+{
+  if(ui != nullptr)
+    delete ui;
+}
+
+void ChromaticPitchFrame::activate(QObject& stomp)
+{
+  ui = new Ui::ChromaticPitchFrame();
   ui->setupUi(this);
-  setCurrentDisplayPage(QToasterLCD::Page1);
+  setCurrentDisplayPage(mCurrentPage);
 
   if(Settings::get().getKPAOSVersion() >= 0x04000000)
   {
     ui->lcdDisplay->setValue9Title("Voice Balance");
   }
-}
 
-ChromaticPitchFrame::~ChromaticPitchFrame()
-{
-  delete ui;
-}
-
-void ChromaticPitchFrame::activate(QObject& stomp)
-{
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -108,6 +111,13 @@ void ChromaticPitchFrame::deactivate()
   }
 
   mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page ChromaticPitchFrame::getMaxDisplayPage()

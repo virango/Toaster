@@ -60,10 +60,9 @@ private slots:
 
 private:
   Ui::MicroPitchFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // MICROPITCHFRAME_H

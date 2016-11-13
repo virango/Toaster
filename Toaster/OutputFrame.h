@@ -117,7 +117,7 @@ private:
                                          "Main Output EQ",
                                          "Output AddOns",
                                          "Aux In" };
-
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // OUTPUTFRAME_H

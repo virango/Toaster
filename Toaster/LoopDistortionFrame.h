@@ -55,10 +55,9 @@ private slots:
 
 private:
   Ui::LoopDistortionFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // LOOPDISTORTIONFRAME_H

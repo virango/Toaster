@@ -32,7 +32,8 @@ TunerFrame::TunerFrame(QWidget *parent) :
 
 TunerFrame::~TunerFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void TunerFrame::on_masterTuneDial_valueChanged(double value)

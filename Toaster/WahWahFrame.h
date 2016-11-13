@@ -75,9 +75,9 @@ private slots:
 
 private:
   Ui::WahWahFrame *ui;
-
   Stomp* mpStomp;
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // WahWahFrame_H

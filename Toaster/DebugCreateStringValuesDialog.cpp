@@ -44,7 +44,8 @@ DebugCreateStringValuesDialog::DebugCreateStringValuesDialog(QWidget *parent)
 
 DebugCreateStringValuesDialog::~DebugCreateStringValuesDialog()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void DebugCreateStringValuesDialog::on_raw2ValFileButton_clicked()

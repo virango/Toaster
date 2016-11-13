@@ -62,8 +62,8 @@ private slots:
 private:
   Ui::CompressorFrame *ui;
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // COMPRESSORFRAME_H

@@ -25,7 +25,8 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
 AboutDialog::~AboutDialog()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void AboutDialog::setVersionString(const QString versionStr)

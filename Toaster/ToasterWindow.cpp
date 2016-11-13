@@ -80,7 +80,8 @@ ToasterWindow::~ToasterWindow()
 {
   ui->mainFrame->disconnectFromKPA();
   Midi::get().closePorts();
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void ToasterWindow::onStartup()

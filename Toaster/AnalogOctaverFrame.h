@@ -62,8 +62,8 @@ private slots:
 
 private:
   Ui::AnalogOctaverFrame *ui;
-
   Stomp* mpStomp;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // ANALOGOCTAVERFRAME_H

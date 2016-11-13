@@ -85,6 +85,13 @@ enum FXType
 //-----green----------------------
   Space,                  // SPCE     0x40
   LegacyDelay,            // LDLY     0x91
+  SingleDelay,            // DLY1     0x92
+  DualDelay,              // DLY2     0x93
+  TwoTapDelay,            // DLY2     0x94
+  SerialTwoTapDelay,      // DLY2     0x95
+  RhythmDelay,            // DLY4     0xA1
+  QuadDelay,              // DLY4     0xA4
+  DualCrystal,            // D2CR     0x8B
 //-----white----------------------
   Transpose,              // TRP      0x81
   PedalPitch,             // PPTC     0x0B

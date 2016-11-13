@@ -20,28 +20,31 @@
 
 AirChorusFrame::AirChorusFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::AirChorusFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 AirChorusFrame::~AirChorusFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void AirChorusFrame::activate(QObject& stomp)
 {
+  ui = new Ui::AirChorusFrame();
+  ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpStomp, &Stomp::modulationDepthReceived, this, &AirChorusFrame::onDepth);
+    connect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &AirChorusFrame::onCrossover);
+    connect(mpStomp, &Stomp::volumeReceived, this, &AirChorusFrame::onVolume);
 
     mpStomp->requestModulationDepth();
     mpStomp->requestModulationCrossover();
@@ -57,11 +60,18 @@ void AirChorusFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    disconnect(mpStomp, &Stomp::modulationDepthReceived, this, &AirChorusFrame::onDepth);
+    disconnect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &AirChorusFrame::onCrossover);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &AirChorusFrame::onVolume);
   }
   mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page AirChorusFrame::getMaxDisplayPage()

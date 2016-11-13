@@ -20,21 +20,23 @@
 
 WahFormantShiftFrame::WahFormantShiftFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::WahFormantShiftFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  setCurrentDisplayPage(QToasterLCD::Page1);
 }
 
 WahFormantShiftFrame::~WahFormantShiftFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void WahFormantShiftFrame::activate(QObject& stomp)
 {
+  ui = new Ui::WahFormantShiftFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -80,8 +82,15 @@ void WahFormantShiftFrame::deactivate()
     disconnect(mpStomp, SIGNAL(wahTouchAttackReceived(double)), this, SLOT(onTouchAttack(double)));
     disconnect(mpStomp, SIGNAL(wahTouchReleaseReceived(double)), this, SLOT(onTouchRelease(double)));
     disconnect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page WahFormantShiftFrame::getMaxDisplayPage()

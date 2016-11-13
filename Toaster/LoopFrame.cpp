@@ -20,27 +20,30 @@
 
 LoopFrame::LoopFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::LoopFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 LoopFrame::~LoopFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void LoopFrame::activate(QObject& stomp)
 {
+  ui = new Ui::LoopFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, &Stomp::volumeReceived, this, &LoopFrame::onVolume);
+    connect(mpStomp, &Stomp::mixReceived, this, &LoopFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &LoopFrame::onDucking);
 
     mpStomp->requestVolume();
     mpStomp->requestMix();
@@ -55,11 +58,18 @@ void LoopFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &LoopFrame::onVolume);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &LoopFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &LoopFrame::onDucking);
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page LoopFrame::getMaxDisplayPage()

@@ -20,19 +20,23 @@
 
 ReverbFrame::ReverbFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::ReverbFrame)
+  , ui(nullptr)
   , mpReverb(nullptr)
 {
-  ui->setupUi(this);
 }
 
 ReverbFrame::~ReverbFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void ReverbFrame::activate(QObject& stomp)
 {
+  ui = new Ui::ReverbFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpReverb = qobject_cast<Reverb*>(&stomp);
 
   if(mpReverb != nullptr)
@@ -69,8 +73,15 @@ void ReverbFrame::deactivate()
     disconnect(mpReverb, SIGNAL(delRevBalanceReceived(double)), this, SLOT(onDelRevBalance(double)));
     disconnect(mpReverb, SIGNAL(dampingReceived(double)), this, SLOT(onDamping(double)));
     disconnect(mpReverb, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    mpReverb = nullptr;
   }
-  mpReverb = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page ReverbFrame::getMaxDisplayPage()

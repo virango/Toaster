@@ -20,29 +20,32 @@
 
 CompressorFrame::CompressorFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::CompressorFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 CompressorFrame::~CompressorFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void CompressorFrame::activate(QObject& stomp)
 {
+  ui = new Ui::CompressorFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(compressorGateIntensityReceived(double)), this, SLOT(onIntensity(double)));
-    connect(mpStomp, SIGNAL(compressorAttackReceived(double)), this, SLOT(onAttack(double)));
-    connect(mpStomp, SIGNAL(compressorSquashReceived(double)), this, SLOT(onSquash(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    connect(mpStomp, &Stomp::compressorGateIntensityReceived, this, &CompressorFrame::onIntensity);
+    connect(mpStomp, &Stomp::compressorAttackReceived, this, &CompressorFrame::onAttack);
+    connect(mpStomp, &Stomp::compressorSquashReceived, this, &CompressorFrame::onSquash);
+    connect(mpStomp, &Stomp::volumeReceived, this, &CompressorFrame::onVolume);
+    connect(mpStomp, &Stomp::mixReceived, this, &CompressorFrame::onMix);
 
     mpStomp->requestCompressorGateIntensity();
     mpStomp->requestCompressorAttack();
@@ -59,14 +62,21 @@ void CompressorFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(compressorGateIntensityReceived(double)), this, SLOT(onIntensity(double)));
-    disconnect(mpStomp, SIGNAL(compressorAttackReceived(double)), this, SLOT(onAttack(double)));
-    disconnect(mpStomp, SIGNAL(compressorSquashReceived(double)), this, SLOT(onSquash(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
+    disconnect(mpStomp, &Stomp::compressorGateIntensityReceived, this, &CompressorFrame::onIntensity);
+    disconnect(mpStomp, &Stomp::compressorAttackReceived, this, &CompressorFrame::onAttack);
+    disconnect(mpStomp, &Stomp::compressorSquashReceived, this, &CompressorFrame::onSquash);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &CompressorFrame::onVolume);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &CompressorFrame::onMix);
   }
 
   mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page CompressorFrame::getMaxDisplayPage()

@@ -64,8 +64,8 @@ private slots:
 
 private:
   Ui::RotarySpeakerFrame *ui;
-
   Stomp* mpStomp;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // ROTARYSPEAKERFRAME_H

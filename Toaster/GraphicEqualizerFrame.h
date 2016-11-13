@@ -80,6 +80,7 @@ private:
   Ui::GraphicEqualizerFrame *ui;
   Stomp* mpStomp;
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // GRAPHICEQUALIZERFRAME_H

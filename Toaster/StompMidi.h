@@ -452,6 +452,13 @@ protected:
       (*this)[FlangerOneway] =          0x5B;
       (*this)[Space] =                  0x40;
       (*this)[LegacyDelay] =            0x91;
+      (*this)[SingleDelay] =            0x92;
+      (*this)[DualDelay] =              0x93;
+      (*this)[TwoTapDelay] =            0x94;
+      (*this)[SerialTwoTapDelay] =      0x95;
+      (*this)[RhythmDelay] =            0xA1;
+      (*this)[QuadDelay] =              0xA4;
+      (*this)[DualCrystal] =            0x8B;
       (*this)[Transpose] =              0x81;
       (*this)[PedalPitch] =             0x0B;
       (*this)[PedalVinylStop] =         0x0D;
@@ -518,6 +525,13 @@ protected:
       (*this)[0x5B] = FlangerOneway;
       (*this)[0x40] = Space;
       (*this)[0x91] = LegacyDelay;
+      (*this)[0x92] = SingleDelay;
+      (*this)[0x93] = DualDelay;
+      (*this)[0x94] = TwoTapDelay;
+      (*this)[0x95] = SerialTwoTapDelay;
+      (*this)[0xA1] = RhythmDelay;
+      (*this)[0xA4] = QuadDelay;
+      (*this)[0x8B] = DualCrystal;
       (*this)[0x81] = Transpose;
       (*this)[0x0B] = PedalPitch;
       (*this)[0x0D] = PedalVinylStop;

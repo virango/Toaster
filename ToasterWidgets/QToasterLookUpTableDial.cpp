@@ -22,6 +22,11 @@
 
 #define DEFAULT_SKIN
 
+QList<QPixmap> QToasterLookUpTableDial::sSmallKnobSkinPixmaps;
+QList<QPixmap> QToasterLookUpTableDial::sBigKnobSkinPixmaps;
+QList<QPixmap> QToasterLookUpTableDial::sUniLEDRingSkinPixmaps;
+QList<QPixmap> QToasterLookUpTableDial::sBiLEDRingSkinPixmaps;
+
 QToasterLookUpTableDial::QToasterLookUpTableDial(QWidget *parent)
   : QWidget(parent)
   , mCurrKnobFrameNo(0)
@@ -39,12 +44,9 @@ QToasterLookUpTableDial::QToasterLookUpTableDial(QWidget *parent)
   , mIsActive(true)
   , mAcceleration(1)
   , mLookUpTable(nullptr)
+  , mKnobSkinPixmaps(&sBigKnobSkinPixmaps)
+  , mLEDRingSkinPixmaps(&sUniLEDRingSkinPixmaps)
 {
-  MAP_INSERT(mKnobSkins, Big,   ":/resources/BigDial.png");
-  MAP_INSERT(mKnobSkins, Small, ":/resources/SmallDial.png");
-
-  MAP_INSERT(mLEDRingSkins, Uni, ":/resources/LEDRingUni.png");
-  MAP_INSERT(mLEDRingSkins, Bi,  ":/resources/LEDRingBi.png");
   createKnobSkin();
   createLEDRingSkin();
 
@@ -54,54 +56,89 @@ QToasterLookUpTableDial::QToasterLookUpTableDial(QWidget *parent)
 
 void QToasterLookUpTableDial::createKnobSkin()
 {
-  if(!mKnobSkinPixmaps.isEmpty())
-    mKnobSkinPixmaps.clear();
-
-  QString skin = mKnobSkins[mKnobSize];
-
-  QPixmap masterPixmap(skin);
-
-  int width = masterPixmap.height();
-  int height = masterPixmap.height();
-
-  width = masterPixmap.width() / mKnobSkinNoOfFrames;
-
-  if(!masterPixmap.isNull())
+  if(sSmallKnobSkinPixmaps.isEmpty())
   {
-    int x = 0;
-    int y = 0;
-    for(int i = 0; i < mKnobSkinNoOfFrames; i++)
+    QPixmap masterPixmap(":/resources/SmallDial.png");
+
+    int width = masterPixmap.height();
+    int height = masterPixmap.height();
+
+    width = masterPixmap.width() / sKnobSkinNoOfFrames;
+
+    if(!masterPixmap.isNull())
     {
-      x = i * width;
-      mKnobSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      int x = 0;
+      int y = 0;
+      for(int i = 0; i < sKnobSkinNoOfFrames; i++)
+      {
+        x = i * width;
+        sSmallKnobSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      }
+    }
+  }
+
+  if(sBigKnobSkinPixmaps.isEmpty())
+  {
+    QPixmap masterPixmap(":/resources/BigDial.png");
+
+    int width = masterPixmap.height();
+    int height = masterPixmap.height();
+
+    width = masterPixmap.width() / sKnobSkinNoOfFrames;
+
+    if(!masterPixmap.isNull())
+    {
+      int x = 0;
+      int y = 0;
+      for(int i = 0; i < sKnobSkinNoOfFrames; i++)
+      {
+        x = i * width;
+        sBigKnobSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      }
     }
   }
 }
 
 void QToasterLookUpTableDial::createLEDRingSkin()
 {
-  if(!mLEDRingSkinPixmaps.isEmpty())
-    mLEDRingSkinPixmaps.clear();
-
-  if(mLEDRingType != None)
+  if(sUniLEDRingSkinPixmaps.isEmpty())
   {
-    QString skin = mLEDRingSkins[mLEDRingType];
-
-    QPixmap masterPixmap(skin);
+    QPixmap masterPixmap(":/resources/LEDRingUni.png");
 
     int width = masterPixmap.height();
     int height = masterPixmap.height();
 
-    width = masterPixmap.width() / mLEDRingSkinNoOfFrames;
+    width = masterPixmap.width() / sLEDRingSkinNoOfFrames;
 
     if(!masterPixmap.isNull())
     {
       int x = 0;
       int y = 0;
-      for(int i = 0; i < mLEDRingSkinNoOfFrames; i++)
+      for(int i = 0; i < sLEDRingSkinNoOfFrames; i++)
       {
         x = i * width;
-        mLEDRingSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+        sUniLEDRingSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
+      }
+    }
+  }
+
+  if(sBiLEDRingSkinPixmaps.isEmpty())
+  {
+    QPixmap masterPixmap(":/resources/LEDRingBi.png");
+
+    int width = masterPixmap.height();
+    int height = masterPixmap.height();
+
+    width = masterPixmap.width() / sLEDRingSkinNoOfFrames;
+
+    if(!masterPixmap.isNull())
+    {
+      int x = 0;
+      int y = 0;
+      for(int i = 0; i < sLEDRingSkinNoOfFrames; i++)
+      {
+        x = i * width;
+        sBiLEDRingSkinPixmaps.insert(i, masterPixmap.copy(x, y, width, height));
       }
     }
   }
@@ -138,13 +175,13 @@ void QToasterLookUpTableDial::update(int deltaSteps)
     // update knob
     int newKnobFrameNo = mCurrKnobFrameNo + deltaSteps;
     if(newKnobFrameNo < 0)
-      mCurrKnobFrameNo = mKnobSkinNoOfFrames + (newKnobFrameNo % mKnobSkinNoOfFrames);
-    else if(newKnobFrameNo >= mKnobSkinNoOfFrames)
-      mCurrKnobFrameNo = newKnobFrameNo % mKnobSkinNoOfFrames;
+      mCurrKnobFrameNo = sKnobSkinNoOfFrames + (newKnobFrameNo % sKnobSkinNoOfFrames);
+    else if(newKnobFrameNo >= sKnobSkinNoOfFrames)
+      mCurrKnobFrameNo = newKnobFrameNo % sKnobSkinNoOfFrames;
     else
       mCurrKnobFrameNo = newKnobFrameNo;
 
-    mCurrKnobFrameNo %= mKnobSkinNoOfFrames;
+    mCurrKnobFrameNo %= sKnobSkinNoOfFrames;
 
     // update led ring
     updateLEDRing();
@@ -184,13 +221,19 @@ void QToasterLookUpTableDial::updateValueText()
 void QToasterLookUpTableDial::setKnobSize(KnobSize knobSize)
 {
   mKnobSize = knobSize;
-  createKnobSkin();
+  if(mKnobSize == Small)
+    mKnobSkinPixmaps = &sSmallKnobSkinPixmaps;
+  else
+    mKnobSkinPixmaps = &sBigKnobSkinPixmaps;
 }
 
 void QToasterLookUpTableDial::setLEDRingType(LEDRingType ledRingType)
 {
   mLEDRingType = ledRingType;
-  createLEDRingSkin();
+  if(mLEDRingType == None || mLEDRingType == Uni)
+    mLEDRingSkinPixmaps = &sUniLEDRingSkinPixmaps;
+  else
+    mLEDRingSkinPixmaps = &sBiLEDRingSkinPixmaps;
 }
 
 void QToasterLookUpTableDial::setValue(int value)
@@ -218,12 +261,15 @@ void QToasterLookUpTableDial::setUnit(QString unit)
 
 void QToasterLookUpTableDial::paintEvent(QPaintEvent* /* pe */)
 {
-  QPainter painter(this);
-  QPixmap& pmKnob = mKnobSkinPixmaps[mCurrKnobFrameNo];
-  painter.setWindow(0, 0, pmKnob.width(), pmKnob.height());
-  if(!mLEDRingSkinPixmaps.isEmpty())
-    painter.drawPixmap(0,0, mLEDRingSkinPixmaps[mCurrLEDRingFrameNo]);
-  painter.drawPixmap(0, 0, pmKnob);
+  if(mKnobSkinPixmaps != nullptr)
+  {
+    QPainter painter(this);
+    const QPixmap& pmKnob = mKnobSkinPixmaps->at(mCurrKnobFrameNo);
+    painter.setWindow(0, 0, pmKnob.width(), pmKnob.height());
+    if(mLEDRingType != None && mLEDRingSkinPixmaps != nullptr)
+      painter.drawPixmap(0,0, mLEDRingSkinPixmaps->at(mCurrLEDRingFrameNo));
+    painter.drawPixmap(0, 0, pmKnob);
+  }
 }
 
 void QToasterLookUpTableDial::wheelEvent(QWheelEvent* we)
@@ -285,11 +331,11 @@ void QToasterLookUpTableDial::updateLEDRing()
 {
   if(mLEDRingType != None && mIsActive)
   {
-    double step = (mMaxValue - mMinValue) / (mLEDRingSkinNoOfFrames - 1);
+    double step = (mMaxValue - mMinValue) / (sLEDRingSkinNoOfFrames - 1);
     double offset = mMinValue * (-1);
     double value =  (mLookUpTable->at(mCurrValue).first + offset) / step;
     mCurrLEDRingFrameNo = (int) floor(value + 0.5);
-    if(mCurrLEDRingFrameNo >= mLEDRingSkinNoOfFrames)
-      mCurrLEDRingFrameNo = mLEDRingSkinNoOfFrames - 1;
+    if(mCurrLEDRingFrameNo >= sLEDRingSkinNoOfFrames)
+      mCurrLEDRingFrameNo = sLEDRingSkinNoOfFrames - 1;
   }
 }

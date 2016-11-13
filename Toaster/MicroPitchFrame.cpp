@@ -20,30 +20,33 @@
 
 MicroPitchFrame::MicroPitchFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::MicroPitchFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 MicroPitchFrame::~MicroPitchFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void MicroPitchFrame::activate(QObject& stomp)
 {
+  ui = new Ui::MicroPitchFrame();
+  ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDetune(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, &Stomp::modulationDepthReceived, this, &MicroPitchFrame::onDetune);
+    connect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &MicroPitchFrame::onCrossover);
+    connect(mpStomp, &Stomp::volumeReceived, this, &MicroPitchFrame::onVolume);
+    connect(mpStomp, &Stomp::mixReceived, this, &MicroPitchFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &MicroPitchFrame::onDucking);
 
     mpStomp->requestModulationDepth();
     mpStomp->requestModulationCrossover();
@@ -60,13 +63,20 @@ void MicroPitchFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDetune(double)));
-    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(double)), this, SLOT(onCrossover(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    disconnect(mpStomp, &Stomp::modulationDepthReceived, this, &MicroPitchFrame::onDetune);
+    disconnect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &MicroPitchFrame::onCrossover);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &MicroPitchFrame::onVolume);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &MicroPitchFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &MicroPitchFrame::onDucking);
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page MicroPitchFrame::getMaxDisplayPage()

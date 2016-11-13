@@ -70,6 +70,8 @@ private:
   Ui::DelayFrame *ui;
 
   Delay* mpDelay;
+
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // DELAYFRAME_H

@@ -20,21 +20,25 @@
 
 TremoloFrame::TremoloFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::TremoloFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
 {
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->rateDial->setLookUpTable(LookUpTables::getTremoloRateValues());
 }
 
 TremoloFrame::~TremoloFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void TremoloFrame::activate(QObject& stomp)
 {
+  ui = new Ui::TremoloFrame();
+  ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui->rateDial->setLookUpTable(LookUpTables::getTremoloRateValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -81,8 +85,15 @@ void TremoloFrame::deactivate()
     disconnect(mpStomp, &Stomp::volumeReceived, this, &TremoloFrame::onVolume);
     disconnect(mpStomp, &Stomp::duckingReceived, this, &TremoloFrame::onDucking);
     disconnect(mpStomp, &Stomp::stereoReceived, this, &TremoloFrame::onStereo);
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page TremoloFrame::getMaxDisplayPage()

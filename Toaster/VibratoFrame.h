@@ -60,10 +60,9 @@ private slots:
 
 private:
   Ui::VibratoFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // VIBRATOFRAME_H

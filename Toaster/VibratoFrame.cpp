@@ -21,21 +21,24 @@
 
 VibratoFrame::VibratoFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::VibratoFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 VibratoFrame::~VibratoFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void VibratoFrame::activate(QObject& stomp)
 {
+  ui = new Ui::VibratoFrame();
+  ui->setupUi(this);
+  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -47,8 +50,17 @@ void VibratoFrame::activate(QObject& stomp)
 
     if(Settings::get().getKPAOSVersion() >= 0x04000000)
     {
+      ui->duckingDial->setIsActive(true);
+      ui->lcdDisplay->setValue5Title("Ducking");
       connect(mpStomp, &Stomp::duckingReceived, this, &VibratoFrame::onDucking);
       mpStomp->requestDucking();
+    }
+    else
+    {
+      ui->lcdDisplay->setValue5Title("");
+      ui->lcdDisplay->setValue5("");
+      ui->duckingDial->setValue(0);;
+      ui->duckingDial->setIsActive(true);
     }
 
     mpStomp->requestModulationRate();
@@ -73,8 +85,15 @@ void VibratoFrame::deactivate()
     if(Settings::get().getKPAOSVersion() >= 0x04000000)
       disconnect(mpStomp, &Stomp::duckingReceived, this, &VibratoFrame::onDucking);
 
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page VibratoFrame::getMaxDisplayPage()

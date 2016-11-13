@@ -64,10 +64,9 @@ private slots:
 
 private:
   Ui::MetalDSFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // METALDSFRAME_H

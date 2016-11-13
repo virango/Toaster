@@ -70,7 +70,8 @@ QToasterBrowserLCD::QToasterBrowserLCD(QWidget *parent)
 
 QToasterBrowserLCD::~QToasterBrowserLCD()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void QToasterBrowserLCD::paintEvent(QPaintEvent* /*pe*/)

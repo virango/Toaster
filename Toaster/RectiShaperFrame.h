@@ -56,10 +56,9 @@ private slots:
 
 private:
   Ui::RectiShaperFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // RECTISHAPERFRAME_H

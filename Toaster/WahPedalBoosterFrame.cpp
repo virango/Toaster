@@ -20,20 +20,23 @@
 
 WahPedalBoosterFrame::WahPedalBoosterFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::WahPedalBoosterFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 WahPedalBoosterFrame::~WahPedalBoosterFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void WahPedalBoosterFrame::activate(QObject& stomp)
 {
+  ui = new Ui::WahPedalBoosterFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -55,8 +58,15 @@ void WahPedalBoosterFrame::deactivate()
   {
     disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
     disconnect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page WahPedalBoosterFrame::getMaxDisplayPage()

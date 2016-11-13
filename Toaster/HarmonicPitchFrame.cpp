@@ -20,28 +20,31 @@
 
 HarmonicPitchFrame::HarmonicPitchFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::HarmonicPitchFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
 {
-  ui->setupUi(this);
-  setCurrentDisplayPage(QToasterLCD::Page1);
-  ui->voice1IntervalDial->setLookUpTable(LookUpTables::getVoiceIntervalValues());
-  ui->voice2IntervalDial->setLookUpTable(LookUpTables::getVoiceIntervalValues());
-
-  if(Settings::get().getKPAOSVersion() >= 0x04000000)
-  {
-    ui->lcdDisplay->setValue9Title("Voice Balance");
-  }
 }
 
 HarmonicPitchFrame::~HarmonicPitchFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 
 void HarmonicPitchFrame::activate(QObject& stomp)
 {
+  ui = new Ui::HarmonicPitchFrame();
+  ui->setupUi(this);
+  ui->voice1IntervalDial->setLookUpTable(LookUpTables::getVoiceIntervalValues());
+  ui->voice2IntervalDial->setLookUpTable(LookUpTables::getVoiceIntervalValues());
+  setCurrentDisplayPage(mCurrentPage);
+
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    ui->lcdDisplay->setValue9Title("Voice Balance");
+  }
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -107,6 +110,13 @@ void HarmonicPitchFrame::deactivate()
   }
 
   mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page HarmonicPitchFrame::getMaxDisplayPage()

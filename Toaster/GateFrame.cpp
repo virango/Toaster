@@ -20,25 +20,28 @@
 
 GateFrame::GateFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(new Ui::GateFrame)
+  , ui(nullptr)
   , mpStomp(nullptr)
-  , mFXType(None)
 {
-  ui->setupUi(this);
 }
 
 GateFrame::~GateFrame()
 {
-  delete ui;
+  if(ui != nullptr)
+    delete ui;
 }
 
 void GateFrame::activate(QObject& stomp)
 {
+  ui = new Ui::GateFrame();
+  ui->setupUi(this);
+  setCurrentDisplayPage(mCurrentPage);
+
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(compressorGateIntensityReceived(double)), this, SLOT(onThreshold(double)));
+    connect(mpStomp, &Stomp::compressorGateIntensityReceived, this, &GateFrame::onThreshold);
 
     mpStomp->requestCompressorGateIntensity();
 
@@ -51,9 +54,16 @@ void GateFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(compressorGateIntensityReceived(double)), this, SLOT(onThreshold(double)));
+    disconnect(mpStomp, &Stomp::compressorGateIntensityReceived, this, &GateFrame::onThreshold);
+    mpStomp = nullptr;
   }
-  mpStomp = nullptr;
+
+  if(ui != nullptr)
+  {
+    mCurrentPage = ui->lcdDisplay->currentPage();
+    delete ui;
+    ui = nullptr;
+  }
 }
 
 QToasterLCD::Page GateFrame::getMaxDisplayPage()

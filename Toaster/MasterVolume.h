@@ -31,6 +31,7 @@ public:
   bool getSPDIFOutputLink() { return mSPDIFOutputLink; }
 
   void init();
+  void dispose();
   void requestValues();
 
 signals:

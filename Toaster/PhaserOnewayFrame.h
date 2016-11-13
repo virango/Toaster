@@ -70,10 +70,9 @@ private slots:
 
 private:
   Ui::PhaserOnewayFrame *ui;
-
   Stomp* mpStomp;
-
   FXType mFXType;
+  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
 };
 
 #endif // PhaserOnewayFrame_H
