@@ -16,14 +16,10 @@
 #ifndef TAPDELAYFRAME_H
 #define TAPDELAYFRAME_H
 #include <QWidget>
+#include "ui_TapDelayFrame.h"
 #include "StompEditorPage.h"
 #include "Delay.h"
 
-namespace Ui {
-class TapDelayFrame;
-}
-
-class Delay;
 class TapDelayFrame : public QWidget, public IStompEditorPage
 {
   Q_OBJECT
@@ -65,9 +61,8 @@ private slots:
   void onClockRight(::DelayClock clockRight);
   void onVolume(double value);
 private:
-  Ui::TapDelayFrame *ui;
-  Delay* mpDelay;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::TapDelayFrame ui;
+  Delay* mpDelay = nullptr;
 };
 
 #endif // TAPDELAYFRAME_H

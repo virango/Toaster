@@ -16,12 +16,9 @@
 #ifndef STEREOWIDENERFRAME_H
 #define STEREOWIDENERFRAME_H
 #include <QWidget>
+#include "ui_StereoWidenerFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class StereoWidenerFrame;
-}
 
 class StereoWidenerFrame : public QWidget, public IStompEditorPage
 {
@@ -56,10 +53,8 @@ private slots:
   void onDucking(double value);
 
 private:
-  Ui::StereoWidenerFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::StereoWidenerFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // STEREOWIDENERFRAME_H

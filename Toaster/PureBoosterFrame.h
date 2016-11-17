@@ -16,12 +16,9 @@
 #ifndef PUREBOOSTERFRAME_H
 #define PUREBOOSTERFRAME_H
 #include <QWidget>
+#include "ui_PureBoosterFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class PureBoosterFrame;
-}
 
 class PureBoosterFrame : public QWidget, public IStompEditorPage
 {
@@ -54,10 +51,8 @@ private slots:
   void onVolume(double value);
 
 private:
-  Ui::PureBoosterFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::PureBoosterFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // PUREBOOSTERFRAME_H

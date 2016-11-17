@@ -14,27 +14,21 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "AmpFrame.h"
-#include "ui_AmpFrame.h"
+
 
 AmpFrame::AmpFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpAmp(nullptr)
 {
+  ui.setupUi(this);
 }
 
 AmpFrame::~AmpFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void AmpFrame::activate(QObject& amp)
 {
-  ui = new Ui::AmpFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpAmp = qobject_cast<Amp*>(&amp);
 
   if(mpAmp != nullptr)
@@ -73,56 +67,49 @@ void AmpFrame::deactivate()
     disconnect(mpAmp, &Amp::directMixReceived, this, &AmpFrame::onDirectMix);
     mpAmp = nullptr;
   }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
-  }
 }
 
 QToasterLCD::Page AmpFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page AmpFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void AmpFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void AmpFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void AmpFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void AmpFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void AmpFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void AmpFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 
@@ -176,41 +163,41 @@ void AmpFrame::on_directMixDial_valueChanged(double value)
 
 void AmpFrame::onDefinition(double value)
 {
-  ui->definitionDial->setValue(value);
+  ui.definitionDial->setValue(value);
 }
 
 void AmpFrame::onPowerSagging(double value)
 {
-  ui->powerSaggingDial->setValue(value);
+  ui.powerSaggingDial->setValue(value);
 }
 
 void AmpFrame::onPick(double value)
 {
-  ui->pickDial->setValue(value);
+  ui.pickDial->setValue(value);
 }
 
 void AmpFrame::onCompressor(double value)
 {
-  ui->compressorDial->setValue(value);
+  ui.compressorDial->setValue(value);
 }
 
 void AmpFrame::onClarity(double value)
 {
-  ui->clarityDial->setValue(value);
+  ui.clarityDial->setValue(value);
 }
 
 void AmpFrame::onTubeShape(double value)
 {
-  ui->tubeShapeDial->setValue(value);
+  ui.tubeShapeDial->setValue(value);
 }
 
 void AmpFrame::onTubeBias(double value)
 {
-  ui->tubeBiasDial->setValue(value);
+  ui.tubeBiasDial->setValue(value);
 }
 
 void AmpFrame::onDirectMix(double value)
 {
-  ui->directMixDial->setValue(value);
+  ui.directMixDial->setValue(value);
 }
 

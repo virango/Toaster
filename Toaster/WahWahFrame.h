@@ -16,13 +16,9 @@
 #ifndef WahWahFrame_H
 #define WahWahFrame_H
 #include <QWidget>
+#include "ui_WahWahFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-  class WahWahFrame;
-}
-
 
 class WahWahFrame : public QWidget, public IStompEditorPage
 {
@@ -74,10 +70,8 @@ private slots:
   void onTouchBoost(double value);
 
 private:
-  Ui::WahWahFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::WahWahFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // WahWahFrame_H

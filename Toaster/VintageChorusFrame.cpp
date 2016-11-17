@@ -14,40 +14,33 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "VintageChorusFrame.h"
-#include "ui_VintageChorusFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 VintageChorusFrame::VintageChorusFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  ui.crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 VintageChorusFrame::~VintageChorusFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void VintageChorusFrame::activate(QObject& stomp)
 {
-  ui = new Ui::VintageChorusFrame();
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
-    connect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    connect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    connect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationRateReceived), this, &VintageChorusFrame::onRate);
+    connect(mpStomp, &Stomp::modulationDepthReceived, this, &VintageChorusFrame::onDepth);
+    connect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &VintageChorusFrame::onCrossover);
+    connect(mpStomp, &Stomp::mixReceived, this, &VintageChorusFrame::onMix);
+    connect(mpStomp, &Stomp::volumeReceived, this, &VintageChorusFrame::onVolume);
+    connect(mpStomp, &Stomp::duckingReceived, this, &VintageChorusFrame::onDucking);
 
     mpStomp->requestModulationRate();
     mpStomp->requestModulationDepth();
@@ -56,8 +49,8 @@ void VintageChorusFrame::activate(QObject& stomp)
     mpStomp->requestVolume();
     mpStomp->requestDucking();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -65,64 +58,57 @@ void VintageChorusFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(modulationRateReceived(double)), this, SLOT(onRate(double)));
-    disconnect(mpStomp, SIGNAL(modulationDepthReceived(double)), this, SLOT(onDepth(double)));
-    disconnect(mpStomp, SIGNAL(modulationCrossoverReceived(int)), this, SLOT(onCrossover(int)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    disconnect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationRateReceived), this, &VintageChorusFrame::onRate);
+    disconnect(mpStomp, &Stomp::modulationDepthReceived, this, &VintageChorusFrame::onDepth);
+    disconnect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &VintageChorusFrame::onCrossover);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &VintageChorusFrame::onMix);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &VintageChorusFrame::onVolume);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &VintageChorusFrame::onDucking);
     mpStomp = nullptr;
-  }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
   }
 }
 
 QToasterLCD::Page VintageChorusFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page VintageChorusFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void VintageChorusFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void VintageChorusFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void VintageChorusFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void VintageChorusFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void VintageChorusFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void VintageChorusFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void VintageChorusFrame::on_rateDial_valueChanged(double value)
@@ -163,36 +149,36 @@ void VintageChorusFrame::on_duckingDial_valueChanged(double value)
 
 void VintageChorusFrame::onRate(double value)
 {
-  ui->rateDial->setValue(value);
+  ui.rateDial->setValue(value);
   update();
 }
 
 void VintageChorusFrame::onDepth(double value)
 {
-  ui->depthDial->setValue(value);
+  ui.depthDial->setValue(value);
   update();
 }
 
 void VintageChorusFrame::onCrossover(int value)
 {
-  ui->crossoverDial->setValue(value);
+  ui.crossoverDial->setValue(value);
   update();
 }
 
 void VintageChorusFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void VintageChorusFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void VintageChorusFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }

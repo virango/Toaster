@@ -16,12 +16,9 @@
 #ifndef ROTARYSPEAKERFRAME_H
 #define ROTARYSPEAKERFRAME_H
 #include <QWidget>
+#include "ui_RotarySpeakerFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class RotarySpeakerFrame;
-}
 
 class RotarySpeakerFrame : public QWidget, public IStompEditorPage
 {
@@ -63,9 +60,8 @@ private slots:
   void onStereo(double value);
 
 private:
-  Ui::RotarySpeakerFrame *ui;
-  Stomp* mpStomp;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::RotarySpeakerFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // ROTARYSPEAKERFRAME_H

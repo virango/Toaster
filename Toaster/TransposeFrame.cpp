@@ -14,40 +14,34 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TransposeFrame.h"
-#include "ui_TransposeFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 TransposeFrame::TransposeFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
 }
 
 TransposeFrame::~TransposeFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void TransposeFrame::activate(QObject& stomp)
 {
-  ui = new Ui::TransposeFrame();
-  ui->setupUi(this);
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
-  setCurrentDisplayPage(mCurrentPage);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(voice1PitchReceived(double)), this, SLOT(onPitch(double)));
-    connect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
+    connect(mpStomp, &Stomp::voice1PitchReceived, this, &TransposeFrame::onPitch);
+    connect(mpStomp, &Stomp::smoothChordsReceived, this, &TransposeFrame::onSmoothChords);
 
     mpStomp->requestVoice1Pitch();
     mpStomp->requestSmoothChords();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -55,60 +49,53 @@ void TransposeFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onPitch(double)));
-    disconnect(mpStomp, SIGNAL(smoothChordsReceived(bool)), this, SLOT(onSmoothChords(bool)));
+    disconnect(mpStomp, &Stomp::voice1PitchReceived, this, &TransposeFrame::onPitch);
+    disconnect(mpStomp, &Stomp::smoothChordsReceived, this, &TransposeFrame::onSmoothChords);
     mpStomp = nullptr;
-  }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
   }
 }
 
 QToasterLCD::Page TransposeFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page TransposeFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void TransposeFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void TransposeFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void TransposeFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void TransposeFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void TransposeFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void TransposeFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void TransposeFrame::on_pitchDial_valueChanged(double value)
@@ -125,12 +112,12 @@ void TransposeFrame::on_smoothChordsDial_valueChanged(int valueIndex)
 
 void TransposeFrame::onPitch(double value)
 {
-  ui->pitchDial->setValue(value);
+  ui.pitchDial->setValue(value);
   update();
 }
 
 void TransposeFrame::onSmoothChords(bool onOff)
 {
-  ui->smoothChordsDial->setValue(onOff ? 1 : 0);
+  ui.smoothChordsDial->setValue(onOff ? 1 : 0);
   update();
 }

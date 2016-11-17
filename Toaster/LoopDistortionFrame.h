@@ -16,12 +16,9 @@
 #ifndef LOOPDISTORTIONFRAME_H
 #define LOOPDISTORTIONFRAME_H
 #include <QWidget>
+#include "ui_LoopDistortionFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class LoopDistortionFrame;
-}
 
 class LoopDistortionFrame : public QWidget, public IStompEditorPage
 {
@@ -45,8 +42,6 @@ public:
   virtual void displayDelayEnabled(bool enabled);
   virtual void displayReverbEnabled(bool enabled);
   virtual void displayAmpName(const QString&  ampName);
-
-
 private slots:
   // ui => kpa
   void on_volumeDial_valueChanged(double value);
@@ -54,10 +49,8 @@ private slots:
   void onVolume(double value);
 
 private:
-  Ui::LoopDistortionFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::LoopDistortionFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // LOOPDISTORTIONFRAME_H

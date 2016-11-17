@@ -16,12 +16,9 @@
 #ifndef VIBRATOFRAME_H
 #define VIBRATOFRAME_H
 #include <QWidget>
+#include "ui_VibratoFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class VibratoFrame;
-}
 
 class VibratoFrame : public QWidget, public IStompEditorPage
 {
@@ -59,10 +56,8 @@ private slots:
   void onDucking(double value);
 
 private:
-  Ui::VibratoFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::VibratoFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // VIBRATOFRAME_H

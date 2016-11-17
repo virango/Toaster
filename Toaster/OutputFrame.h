@@ -17,12 +17,9 @@
 #define OUTPUTFRAME_H
 #include <QWidget>
 #include <QVector>
+#include "ui_OutputFrame.h"
 #include "StompEditorPage.h"
 #include "Global.h"
-
-namespace Ui {
-class OutputFrame;
-}
 
 class OutputFrame : public QWidget, public IStompEditorPage
 {
@@ -109,15 +106,15 @@ private slots:
 
 
 private:
-  Ui::OutputFrame *ui;
-  Global* mpGlobal;
+  Ui::OutputFrame ui;
+  Global* mpGlobal = nullptr;
   const QVector<QString> mPageTitles = { "Output Source",
                                          "Output Volumes",
                                          "Monitor Output EQ",
                                          "Main Output EQ",
                                          "Output AddOns",
                                          "Aux In" };
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  
 };
 
 #endif // OUTPUTFRAME_H

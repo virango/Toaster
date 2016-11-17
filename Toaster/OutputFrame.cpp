@@ -14,34 +14,27 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "OutputFrame.h"
-#include "ui_OutputFrame.h"
 #include "LookUpTables.h"
 #include "MasterVolume.h"
 
 OutputFrame::OutputFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpGlobal(nullptr)
 {
+  ui.setupUi(this);
+  ui.mainVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  ui.monitorVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  ui.directVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  ui.headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
+  ui.spdifVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
 }
 
 OutputFrame::~OutputFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void OutputFrame::activate(QObject& module)
 {
-  ui = new Ui::OutputFrame();
-  ui->setupUi(this);
-  ui->mainVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
-  ui->monitorVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
-  ui->directVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
-  ui->headphoneVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
-  ui->spdifVolumeDial->setLookUpTable(LookUpTables::getMainVolumeValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   MasterVolume& mv = MasterVolume::get();
   connect(&mv, &MasterVolume::mainOutputVolumeChanged, this, &OutputFrame::OnMainVolume);
   connect(&mv, &MasterVolume::monitorOutputVolumeChanged, this, &OutputFrame::OnMonitorVolume);
@@ -105,11 +98,11 @@ void OutputFrame::activate(QObject& module)
     mpGlobal->requestAuxInToHeadphone();
     mpGlobal->requestConstantLatencyOnOff();
 
-    ui->monitorOutLinkDial->setValue(MasterVolume::get().getMonitoprOutputLink() ? 1 : 0);
-    ui->mainOutLinkDial->setValue(MasterVolume::get().getMainOutputLink() ? 1 : 0);
-    ui->directOutLinkDial->setValue(MasterVolume::get().getDirectOutputLink() ? 1 : 0);
-    ui->headphoneLinkDial->setValue(MasterVolume::get().getHeadphoneOutputLink() ? 1 : 0);
-    ui->spdifOutLinkDial->setValue(MasterVolume::get().getSPDIFOutputLink() ? 1 : 0);
+    ui.monitorOutLinkDial->setValue(MasterVolume::get().getMonitoprOutputLink() ? 1 : 0);
+    ui.mainOutLinkDial->setValue(MasterVolume::get().getMainOutputLink() ? 1 : 0);
+    ui.directOutLinkDial->setValue(MasterVolume::get().getDirectOutputLink() ? 1 : 0);
+    ui.headphoneLinkDial->setValue(MasterVolume::get().getHeadphoneOutputLink() ? 1 : 0);
+    ui.spdifOutLinkDial->setValue(MasterVolume::get().getSPDIFOutputLink() ? 1 : 0);
   }
 }
 
@@ -151,59 +144,52 @@ void OutputFrame::deactivate()
     disconnect(mpGlobal, &Global::constantLatencyOnOffReceived, this, &OutputFrame::OnConstantLatency);
     mpGlobal = nullptr;
   }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
-  }
 }
 
 QToasterLCD::Page OutputFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page OutputFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void OutputFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage() && page >= QToasterLCD::Page1)
+  if(page <= ui.lcdDisplay->maxPage() && page >= QToasterLCD::Page1)
   {
-    ui->lcdDisplay->setCurrentPage(page);
-    ui->bigDials->setCurrentIndex((int) page);
-    ui->smallDials->setCurrentIndex((int) page);
-    ui->lcdDisplay->setStompName(mPageTitles[page]);
+    ui.lcdDisplay->setCurrentPage(page);
+    ui.bigDials->setCurrentIndex((int) page);
+    ui.smallDials->setCurrentIndex((int) page);
+    ui.lcdDisplay->setStompName(mPageTitles[page]);
   }
 }
 
 void OutputFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void OutputFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void OutputFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void OutputFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void OutputFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void OutputFrame::on_mainOutputSourceDial_valueChanged(int valueIndex)
@@ -383,157 +369,157 @@ void OutputFrame::on_constantLatencyDial_valueChanged(int valueIndex)
 
 void OutputFrame::OnMainOutputSource(int valueIndex)
 {
-  ui->mainOutputSourceDial->setValue(valueIndex);
+  ui.mainOutputSourceDial->setValue(valueIndex);
   update();
 }
 
 void OutputFrame::OnMonitorOutputSource(int valueIndex)
 {
-  ui->monitorOutputSourceDial->setValue(valueIndex);
+  ui.monitorOutputSourceDial->setValue(valueIndex);
   update();
 }
 
 void OutputFrame::OnDirectOutputSource(int valueIndex)
 {
-  ui->directOutputSourceDial->setValue(valueIndex);
+  ui.directOutputSourceDial->setValue(valueIndex);
   update();
 }
 
 void OutputFrame::OnSPDIFOutputSource(int valueIndex)
 {
-  ui->spdifOutputSourceDial->setValue(valueIndex);
+  ui.spdifOutputSourceDial->setValue(valueIndex);
   update();
 }
 
 void OutputFrame::OnMainVolume(int value)
 {
-  ui->mainVolumeDial->setValue(value);
+  ui.mainVolumeDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnMonitorVolume(int value)
 {
-  ui->monitorVolumeDial->setValue(value);
+  ui.monitorVolumeDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnDirectVolume(int value)
 {
-  ui->directVolumeDial->setValue(value);
+  ui.directVolumeDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnHeadphoneVolume(int value)
 {
-  ui->headphoneVolumeDial->setValue(value);
+  ui.headphoneVolumeDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnMonitorOutputEQBass(double value)
 {
-  ui->monitorOutputEQBassDial->setValue(value);
+  ui.monitorOutputEQBassDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnMonitorOutputEQMiddle(double value)
 {
-  ui->monitorOutputEQMiddleDial->setValue(value);
+  ui.monitorOutputEQMiddleDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnMonitorOutputEQTreble(double value)
 {
-  ui->monitorOutputEQTrebleDial->setValue(value);
+  ui.monitorOutputEQTrebleDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnMonitorOutputEQPresence(double value)
 {
-  ui->monitorOutputEQPresenceDial->setValue(value);
+  ui.monitorOutputEQPresenceDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnMonitorCabOff(int valueIndex)
 {
-  ui->monitorCabOffDial->setValue(valueIndex);
+  ui.monitorCabOffDial->setValue(valueIndex);
   update();
 }
 
 void OutputFrame::OnMainOutputEQBass(double value)
 {
-  ui->mainOutputEQBassDial->setValue(value);
+  ui.mainOutputEQBassDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnMainOutputEQMiddle(double value)
 {
-  ui->mainOutputEQMiddleDial->setValue(value);
+  ui.mainOutputEQMiddleDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnMainOutputEQTreble(double value)
 {
-  ui->mainOutputEQTrebleDial->setValue(value);
+  ui.mainOutputEQTrebleDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnMainOutputEQPresence(double value)
 {
-  ui->mainOutputEQPresenceDial->setValue(value);
+  ui.mainOutputEQPresenceDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnSPDIFVolume(int value)
 {
-  ui->spdifVolumeDial->setValue(value);
+  ui.spdifVolumeDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnPureCabinet(double value)
 {
-  ui->pureCabinetDial->setValue(value);
+  ui.pureCabinetDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnSpace(double value)
 {
-  ui->spaceDial->setValue(value);
+  ui.spaceDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnSPDIFOutLink(int valueIndex)
 {
-  ui->spdifOutLinkDial->setValue(valueIndex);
+  ui.spdifOutLinkDial->setValue(valueIndex);
   update();
 }
 
 void OutputFrame::OnPureCabinetOnOff(int valueIndex)
 {
-  ui->pureCabinetOnOffDial->setValue(valueIndex);
+  ui.pureCabinetOnOffDial->setValue(valueIndex);
   update();
 }
 
 void OutputFrame::OnHeadphoneSpace(int valueIndex)
 {
-  ui->headphoneSpaceDial->setValue(valueIndex);
+  ui.headphoneSpaceDial->setValue(valueIndex);
   update();
 }
 
 void OutputFrame::OnAuxInMain(double value)
 {
-  ui->auxInMainDial->setValue(value);
+  ui.auxInMainDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnAuxInHeadphone(double value)
 {
-  ui->auxInHeadphoneDial->setValue(value);
+  ui.auxInHeadphoneDial->setValue(value);
   update();
 }
 
 void OutputFrame::OnConstantLatency(int valueIndex)
 {
-  ui->constantLatencyDial->setValue(valueIndex);
+  ui.constantLatencyDial->setValue(valueIndex);
   update();
 }
 

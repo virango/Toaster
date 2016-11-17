@@ -14,38 +14,31 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TapDelayFrame.h"
-#include "ui_TapDelayFrame.h"
 #include "LookUpTables.h"
 
 TapDelayFrame::TapDelayFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpDelay(nullptr)
 {
+  ui.setupUi(this);
 }
 
 TapDelayFrame::~TapDelayFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
+
 void TapDelayFrame::activate(QObject& stomp)
 {
-  ui = new Ui::TapDelayFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
   mpDelay = qobject_cast<Delay*>(&stomp);
 
   if(mpDelay != nullptr)
   {
-    connect(mpDelay, SIGNAL(bandwidthReceived(double)), this, SLOT(onBandwidth(double)));
-    connect(mpDelay, SIGNAL(centerFrequencyReceived(double)), this, SLOT(onCenterFrequency(double)));
-    connect(mpDelay, SIGNAL(modulationReceived(double)), this, SLOT(onModulation(double)));
-    connect(mpDelay, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpDelay, SIGNAL(clockLeftReceived(::DelayClock)), this, SLOT(onClockLeft(::DelayClock)));
-    connect(mpDelay, SIGNAL(clockRightReceived(::DelayClock)), this, SLOT(onClockRight(::DelayClock)));
-    connect(mpDelay, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpDelay, &Delay::bandwidthReceived, this, &TapDelayFrame::onBandwidth);
+    connect(mpDelay, &Delay::centerFrequencyReceived, this, &TapDelayFrame::onCenterFrequency);
+    connect(mpDelay, &Delay::modulationReceived, this, &TapDelayFrame::onModulation);
+    connect(mpDelay, &Delay::duckingReceived, this, &TapDelayFrame::onDucking);
+    connect(mpDelay, &Delay::clockLeftReceived, this, &TapDelayFrame::onClockLeft);
+    connect(mpDelay, &Delay::clockRightReceived, this, &TapDelayFrame::onClockRight);
+    connect(mpDelay, &Delay::volumeReceived, this, &TapDelayFrame::onVolume);
 
     mpDelay->requestBandwidth();
     mpDelay->requestCenterFrequency();
@@ -55,8 +48,8 @@ void TapDelayFrame::activate(QObject& stomp)
     mpDelay->requestClockRight();
     mpDelay->requestVolume();
 
-    ui->lcdDisplay->setStompInstance("Delay Effect");
-    ui->lcdDisplay->setStompName(LookUpTables::delayTypeName(mpDelay->getDelayType()));
+    ui.lcdDisplay->setStompInstance("Delay Effect");
+    ui.lcdDisplay->setStompName(LookUpTables::delayTypeName(mpDelay->getDelayType()));
   }
 }
 
@@ -64,65 +57,58 @@ void TapDelayFrame::deactivate()
 {
   if(mpDelay != nullptr)
   {
-    disconnect(mpDelay, SIGNAL(bandwidthReceived(double)), this, SLOT(onBandwidth(double)));
-    disconnect(mpDelay, SIGNAL(centerFrequencyReceived(double)), this, SLOT(onCenterFrequency(double)));
-    disconnect(mpDelay, SIGNAL(modulationReceived(double)), this, SLOT(onModulation(double)));
-    disconnect(mpDelay, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpDelay, SIGNAL(timeReceived(double)), this, SLOT(onTime(double)));
-    disconnect(mpDelay, SIGNAL(ratioReceived(::DelayRatio)), this, SLOT(onRatio(::DelayRatio)));
-    disconnect(mpDelay, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    disconnect(mpDelay, &Delay::bandwidthReceived, this, &TapDelayFrame::onBandwidth);
+    disconnect(mpDelay, &Delay::centerFrequencyReceived, this, &TapDelayFrame::onCenterFrequency);
+    disconnect(mpDelay, &Delay::modulationReceived, this, &TapDelayFrame::onModulation);
+    disconnect(mpDelay, &Delay::duckingReceived, this, &TapDelayFrame::onDucking);
+    disconnect(mpDelay, &Delay::clockLeftReceived, this, &TapDelayFrame::onClockLeft);
+    disconnect(mpDelay, &Delay::clockRightReceived, this, &TapDelayFrame::onClockRight);
+    disconnect(mpDelay, &Delay::volumeReceived, this, &TapDelayFrame::onVolume);
     mpDelay = nullptr;
-  }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
   }
 }
 
 QToasterLCD::Page TapDelayFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page TapDelayFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void TapDelayFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void TapDelayFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void TapDelayFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void TapDelayFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void TapDelayFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void TapDelayFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void TapDelayFrame::on_bandwidthDial_valueChanged(double value)
@@ -169,35 +155,35 @@ void TapDelayFrame::on_volumeDial_valueChanged(double value)
 
 void TapDelayFrame::onBandwidth(double value)
 {
-  ui->bandwidthDial->setValue(value);
+  ui.bandwidthDial->setValue(value);
 }
 
 void TapDelayFrame::onCenterFrequency(double value)
 {
-  ui->centerFrequencyDial->setValue(value);
+  ui.centerFrequencyDial->setValue(value);
 }
 
 void TapDelayFrame::onModulation(double value)
 {
-  ui->modulationDial->setValue(value);
+  ui.modulationDial->setValue(value);
 }
 
 void TapDelayFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
 }
 
 void TapDelayFrame::onClockLeft(::DelayClock clockLeft)
 {
-  ui->clockLeftDial->setValue((int)clockLeft);
+  ui.clockLeftDial->setValue((int)clockLeft);
 }
 
 void TapDelayFrame::onClockRight(::DelayClock clockRight)
 {
-  ui->clockRightDial->setValue((int)clockRight);
+  ui.clockRightDial->setValue((int)clockRight);
 }
 
 void TapDelayFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
 }

@@ -14,31 +14,24 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "TremoloFrame.h"
-#include "ui_TremoloFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 TremoloFrame::TremoloFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  ui.crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui.rateDial->setLookUpTable(LookUpTables::getTremoloRateValues());
 }
 
 TremoloFrame::~TremoloFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void TremoloFrame::activate(QObject& stomp)
 {
-  ui = new Ui::TremoloFrame();
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->rateDial->setLookUpTable(LookUpTables::getTremoloRateValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -50,8 +43,8 @@ void TremoloFrame::activate(QObject& stomp)
     connect(mpStomp, &Stomp::duckingReceived, this, &TremoloFrame::onDucking);
     connect(mpStomp, &Stomp::stereoReceived, this, &TremoloFrame::onStereo);
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestModulationRate();
     mpStomp->requestModulationDepth();
@@ -62,14 +55,14 @@ void TremoloFrame::activate(QObject& stomp)
     StompInstance si = mpStomp->getInstance();
     if(si != StompX && si != StompMod && si != StompDelay)
     {
-      ui->lcdDisplay->setValue4("");
-      ui->lcdDisplay->setValue4Title("");
-      ui->stereoDial->setIsActive(false);
+      ui.lcdDisplay->setValue4("");
+      ui.lcdDisplay->setValue4Title("");
+      ui.stereoDial->setIsActive(false);
     }
     else
     {
-      ui->lcdDisplay->setValue4Title("Stereo");
-      ui->stereoDial->setIsActive(true);
+      ui.lcdDisplay->setValue4Title("Stereo");
+      ui.stereoDial->setIsActive(true);
       mpStomp->requestStereo();
     }
   }
@@ -87,56 +80,49 @@ void TremoloFrame::deactivate()
     disconnect(mpStomp, &Stomp::stereoReceived, this, &TremoloFrame::onStereo);
     mpStomp = nullptr;
   }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
-  }
 }
 
 QToasterLCD::Page TremoloFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page TremoloFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void TremoloFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void TremoloFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void TremoloFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void TremoloFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void TremoloFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void TremoloFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void TremoloFrame::on_rateDial_valueChanged(int value)
@@ -177,36 +163,36 @@ void TremoloFrame::on_stereoDial_valueChanged(double value)
 
 void TremoloFrame::onRate(int value)
 {
-  ui->rateDial->setValue(value*128);
+  ui.rateDial->setValue(value*128);
   update();
 }
 
 void TremoloFrame::onDepth(double value)
 {
-  ui->depthDial->setValue(value);
+  ui.depthDial->setValue(value);
   update();
 }
 
 void TremoloFrame::onCrossover(int value)
 {
-  ui->crossoverDial->setValue(value);
+  ui.crossoverDial->setValue(value);
   update();
 }
 
 void TremoloFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void TremoloFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void TremoloFrame::onStereo(double value)
 {
-  ui->stereoDial->setValue(value);
+  ui.stereoDial->setValue(value);
   update();
 }

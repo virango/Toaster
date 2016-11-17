@@ -14,41 +14,33 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "DriveAndToneDSFrame.h"
-#include "ui_DriveAndToneDSFrame.h"
 #include "Stomp.h"
 #include "Settings.h"
 #include "LookUpTables.h"
 
 DriveAndToneDSFrame::DriveAndToneDSFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  if(Settings::get().getKPAOSVersion() < 0x04000000)
+  {
+    ui.mixDial->setValue(0);
+    ui.toneDial->setMinValue(-5);
+    ui.toneDial->setMaxValue(5);
+    ui.toneDial->setLEDRingType(QToasterDial::Bi);
+    ui.lcdDisplay->setValue3Title("");
+    ui.lcdDisplay->setValue3("");
+    ui.mixDial->setIsActive(false);
+  }
 }
 
 DriveAndToneDSFrame::~DriveAndToneDSFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void DriveAndToneDSFrame::activate(QObject& stomp)
 {
-  ui = new Ui::DriveAndToneDSFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
-  if(Settings::get().getKPAOSVersion() < 0x04000000)
-  {
-    ui->mixDial->setValue(0);
-    ui->toneDial->setMinValue(-5);
-    ui->toneDial->setMaxValue(5);
-    ui->toneDial->setLEDRingType(QToasterDial::Bi);
-    ui->lcdDisplay->setValue3Title("");
-    ui->lcdDisplay->setValue3("");
-    ui->mixDial->setIsActive(false);
-  }
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -61,15 +53,15 @@ void DriveAndToneDSFrame::activate(QObject& stomp)
     {
       if(mpStomp->getFXType() == BitShaper)
       {
-        ui->lcdDisplay->setValue3Title("");
-        ui->mixDial->setValue(0);
-        ui->lcdDisplay->setValue3("");
-        ui->mixDial->setIsActive(false);
+        ui.lcdDisplay->setValue3Title("");
+        ui.mixDial->setValue(0);
+        ui.lcdDisplay->setValue3("");
+        ui.mixDial->setIsActive(false);
       }
       else
       {
-        ui->lcdDisplay->setValue3Title("Mix");
-        ui->mixDial->setIsActive(true);
+        ui.lcdDisplay->setValue3Title("Mix");
+        ui.mixDial->setIsActive(true);
         connect(mpStomp, &Stomp::mixReceived, this, &DriveAndToneDSFrame::onMix);
         mpStomp->requestMix();
       }
@@ -79,8 +71,8 @@ void DriveAndToneDSFrame::activate(QObject& stomp)
     mpStomp->requestDistortionShaperDrive();
     mpStomp->requestDistortionBoosterTone();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -96,58 +88,51 @@ void DriveAndToneDSFrame::deactivate()
     {
       disconnect(mpStomp, &Stomp::mixReceived, this, &DriveAndToneDSFrame::onMix);
     }
-  }
-  mpStomp = nullptr;
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
+    mpStomp = nullptr;
   }
 }
 
 QToasterLCD::Page DriveAndToneDSFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page DriveAndToneDSFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void DriveAndToneDSFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void DriveAndToneDSFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void DriveAndToneDSFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void DriveAndToneDSFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void DriveAndToneDSFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void DriveAndToneDSFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void DriveAndToneDSFrame::on_volumeDial_valueChanged(double value)
@@ -176,24 +161,24 @@ void DriveAndToneDSFrame::on_mixDial_valueChanged(double value)
 
 void DriveAndToneDSFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void DriveAndToneDSFrame::onDrive(double value)
 {
-  ui->driveDial->setValue(value);
+  ui.driveDial->setValue(value);
   update();
 }
 
 void DriveAndToneDSFrame::onTone(double value)
 {
-  ui->toneDial->setValue(value);
+  ui.toneDial->setValue(value);
   update();
 }
 
 void DriveAndToneDSFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }

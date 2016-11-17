@@ -14,102 +14,88 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "RectiShaperFrame.h"
-#include "ui_RectiShaperFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 RectiShaperFrame::RectiShaperFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
 }
 
 RectiShaperFrame::~RectiShaperFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void RectiShaperFrame::activate(QObject& stomp)
 {
-  ui = new Ui::RectiShaperFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
-  connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-  connect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
-  connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+  connect(mpStomp, &Stomp::volumeReceived, this, &RectiShaperFrame::onVolume);
+  connect(mpStomp, &Stomp::distortionShaperDriveReceived, this, &RectiShaperFrame::onDrive);
+  connect(mpStomp, &Stomp::duckingReceived, this, &RectiShaperFrame::onDucking);
 
   mpStomp->requestVolume();
   mpStomp->requestDistortionShaperDrive();
   mpStomp->requestDucking();
 
-  ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-  ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+  ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+  ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 }
 
 void RectiShaperFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(distortionShaperDriveReceived(double)), this, SLOT(onDrive(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &RectiShaperFrame::onVolume);
+    disconnect(mpStomp, &Stomp::distortionShaperDriveReceived, this, &RectiShaperFrame::onDrive);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &RectiShaperFrame::onDucking);
     mpStomp = nullptr;
-  }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
   }
 }
 
 QToasterLCD::Page RectiShaperFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page RectiShaperFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void RectiShaperFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void RectiShaperFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void RectiShaperFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void RectiShaperFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void RectiShaperFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void RectiShaperFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void RectiShaperFrame::on_volumeDial_valueChanged(double value)
@@ -132,18 +118,18 @@ void RectiShaperFrame::on_duckingDial_valueChanged(double value)
 
 void RectiShaperFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void RectiShaperFrame::onDrive(double value)
 {
-  ui->driveDial->setValue(value);
+  ui.driveDial->setValue(value);
   update();
 }
 
 void RectiShaperFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }

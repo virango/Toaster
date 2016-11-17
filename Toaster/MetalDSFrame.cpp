@@ -14,29 +14,23 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "MetalDSFrame.h"
-#include "ui_MetalDSFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 MetalDSFrame::MetalDSFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  ui.midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 MetalDSFrame::~MetalDSFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void MetalDSFrame::activate(QObject& stomp)
 {
-  ui->setupUi(this);
-  ui->midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -57,8 +51,8 @@ void MetalDSFrame::activate(QObject& stomp)
     mpStomp->requestParametricEQHighGain();
     mpStomp->requestMix();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -75,57 +69,49 @@ void MetalDSFrame::deactivate()
     disconnect(mpStomp, &Stomp::mixReceived, this, &MetalDSFrame::onMix);
     mpStomp = nullptr;
   }
-
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
-  }
 }
 
 QToasterLCD::Page MetalDSFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page MetalDSFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void MetalDSFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void MetalDSFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void MetalDSFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void MetalDSFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void MetalDSFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void MetalDSFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void MetalDSFrame::on_volumeDial_valueChanged(double value)
@@ -166,7 +152,7 @@ void MetalDSFrame::on_highDial_valueChanged(double value)
 
 void MetalDSFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
@@ -178,36 +164,36 @@ void MetalDSFrame::on_mixDial_valueChanged(double value)
 
 void MetalDSFrame::onDrive(double value)
 {
-  ui->driveDial->setValue(value);
+  ui.driveDial->setValue(value);
   update();
 }
 
 void MetalDSFrame::onLow(double value)
 {
-  ui->lowDial->setValue(value);
+  ui.lowDial->setValue(value);
   update();
 }
 
 void MetalDSFrame::onMiddle(double value)
 {
-  ui->middleDial->setValue(value);
+  ui.middleDial->setValue(value);
   update();
 }
 
 void MetalDSFrame::onMidFreq(int value)
 {
-  ui->midFreqDial->setValue(value);
+  ui.midFreqDial->setValue(value);
   update();
 }
 
 void MetalDSFrame::onHigh(double value)
 {
-  ui->highDial->setValue(value);
+  ui.highDial->setValue(value);
   update();
 }
 
 void MetalDSFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }

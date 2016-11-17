@@ -16,12 +16,9 @@
 #ifndef LOOPFRAME_H
 #define LOOPFRAME_H
 #include <QWidget>
+#include "ui_LoopFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class LoopFrame;
-}
 
 class LoopFrame : public QWidget, public IStompEditorPage
 {
@@ -54,10 +51,8 @@ private slots:
   void onMix(double value);
   void onDucking(double value);
 private:
-  Ui::LoopFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::LoopFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // LOOPFRAME_H

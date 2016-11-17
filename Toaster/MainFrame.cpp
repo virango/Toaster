@@ -172,8 +172,8 @@ MainFrame::MainFrame(QWidget *parent)
 MainFrame::~MainFrame()
 {
   MasterVolume::get().dispose();
-  if(ui != nullptr)
-    delete ui;
+
+
 }
 //------------------------------------------------------------------------------------------
 

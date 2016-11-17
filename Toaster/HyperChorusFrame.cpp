@@ -14,30 +14,23 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "HyperChorusFrame.h"
-#include "ui_HyperChorusFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 HyperChorusFrame::HyperChorusFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  ui.crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 HyperChorusFrame::~HyperChorusFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void HyperChorusFrame::activate(QObject& stomp)
 {
-  ui = new Ui::HyperChorusFrame();
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -56,8 +49,8 @@ void HyperChorusFrame::activate(QObject& stomp)
     mpStomp->requestVolume();
     mpStomp->requestDucking();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -71,58 +64,51 @@ void HyperChorusFrame::deactivate()
     disconnect(mpStomp, &Stomp::mixReceived, this, &HyperChorusFrame::onMix);
     disconnect(mpStomp, &Stomp::volumeReceived, this, &HyperChorusFrame::onVolume);
     disconnect(mpStomp, &Stomp::duckingReceived, this, &HyperChorusFrame::onDucking);
-  }
-  mpStomp = nullptr;
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
+    mpStomp = nullptr;
   }
 }
 
 QToasterLCD::Page HyperChorusFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page HyperChorusFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void HyperChorusFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void HyperChorusFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void HyperChorusFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void HyperChorusFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void HyperChorusFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void HyperChorusFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void HyperChorusFrame::on_depthDial_valueChanged(double value)
@@ -163,36 +149,36 @@ void HyperChorusFrame::on_duckingDial_valueChanged(double value)
 
 void HyperChorusFrame::onDepth(double value)
 {
-  ui->depthDial->setValue(value);
+  ui.depthDial->setValue(value);
   update();
 }
 
 void HyperChorusFrame::onAmount(double value)
 {
-  ui->amountDial->setValue(value);
+  ui.amountDial->setValue(value);
   update();
 }
 
 void HyperChorusFrame::onCrossover(int value)
 {
-  ui->crossoverDial->setValue(value);
+  ui.crossoverDial->setValue(value);
   update();
 }
 
 void HyperChorusFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void HyperChorusFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void HyperChorusFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }

@@ -14,30 +14,23 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "AirChorusFrame.h"
-#include "ui_AirChorusFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 AirChorusFrame::AirChorusFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  ui.crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 AirChorusFrame::~AirChorusFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void AirChorusFrame::activate(QObject& stomp)
 {
-  ui = new Ui::AirChorusFrame();
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -50,8 +43,8 @@ void AirChorusFrame::activate(QObject& stomp)
     mpStomp->requestModulationCrossover();
     mpStomp->requestVolume();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 
 }
@@ -63,58 +56,51 @@ void AirChorusFrame::deactivate()
     disconnect(mpStomp, &Stomp::modulationDepthReceived, this, &AirChorusFrame::onDepth);
     disconnect(mpStomp, static_cast<void (Stomp::*)(int)>(&Stomp::modulationCrossoverReceived), this, &AirChorusFrame::onCrossover);
     disconnect(mpStomp, &Stomp::volumeReceived, this, &AirChorusFrame::onVolume);
-  }
-  mpStomp = nullptr;
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
+    mpStomp = nullptr;
   }
 }
 
 QToasterLCD::Page AirChorusFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page AirChorusFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void AirChorusFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void AirChorusFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void AirChorusFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void AirChorusFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void AirChorusFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void AirChorusFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void AirChorusFrame::on_depthDial_valueChanged(double value)
@@ -137,18 +123,18 @@ void AirChorusFrame::on_volumeDial_valueChanged(double value)
 
 void AirChorusFrame::onDepth(double value)
 {
-  ui->depthDial->setValue(value);
+  ui.depthDial->setValue(value);
   update();
 }
 
 void AirChorusFrame::onCrossover(int value)
 {
-  ui->crossoverDial->setValue(value);
+  ui.crossoverDial->setValue(value);
   update();
 }
 
 void AirChorusFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }

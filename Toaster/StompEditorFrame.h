@@ -16,15 +16,12 @@
 #ifndef STOMPEDITORFRAME_H
 #define STOMPEDITORFRAME_H
 #include <QStackedWidget>
+#include "ui_StompEditorFrame.h"
 #include "Commons.h"
-
-namespace Ui {
-  class StompEditorFrame;
-}
 
 struct IStompEditorPage;
 
-class StompEditorFrame : public QStackedWidget
+class StompEditorFrame : public QWidget
 {
   Q_OBJECT
 
@@ -76,10 +73,10 @@ public slots:
 
 private:
   void requestValues();
-  void activatePage(IStompEditorPage* page, int index);
+  void activatePage(IStompEditorPage* page);
 
 private:
-  Ui::StompEditorFrame *ui;
+  Ui::StompEditorFrame ui;
 
   QObject*          mpActiveStomp;
   int               mActiveStompType;

@@ -16,12 +16,9 @@
 #ifndef WAHNOPEAKFRAME_H
 #define WAHNOPEAKFRAME_H
 #include <QWidget>
+#include "ui_WahNoPeakFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class WahNoPeakFrame;
-}
 
 class WahNoPeakFrame : public QWidget, public IStompEditorPage
 {
@@ -69,10 +66,8 @@ private slots:
   void onTouchBoost(double value);
 
 private:
-  Ui::WahNoPeakFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::WahNoPeakFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // WAHNOPEAKFRAME_H

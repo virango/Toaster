@@ -13,8 +13,8 @@
 *   You should have received a copy of the GNU General Public License along with Toaster.
 *   If not, see <http://www.gnu.org/licenses/>.
 */
+#include <QLayout>
 #include "StompEditorFrame.h"
-#include "ui_StompEditorFrame.h"
 #include "Stomp.h"
 #include "StompEditorPage.h"
 #include "Input.h"
@@ -22,21 +22,63 @@
 #include "Delay.h"
 #include "Reverb.h"
 #include "Profile.h"
+#include "AirChorusFrame.h"
+#include "AmpFrame.h"
+#include "AnalogOctaverFrame.h"
+#include "CabFrame.h"
+#include "ChromaticPitchFrame.h"
+#include "CompressorFrame.h"
+#include "DelayFrame.h"
+#include "DriveAndToneDSFrame.h"
+#include "DriveDSFrame.h"
+#include "FlangerFrame.h"
+#include "FlangerOnewayFrame.h"
+#include "GateFrame.h"
+#include "GraphicEqualizerFrame.h"
+#include "HarmonicPitchFrame.h"
+#include "HyperChorusFrame.h"
+#include "InputFrame.h"
+#include "LegacyDelayFrame.h"
+#include "LoopDistortionFrame.h"
+#include "LoopFrame.h"
+#include "MetalDSFrame.h"
+#include "MetalEqualizerFrame.h"
+#include "MicroPitchFrame.h"
+#include "OutputFrame.h"
+#include "PedalPitchFrame.h"
+#include "PedalVinylStopFrame.h"
+#include "PhaserFrame.h"
+#include "PhaserOnewayFrame.h"
+#include "PureBoosterFrame.h"
+#include "RectiShaperFrame.h"
+#include "ReverbFrame.h"
+#include "RotarySpeakerFrame.h"
+#include "SpaceFrame.h"
+#include "StereoWidenerFrame.h"
+#include "StudioEqualizerFrame.h"
+#include "TapDelayFrame.h"
+#include "ToneAndDuckingDSFrame.h"
+#include "TransposeFrame.h"
+#include "TremoloFrame.h"
+#include "VibratoFrame.h"
+#include "VintageChorusFrame.h"
+#include "WahFormantShiftFrame.h"
+#include "WahNoPeakFrame.h"
+#include "WahPedalBoosterFrame.h"
+#include "WahPhaserFrame.h"
+#include "WahWahFrame.h"
 
 StompEditorFrame::StompEditorFrame(QWidget *parent)
-  : QStackedWidget(parent)
-  , ui(new Ui::StompEditorFrame)
+  : QWidget(parent)
   , mpActiveStomp(nullptr)
   , mActiveStompType(-1)
   , mpActivePage(nullptr)
 {
-  ui->setupUi(this);
+  ui.setupUi(this);
 }
 
 StompEditorFrame::~StompEditorFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void StompEditorFrame::init()
@@ -103,19 +145,19 @@ void StompEditorFrame::activate(QObject& stomp)
     }
     else if (pAmp != nullptr)
     {
-      activatePage(ui->amp, indexOf(ui->amp));
+      activatePage(new AmpFrame(this));
     }
     else if(pCab != nullptr)
     {
-      activatePage(ui->cab, indexOf(ui->cab));
+      activatePage(new CabFrame(this));
     }
     else if(pGlobal != nullptr)
     {
-      activatePage(ui->output, indexOf(ui->output));
+      activatePage(new OutputFrame(this));
     }
     else if(pInput != nullptr)
     {
-      activatePage(ui->input, indexOf(ui->input));
+      activatePage(new InputFrame(this));
     }
   }
 
@@ -145,6 +187,8 @@ void StompEditorFrame::deactivate()
   if(mpActivePage != nullptr)
   {
     mpActivePage->deactivate();
+    ui.dummyStompFrame->show();
+    delete mpActivePage;
     mpActivePage = nullptr;
     emit editorPageChanged(mpActivePage);
   }
@@ -163,11 +207,9 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
     }
   }
 
-  int index = 0;
-
   pActiveStomp = qobject_cast<Stomp*>(mpActiveStomp);
 
-  if(pActiveStomp != nullptr)
+  if(mpActivePage == nullptr && pActiveStomp != nullptr)
   {
     switch(fxType)
     {
@@ -177,181 +219,144 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case WahVowelFilter:
       case WahFlanger:
       case WahRateReducer:
-        mpActivePage = ui->wahWah;
-        index = indexOf(ui->wahWah);
+        mpActivePage = new WahWahFrame(this);
         break;
       case WahRingModulator:
       case WahFrequencyShifter:
-        mpActivePage = ui->wahNoPeak;
-        index = indexOf(ui->wahNoPeak);
+        mpActivePage = new WahNoPeakFrame(this);
         break;
       case WahFormantShifter:
-        mpActivePage = ui->wahFormantShift;
-        index = indexOf(ui->wahFormantShift);
+        mpActivePage = new WahFormantShiftFrame(this);
         break;
       case WahPhaser:
-        mpActivePage = ui->wahPhaser;
-        index = indexOf(ui->wahPhaser);
+        mpActivePage = new WahPhaserFrame(this);
         break;
       case PureBooster:
-        mpActivePage = ui->pureBooster;
-        index = indexOf(ui->pureBooster);
+        mpActivePage = new PureBoosterFrame(this);
         break;
       case SoftShaper:
       case HardShaper:
       case WaveShaper:
       case PlusDS:
       case FuzzDS:
-        mpActivePage = ui->driveDS;
-        index = indexOf(ui->driveDS);
+        mpActivePage = new DriveDSFrame(this);
         break;
       case BitShaper:
       case GreenScream:
       case OneDS:
       case Muffin:
       case MouseDS:
-        mpActivePage = ui->driveAndToneDS;
-        index = indexOf(ui->driveAndToneDS);
+        mpActivePage = new DriveAndToneDSFrame(this);
         break;
       case RectiShaper:
-        mpActivePage = ui->rectiShaper;
-        index = indexOf(ui->rectiShaper);
+        mpActivePage = new RectiShaperFrame(this);
         break;
       case TrebleBooster:
       case LeadBooster:
-        mpActivePage = ui->toneAndDuckingDS;
-        index = indexOf(ui->toneAndDuckingDS);
+        mpActivePage = new ToneAndDuckingDSFrame(this);
         break;
       case WahPedalBooster:
-        mpActivePage = ui->wahPedalBooster;
-        index = indexOf(ui->wahPedalBooster);
+        mpActivePage = new WahPedalBoosterFrame(this);
         break;
       case MetalDS:
-        mpActivePage = ui->metalDS;
-        index = indexOf(ui->metalDS);
+        mpActivePage = new MetalDSFrame(this);
         break;
       case GraphicEqualizer:
-        mpActivePage = ui->graphicEqualizer;
-        index = indexOf(ui->graphicEqualizer);
+        mpActivePage = new GraphicEqualizerFrame(this);
         break;
       case StudioEqualizer:
-        mpActivePage = ui->studioEqualizer;
-        index = indexOf(ui->studioEqualizer);
+        mpActivePage = new StudioEqualizerFrame(this);
         break;
       case MetalEqualizer:
-        mpActivePage = ui->metalEqualizer;
-        index = indexOf(ui->metalEqualizer);
+        mpActivePage = new MetalEqualizerFrame(this);
         break;
       case StereoWidener:
-        mpActivePage = ui->stereoWidener;
-        index = indexOf(ui->stereoWidener);
+        mpActivePage = new StereoWidenerFrame(this);
         break;
       case Compressor:
-        mpActivePage = ui->compressorFrame;
-        index = indexOf(ui->compressorFrame);
+        mpActivePage = new CompressorFrame(this);
         break;
       case NoiseGate21:
       case NoiseGate41:
-        mpActivePage = ui->gateFrame;
-        index = indexOf(ui->gateFrame);
+        mpActivePage = new GateFrame(this);
         break;
       case VintageChorus:
-        mpActivePage = ui->vintageChorusFrame;
-        index = indexOf(ui->vintageChorusFrame);
+        mpActivePage = new VintageChorusFrame(this);
         break;
       case HyperChorus:
-        mpActivePage = ui->hyperChorusFrame;
-        index = indexOf(ui->hyperChorusFrame);
+        mpActivePage = new HyperChorusFrame(this);
         break;
       case AirChorus:
-        mpActivePage = ui->airChorusFrame;
-        index = indexOf(ui->airChorusFrame);
+        mpActivePage = new AirChorusFrame(this);
         break;
       case MicroPitch:
-        mpActivePage = ui->microPitch;
-        index = indexOf(ui->microPitch);
+        mpActivePage = new MicroPitchFrame(this);
         break;
       case Vibrato:
-        mpActivePage = ui->vibrato;
-        index = indexOf(ui->vibrato);
+        mpActivePage = new VibratoFrame(this);
         break;
       case RotarySpeaker:
-        mpActivePage = ui->rotarySpeaker;
-        index = indexOf(ui->rotarySpeaker);
+        mpActivePage = new RotarySpeakerFrame(this);
         break;
       case Tremolo:
-        mpActivePage = ui->tremolo;
-        index = indexOf(ui->tremolo);
+        mpActivePage = new TremoloFrame(this);
         break;
       case Phaser:
       case PhaserVibe:
-        mpActivePage = ui->phaser;
-        index = indexOf(ui->phaser);
+        mpActivePage = new PhaserFrame(this);
         break;
       case PhaserOneway:
-        mpActivePage = ui->phaserOneway;
-        index = indexOf(ui->phaserOneway);
+        mpActivePage = new PhaserOnewayFrame(this);
         break;
       case Flanger:
-        mpActivePage = ui->flanger;
-        index = indexOf(ui->flanger);
+        mpActivePage = new FlangerFrame(this);
         break;
       case FlangerOneway:
-        mpActivePage = ui->flangerOneway;
-        index = indexOf(ui->flangerOneway);
+        mpActivePage = new FlangerOnewayFrame(this);
         break;
       case Space:
-        mpActivePage = ui->space;
-        index = indexOf(ui->space);
+        mpActivePage = new SpaceFrame(this);
         break;
       case Transpose:
-        mpActivePage = ui->transpose;
-        index = indexOf(ui->transpose);
+        mpActivePage = new TransposeFrame(this);
         break;
       case PedalPitch:
-        mpActivePage = ui->pedalPitch;
-        index = indexOf(ui->pedalPitch);
+        mpActivePage = new PedalPitchFrame(this);
         break;
       case PedalVinylStop:
-        mpActivePage = ui->pedalVinylStop;
-        index = indexOf(ui->pedalVinylStop);
+        mpActivePage = new PedalVinylStopFrame(this);
         break;
       case ChromaticPitch:
-        mpActivePage = ui->chromaticPitch;
-        index = indexOf(ui->chromaticPitch);
+        mpActivePage = new ChromaticPitchFrame(this);
         break;
       case HarmonicPitch:
-        mpActivePage = ui->harmonicPitch;
-        index = indexOf(ui->harmonicPitch);
+        mpActivePage = new HarmonicPitchFrame(this);
         break;
       case AnalogOctaver:
-        mpActivePage = ui->analogOctaver;
-        index = indexOf(ui->analogOctaver);
+        mpActivePage = new AnalogOctaverFrame(this);
         break;
       case LoopMono:
       case LoopStereo:
-        mpActivePage = ui->loop;
-        index = indexOf(ui->loop);
+        mpActivePage = new LoopFrame(this);
         break;
       case LoopDistortion:
-        mpActivePage = ui->loopDistortion;
-        index = indexOf(ui->loopDistortion);
+        mpActivePage = new LoopDistortionFrame(this);
         break;
       case LegacyDelay:
-        mpActivePage = ui->legacyDelay;
-        index = indexOf(ui->legacyDelay);
+        mpActivePage = new LegacyDelayFrame(this);
         break;
       default:
-        mpActivePage = ui->dummyStomp;
-        index = indexOf(ui->dummyStomp);
+        ui.dummyStompFrame->show();
         break;
     }
 
     if(mpActivePage != nullptr && !mpActivePage->isActive())
     {
+      setUpdatesEnabled(false);
       mActiveStompType = fxType;
+      ui.dummyStompFrame->hide();
       mpActivePage->activate(*pActiveStomp);
-      setCurrentIndex(index);
+      setUpdatesEnabled(true);
       emit editorPageChanged(mpActivePage);
       requestValues();
     }
@@ -371,34 +376,31 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
     }
   }
 
-  int index = 0;
-
   pActiveDelay = qobject_cast<Delay*>(mpActiveStomp);
 
-  if(pActiveDelay != nullptr)
+  if(mpActivePage == nullptr && pActiveDelay != nullptr)
   {
     switch(delayType)
     {
       case FreeDelay:
       case AnalogDelay:
-        mpActivePage = ui->delay;
-        index = indexOf(ui->delay);
+        mpActivePage = new DelayFrame(this);
         break;
       case TapDelay:
-        mpActivePage = ui->tapDelay;
-        index = indexOf(ui->tapDelay);
+        mpActivePage = new TapDelayFrame(this);
         break;
       default:
-        mpActivePage = ui->dummyStomp;
-        index = indexOf(ui->dummyStomp);
+        ui.dummyStompFrame->show();
         break;
     }
 
     if(mpActivePage != nullptr && !mpActivePage->isActive())
     {
+      setUpdatesEnabled(false);
       mActiveStompType = delayType;
+      ui.dummyStompFrame->hide();
       mpActivePage->activate(*pActiveDelay);
-      setCurrentIndex(index);
+      setUpdatesEnabled(true);
       emit editorPageChanged(mpActivePage);
       requestValues();
     }
@@ -418,11 +420,9 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
     }
   }
 
-  int index = 0;
-
   pActiveReverb = qobject_cast<Reverb*>(mpActiveStomp);
 
-  if(pActiveReverb != nullptr)
+  if(mpActivePage == nullptr && pActiveReverb != nullptr)
   {
     switch(reverbType)
     {
@@ -431,20 +431,20 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
       case SmallRoom:
       case Ambience:
       case Matchbox:
-        mpActivePage = ui->reverb;
-        index = indexOf(ui->reverb);
+        mpActivePage = new ReverbFrame(this);
         break;
       default:
-        mpActivePage = ui->dummyStomp;
-        index = indexOf(ui->dummyStomp);
+        ui.dummyStompFrame->show();
         break;
     }
 
     if(mpActivePage != nullptr && !mpActivePage->isActive())
     {
-      mActiveStompType = reverbType;
+      setUpdatesEnabled(false);
+      mActiveStompType = reverbType;      
       mpActivePage->activate(*pActiveReverb);
-      setCurrentIndex(index);
+      ui.dummyStompFrame->hide();
+      setUpdatesEnabled(true);
       emit editorPageChanged(mpActivePage);
       requestValues();
     }
@@ -621,13 +621,15 @@ void StompEditorFrame::requestValues()
   profileObj.requestAmpName();
 }
 
-void StompEditorFrame::activatePage(IStompEditorPage* page, int index)
+void StompEditorFrame::activatePage(IStompEditorPage* page)
 {
   mpActivePage = page;
   if(mpActivePage != nullptr && !mpActivePage->isActive())
   {
+    setUpdatesEnabled(false);
     mpActivePage->activate(*mpActiveStomp);
-    setCurrentIndex(index);
+    ui.dummyStompFrame->hide();
+    setUpdatesEnabled(true);
     emit editorPageChanged(mpActivePage);
     requestValues();
   }

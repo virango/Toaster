@@ -15,13 +15,9 @@
 */
 #ifndef TUNERFRAME_H
 #define TUNERFRAME_H
-
 #include <QWidget>
+#include "ui_TunerFrame.h"
 #include "TunerIndex.h"
-
-namespace Ui {
-  class TunerFrame;
-}
 
 class TunerFrame : public QWidget
 {
@@ -43,7 +39,7 @@ private slots:
   void on_toasterTunerLCD_signalMuted(bool muted);
 
 private:
-  Ui::TunerFrame *ui;
+  Ui::TunerFrame ui;
   TunerIndex mTunerIndex;
 };
 

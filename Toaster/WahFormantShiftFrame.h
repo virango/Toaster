@@ -16,12 +16,9 @@
 #ifndef WAHFORMANTSHIFTFRAME_H
 #define WAHFORMANTSHIFTFRAME_H
 #include <QWidget>
+#include "ui_WahFormantShiftFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class WahFormantShiftFrame;
-}
 
 class WahFormantShiftFrame : public QWidget, public IStompEditorPage
 {
@@ -70,13 +67,9 @@ private slots:
   void onTouchRelease(double value);
   void onTouchBoost(double value);
 
-
-
 private:
-  Ui::WahFormantShiftFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::WahFormantShiftFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // WAHFORMANTSHIFTFRAME_H

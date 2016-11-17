@@ -16,12 +16,9 @@
 #ifndef TREMOLOFRAME_H
 #define TREMOLOFRAME_H
 #include <QWidget>
+#include "ui_TremoloFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class TremoloFrame;
-}
 
 class TremoloFrame : public QWidget, public IStompEditorPage
 {
@@ -61,9 +58,8 @@ private slots:
   void onStereo(double value);
 
 private:
-  Ui::TremoloFrame *ui;
-  Stomp* mpStomp;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::TremoloFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // TREMOLOFRAME_H

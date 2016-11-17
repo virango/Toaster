@@ -14,55 +14,49 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "StudioEqualizerFrame.h"
-#include "ui_StudioEqualizerFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 StudioEqualizerFrame::StudioEqualizerFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  ui.lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui.highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui.lowFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui.mid1FreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui.mid2FreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui.highFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui.mid1QFactorDial->setLookUpTable(LookUpTables::getQFactorValues());
+  ui.mid2QFactorDial->setLookUpTable(LookUpTables::getQFactorValues());
 }
 
 StudioEqualizerFrame::~StudioEqualizerFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
+
 void StudioEqualizerFrame::activate(QObject& stomp)
 {
-  ui = new Ui::StudioEqualizerFrame();
-  ui->setupUi(this);
-  ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->lowFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->mid1FreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->mid2FreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->highFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->mid1QFactorDial->setLookUpTable(LookUpTables::getQFactorValues());
-  ui->mid2QFactorDial->setLookUpTable(LookUpTables::getQFactorValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
-    connect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onHighCut(int)));
-    connect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowGain(double)));
-    connect(mpStomp, SIGNAL(parametricEQLowFrequencyReceived(int)), this, SLOT(onLowFreq(int)));
-    connect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighGain(double)));
-    connect(mpStomp, SIGNAL(parametricEQHighFrequencyReceived(int)), this, SLOT(onHighFreq(int)));
-    connect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMid1Gain(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMid1Freq(int)));
-    connect(mpStomp, SIGNAL(parametricEQPeakQFactorReceived(int)), this, SLOT(onMid1QFactor(int)));
-    connect(mpStomp, SIGNAL(parametricEQPeakGain2Received(double)), this, SLOT(onMid2Gain(double)));
-    connect(mpStomp, SIGNAL(parametricEQPeakFrequency2Received(int)), this, SLOT(onMid2Freq(int)));
-    connect(mpStomp, SIGNAL(parametricEQPeakQFactor2Received(int)), this, SLOT(onMid2QFactor(int)));
+    connect(mpStomp, &Stomp::mixReceived, this, &StudioEqualizerFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &StudioEqualizerFrame::onDucking);
+    connect(mpStomp, &Stomp::volumeReceived, this, &StudioEqualizerFrame::onVolume);
+    connect(mpStomp, &Stomp::lowCutReceived, this, &StudioEqualizerFrame::onLowCut);
+    connect(mpStomp, &Stomp::highCutReceived, this, &StudioEqualizerFrame::onHighCut);
+    connect(mpStomp, &Stomp::parametricEQLowGainReceived, this, &StudioEqualizerFrame::onLowGain);
+    connect(mpStomp, &Stomp::parametricEQLowFrequencyReceived, this, &StudioEqualizerFrame::onLowFreq);
+    connect(mpStomp, &Stomp::parametricEQHighGainReceived, this, &StudioEqualizerFrame::onHighGain);
+    connect(mpStomp, &Stomp::parametricEQHighFrequencyReceived, this, &StudioEqualizerFrame::onHighFreq);
+    connect(mpStomp, &Stomp::parametricEQPeakGainReceived, this, &StudioEqualizerFrame::onMid1Gain);
+    connect(mpStomp, &Stomp::parametricEQPeakFrequencyReceived, this, &StudioEqualizerFrame::onMid1Freq);
+    connect(mpStomp, &Stomp::parametricEQPeakQFactorReceived, this, &StudioEqualizerFrame::onMid1QFactor);
+    connect(mpStomp, &Stomp::parametricEQPeakGain2Received, this, &StudioEqualizerFrame::onMid2Gain);
+    connect(mpStomp, &Stomp::parametricEQPeakFrequency2Received, this, &StudioEqualizerFrame::onMid2Freq);
+    connect(mpStomp, &Stomp::parametricEQPeakQFactor2Received, this, &StudioEqualizerFrame::onMid2QFactor);
 
     mpStomp->requestMix();
     mpStomp->requestDucking();
@@ -80,8 +74,8 @@ void StudioEqualizerFrame::activate(QObject& stomp)
     mpStomp->requestParametricEQPeakFrequency2();
     mpStomp->requestParametricEQPeakQFactor2();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -89,75 +83,68 @@ void StudioEqualizerFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(lowCutReceived(int)), this, SLOT(onLowCut(int)));
-    disconnect(mpStomp, SIGNAL(highCutReceived(int)), this, SLOT(onHighCut(int)));
-    disconnect(mpStomp, SIGNAL(parametricEQLowGainReceived(double)), this, SLOT(onLowGain(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQLowFrequencyReceived(int)), this, SLOT(onLowFreq(int)));
-    disconnect(mpStomp, SIGNAL(parametricEQHighGainReceived(double)), this, SLOT(onHighGain(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQHighFrequencyReceived(int)), this, SLOT(onHighFreq(int)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakGainReceived(double)), this, SLOT(onMid1Gain(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequencyReceived(int)), this, SLOT(onMid1Freq(int)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakQFactorReceived(int)), this, SLOT(onMid1QFactor(int)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakGain2Received(double)), this, SLOT(onMid2Gain(double)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakFrequency2Received(int)), this, SLOT(onMid2Freq(int)));
-    disconnect(mpStomp, SIGNAL(parametricEQPeakQFactor2Received(int)), this, SLOT(onMid2QFactor(int)));
+    disconnect(mpStomp, &Stomp::mixReceived, this, &StudioEqualizerFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &StudioEqualizerFrame::onDucking);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &StudioEqualizerFrame::onVolume);
+    disconnect(mpStomp, &Stomp::lowCutReceived, this, &StudioEqualizerFrame::onLowCut);
+    disconnect(mpStomp, &Stomp::highCutReceived, this, &StudioEqualizerFrame::onHighCut);
+    disconnect(mpStomp, &Stomp::parametricEQLowGainReceived, this, &StudioEqualizerFrame::onLowGain);
+    disconnect(mpStomp, &Stomp::parametricEQLowFrequencyReceived, this, &StudioEqualizerFrame::onLowFreq);
+    disconnect(mpStomp, &Stomp::parametricEQHighGainReceived, this, &StudioEqualizerFrame::onHighGain);
+    disconnect(mpStomp, &Stomp::parametricEQHighFrequencyReceived, this, &StudioEqualizerFrame::onHighFreq);
+    disconnect(mpStomp, &Stomp::parametricEQPeakGainReceived, this, &StudioEqualizerFrame::onMid1Gain);
+    disconnect(mpStomp, &Stomp::parametricEQPeakFrequencyReceived, this, &StudioEqualizerFrame::onMid1Freq);
+    disconnect(mpStomp, &Stomp::parametricEQPeakQFactorReceived, this, &StudioEqualizerFrame::onMid1QFactor);
+    disconnect(mpStomp, &Stomp::parametricEQPeakGain2Received, this, &StudioEqualizerFrame::onMid2Gain);
+    disconnect(mpStomp, &Stomp::parametricEQPeakFrequency2Received, this, &StudioEqualizerFrame::onMid2Freq);
+    disconnect(mpStomp, &Stomp::parametricEQPeakQFactor2Received, this, &StudioEqualizerFrame::onMid2QFactor);
     mpStomp = nullptr;
-  }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
   }
 }
 
 QToasterLCD::Page StudioEqualizerFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page StudioEqualizerFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void StudioEqualizerFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
-    ui->bigDials->setCurrentIndex((int) page);
-    ui->smallDials->setCurrentIndex((int) page);
+    ui.lcdDisplay->setCurrentPage(page);
+    ui.bigDials->setCurrentIndex((int) page);
+    ui.smallDials->setCurrentIndex((int) page);
   }
 }
 
 void StudioEqualizerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void StudioEqualizerFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void StudioEqualizerFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void StudioEqualizerFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void StudioEqualizerFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void StudioEqualizerFrame::on_mixDial_valueChanged(double value)
@@ -251,90 +238,90 @@ void StudioEqualizerFrame::on_mid2QFactorDial_valueChanged(int value)
 
 void StudioEqualizerFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onLowCut(int value)
 {
-  ui->lowCutDial->setValue(value);
+  ui.lowCutDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onHighCut(int value)
 {
-  ui->highCutDial->setValue(value);
+  ui.highCutDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onLowGain(double value)
 {
-  ui->lowGainDial->setValue(value);
+  ui.lowGainDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onLowFreq(int value)
 {
-  ui->lowFreqDial->setValue(value);
+  ui.lowFreqDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onHighGain(double value)
 {
-  ui->highGainDial->setValue(value);
+  ui.highGainDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onHighFreq(int value)
 {
-  ui->highFreqDial->setValue(value);
+  ui.highFreqDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onMid1Gain(double value)
 {
-  ui->mid1GainDial->setValue(value);
+  ui.mid1GainDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onMid1Freq(int value)
 {
-  ui->mid1FreqDial->setValue(value);
+  ui.mid1FreqDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onMid1QFactor(int value)
 {
-  ui->mid1QFactorDial->setValue(value);
+  ui.mid1QFactorDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onMid2Gain(double value)
 {
-  ui->mid2GainDial->setValue(value);
+  ui.mid2GainDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onMid2Freq(int value)
 {
-  ui->mid2FreqDial->setValue(value);
+  ui.mid2FreqDial->setValue(value);
   update();
 }
 
 void StudioEqualizerFrame::onMid2QFactor(int value)
 {
-  ui->mid2QFactorDial->setValue(value);
+  ui.mid2QFactorDial->setValue(value);
   update();
 }

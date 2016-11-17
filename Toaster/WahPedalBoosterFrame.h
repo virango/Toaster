@@ -16,12 +16,9 @@
 #ifndef WAHPEDALBOOSTERFRAME_H
 #define WAHPEDALBOOSTERFRAME_H
 #include <QWidget>
+#include "ui_WahPedalBoosterFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class WahPedalBoosterFrame;
-}
 
 class WahPedalBoosterFrame : public QWidget, public IStompEditorPage
 {
@@ -53,10 +50,8 @@ private slots:
   void onPedalRange(double value);
 
 private:
-  Ui::WahPedalBoosterFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::WahPedalBoosterFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // WAHPEDALBOOSTERFRAME_H

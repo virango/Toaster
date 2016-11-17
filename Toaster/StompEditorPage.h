@@ -23,6 +23,7 @@ class QString;
 
 struct IStompEditorPage
 {
+  virtual ~IStompEditorPage() {}
   virtual void activate(QObject& stomp) = 0;
   virtual void deactivate() = 0;
   virtual bool isActive() = 0;

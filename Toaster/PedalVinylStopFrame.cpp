@@ -14,30 +14,23 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "PedalVinylStopFrame.h"
-#include "ui_PedalVinylStopFrame.h"
 #include "Stomp.h"
 #include "Global.h"
 #include "LookUpTables.h"
 
 PedalVinylStopFrame::PedalVinylStopFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
 }
 
 PedalVinylStopFrame::~PedalVinylStopFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void PedalVinylStopFrame::activate(QObject& stomp)
 {
-  ui = new Ui::PedalVinylStopFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -50,8 +43,8 @@ void PedalVinylStopFrame::activate(QObject& stomp)
     mpStomp->requestMix();
     globalObj.requestWahPedalToPitch();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -61,61 +54,53 @@ void PedalVinylStopFrame::deactivate()
   {
     disconnect(mpStomp, &Stomp::volumeReceived, this, &PedalVinylStopFrame::onVolume);
     disconnect(mpStomp, &Stomp::mixReceived, this, &PedalVinylStopFrame::onMix);
-
     mpStomp = nullptr;
   }
 
   disconnect(&globalObj, &Global::wahPedalToPitchReceived, this, &PedalVinylStopFrame::onWahPedalToPitch);
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
-  }
 }
 
 QToasterLCD::Page PedalVinylStopFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page PedalVinylStopFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void PedalVinylStopFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void PedalVinylStopFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void PedalVinylStopFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void PedalVinylStopFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void PedalVinylStopFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void PedalVinylStopFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void PedalVinylStopFrame::on_volumeDial_valueChanged(double value)
@@ -138,18 +123,18 @@ void PedalVinylStopFrame::on_wahPedalToPitchDial_valueChanged(int valueIndex)
 
 void PedalVinylStopFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void PedalVinylStopFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void PedalVinylStopFrame::onWahPedalToPitch(bool onOff)
 {
-  ui->wahPedalToPitchDial->setValue(onOff ? 1 : 0);
+  ui.wahPedalToPitchDial->setValue(onOff ? 1 : 0);
   update();
 }

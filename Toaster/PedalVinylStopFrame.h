@@ -16,12 +16,9 @@
 #ifndef PEDALVINYLSTOPFRAME_H
 #define PEDALVINYLSTOPFRAME_H
 #include <QWidget>
+#include "ui_PedalVinylStopFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class PedalVinylStopFrame;
-}
 
 class PedalVinylStopFrame : public QWidget, public IStompEditorPage
 {
@@ -57,10 +54,8 @@ private slots:
   void onWahPedalToPitch(bool onOff);
 
 private:
-  Ui::PedalVinylStopFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::PedalVinylStopFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // PEDALVINYLSTOPFRAME_H

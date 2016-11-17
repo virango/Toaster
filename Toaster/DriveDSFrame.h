@@ -16,12 +16,9 @@
 #ifndef DRIVEDSFRAME_H
 #define DRIVEDSFRAME_H
 #include <QWidget>
+#include "ui_DriveDSFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class DriveDSFrame;
-}
 
 class DriveDSFrame : public QWidget, public IStompEditorPage
 {
@@ -56,10 +53,8 @@ private slots:
   void onMix(double value);
 
 private:
-  Ui::DriveDSFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::DriveDSFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // DRIVEDSFRAME_H

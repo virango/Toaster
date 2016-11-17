@@ -14,31 +14,24 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "VibratoFrame.h"
-#include "ui_VibratoFrame.h"
 #include "Stomp.h"
 #include "Settings.h"
 #include "LookUpTables.h"
 
 VibratoFrame::VibratoFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  ui.crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 VibratoFrame::~VibratoFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void VibratoFrame::activate(QObject& stomp)
 {
-  ui = new Ui::VibratoFrame();
-  ui->setupUi(this);
-  ui->crossoverDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -50,17 +43,17 @@ void VibratoFrame::activate(QObject& stomp)
 
     if(Settings::get().getKPAOSVersion() >= 0x04000000)
     {
-      ui->duckingDial->setIsActive(true);
-      ui->lcdDisplay->setValue5Title("Ducking");
+      ui.duckingDial->setIsActive(true);
+      ui.lcdDisplay->setValue5Title("Ducking");
       connect(mpStomp, &Stomp::duckingReceived, this, &VibratoFrame::onDucking);
       mpStomp->requestDucking();
     }
     else
     {
-      ui->lcdDisplay->setValue5Title("");
-      ui->lcdDisplay->setValue5("");
-      ui->duckingDial->setValue(0);;
-      ui->duckingDial->setIsActive(true);
+      ui.lcdDisplay->setValue5Title("");
+      ui.lcdDisplay->setValue5("");
+      ui.duckingDial->setValue(0);;
+      ui.duckingDial->setIsActive(true);
     }
 
     mpStomp->requestModulationRate();
@@ -68,8 +61,8 @@ void VibratoFrame::activate(QObject& stomp)
     mpStomp->requestModulationCrossover();
     mpStomp->requestVolume();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -87,56 +80,49 @@ void VibratoFrame::deactivate()
 
     mpStomp = nullptr;
   }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
-  }
 }
 
 QToasterLCD::Page VibratoFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page VibratoFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void VibratoFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void VibratoFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void VibratoFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void VibratoFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void VibratoFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void VibratoFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void VibratoFrame::on_rateDial_valueChanged(double value)
@@ -171,31 +157,31 @@ void VibratoFrame::on_duckingDial_valueChanged(double value)
 
 void VibratoFrame::onRate(double value)
 {
-  ui->rateDial->setValue(value);
+  ui.rateDial->setValue(value);
   update();
 }
 
 void VibratoFrame::onDepth(double value)
 {
-  ui->depthDial->setValue(value);
+  ui.depthDial->setValue(value);
   update();
 }
 
 void VibratoFrame::onCrossover(int value)
 {
-  ui->crossoverDial->setValue(value);
+  ui.crossoverDial->setValue(value);
   update();
 }
 
 void VibratoFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 
 void VibratoFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }

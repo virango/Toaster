@@ -16,12 +16,9 @@
 #ifndef WAHPHASERFRAME_H
 #define WAHPHASERFRAME_H
 #include <QWidget>
+#include "ui_WahPhaserFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class WahPhaserFrame;
-}
 
 class WahPhaserFrame : public QWidget, public IStompEditorPage
 {
@@ -77,10 +74,8 @@ private slots:
   void onStages(double value);
 
 private:
-  Ui::WahPhaserFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::WahPhaserFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // WAHPHASERFRAME_H

@@ -14,39 +14,32 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "AnalogOctaverFrame.h"
-#include "ui_AnalogOctaverFrame.h"
 #include "Stomp.h"
 #include "Settings.h"
 #include "LookUpTables.h"
 
 AnalogOctaverFrame::AnalogOctaverFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    ui.lcdDisplay->setValue5Title("Voice Balance");
+  }
+  else
+  {
+    ui.lcdDisplay->setValue5Title("Voice Mix");
+  }
 }
 
 AnalogOctaverFrame::~AnalogOctaverFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void AnalogOctaverFrame::activate(QObject& stomp)
 {
-  ui = new Ui::AnalogOctaverFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
-  if(Settings::get().getKPAOSVersion() >= 0x04000000)
-  {
-    ui->lcdDisplay->setValue5Title("Voice Balance");
-  }
-  else
-  {
-    ui->lcdDisplay->setValue5Title("Voice Mix");
-  }
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -58,8 +51,8 @@ void AnalogOctaverFrame::activate(QObject& stomp)
     connect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationCrossoverReceived), this, &AnalogOctaverFrame::onLowCut);
     connect(mpStomp, &Stomp::stereoReceived, this, &AnalogOctaverFrame::onStereo);
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestVolume();
     mpStomp->requestDucking();
@@ -70,14 +63,14 @@ void AnalogOctaverFrame::activate(QObject& stomp)
     StompInstance si = mpStomp->getInstance();
     if(si != StompX && si != StompMod && si != StompDelay)
     {
-      ui->lcdDisplay->setValue8("");
-      ui->lcdDisplay->setValue8Title("");
-      ui->stereoDial->setIsActive(false);
+      ui.lcdDisplay->setValue8("");
+      ui.lcdDisplay->setValue8Title("");
+      ui.stereoDial->setIsActive(false);
     }
     else
     {
-      ui->lcdDisplay->setValue8Title("Stereo");
-      ui->stereoDial->setIsActive(true);
+      ui.lcdDisplay->setValue8Title("Stereo");
+      ui.stereoDial->setIsActive(true);
       mpStomp->requestStereo();
     }
   }
@@ -93,58 +86,51 @@ void AnalogOctaverFrame::deactivate()
     disconnect(mpStomp, &Stomp::intensityReceived, this, &AnalogOctaverFrame::onMix);
     disconnect(mpStomp, static_cast<void (Stomp::*)(double)>(&Stomp::modulationCrossoverReceived), this, &AnalogOctaverFrame::onLowCut);
     disconnect(mpStomp, &Stomp::stereoReceived, this, &AnalogOctaverFrame::onStereo);
-  }
-  mpStomp = nullptr;
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
+    mpStomp = nullptr;
   }
 }
 
 QToasterLCD::Page AnalogOctaverFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page AnalogOctaverFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void AnalogOctaverFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void AnalogOctaverFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void AnalogOctaverFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void AnalogOctaverFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void AnalogOctaverFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void AnalogOctaverFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void AnalogOctaverFrame::on_volumeDial_valueChanged(double value)
@@ -185,36 +171,36 @@ void AnalogOctaverFrame::on_stereoDial_valueChanged(double value)
 
 void AnalogOctaverFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void AnalogOctaverFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void AnalogOctaverFrame::onVoiceMix(double value)
 {
-  ui->voiceMixDial->setValue(value);
+  ui.voiceMixDial->setValue(value);
   update();
 }
 
 void AnalogOctaverFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void AnalogOctaverFrame::onLowCut(double value)
 {
-  ui->lowCutDial->setValue(value);
+  ui.lowCutDial->setValue(value);
   update();
 }
 
 void AnalogOctaverFrame::onStereo(double value)
 {
-  ui->stereoDial->setValue(value);
+  ui.stereoDial->setValue(value);
   update();
 }

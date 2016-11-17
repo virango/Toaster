@@ -14,31 +14,23 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "LegacyDelayFrame.h"
-#include "ui_LegacyDelayFrame.h"
 #include "LookUpTables.h"
 #include "Stomp.h"
 
 LegacyDelayFrame::LegacyDelayFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
-  , mToTempo(false)
 {
+  ui.setupUi(this);
+  ui.mixDial->setLookUpTable(LookUpTables::getMixValuesV4());
 }
 
 LegacyDelayFrame::~LegacyDelayFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void LegacyDelayFrame::activate(QObject& stomp)
 {
-  ui = new Ui::LegacyDelayFrame();
-  ui->setupUi(this);
-  ui->mixDial->setLookUpTable(LookUpTables::getMixValuesV4());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -55,8 +47,8 @@ void LegacyDelayFrame::activate(QObject& stomp)
     connect(mpStomp, &Stomp::delayModulationReceived, this, &LegacyDelayFrame::OnModulation);
     connect(mpStomp, &Stomp::duckingReceived, this, &LegacyDelayFrame::OnDucking);
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestDelayToTempo();
     mpStomp->requestDelayMix();
@@ -87,59 +79,52 @@ void LegacyDelayFrame::deactivate()
     disconnect(mpStomp, &Stomp::distortionBoosterToneReceived, this, &LegacyDelayFrame::OnFrequency);
     disconnect(mpStomp, &Stomp::delayModulationReceived, this, &LegacyDelayFrame::OnModulation);
     disconnect(mpStomp, &Stomp::duckingReceived, this, &LegacyDelayFrame::OnDucking);
-  }
-  mpStomp = nullptr;
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
+    mpStomp = nullptr;
   }
 }
 
 QToasterLCD::Page LegacyDelayFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page LegacyDelayFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void LegacyDelayFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
-    ui->bigDials->setCurrentIndex((int) page);
-    ui->smallDials->setCurrentIndex((int) page);
+    ui.lcdDisplay->setCurrentPage(page);
+    ui.bigDials->setCurrentIndex((int) page);
+    ui.smallDials->setCurrentIndex((int) page);
   }
 }
 
 void LegacyDelayFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void LegacyDelayFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void LegacyDelayFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void LegacyDelayFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 void LegacyDelayFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void LegacyDelayFrame::on_mixDial_valueChanged(int value)
@@ -214,43 +199,43 @@ void LegacyDelayFrame::on_duckingDial_valueChanged(double value)
 
 void LegacyDelayFrame::OnMix(int value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void LegacyDelayFrame::OnDelay1Time(double value)
 {
-  ui->delay1TimeDial->setValue(value);
+  ui.delay1TimeDial->setValue(value);
   update();
 }
 
 void LegacyDelayFrame::OnDelay2Ratio(double value)
 {
-  ui->delay2RatioDial->setValue(value);
+  ui.delay2RatioDial->setValue(value);
   update();
 }
 
 void LegacyDelayFrame::OnFeedback(double value)
 {
-  ui->feedbackDial->setValue(value);
+  ui.feedbackDial->setValue(value);
   update();
 }
 
 void LegacyDelayFrame::OnNoteValue1(int valueIndex)
 {
-  ui->noteValue1Dial->setValue(valueIndex);
+  ui.noteValue1Dial->setValue(valueIndex);
   update();
 }
 
 void LegacyDelayFrame::OnNoteValue2(int valueIndex)
 {
-  ui->noteValue2Dial->setValue(valueIndex);
+  ui.noteValue2Dial->setValue(valueIndex);
   update();
 }
 
 void LegacyDelayFrame::OnToTempo(int valueIndex)
 {
-  ui->toTempoDial->setValue(valueIndex);
+  ui.toTempoDial->setValue(valueIndex);
   mToTempo = valueIndex != 0;
   UpdateLCD();
   update();
@@ -258,25 +243,25 @@ void LegacyDelayFrame::OnToTempo(int valueIndex)
 
 void LegacyDelayFrame::OnBandwidth(double value)
 {
-  ui->bandwidthDial->setValue(value);
+  ui.bandwidthDial->setValue(value);
   update();
 }
 
 void LegacyDelayFrame::OnFrequency(double value)
 {
-  ui->frequencyDial->setValue(value);
+  ui.frequencyDial->setValue(value);
   update();
 }
 
 void LegacyDelayFrame::OnModulation(double value)
 {
-  ui->modulationDial->setValue(value);
+  ui.modulationDial->setValue(value);
   update();
 }
 
 void LegacyDelayFrame::OnDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
@@ -284,16 +269,16 @@ void LegacyDelayFrame::UpdateLCD()
 {
   if(mToTempo)
   {
-    ui->lcdDisplay->setValue2Title("Note Value 1");
-    ui->lcdDisplay->setValue3Title("Note Value 2");
-    ui->lcdDisplay->setValue2(ui->noteValue1Dial->valueText());
-    ui->lcdDisplay->setValue3(ui->noteValue1Dial->valueText());
+    ui.lcdDisplay->setValue2Title("Note Value 1");
+    ui.lcdDisplay->setValue3Title("Note Value 2");
+    ui.lcdDisplay->setValue2(ui.noteValue1Dial->valueText());
+    ui.lcdDisplay->setValue3(ui.noteValue1Dial->valueText());
   }
   else
   {
-    ui->lcdDisplay->setValue2Title("Delay 1 Time");
-    ui->lcdDisplay->setValue3Title("Delay 2 Ratio");
-    ui->lcdDisplay->setValue2(ui->delay1TimeDial->valueText());
-    ui->lcdDisplay->setValue3(ui->delay2RatioDial->valueText());
+    ui.lcdDisplay->setValue2Title("Delay 1 Time");
+    ui.lcdDisplay->setValue3Title("Delay 2 Ratio");
+    ui.lcdDisplay->setValue2(ui.delay1TimeDial->valueText());
+    ui.lcdDisplay->setValue3(ui.delay2RatioDial->valueText());
   }
 }

@@ -13,41 +13,35 @@
 *   You should have received a copy of the GNU General Public License along with Toaster.
 *   If not, see <http://www.gnu.org/licenses/>.
 */
+#include <QLayout>
 #include "ReverbFrame.h"
-#include "ui_ReverbFrame.h"
 #include "Reverb.h"
 #include "LookUpTables.h"
 
 ReverbFrame::ReverbFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpReverb(nullptr)
 {
+  ui.setupUi(this);
 }
 
 ReverbFrame::~ReverbFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void ReverbFrame::activate(QObject& stomp)
 {
-  ui = new Ui::ReverbFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpReverb = qobject_cast<Reverb*>(&stomp);
 
   if(mpReverb != nullptr)
   {
-    connect(mpReverb, SIGNAL(preDelayReceived(double)), this, SLOT(onPredaly(double)));
-    connect(mpReverb, SIGNAL(bandwidthReceived(double)), this, SLOT(onBandwidth(double)));
-    connect(mpReverb, SIGNAL(centerFrequencyReceived(double)), this, SLOT(onFrequency(double)));
-    connect(mpReverb, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpReverb, SIGNAL(delRevBalanceReceived(double)), this, SLOT(onDelRevBalance(double)));
-    connect(mpReverb, SIGNAL(dampingReceived(double)), this, SLOT(onDamping(double)));
-    connect(mpReverb, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    connect(mpReverb, &Reverb::preDelayReceived, this, &ReverbFrame::onPredaly);
+    connect(mpReverb, &Reverb::bandwidthReceived, this, &ReverbFrame::onBandwidth);
+    connect(mpReverb, &Reverb::centerFrequencyReceived, this, &ReverbFrame::onFrequency);
+    connect(mpReverb, &Reverb::duckingReceived, this, &ReverbFrame::onDucking);
+    connect(mpReverb, &Reverb::delRevBalanceReceived, this, &ReverbFrame::onDelRevBalance);
+    connect(mpReverb, &Reverb::dampingReceived, this, &ReverbFrame::onDamping);
+    connect(mpReverb, &Reverb::volumeReceived, this, &ReverbFrame::onVolume);
 
     mpReverb->requestPreDelay();
     mpReverb->requestBandwidth();
@@ -57,8 +51,8 @@ void ReverbFrame::activate(QObject& stomp)
     mpReverb->requestDamping();
     mpReverb->requestVolume();
 
-    ui->lcdDisplay->setStompInstance("Reverb module");
-    ui->lcdDisplay->setStompName(LookUpTables::reverbTypeName(mpReverb->getReverbType()));
+    ui.lcdDisplay->setStompInstance("Reverb module");
+    ui.lcdDisplay->setStompName(LookUpTables::reverbTypeName(mpReverb->getReverbType()));
   }
 }
 
@@ -66,65 +60,58 @@ void ReverbFrame::deactivate()
 {
   if(mpReverb != nullptr)
   {
-    disconnect(mpReverb, SIGNAL(preDelayReceived(double)), this, SLOT(onPredaly(double)));
-    disconnect(mpReverb, SIGNAL(bandwidthReceived(double)), this, SLOT(onBandwidth(double)));
-    disconnect(mpReverb, SIGNAL(centerFrequencyReceived(double)), this, SLOT(onFrequency(double)));
-    disconnect(mpReverb, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpReverb, SIGNAL(delRevBalanceReceived(double)), this, SLOT(onDelRevBalance(double)));
-    disconnect(mpReverb, SIGNAL(dampingReceived(double)), this, SLOT(onDamping(double)));
-    disconnect(mpReverb, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
+    disconnect(mpReverb, &Reverb::preDelayReceived, this, &ReverbFrame::onPredaly);
+    disconnect(mpReverb, &Reverb::bandwidthReceived, this, &ReverbFrame::onBandwidth);
+    disconnect(mpReverb, &Reverb::centerFrequencyReceived, this, &ReverbFrame::onFrequency);
+    disconnect(mpReverb, &Reverb::duckingReceived, this, &ReverbFrame::onDucking);
+    disconnect(mpReverb, &Reverb::delRevBalanceReceived, this, &ReverbFrame::onDelRevBalance);
+    disconnect(mpReverb, &Reverb::dampingReceived, this, &ReverbFrame::onDamping);
+    disconnect(mpReverb, &Reverb::volumeReceived, this, &ReverbFrame::onVolume);
     mpReverb = nullptr;
-  }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
   }
 }
 
 QToasterLCD::Page ReverbFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page ReverbFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void ReverbFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void ReverbFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void ReverbFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void ReverbFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void ReverbFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void ReverbFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void ReverbFrame::on_predelayDial_valueChanged(double value)
@@ -171,42 +158,42 @@ void ReverbFrame::on_volumeDial_valueChanged(double value)
 
 void ReverbFrame::onPredaly(double value)
 {
-  ui->predelayDial->setValue(value);
+  ui.predelayDial->setValue(value);
   update();
 }
 
 void ReverbFrame::onBandwidth(double value)
 {
-  ui->bandwidthDial->setValue(value);
+  ui.bandwidthDial->setValue(value);
   update();
 }
 
 void ReverbFrame::onFrequency(double value)
 {
-  ui->frequencyDial->setValue(value);
+  ui.frequencyDial->setValue(value);
   update();
 }
 
 void ReverbFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void ReverbFrame::onDelRevBalance(double value)
 {
-  ui->delRevBalanceDial->setValue(value);
+  ui.delRevBalanceDial->setValue(value);
   update();
 }
 
 void ReverbFrame::onDamping(double value)
 {
-  ui->dampingDial->setValue(value);
+  ui.dampingDial->setValue(value);
   update();
 }
 
 void ReverbFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }

@@ -16,12 +16,9 @@
 #ifndef CABFRAME_H
 #define CABFRAME_H
 #include <QWidget>
+#include "ui_CabFrame.h"
 #include "StompEditorPage.h"
 #include "Cab.h"
-
-namespace Ui {
-class CabFrame;
-}
 
 class CabFrame : public QWidget, public IStompEditorPage
 {
@@ -57,9 +54,8 @@ private slots:
   void onVolume(double value);
 
 private:
-  Ui::CabFrame *ui;
-  Cab* mpCab;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::CabFrame ui;
+  Cab* mpCab = nullptr;
 };
 
 #endif // CABFRAME_H

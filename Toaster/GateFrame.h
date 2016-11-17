@@ -16,12 +16,9 @@
 #ifndef GATEFRAME_H
 #define GATEFRAME_H
 #include <QWidget>
+#include "ui_GateFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class GateFrame;
-}
 
 class GateFrame : public QWidget, public IStompEditorPage
 {
@@ -51,10 +48,8 @@ private slots:
   void onThreshold(double value);
 
 private:
-  Ui::GateFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::GateFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // GATEFRAME_H

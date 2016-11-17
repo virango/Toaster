@@ -16,12 +16,9 @@
 #ifndef TONEANDDUCKINGDSFRAME_H
 #define TONEANDDUCKINGDSFRAME_H
 #include <QWidget>
+#include "ui_ToneAndDuckingDSFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class ToneAndDuckingDSFrame;
-}
 
 class ToneAndDuckingDSFrame : public QWidget, public IStompEditorPage
 {
@@ -55,10 +52,8 @@ private slots:
   void onDucking(double value);
 
 private:
-  Ui::ToneAndDuckingDSFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::ToneAndDuckingDSFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // TONEANDDUCKINGDSFRAME_H

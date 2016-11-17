@@ -16,12 +16,9 @@
 #ifndef HYPERCHORUSFRAME_H
 #define HYPERCHORUSFRAME_H
 #include <QWidget>
+#include "ui_HyperChorusFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class HyperChorusFrame;
-}
 
 class HyperChorusFrame : public QWidget, public IStompEditorPage
 {
@@ -60,10 +57,8 @@ private slots:
   void onVolume(double value);
   void onDucking(double value);
 private:
-  Ui::HyperChorusFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::HyperChorusFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // HYPERCHORUSFRAME_H

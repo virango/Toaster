@@ -14,29 +14,22 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "CompressorFrame.h"
-#include "ui_CompressorFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 CompressorFrame::CompressorFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
 }
 
 CompressorFrame::~CompressorFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void CompressorFrame::activate(QObject& stomp)
 {
-  ui = new Ui::CompressorFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -53,8 +46,8 @@ void CompressorFrame::activate(QObject& stomp)
     mpStomp->requestVolume();
     mpStomp->requestMix();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -67,59 +60,51 @@ void CompressorFrame::deactivate()
     disconnect(mpStomp, &Stomp::compressorSquashReceived, this, &CompressorFrame::onSquash);
     disconnect(mpStomp, &Stomp::volumeReceived, this, &CompressorFrame::onVolume);
     disconnect(mpStomp, &Stomp::mixReceived, this, &CompressorFrame::onMix);
-  }
-
-  mpStomp = nullptr;
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
+    mpStomp = nullptr;
   }
 }
 
 QToasterLCD::Page CompressorFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page CompressorFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void CompressorFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void CompressorFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void CompressorFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void CompressorFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void CompressorFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void CompressorFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void CompressorFrame::on_intensityDial_valueChanged(double value)
@@ -154,29 +139,29 @@ void CompressorFrame::on_mixDial_valueChanged(double value)
 
 void CompressorFrame::onIntensity(double value)
 {
-  ui->intensityDial->setValue(value);
+  ui.intensityDial->setValue(value);
   update();
 }
 void CompressorFrame::onAttack(double value)
 {
-  ui->attackDial->setValue(value);
+  ui.attackDial->setValue(value);
   update();
 }
 
 void CompressorFrame::onSquash(double value)
 {
-  ui->squashDial->setValue(value);
+  ui.squashDial->setValue(value);
   update();
 }
 
 void CompressorFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void CompressorFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }

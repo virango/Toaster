@@ -16,12 +16,9 @@
 #ifndef METALEQUALIZERFRAME_H
 #define METALEQUALIZERFRAME_H
 #include <QWidget>
+#include "ui_MetalEqualizerFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class MetalEqualizerFrame;
-}
 
 class MetalEqualizerFrame : public QWidget, public IStompEditorPage
 {
@@ -68,10 +65,8 @@ private slots:
   void onVolume(double value);
 
 private:
-  Ui::MetalEqualizerFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::MetalEqualizerFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // METALEQUALIZERFRAME_H

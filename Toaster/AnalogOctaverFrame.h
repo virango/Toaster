@@ -16,12 +16,9 @@
 #ifndef ANALOGOCTAVERFRAME_H
 #define ANALOGOCTAVERFRAME_H
 #include <QWidget>
+#include "ui_AnalogOctaverFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class AnalogOctaverFrame;
-}
 
 class AnalogOctaverFrame : public QWidget, public IStompEditorPage
 {
@@ -61,9 +58,8 @@ private slots:
   void onStereo(double value);
 
 private:
-  Ui::AnalogOctaverFrame *ui;
-  Stomp* mpStomp;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::AnalogOctaverFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // ANALOGOCTAVERFRAME_H

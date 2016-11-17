@@ -16,12 +16,9 @@
 #ifndef SPACEFRAME_H
 #define SPACEFRAME_H
 #include <QWidget>
+#include "ui_SpaceFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class SpaceFrame;
-}
 
 class SpaceFrame : public QWidget, public IStompEditorPage
 {
@@ -52,10 +49,8 @@ private slots:
   void onIntensity(double value);
 
 private:
-  Ui::SpaceFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::SpaceFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // SPACEFRAME_H

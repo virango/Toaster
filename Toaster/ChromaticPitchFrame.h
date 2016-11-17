@@ -16,12 +16,9 @@
 #ifndef CHROMATICPITCHFRAME_H
 #define CHROMATICPITCHFRAME_H
 #include <QWidget>
+#include "ui_ChromaticPitchFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class ChromaticPitchFrame;
-}
 
 class ChromaticPitchFrame : public QWidget, public IStompEditorPage
 {
@@ -73,9 +70,8 @@ private slots:
   void onStereo(double value);
 
 private:
-  Ui::ChromaticPitchFrame *ui;
-  Stomp* mpStomp;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::ChromaticPitchFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // CHROMATICPITCHFRAME_H

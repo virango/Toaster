@@ -16,14 +16,9 @@
 #ifndef DELAYFRAME_H
 #define DELAYFRAME_H
 #include <QWidget>
+#include "ui_DelayFrame.h"
 #include "StompEditorPage.h"
 #include "Delay.h"
-
-namespace Ui {
-class DelayFrame;
-}
-
-class Delay;
 
 class DelayFrame : public QWidget, public IStompEditorPage
 {
@@ -67,11 +62,8 @@ private slots:
   void onVolume(double value);
 
 private:
-  Ui::DelayFrame *ui;
-
-  Delay* mpDelay;
-
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::DelayFrame ui;
+  Delay* mpDelay = nullptr;
 };
 
 #endif // DELAYFRAME_H

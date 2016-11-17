@@ -14,32 +14,25 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "MetalEqualizerFrame.h"
-#include "ui_MetalEqualizerFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 MetalEqualizerFrame::MetalEqualizerFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  ui.lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui.highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui.midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 MetalEqualizerFrame::~MetalEqualizerFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void MetalEqualizerFrame::activate(QObject& stomp)
 {
-  ui = new Ui::MetalEqualizerFrame();
-  ui->setupUi(this);
-  ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->midFreqDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -64,8 +57,8 @@ void MetalEqualizerFrame::activate(QObject& stomp)
     mpStomp->requestDucking();
     mpStomp->requestVolume();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -84,58 +77,51 @@ void MetalEqualizerFrame::deactivate()
     disconnect(mpStomp, &Stomp::volumeReceived, this, &MetalEqualizerFrame::onVolume);
     mpStomp = nullptr;
   }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
-  }
 }
 
 QToasterLCD::Page MetalEqualizerFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page MetalEqualizerFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void MetalEqualizerFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
-    ui->bigDials->setCurrentIndex((int) page);
-    ui->smallDials->setCurrentIndex((int) page);
+    ui.lcdDisplay->setCurrentPage(page);
+    ui.bigDials->setCurrentIndex((int) page);
+    ui.smallDials->setCurrentIndex((int) page);
   }
 }
 
 void MetalEqualizerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void MetalEqualizerFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void MetalEqualizerFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void MetalEqualizerFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void MetalEqualizerFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void MetalEqualizerFrame::on_lowDial_valueChanged(double value)
@@ -194,55 +180,55 @@ void MetalEqualizerFrame::on_volumeDial_valueChanged(double value)
 
 void MetalEqualizerFrame::onLowDial(double value)
 {
-  ui->lowDial->setValue(value);
+  ui.lowDial->setValue(value);
   update();
 }
 
 void MetalEqualizerFrame::onMiddleDial(double value)
 {
-  ui->middleDial->setValue(value);
+  ui.middleDial->setValue(value);
   update();
 }
 
 void MetalEqualizerFrame::onMidFreqDial(int value)
 {
-  ui->midFreqDial->setValue(value);
+  ui.midFreqDial->setValue(value);
   update();
 }
 
 void MetalEqualizerFrame::onHighDial(double value)
 {
-  ui->highDial->setValue(value);
+  ui.highDial->setValue(value);
   update();
 }
 
 void MetalEqualizerFrame::onLowCut(int value)
 {
-  ui->lowCutDial->setValue(value);
+  ui.lowCutDial->setValue(value);
   update();
 }
 
 void MetalEqualizerFrame::onHighCut(int value)
 {
-  ui->highCutDial->setValue(value);
+  ui.highCutDial->setValue(value);
   update();
 }
 
 void MetalEqualizerFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void MetalEqualizerFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void MetalEqualizerFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 

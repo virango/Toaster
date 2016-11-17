@@ -14,31 +14,23 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "PhaserFrame.h"
-#include "ui_PhaserFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 PhaserFrame::PhaserFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
-
+  ui.setupUi(this);
+  ui.rateDial->setLookUpTable(LookUpTables::getFlangerRateValues());
 }
 
 PhaserFrame::~PhaserFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void PhaserFrame::activate(QObject& stomp)
 {
-  ui = new Ui::PhaserFrame();
-  ui->setupUi(this);
-  ui->rateDial->setLookUpTable(LookUpTables::getFlangerRateValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -54,8 +46,8 @@ void PhaserFrame::activate(QObject& stomp)
     connect(mpStomp, &Stomp::volumeReceived, this, &PhaserFrame::onVolume);
     connect(mpStomp, &Stomp::stereoReceived, this, &PhaserFrame::onStereo);
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestModulationRate();
     mpStomp->requestModulationDepth();
@@ -70,14 +62,14 @@ void PhaserFrame::activate(QObject& stomp)
     StompInstance si = mpStomp->getInstance();
     if(si != StompX && si != StompMod && si != StompDelay)
     {
-      ui->lcdDisplay->setValue7("");
-      ui->lcdDisplay->setValue7Title("");
-      ui->stereoDial->setIsActive(false);
+      ui.lcdDisplay->setValue7("");
+      ui.lcdDisplay->setValue7Title("");
+      ui.stereoDial->setIsActive(false);
     }
     else
     {
-      ui->lcdDisplay->setValue7Title("Stereo");
-      ui->stereoDial->setIsActive(true);
+      ui.lcdDisplay->setValue7Title("Stereo");
+      ui.stereoDial->setIsActive(true);
       mpStomp->requestStereo();
     }
   }
@@ -99,58 +91,51 @@ void PhaserFrame::deactivate()
     disconnect(mpStomp, &Stomp::stereoReceived, this, &PhaserFrame::onStereo);
     mpStomp = nullptr;
   }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
-  }
 }
 
 QToasterLCD::Page PhaserFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page PhaserFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void PhaserFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
-    ui->bigDials->setCurrentIndex((int) page);
-    ui->smallDials->setCurrentIndex((int) page);
+    ui.lcdDisplay->setCurrentPage(page);
+    ui.bigDials->setCurrentIndex((int) page);
+    ui.smallDials->setCurrentIndex((int) page);
   }
 }
 
 void PhaserFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void PhaserFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void PhaserFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void PhaserFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void PhaserFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void PhaserFrame::on_rateDial_valueChanged(int value)
@@ -215,60 +200,60 @@ void PhaserFrame::on_stereoDial_valueChanged(double value)
 
 void PhaserFrame::onRate(int value)
 {
-  ui->rateDial->setValue(value*128);
+  ui.rateDial->setValue(value*128);
   update();
 }
 
 void PhaserFrame::onDepth(double value)
 {
-  ui->depthDial->setValue(value);
+  ui.depthDial->setValue(value);
   update();
 }
 
 void PhaserFrame::onManual(double value)
 {
-  ui->manualDial->setValue(value);
+  ui.manualDial->setValue(value);
   update();
 }
 
 void PhaserFrame::onFeedback(double value)
 {
-  ui->feedbackDial->setValue(value);
+  ui.feedbackDial->setValue(value);
   update();
 }
 
 void PhaserFrame::onPeakSpread(double value)
 {
-  ui->peakSpreadDial->setValue(value);
+  ui.peakSpreadDial->setValue(value);
   update();
 }
 
 void PhaserFrame::onStages(double value)
 {
-  ui->stagesDial->setValue(value);
+  ui.stagesDial->setValue(value);
   update();
 }
 
 void PhaserFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void PhaserFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void PhaserFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void PhaserFrame::onStereo(double value)
 {
-  ui->stereoDial->setValue(value);
+  ui.stereoDial->setValue(value);
   update();
 }

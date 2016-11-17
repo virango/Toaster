@@ -16,12 +16,9 @@
 #ifndef AMPFRAME_H
 #define AMPFRAME_H
 #include <QWidget>
+#include "ui_AmpFrame.h"
 #include "StompEditorPage.h"
 #include "Amp.h"
-
-namespace Ui {
-class AmpFrame;
-}
 
 class AmpFrame : public QWidget, public IStompEditorPage
 {
@@ -66,9 +63,8 @@ private slots:
   void onDirectMix(double value);
 
 private:
-  Ui::AmpFrame *ui;
-  Amp* mpAmp;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::AmpFrame ui;
+  Amp* mpAmp = nullptr;
 };
 
 #endif // AMPFRAME_H

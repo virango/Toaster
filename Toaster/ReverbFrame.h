@@ -16,21 +16,17 @@
 #ifndef REVERBFRAME_H
 #define REVERBFRAME_H
 #include <QWidget>
+#include "ui_ReverbFrame.h"
 #include "StompEditorPage.h"
 #include "Reverb.h"
 
-namespace Ui {
-class ReverbFrame;
-}
-
-class Reverb;
 class ReverbFrame : public QWidget, public IStompEditorPage
 {
   Q_OBJECT
 
 public:
   explicit ReverbFrame(QWidget *parent = 0);
-  ~ReverbFrame();
+  virtual ~ReverbFrame();
 
   // IStompEditorPage
   virtual void activate(QObject& stomp);
@@ -65,9 +61,8 @@ private slots:
   void onDamping(double value);
   void onVolume(double value);
 private:
-  Ui::ReverbFrame *ui;
-  Reverb* mpReverb;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::ReverbFrame ui;
+  Reverb* mpReverb = nullptr;
 };
 
 #endif // REVERBFRAME_H

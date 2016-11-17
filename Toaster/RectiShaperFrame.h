@@ -16,12 +16,9 @@
 #ifndef RECTISHAPERFRAME_H
 #define RECTISHAPERFRAME_H
 #include <QWidget>
+#include "ui_RectiShaperFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class RectiShaperFrame;
-}
 
 class RectiShaperFrame : public QWidget, public IStompEditorPage
 {
@@ -55,10 +52,8 @@ private slots:
   void onDucking(double value);
 
 private:
-  Ui::RectiShaperFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::RectiShaperFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // RECTISHAPERFRAME_H

@@ -14,35 +14,28 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "ChromaticPitchFrame.h"
-#include "ui_ChromaticPitchFrame.h"
 #include "Stomp.h"
 #include "Settings.h"
 #include "LookUpTables.h"
 
 ChromaticPitchFrame::ChromaticPitchFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+
+  if(Settings::get().getKPAOSVersion() >= 0x04000000)
+  {
+    ui.lcdDisplay->setValue9Title("Voice Balance");
+  }
 }
 
 ChromaticPitchFrame::~ChromaticPitchFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void ChromaticPitchFrame::activate(QObject& stomp)
 {
-  ui = new Ui::ChromaticPitchFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
-  if(Settings::get().getKPAOSVersion() >= 0x04000000)
-  {
-    ui->lcdDisplay->setValue9Title("Voice Balance");
-  }
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -60,8 +53,8 @@ void ChromaticPitchFrame::activate(QObject& stomp)
     connect(mpStomp, &Stomp::formantShiftOnOffReceived, this, &ChromaticPitchFrame::onFormantShiftOnOff);
     connect(mpStomp, &Stomp::stereoReceived, this, &ChromaticPitchFrame::onStereo);
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestVoice1Pitch();
     mpStomp->requestVoice2Pitch();
@@ -78,14 +71,14 @@ void ChromaticPitchFrame::activate(QObject& stomp)
     StompInstance si = mpStomp->getInstance();
     if(si != StompX && si != StompMod && si != StompDelay)
     {
-      ui->lcdDisplay->setValue16("");
-      ui->lcdDisplay->setValue16Title("");
-      ui->stereoDial->setIsActive(false);
+      ui.lcdDisplay->setValue16("");
+      ui.lcdDisplay->setValue16Title("");
+      ui.stereoDial->setIsActive(false);
     }
     else
     {
-      ui->lcdDisplay->setValue16Title("Stereo");
-      ui->stereoDial->setIsActive(true);
+      ui.lcdDisplay->setValue16Title("Stereo");
+      ui.stereoDial->setIsActive(true);
       mpStomp->requestStereo();
     }
   }
@@ -107,62 +100,53 @@ void ChromaticPitchFrame::deactivate()
     disconnect(mpStomp, &Stomp::pureTuningReceived, this, &ChromaticPitchFrame::onPureTuning);
     disconnect(mpStomp, &Stomp::formantShiftOnOffReceived, this, &ChromaticPitchFrame::onFormantShiftOnOff);
     disconnect(mpStomp, &Stomp::stereoReceived, this, &ChromaticPitchFrame::onStereo);
-
-  }
-
-  mpStomp = nullptr;
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
+    mpStomp = nullptr;
   }
 }
 
 QToasterLCD::Page ChromaticPitchFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page ChromaticPitchFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void ChromaticPitchFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
-    ui->bigDials->setCurrentIndex((int) page);
-    ui->smallDials->setCurrentIndex((int) page);
+    ui.lcdDisplay->setCurrentPage(page);
+    ui.bigDials->setCurrentIndex((int) page);
+    ui.smallDials->setCurrentIndex((int) page);
   }
 }
 
 void ChromaticPitchFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void ChromaticPitchFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void ChromaticPitchFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void ChromaticPitchFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void ChromaticPitchFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void ChromaticPitchFrame::on_voice1PitchDial_valueChanged(double value)
@@ -239,72 +223,72 @@ void ChromaticPitchFrame::on_stereoDial_valueChanged(double value)
 
 void ChromaticPitchFrame::onVoice1Pitch(double value)
 {
-  ui->voice1PitchDial->setValue(value);
+  ui.voice1PitchDial->setValue(value);
   update();
 }
 
 void ChromaticPitchFrame::onVoice2Pitch(double value)
 {
-  ui->voice2PitchDial->setValue(value);
+  ui.voice2PitchDial->setValue(value);
   update();
 }
 
 void ChromaticPitchFrame::onFormantShift(double value)
 {
-  ui->formantShiftDial->setValue(value);
+  ui.formantShiftDial->setValue(value);
   update();
 }
 
 void ChromaticPitchFrame::onDetune(double value)
 {
-  ui->detuneDial->setValue(value);
+  ui.detuneDial->setValue(value);
   update();
 }
 
 void ChromaticPitchFrame::onVoiceMix(double value)
 {
-  ui->voiceMixDial->setValue(value);
+  ui.voiceMixDial->setValue(value);
   update();
 }
 
 void ChromaticPitchFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void ChromaticPitchFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void ChromaticPitchFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void ChromaticPitchFrame::onSmoothChords(bool onOff)
 {
-  ui->smoothChordsDial->setValue(onOff ? 1 : 0);
+  ui.smoothChordsDial->setValue(onOff ? 1 : 0);
   update();
 }
 
 void ChromaticPitchFrame::onPureTuning(bool onOff)
 {
-  ui->pureTuningDial->setValue(onOff ? 1 : 0);
+  ui.pureTuningDial->setValue(onOff ? 1 : 0);
   update();
 }
 
 void ChromaticPitchFrame::onFormantShiftOnOff(bool onOff)
 {
-  ui->formantShiftOnOffDial->setValue(onOff ? 1 : 0);
+  ui.formantShiftOnOffDial->setValue(onOff ? 1 : 0);
   update();
 }
 
 void ChromaticPitchFrame::onStereo(double value)
 {
-  ui->stereoDial->setValue(value);
+  ui.stereoDial->setValue(value);
   update();
 }

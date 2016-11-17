@@ -16,12 +16,9 @@
 #ifndef PHASERONEWAYFRAME_H
 #define PHASERONEWAYFRAME_H
 #include <QWidget>
+#include "ui_PhaserOnewayFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class PhaserOnewayFrame;
-}
 
 class PhaserOnewayFrame : public QWidget, public IStompEditorPage
 {
@@ -69,10 +66,8 @@ private slots:
   void onStereo(double value);
 
 private:
-  Ui::PhaserOnewayFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::PhaserOnewayFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // PhaserOnewayFrame_H

@@ -14,30 +14,21 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "DelayFrame.h"
-#include "ui_DelayFrame.h"
 #include "LookUpTables.h"
 
 DelayFrame::DelayFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpDelay(nullptr)
 {
+  ui.setupUi(this);
 }
 
 DelayFrame::~DelayFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void DelayFrame::activate(QObject& stomp)
 {
-  ui = new Ui::DelayFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
   mpDelay = qobject_cast<Delay*>(&stomp);
-
   if(mpDelay != nullptr)
   {
     connect(mpDelay, &Delay::bandwidthReceived, this, &DelayFrame::onBandwidth);
@@ -56,8 +47,8 @@ void DelayFrame::activate(QObject& stomp)
     mpDelay->requestRatio();
     mpDelay->requestVolume();
 
-    ui->lcdDisplay->setStompInstance("Delay Effect");
-    ui->lcdDisplay->setStompName(LookUpTables::delayTypeName(mpDelay->getDelayType()));
+    ui.lcdDisplay->setStompInstance("Delay Effect");
+    ui.lcdDisplay->setStompName(LookUpTables::delayTypeName(mpDelay->getDelayType()));
   }
 }
 
@@ -72,58 +63,51 @@ void DelayFrame::deactivate()
     disconnect(mpDelay, &Delay::timeReceived, this, &DelayFrame::onTime);
     disconnect(mpDelay, &Delay::ratioReceived, this, &DelayFrame::onRatio);
     disconnect(mpDelay, &Delay::volumeReceived, this, &DelayFrame::onVolume);
-  }
-  mpDelay = nullptr;
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
+    mpDelay = nullptr;
   }
 }
 
 QToasterLCD::Page DelayFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page DelayFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void DelayFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void DelayFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void DelayFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void DelayFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void DelayFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void DelayFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void DelayFrame::on_bandwidthDial_valueChanged(double value)
@@ -170,42 +154,42 @@ void DelayFrame::on_volumeDial_valueChanged(double value)
 
 void DelayFrame::onBandwidth(double value)
 {
-  ui->bandwidthDial->setValue(value);
+  ui.bandwidthDial->setValue(value);
   update();
 }
 
 void DelayFrame::onCenterFrequency(double value)
 {
-  ui->centerFrequencyDial->setValue(value);
+  ui.centerFrequencyDial->setValue(value);
   update();
 }
 
 void DelayFrame::onModulation(double value)
 {
-  ui->modulationDial->setValue(value);
+  ui.modulationDial->setValue(value);
   update();
 }
 
 void DelayFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void DelayFrame::onTime(double value)
 {
-  ui->timeDial->setValue(value);
+  ui.timeDial->setValue(value);
   update();
 }
 
 void DelayFrame::onRatio(::DelayRatio ratio)
 {
-  ui->ratioDial->setValue((int)ratio);
+  ui.ratioDial->setValue((int)ratio);
   update();
 }
 
 void DelayFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }

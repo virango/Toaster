@@ -16,12 +16,9 @@
 #ifndef FLANGERFRAME_H
 #define FLANGERFRAME_H
 #include <QWidget>
+#include "ui_FlangerFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class FlangerFrame;
-}
 
 class FlangerFrame : public QWidget, public IStompEditorPage
 {
@@ -65,9 +62,8 @@ private slots:
   void onStereo(double value);
 
 private:
-  Ui::FlangerFrame *ui;
-  Stomp* mpStomp;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::FlangerFrame ui;
+  Stomp* mpStomp = nullptr;  
 };
 
 #endif // FLANGERFRAME_H

@@ -16,12 +16,9 @@
 #ifndef MICROPITCHFRAME_H
 #define MICROPITCHFRAME_H
 #include <QWidget>
+#include "ui_MicroPitchFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class MicroPitchFrame;
-}
 
 class MicroPitchFrame : public QWidget, public IStompEditorPage
 {
@@ -59,10 +56,8 @@ private slots:
   void onDucking(double value);
 
 private:
-  Ui::MicroPitchFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::MicroPitchFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // MICROPITCHFRAME_H

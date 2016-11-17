@@ -16,12 +16,9 @@
 #ifndef HARMONICPITCHFRAME_H
 #define HARMONICPITCHFRAME_H
 #include <QWidget>
+#include "ui_HarmonicPitchFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class HarmonicPitchFrame;
-}
 
 class HarmonicPitchFrame : public QWidget, public IStompEditorPage
 {
@@ -71,9 +68,8 @@ private slots:
   void onStereo(double value);
 
 private:
-  Ui::HarmonicPitchFrame *ui;
-  Stomp* mpStomp;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::HarmonicPitchFrame ui;
+  Stomp* mpStomp = nullptr;  
 };
 
 #endif // HARMONICPITCHFRAME_H

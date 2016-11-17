@@ -14,43 +14,36 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "WahFormantShiftFrame.h"
-#include "ui_WahFormantShiftFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 WahFormantShiftFrame::WahFormantShiftFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
 }
 
 WahFormantShiftFrame::~WahFormantShiftFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void WahFormantShiftFrame::activate(QObject& stomp)
 {
-  ui = new Ui::WahFormantShiftFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(wahManualReceived(double)), this, SLOT(onManual(double)));
-    connect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
-    connect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onPitchShift(double)));
-    connect(mpStomp, SIGNAL(wahPedalModeReceived(::WahPedalMode)), this, SLOT(onPedalMode(::WahPedalMode)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(wahTouchAttackReceived(double)), this, SLOT(onTouchAttack(double)));
-    connect(mpStomp, SIGNAL(wahTouchReleaseReceived(double)), this, SLOT(onTouchRelease(double)));
-    connect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
+    connect(mpStomp, &Stomp::wahManualReceived, this, &WahFormantShiftFrame::onManual);
+    connect(mpStomp, &Stomp::wahRangeReceived, this, &WahFormantShiftFrame::onPedalRange);
+    connect(mpStomp, &Stomp::voice2PitchReceived, this, &WahFormantShiftFrame::onPitchShift);
+    connect(mpStomp, &Stomp::wahPedalModeReceived, this, &WahFormantShiftFrame::onPedalMode);
+    connect(mpStomp, &Stomp::mixReceived, this, &WahFormantShiftFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &WahFormantShiftFrame::onDucking);
+    connect(mpStomp, &Stomp::volumeReceived, this, &WahFormantShiftFrame::onVolume);
+    connect(mpStomp, &Stomp::wahTouchAttackReceived, this, &WahFormantShiftFrame::onTouchAttack);
+    connect(mpStomp, &Stomp::wahTouchReleaseReceived, this, &WahFormantShiftFrame::onTouchRelease);
+    connect(mpStomp, &Stomp::wahTouchBoostReceived, this, &WahFormantShiftFrame::onTouchBoost);
 
     mpStomp->requestWahManual();
     mpStomp->requestWahRange();
@@ -63,8 +56,8 @@ void WahFormantShiftFrame::activate(QObject& stomp)
     mpStomp->requestWahTouchRelease();
     mpStomp->requestWahTouchBoost();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -72,70 +65,63 @@ void WahFormantShiftFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(wahManualReceived(double)), this, SLOT(onManual(double)));
-    disconnect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
-    disconnect(mpStomp, SIGNAL(voice2PitchReceived(double)), this, SLOT(onPitchShift(double)));
-    disconnect(mpStomp, SIGNAL(wahPedalModeReceived(::WahPedalMode)), this, SLOT(onPedalMode(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(wahTouchAttackReceived(double)), this, SLOT(onTouchAttack(double)));
-    disconnect(mpStomp, SIGNAL(wahTouchReleaseReceived(double)), this, SLOT(onTouchRelease(double)));
-    disconnect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
+    disconnect(mpStomp, &Stomp::wahManualReceived, this, &WahFormantShiftFrame::onManual);
+    disconnect(mpStomp, &Stomp::wahRangeReceived, this, &WahFormantShiftFrame::onPedalRange);
+    disconnect(mpStomp, &Stomp::voice2PitchReceived, this, &WahFormantShiftFrame::onPitchShift);
+    disconnect(mpStomp, &Stomp::wahPedalModeReceived, this, &WahFormantShiftFrame::onPedalMode);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &WahFormantShiftFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &WahFormantShiftFrame::onDucking);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &WahFormantShiftFrame::onVolume);
+    disconnect(mpStomp, &Stomp::wahTouchAttackReceived, this, &WahFormantShiftFrame::onTouchAttack);
+    disconnect(mpStomp, &Stomp::wahTouchReleaseReceived, this, &WahFormantShiftFrame::onTouchRelease);
+    disconnect(mpStomp, &Stomp::wahTouchBoostReceived, this, &WahFormantShiftFrame::onTouchBoost);
     mpStomp = nullptr;
-  }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
   }
 }
 
 QToasterLCD::Page WahFormantShiftFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page WahFormantShiftFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void WahFormantShiftFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
-    ui->bigDials->setCurrentIndex((int) page);
-    ui->smallDials->setCurrentIndex((int) page);
+    ui.lcdDisplay->setCurrentPage(page);
+    ui.bigDials->setCurrentIndex((int) page);
+    ui.smallDials->setCurrentIndex((int) page);
   }
 }
 
 void WahFormantShiftFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void WahFormantShiftFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void WahFormantShiftFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void WahFormantShiftFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void WahFormantShiftFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void WahFormantShiftFrame::on_manualDial_valueChanged(double value)
@@ -200,61 +186,61 @@ void WahFormantShiftFrame::on_touchBoostDial_valueChanged(double value)
 
 void WahFormantShiftFrame::onManual(double value)
 {
-  ui->manualDial->setValue(value - 5.0);
+  ui.manualDial->setValue(value - 5.0);
   update();
 }
 
 void WahFormantShiftFrame::onPedalRange(double value)
 {
-  ui->pedalRangeDial->setValue(value);
+  ui.pedalRangeDial->setValue(value);
   update();
 }
 
 void  WahFormantShiftFrame::onPitchShift(double value)
 {
-  ui->pitchShiftDial->setValue(value);
+  ui.pitchShiftDial->setValue(value);
   update();
 }
 
 void WahFormantShiftFrame::onPedalMode(WahPedalMode value)
 {
-  ui->pedalModeDial->setValue((int)value);
+  ui.pedalModeDial->setValue((int)value);
   update();
 }
 
 void WahFormantShiftFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void WahFormantShiftFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void WahFormantShiftFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void WahFormantShiftFrame::onTouchAttack(double value)
 {
-  ui->touchAttackDial->setValue(value);
+  ui.touchAttackDial->setValue(value);
   update();
 }
 
 void WahFormantShiftFrame::onTouchRelease(double value)
 {
-  ui->touchReleaseDial->setValue(value);
+  ui.touchReleaseDial->setValue(value);
   update();
 }
 
 void WahFormantShiftFrame::onTouchBoost(double value)
 {
-  ui->touchBoostDial->setValue(value);
+  ui.touchBoostDial->setValue(value);
   update();
 }
 

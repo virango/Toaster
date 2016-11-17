@@ -16,12 +16,9 @@
 #ifndef METALDSFRAME_H
 #define METALDSFRAME_H
 #include <QWidget>
+#include "ui_MetalDSFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class MetalDSFrame;
-}
 
 class MetalDSFrame : public QWidget, public IStompEditorPage
 {
@@ -63,10 +60,8 @@ private slots:
   void onMix(double value);
 
 private:
-  Ui::MetalDSFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::MetalDSFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // METALDSFRAME_H

@@ -16,12 +16,9 @@
 #ifndef GRAPHICEQUALIZERFRAME_H
 #define GRAPHICEQUALIZERFRAME_H
 #include <QWidget>
+#include "ui_GraphicEqualizerFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class GraphicEqualizerFrame;
-}
 
 class GraphicEqualizerFrame : public QWidget, public IStompEditorPage
 {
@@ -77,10 +74,8 @@ private slots:
   void onHighCut(int value);
 
 private:
-  Ui::GraphicEqualizerFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::GraphicEqualizerFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // GRAPHICEQUALIZERFRAME_H

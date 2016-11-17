@@ -14,29 +14,22 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "FlangerOnewayFrame.h"
-#include "ui_FlangerOnewayFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 FlangerOnewayFrame::FlangerOnewayFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
 }
 
 FlangerOnewayFrame::~FlangerOnewayFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void FlangerOnewayFrame::activate(QObject& stomp)
 {
-  ui = new Ui::FlangerOnewayFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -50,8 +43,8 @@ void FlangerOnewayFrame::activate(QObject& stomp)
     connect(mpStomp, &Stomp::volumeReceived, this, &FlangerOnewayFrame::onVolume);
     connect(mpStomp, &Stomp::stereoReceived, this, &FlangerOnewayFrame::onStereo);
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestModulationRate();
     mpStomp->requestModulationDepth();
@@ -64,14 +57,14 @@ void FlangerOnewayFrame::activate(QObject& stomp)
     StompInstance si = mpStomp->getInstance();
     if(si != StompX && si != StompMod && si != StompDelay)
     {
-      ui->lcdDisplay->setValue7("");
-      ui->lcdDisplay->setValue7Title("");
-      ui->stereoDial->setIsActive(false);
+      ui.lcdDisplay->setValue7("");
+      ui.lcdDisplay->setValue7Title("");
+      ui.stereoDial->setIsActive(false);
     }
     else
     {
-      ui->lcdDisplay->setValue7Title("Stereo");
-      ui->stereoDial->setIsActive(true);
+      ui.lcdDisplay->setValue7Title("Stereo");
+      ui.stereoDial->setIsActive(true);
       mpStomp->requestStereo();
     }
   }
@@ -89,59 +82,51 @@ void FlangerOnewayFrame::deactivate()
     disconnect(mpStomp, &Stomp::duckingReceived, this, &FlangerOnewayFrame::onDucking);
     disconnect(mpStomp, &Stomp::volumeReceived, this, &FlangerOnewayFrame::onVolume);
     disconnect(mpStomp, &Stomp::stereoReceived, this, &FlangerOnewayFrame::onStereo);
-  }
-
-  mpStomp = nullptr;
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
+    mpStomp = nullptr;
   }
 }
 
 QToasterLCD::Page FlangerOnewayFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page FlangerOnewayFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void FlangerOnewayFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void FlangerOnewayFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void FlangerOnewayFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void FlangerOnewayFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void FlangerOnewayFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void FlangerOnewayFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void FlangerOnewayFrame::on_rateDial_valueChanged(double value)
@@ -194,48 +179,48 @@ void FlangerOnewayFrame::on_stereoDial_valueChanged(double value)
 
 void FlangerOnewayFrame::onRate(double value)
 {
-  ui->rateDial->setValue(value - 5.0);
+  ui.rateDial->setValue(value - 5.0);
   update();
 }
 
 void FlangerOnewayFrame::onDepth(double value)
 {
-  ui->depthDial->setValue(value);
+  ui.depthDial->setValue(value);
   update();
 }
 
 void FlangerOnewayFrame::onManual(double value)
 {
-  ui->manualDial->setValue(value - 5.0);
+  ui.manualDial->setValue(value - 5.0);
   update();
 }
 
 void FlangerOnewayFrame::onFeedback(double value)
 {
-  ui->feedbackDial->setValue(value);
+  ui.feedbackDial->setValue(value);
   update();
 }
 
 void FlangerOnewayFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void FlangerOnewayFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void FlangerOnewayFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void FlangerOnewayFrame::onStereo(double value)
 {
-  ui->stereoDial->setValue(value);
+  ui.stereoDial->setValue(value);
   update();
 }

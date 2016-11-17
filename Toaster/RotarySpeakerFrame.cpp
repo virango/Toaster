@@ -14,30 +14,23 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "RotarySpeakerFrame.h"
-#include "ui_RotarySpeakerFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 RotarySpeakerFrame::RotarySpeakerFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  ui.distanceDial->setLookUpTable(LookUpTables::getRotaryDistanceValues());
 }
 
 RotarySpeakerFrame::~RotarySpeakerFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void RotarySpeakerFrame::activate(QObject& stomp)
 {
-  ui = new Ui::RotarySpeakerFrame();
-  ui->setupUi(this);
-  ui->distanceDial->setLookUpTable(LookUpTables::getRotaryDistanceValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -50,8 +43,8 @@ void RotarySpeakerFrame::activate(QObject& stomp)
     connect(mpStomp, &Stomp::duckingReceived, this, &RotarySpeakerFrame::onDucking);
     connect(mpStomp, &Stomp::stereoReceived, this, &RotarySpeakerFrame::onStereo);
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
 
     mpStomp->requestRotaryDistance();
     mpStomp->requestRotaryBalance();
@@ -64,14 +57,14 @@ void RotarySpeakerFrame::activate(QObject& stomp)
     StompInstance si = mpStomp->getInstance();
     if(si != StompX && si != StompMod && si != StompDelay)
     {
-      ui->lcdDisplay->setValue7("");
-      ui->lcdDisplay->setValue7Title("");
-      ui->stereoDial->setIsActive(false);
+      ui.lcdDisplay->setValue7("");
+      ui.lcdDisplay->setValue7Title("");
+      ui.stereoDial->setIsActive(false);
     }
     else
     {
-      ui->lcdDisplay->setValue7Title("Stereo");
-      ui->stereoDial->setIsActive(true);
+      ui.lcdDisplay->setValue7Title("Stereo");
+      ui.stereoDial->setIsActive(true);
       mpStomp->requestStereo();
     }
   }
@@ -90,56 +83,49 @@ void RotarySpeakerFrame::deactivate()
     disconnect(mpStomp, &Stomp::stereoReceived, this, &RotarySpeakerFrame::onStereo);
     mpStomp = nullptr;
   }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
-  }
 }
 
 QToasterLCD::Page RotarySpeakerFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page RotarySpeakerFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void RotarySpeakerFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void RotarySpeakerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void RotarySpeakerFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void RotarySpeakerFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void RotarySpeakerFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void RotarySpeakerFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void RotarySpeakerFrame::on_distanceDial_valueChanged(int value)
@@ -186,42 +172,42 @@ void RotarySpeakerFrame::on_stereoDial_valueChanged(double value)
 
 void RotarySpeakerFrame::onDistance(int value)
 {
-  ui->distanceDial->setValue(value);
+  ui.distanceDial->setValue(value);
   update();
 }
 
 void RotarySpeakerFrame::onLowHighBalance(double value)
 {
-  ui->lowHighBalanceDial->setValue(value);
+  ui.lowHighBalanceDial->setValue(value);
   update();
 }
 
 void RotarySpeakerFrame::onRotarySpeed(::RotarySpeed value)
 {
-  ui->rotarySpeedDial->setValue(value);
+  ui.rotarySpeedDial->setValue(value);
   update();
 }
 
 void RotarySpeakerFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void RotarySpeakerFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void RotarySpeakerFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void RotarySpeakerFrame::onStereo(double value)
 {
-  ui->stereoDial->setValue(value);
+  ui.stereoDial->setValue(value);
   update();
 }

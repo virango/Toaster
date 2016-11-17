@@ -15,14 +15,10 @@
 */
 #ifndef LEGACYDELAYFRAME_H
 #define LEGACYDELAYFRAME_H
-
 #include <QWidget>
+#include "ui_LegacyDelayFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class LegacyDelayFrame;
-}
 
 class LegacyDelayFrame : public QWidget, public IStompEditorPage
 {
@@ -74,10 +70,9 @@ private slots:
 
 private:
   void UpdateLCD();
-  Ui::LegacyDelayFrame *ui;
-  Stomp* mpStomp;
-  bool mToTempo;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::LegacyDelayFrame ui;
+  Stomp* mpStomp = nullptr;
+  bool mToTempo = false;
 };
 
 #endif // LEGACYDELAYFRAME_H

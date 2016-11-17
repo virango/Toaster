@@ -16,12 +16,9 @@
 #ifndef COMPRESSORFRAME_H
 #define COMPRESSORFRAME_H
 #include <QWidget>
+#include "ui_CompressorFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class CompressorFrame;
-}
 
 class CompressorFrame : public QWidget, public IStompEditorPage
 {
@@ -60,10 +57,8 @@ private slots:
   void onVolume(double value);
 
 private:
-  Ui::CompressorFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::CompressorFrame ui;
+  Stomp* mpStomp = nullptr;  
 };
 
 #endif // COMPRESSORFRAME_H

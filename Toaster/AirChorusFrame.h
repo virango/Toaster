@@ -16,12 +16,9 @@
 #ifndef AIRCHORUSFRAME_H
 #define AIRCHORUSFRAME_H
 #include <QWidget>
+#include "ui_AirChorusFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class AirChorusFrame;
-}
 
 class AirChorusFrame : public QWidget, public IStompEditorPage
 {
@@ -54,10 +51,8 @@ private slots:
   void onCrossover(int value);
   void onVolume(double value);
 private:
-  Ui::AirChorusFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::AirChorusFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // AIRCHORUSFRAME_H

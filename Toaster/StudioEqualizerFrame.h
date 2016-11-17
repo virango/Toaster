@@ -16,12 +16,9 @@
 #ifndef STUDIOEQUALIZERFRAME_H
 #define STUDIOEQUALIZERFRAME_H
 #include <QWidget>
+#include "ui_StudioEqualizerFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class StudioEqualizerFrame;
-}
 
 class StudioEqualizerFrame : public QWidget, public IStompEditorPage
 {
@@ -80,10 +77,8 @@ private slots:
   void onMid2QFactor(int value);
 
 private:
-  Ui::StudioEqualizerFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::StudioEqualizerFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // STUDIOEQUALIZERFRAME_H

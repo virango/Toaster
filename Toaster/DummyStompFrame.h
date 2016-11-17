@@ -16,12 +16,9 @@
 #ifndef DUMMYSTOMPFRAME_H
 #define DUMMYSTOMPFRAME_H
 #include <QWidget>
+#include "ui_DummyStompFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class DummyStompFrame;
-}
 
 class Stomp;
 
@@ -49,10 +46,8 @@ public:
   virtual void displayAmpName(const QString&  ampName);
 
 private:
-  Ui::DummyStompFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::DummyStompFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // DUMMYSTOMPFRAME_H

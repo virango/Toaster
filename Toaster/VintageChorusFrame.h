@@ -16,12 +16,9 @@
 #ifndef VINTAGECHORUSFRAME_H
 #define VINTAGECHORUSFRAME_H
 #include <QWidget>
+#include "ui_VintageChorusFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class VintageChorusFrame;
-}
 
 class VintageChorusFrame : public QWidget, public IStompEditorPage
 {
@@ -60,10 +57,8 @@ private slots:
   void onVolume(double value);
   void onDucking(double value);
 private:
-  Ui::VintageChorusFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::VintageChorusFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // VINTAGECHORUSFRAME_H

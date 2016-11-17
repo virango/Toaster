@@ -16,13 +16,9 @@
 #ifndef PEDALPITCHFRAME_H
 #define PEDALPITCHFRAME_H
 #include <QWidget>
+#include "ui_PedalPitchFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class PedalPitchFrame;
-}
-
 
 class PedalPitchFrame : public QWidget, public IStompEditorPage
 {
@@ -69,13 +65,9 @@ private slots:
   void onPureTuning(bool onOff);
   void onFormantShiftOnOff(bool onOff);
 
-
-
 private:
-  Ui::PedalPitchFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::PedalPitchFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // PEDALPITCHFRAME_H

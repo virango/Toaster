@@ -14,37 +14,31 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "DriveDSFrame.h"
-#include "ui_DriveDSFrame.h"
 #include "Stomp.h"
 #include "Settings.h"
 #include "LookUpTables.h"
 
 DriveDSFrame::DriveDSFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+
+  if(Settings::get().getKPAOSVersion() < 0x04000000)
+  {
+    ui.mixDial->setValue(0);
+    ui.lcdDisplay->setValue3Title("");
+    ui.lcdDisplay->setValue3("");
+    ui.mixDial->setIsActive(false);
+  }
 }
 
 DriveDSFrame::~DriveDSFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void DriveDSFrame::activate(QObject& stomp)
 {
-  ui = new Ui::DriveDSFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
-  if(Settings::get().getKPAOSVersion() < 0x04000000)
-  {
-    ui->mixDial->setValue(0);
-    ui->lcdDisplay->setValue3Title("");
-    ui->lcdDisplay->setValue3("");
-    ui->mixDial->setIsActive(false);
-  }
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -56,25 +50,25 @@ void DriveDSFrame::activate(QObject& stomp)
     {
       if(mpStomp->getFXType() == FuzzDS)
       {
-        ui->lcdDisplay->setValue3Title("Mix");
-        ui->mixDial->setIsActive(true);
+        ui.lcdDisplay->setValue3Title("Mix");
+        ui.mixDial->setIsActive(true);
         connect(mpStomp, &Stomp::mixReceived, this, &DriveDSFrame::onMix);
         mpStomp->requestMix();
       }
       else
       {
-        ui->lcdDisplay->setValue3Title("");
-        ui->mixDial->setValue(0);
-        ui->lcdDisplay->setValue3("");
-        ui->mixDial->setIsActive(false);
+        ui.lcdDisplay->setValue3Title("");
+        ui.mixDial->setValue(0);
+        ui.lcdDisplay->setValue3("");
+        ui.mixDial->setIsActive(false);
       }
     }
 
     mpStomp->requestVolume();
     mpStomp->requestDistortionShaperDrive();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -87,58 +81,52 @@ void DriveDSFrame::deactivate()
 
     if((Settings::get().getKPAOSVersion() >= 0x04000000) && (mpStomp->getFXType() == FuzzDS))
       disconnect(mpStomp, &Stomp::mixReceived, this, &DriveDSFrame::onMix);
-  }
-  mpStomp = nullptr;
 
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
+    mpStomp = nullptr;
   }
 }
 
 QToasterLCD::Page DriveDSFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page DriveDSFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void DriveDSFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
+    ui.lcdDisplay->setCurrentPage(page);
   }
 }
 
 void DriveDSFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void DriveDSFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void DriveDSFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void DriveDSFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void DriveDSFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void DriveDSFrame::on_volumeDial_valueChanged(double value)
@@ -161,18 +149,18 @@ void DriveDSFrame::on_mixDial_valueChanged(double value)
 
 void DriveDSFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void DriveDSFrame::onDrive(double value)
 {
-  ui->driveDial->setValue(value);
+  ui.driveDial->setValue(value);
   update();
 }
 
 void DriveDSFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }

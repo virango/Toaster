@@ -14,42 +14,35 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "WahNoPeakFrame.h"
-#include "ui_WahNoPeakFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 WahNoPeakFrame::WahNoPeakFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
 }
 
 WahNoPeakFrame::~WahNoPeakFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void WahNoPeakFrame::activate(QObject& stomp)
 {
-  ui = new Ui::WahNoPeakFrame();
-  ui->setupUi(this);
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
   {
-    connect(mpStomp, SIGNAL(wahManualReceived(double)), this, SLOT(onManual(double)));
-    connect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
-    connect(mpStomp, SIGNAL(wahPedalModeReceived(::WahPedalMode)), this, SLOT(onPedalMode(::WahPedalMode)));
-    connect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    connect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    connect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    connect(mpStomp, SIGNAL(wahTouchAttackReceived(double)), this, SLOT(onTouchAttack(double)));
-    connect(mpStomp, SIGNAL(wahTouchReleaseReceived(double)), this, SLOT(onTouchRelease(double)));
-    connect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
+    connect(mpStomp, &Stomp::wahManualReceived, this, &WahNoPeakFrame::onManual);
+    connect(mpStomp, &Stomp::wahRangeReceived, this, &WahNoPeakFrame::onPedalRange);
+    connect(mpStomp, &Stomp::wahPedalModeReceived, this, &WahNoPeakFrame::onPedalMode);
+    connect(mpStomp, &Stomp::mixReceived, this, &WahNoPeakFrame::onMix);
+    connect(mpStomp, &Stomp::duckingReceived, this, &WahNoPeakFrame::onDucking);
+    connect(mpStomp, &Stomp::volumeReceived, this, &WahNoPeakFrame::onVolume);
+    connect(mpStomp, &Stomp::wahTouchAttackReceived, this, &WahNoPeakFrame::onTouchAttack);
+    connect(mpStomp, &Stomp::wahTouchReleaseReceived, this, &WahNoPeakFrame::onTouchRelease);
+    connect(mpStomp, &Stomp::wahTouchBoostReceived, this, &WahNoPeakFrame::onTouchBoost);
 
     mpStomp->requestWahManual();
     mpStomp->requestWahRange();
@@ -61,8 +54,8 @@ void WahNoPeakFrame::activate(QObject& stomp)
     mpStomp->requestWahTouchRelease();
     mpStomp->requestWahTouchBoost();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 
@@ -70,69 +63,62 @@ void WahNoPeakFrame::deactivate()
 {
   if(mpStomp != nullptr)
   {
-    disconnect(mpStomp, SIGNAL(wahManualReceived(double)), this, SLOT(onManual(double)));
-    disconnect(mpStomp, SIGNAL(wahRangeReceived(double)), this, SLOT(onPedalRange(double)));
-    disconnect(mpStomp, SIGNAL(wahPedalModeReceived(::WahPedalMode)), this, SLOT(onPedalMode(double)));
-    disconnect(mpStomp, SIGNAL(mixReceived(double)), this, SLOT(onMix(double)));
-    disconnect(mpStomp, SIGNAL(duckingReceived(double)), this, SLOT(onDucking(double)));
-    disconnect(mpStomp, SIGNAL(volumeReceived(double)), this, SLOT(onVolume(double)));
-    disconnect(mpStomp, SIGNAL(wahTouchAttackReceived(double)), this, SLOT(onTouchAttack(double)));
-    disconnect(mpStomp, SIGNAL(wahTouchReleaseReceived(double)), this, SLOT(onTouchRelease(double)));
-    disconnect(mpStomp, SIGNAL(wahTouchBoostReceived(double)), this, SLOT(onTouchBoost(double)));
+    disconnect(mpStomp, &Stomp::wahManualReceived, this, &WahNoPeakFrame::onManual);
+    disconnect(mpStomp, &Stomp::wahRangeReceived, this, &WahNoPeakFrame::onPedalRange);
+    disconnect(mpStomp, &Stomp::wahPedalModeReceived, this, &WahNoPeakFrame::onPedalMode);
+    disconnect(mpStomp, &Stomp::mixReceived, this, &WahNoPeakFrame::onMix);
+    disconnect(mpStomp, &Stomp::duckingReceived, this, &WahNoPeakFrame::onDucking);
+    disconnect(mpStomp, &Stomp::volumeReceived, this, &WahNoPeakFrame::onVolume);
+    disconnect(mpStomp, &Stomp::wahTouchAttackReceived, this, &WahNoPeakFrame::onTouchAttack);
+    disconnect(mpStomp, &Stomp::wahTouchReleaseReceived, this, &WahNoPeakFrame::onTouchRelease);
+    disconnect(mpStomp, &Stomp::wahTouchBoostReceived, this, &WahNoPeakFrame::onTouchBoost);
     mpStomp = nullptr;
-  }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
   }
 }
 
 QToasterLCD::Page WahNoPeakFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page WahNoPeakFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void WahNoPeakFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
-    ui->bigDials->setCurrentIndex((int) page);
-    ui->smallDials->setCurrentIndex((int) page);
+    ui.lcdDisplay->setCurrentPage(page);
+    ui.bigDials->setCurrentIndex((int) page);
+    ui.smallDials->setCurrentIndex((int) page);
   }
 }
 
 void WahNoPeakFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void WahNoPeakFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void WahNoPeakFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void WahNoPeakFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void WahNoPeakFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void WahNoPeakFrame::on_manualDial_valueChanged(double value)
@@ -191,55 +177,55 @@ void WahNoPeakFrame::on_touchBoostDial_valueChanged(double value)
 
 void WahNoPeakFrame::onManual(double value)
 {
-  ui->manualDial->setValue(value - 5.0);
+  ui.manualDial->setValue(value - 5.0);
   update();
 }
 
 void WahNoPeakFrame::onPedalRange(double value)
 {
-  ui->pedalRangeDial->setValue(value);
+  ui.pedalRangeDial->setValue(value);
   update();
 }
 
 void WahNoPeakFrame::onPedalMode(WahPedalMode value)
 {
-  ui->pedalModeDial->setValue((int)value);
+  ui.pedalModeDial->setValue((int)value);
   update();
 }
 
 void WahNoPeakFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void WahNoPeakFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void WahNoPeakFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 void WahNoPeakFrame::onTouchAttack(double value)
 {
-  ui->touchAttackDial->setValue(value);
+  ui.touchAttackDial->setValue(value);
   update();
 }
 
 void WahNoPeakFrame::onTouchRelease(double value)
 {
-  ui->touchReleaseDial->setValue(value);
+  ui.touchReleaseDial->setValue(value);
   update();
 }
 
 void WahNoPeakFrame::onTouchBoost(double value)
 {
-  ui->touchBoostDial->setValue(value);
+  ui.touchBoostDial->setValue(value);
   update();
 }
 

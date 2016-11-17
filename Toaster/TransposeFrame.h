@@ -16,12 +16,9 @@
 #ifndef TRANSPOSEFRAME_H
 #define TRANSPOSEFRAME_H
 #include <QWidget>
+#include "ui_TransposeFrame.h"
 #include "StompEditorPage.h"
 #include "Stomp.h"
-
-namespace Ui {
-class TransposeFrame;
-}
 
 class TransposeFrame : public QWidget, public IStompEditorPage
 {
@@ -52,10 +49,8 @@ private slots:
   void onSmoothChords(bool onOff);
 
 private:
-  Ui::TransposeFrame *ui;
-  Stomp* mpStomp;
-  FXType mFXType;
-  QToasterLCD::Page mCurrentPage = QToasterLCD::Page1;
+  Ui::TransposeFrame ui;
+  Stomp* mpStomp = nullptr;
 };
 
 #endif // TRANSPOSEFRAME_H

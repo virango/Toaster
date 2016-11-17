@@ -14,31 +14,24 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "GraphicEqualizerFrame.h"
-#include "ui_GraphicEqualizerFrame.h"
 #include "Stomp.h"
 #include "LookUpTables.h"
 
 GraphicEqualizerFrame::GraphicEqualizerFrame(QWidget *parent)
   : QWidget(parent)
-  , ui(nullptr)
-  , mpStomp(nullptr)
 {
+  ui.setupUi(this);
+  ui.lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
+  ui.highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
 }
 
 GraphicEqualizerFrame::~GraphicEqualizerFrame()
 {
-  if(ui != nullptr)
-    delete ui;
 }
 
 void GraphicEqualizerFrame::activate(QObject& stomp)
 {
-  ui = new Ui::GraphicEqualizerFrame();
-  ui->setupUi(this);
-  ui->lowCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  ui->highCutDial->setLookUpTable(LookUpTables::getFrequencyValues());
-  setCurrentDisplayPage(mCurrentPage);
-
+  show();
   mpStomp = qobject_cast<Stomp*>(&stomp);
 
   if(mpStomp != nullptr)
@@ -71,8 +64,8 @@ void GraphicEqualizerFrame::activate(QObject& stomp)
     mpStomp->requestLowCut();
     mpStomp->requestHighCut();
 
-    ui->lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
-    ui->lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
+    ui.lcdDisplay->setStompInstance(LookUpTables::stompInstanceName(mpStomp->getInstance()));
+    ui.lcdDisplay->setStompName(LookUpTables::stompFXName(mpStomp->getFXType()));
   }
 }
 void GraphicEqualizerFrame::deactivate()
@@ -94,58 +87,51 @@ void GraphicEqualizerFrame::deactivate()
     disconnect(mpStomp, &Stomp::highCutReceived, this, &GraphicEqualizerFrame::onHighCut);
     mpStomp = nullptr;
   }
-
-  if(ui != nullptr)
-  {
-    mCurrentPage = ui->lcdDisplay->currentPage();
-    delete ui;
-    ui = nullptr;
-  }
 }
 
 QToasterLCD::Page GraphicEqualizerFrame::getMaxDisplayPage()
 {
-  return ui->lcdDisplay->maxPage();
+  return ui.lcdDisplay->maxPage();
 }
 
 QToasterLCD::Page GraphicEqualizerFrame::getCurrentDisplayPage()
 {
-  return ui->lcdDisplay->currentPage();
+  return ui.lcdDisplay->currentPage();
 }
 
 void GraphicEqualizerFrame::setCurrentDisplayPage(QToasterLCD::Page page)
 {
-  if(page <= ui->lcdDisplay->maxPage())
+  if(page <= ui.lcdDisplay->maxPage())
   {
-    ui->lcdDisplay->setCurrentPage(page);
-    ui->bigDials->setCurrentIndex((int) page);
-    ui->smallDials->setCurrentIndex((int) page);
+    ui.lcdDisplay->setCurrentPage(page);
+    ui.bigDials->setCurrentIndex((int) page);
+    ui.smallDials->setCurrentIndex((int) page);
   }
 }
 
 void GraphicEqualizerFrame::displayStompType(StompInstance stompInstance, FXType fxType)
 {
-  ui->lcdDisplay->setStompFXType(stompInstance, fxType);
+  ui.lcdDisplay->setStompFXType(stompInstance, fxType);
 }
 
 void GraphicEqualizerFrame::displayStompEnabled(StompInstance stompInstance, bool enabled)
 {
-  ui->lcdDisplay->setStompEnabled(stompInstance, enabled);
+  ui.lcdDisplay->setStompEnabled(stompInstance, enabled);
 }
 
 void GraphicEqualizerFrame::displayDelayEnabled(bool enabled)
 {
-  ui->lcdDisplay->setDelayEnabled(enabled);
+  ui.lcdDisplay->setDelayEnabled(enabled);
 }
 
 void GraphicEqualizerFrame::displayReverbEnabled(bool enabled)
 {
-  ui->lcdDisplay->setReverbEnabled(enabled);
+  ui.lcdDisplay->setReverbEnabled(enabled);
 }
 
 void GraphicEqualizerFrame::displayAmpName(const QString&  ampName)
 {
-  ui->lcdDisplay->setAmpName(ampName);
+  ui.lcdDisplay->setAmpName(ampName);
 }
 
 void GraphicEqualizerFrame::on_mixDial_valueChanged(double value)
@@ -229,88 +215,88 @@ void GraphicEqualizerFrame::on_highCutDial_valueChanged(int value)
 
 void GraphicEqualizerFrame::onMix(double value)
 {
-  ui->mixDial->setValue(value);
+  ui.mixDial->setValue(value);
   update();
 }
 
 void GraphicEqualizerFrame::onDucking(double value)
 {
-  ui->duckingDial->setValue(value);
+  ui.duckingDial->setValue(value);
   update();
 }
 
 void GraphicEqualizerFrame::onVolume(double value)
 {
-  ui->volumeDial->setValue(value);
+  ui.volumeDial->setValue(value);
   update();
 }
 
 
 void GraphicEqualizerFrame::onBand1(double value)
 {
-  ui->band1Dial->setValue(value);
-  ui->lcdDisplay->setEqBand1Value(value);
+  ui.band1Dial->setValue(value);
+  ui.lcdDisplay->setEqBand1Value(value);
   update();
 }
 
 void GraphicEqualizerFrame::onBand2(double value)
 {
-  ui->band2Dial->setValue(value);
-  ui->lcdDisplay->setEqBand2Value(value);
+  ui.band2Dial->setValue(value);
+  ui.lcdDisplay->setEqBand2Value(value);
   update();
 }
 
 void GraphicEqualizerFrame::onBand3(double value)
 {
-  ui->band3Dial->setValue(value);
-  ui->lcdDisplay->setEqBand3Value(value);
+  ui.band3Dial->setValue(value);
+  ui.lcdDisplay->setEqBand3Value(value);
   update();
 }
 
 void GraphicEqualizerFrame::onBand4(double value)
 {
-  ui->band4Dial->setValue(value);
-  ui->lcdDisplay->setEqBand4Value(value);
+  ui.band4Dial->setValue(value);
+  ui.lcdDisplay->setEqBand4Value(value);
   update();
 }
 
 void GraphicEqualizerFrame::onBand5(double value)
 {
-  ui->band5Dial->setValue(value);
-  ui->lcdDisplay->setEqBand5Value(value);
+  ui.band5Dial->setValue(value);
+  ui.lcdDisplay->setEqBand5Value(value);
   update();
 }
 
 void GraphicEqualizerFrame::onBand6(double value)
 {
-  ui->band6Dial->setValue(value);
-  ui->lcdDisplay->setEqBand6Value(value);
+  ui.band6Dial->setValue(value);
+  ui.lcdDisplay->setEqBand6Value(value);
   update();
 }
 
 void GraphicEqualizerFrame::onBand7(double value)
 {
-  ui->band7Dial->setValue(value);
-  ui->lcdDisplay->setEqBand7Value(value);
+  ui.band7Dial->setValue(value);
+  ui.lcdDisplay->setEqBand7Value(value);
   update();
 }
 
 void GraphicEqualizerFrame::onBand8(double value)
 {
-  ui->band8Dial->setValue(value);
-  ui->lcdDisplay->setEqBand8Value(value);
+  ui.band8Dial->setValue(value);
+  ui.lcdDisplay->setEqBand8Value(value);
   update();
 }
 
 void GraphicEqualizerFrame::onLowCut(int value)
 {
-  ui->lowCutDial->setValue(value);
+  ui.lowCutDial->setValue(value);
   update();
 }
 
 void GraphicEqualizerFrame::onHighCut(int value)
 {
-  ui->highCutDial->setValue(value);
+  ui.highCutDial->setValue(value);
   update();
 }
 
