@@ -199,9 +199,11 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
   Stomp* pActiveStomp = nullptr;
   if(mpActivePage != nullptr)
   {
+    // on rig change, while editor is active
     if(fxType != mActiveStompType)
     {
       mpActivePage->deactivate();
+      delete mpActivePage;
       mpActivePage = nullptr;
       emit editorPageChanged(mpActivePage);
     }
