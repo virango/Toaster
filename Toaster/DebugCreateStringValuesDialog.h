@@ -17,13 +17,9 @@
 #define DEBUGCREATESTRINGVALUESDIALOG_H
 
 #include <QDialog>
-
-
-namespace Ui {
-class DebugCreateStringValuesDialog;
-}
-
-class QTimer;
+#include <QTimer>
+#include "ui_DebugCreateStringValuesDialog.h"
+#include <memory>
 
 class DebugCreateStringValuesDialog : public QDialog
 {
@@ -31,7 +27,6 @@ class DebugCreateStringValuesDialog : public QDialog
 
 public:
   explicit DebugCreateStringValuesDialog(QWidget *parent = 0);
-  ~DebugCreateStringValuesDialog();
 
 private slots:
   void on_raw2ValFileButton_clicked();
@@ -41,7 +36,7 @@ private slots:
   void onTimer();
 
 private:
-  Ui::DebugCreateStringValuesDialog *ui;
+  Ui::DebugCreateStringValuesDialog ui;
 
   unsigned char mAdressPage;
   unsigned char mParameter;
@@ -50,7 +45,7 @@ private:
 
   int mCurrValue;
 
-  QTimer* mTimer;
+  std::unique_ptr<QTimer> mTimer;
 };
 
 #endif // DEBUGCREATESTRINGVALUESDIALOG_H

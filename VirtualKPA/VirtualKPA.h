@@ -18,6 +18,7 @@
 #include "virtualkpa_global.h"
 #include "VirtualRig.h"
 #include "MidiConsumer.h"
+#include <memory>
 
 
 class VIRTUALKPASHARED_EXPORT VirtualKPA
@@ -26,7 +27,7 @@ public:
   static VirtualKPA& get();
 
   VirtualRig* loadRig(const QString& rigFilePath);
-  VirtualRig* getCurrentRig() { return mCurrentRig; }
+  VirtualRig* getCurrentRig() { return mCurrentRig.get(); }
 
   unsigned short loadRig(const QString& rigFileName, ByteArray& blob);
 
@@ -48,7 +49,7 @@ private:
 
   RigMap mRigMap;
 
-  VirtualRig* mCurrentRig = nullptr;
+  std::unique_ptr<VirtualRig> mCurrentRig;
 
   QList<IMidiConsumer*> mMidiConsumer;
 

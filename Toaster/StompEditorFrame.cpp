@@ -145,19 +145,19 @@ void StompEditorFrame::activate(QObject& stomp)
     }
     else if (pAmp != nullptr)
     {
-      activatePage(new AmpFrame(this));
+      activatePage(std::unique_ptr<AmpFrame>(new AmpFrame(this)));
     }
     else if(pCab != nullptr)
     {
-      activatePage(new CabFrame(this));
+      activatePage(std::unique_ptr<CabFrame>(new CabFrame(this)));
     }
     else if(pGlobal != nullptr)
     {
-      activatePage(new OutputFrame(this));
+      activatePage(std::unique_ptr<OutputFrame>(new OutputFrame(this)));
     }
     else if(pInput != nullptr)
     {
-      activatePage(new InputFrame(this));
+      activatePage(std::unique_ptr<InputFrame>(new InputFrame(this)));
     }
   }
 
@@ -188,9 +188,8 @@ void StompEditorFrame::deactivate()
   {
     mpActivePage->deactivate();
     ui.dummyStompFrame->show();
-    delete mpActivePage;
-    mpActivePage = nullptr;
-    emit editorPageChanged(mpActivePage);
+    mpActivePage.reset();
+    emit editorPageChanged(mpActivePage.get());
   }
 }
 
@@ -203,9 +202,8 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
     if(fxType != mActiveStompType)
     {
       mpActivePage->deactivate();
-      delete mpActivePage;
-      mpActivePage = nullptr;
-      emit editorPageChanged(mpActivePage);
+      mpActivePage.reset();
+      emit editorPageChanged(mpActivePage.get());
     }
   }
 
@@ -221,131 +219,131 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       case WahVowelFilter:
       case WahFlanger:
       case WahRateReducer:
-        mpActivePage = new WahWahFrame(this);
+        mpActivePage.reset(new WahWahFrame(this));
         break;
       case WahRingModulator:
       case WahFrequencyShifter:
-        mpActivePage = new WahNoPeakFrame(this);
+        mpActivePage.reset(new WahNoPeakFrame(this));
         break;
       case WahFormantShifter:
-        mpActivePage = new WahFormantShiftFrame(this);
+        mpActivePage.reset(new WahFormantShiftFrame(this));
         break;
       case WahPhaser:
-        mpActivePage = new WahPhaserFrame(this);
+        mpActivePage.reset(new WahPhaserFrame(this));
         break;
       case PureBooster:
-        mpActivePage = new PureBoosterFrame(this);
+        mpActivePage.reset(new PureBoosterFrame(this));
         break;
       case SoftShaper:
       case HardShaper:
       case WaveShaper:
       case PlusDS:
       case FuzzDS:
-        mpActivePage = new DriveDSFrame(this);
+        mpActivePage.reset(new DriveDSFrame(this));
         break;
       case BitShaper:
       case GreenScream:
       case OneDS:
       case Muffin:
       case MouseDS:
-        mpActivePage = new DriveAndToneDSFrame(this);
+        mpActivePage.reset(new DriveAndToneDSFrame(this));
         break;
       case RectiShaper:
-        mpActivePage = new RectiShaperFrame(this);
+        mpActivePage.reset(new RectiShaperFrame(this));
         break;
       case TrebleBooster:
       case LeadBooster:
-        mpActivePage = new ToneAndDuckingDSFrame(this);
+        mpActivePage.reset(new ToneAndDuckingDSFrame(this));
         break;
       case WahPedalBooster:
-        mpActivePage = new WahPedalBoosterFrame(this);
+        mpActivePage.reset(new WahPedalBoosterFrame(this));
         break;
       case MetalDS:
-        mpActivePage = new MetalDSFrame(this);
+        mpActivePage.reset(new MetalDSFrame(this));
         break;
       case GraphicEqualizer:
-        mpActivePage = new GraphicEqualizerFrame(this);
+        mpActivePage.reset(new GraphicEqualizerFrame(this));
         break;
       case StudioEqualizer:
-        mpActivePage = new StudioEqualizerFrame(this);
+        mpActivePage.reset(new StudioEqualizerFrame(this));
         break;
       case MetalEqualizer:
-        mpActivePage = new MetalEqualizerFrame(this);
+        mpActivePage.reset(new MetalEqualizerFrame(this));
         break;
       case StereoWidener:
-        mpActivePage = new StereoWidenerFrame(this);
+        mpActivePage.reset(new StereoWidenerFrame(this));
         break;
       case Compressor:
-        mpActivePage = new CompressorFrame(this);
+        mpActivePage.reset(new CompressorFrame(this));
         break;
       case NoiseGate21:
       case NoiseGate41:
-        mpActivePage = new GateFrame(this);
+        mpActivePage.reset(new GateFrame(this));
         break;
       case VintageChorus:
-        mpActivePage = new VintageChorusFrame(this);
+        mpActivePage.reset(new VintageChorusFrame(this));
         break;
       case HyperChorus:
-        mpActivePage = new HyperChorusFrame(this);
+        mpActivePage.reset(new HyperChorusFrame(this));
         break;
       case AirChorus:
-        mpActivePage = new AirChorusFrame(this);
+        mpActivePage.reset(new AirChorusFrame(this));
         break;
       case MicroPitch:
-        mpActivePage = new MicroPitchFrame(this);
+        mpActivePage.reset(new MicroPitchFrame(this));
         break;
       case Vibrato:
-        mpActivePage = new VibratoFrame(this);
+        mpActivePage.reset(new VibratoFrame(this));
         break;
       case RotarySpeaker:
-        mpActivePage = new RotarySpeakerFrame(this);
+        mpActivePage.reset(new RotarySpeakerFrame(this));
         break;
       case Tremolo:
-        mpActivePage = new TremoloFrame(this);
+        mpActivePage.reset(new TremoloFrame(this));
         break;
       case Phaser:
       case PhaserVibe:
-        mpActivePage = new PhaserFrame(this);
+        mpActivePage.reset(new PhaserFrame(this));
         break;
       case PhaserOneway:
-        mpActivePage = new PhaserOnewayFrame(this);
+        mpActivePage.reset(new PhaserOnewayFrame(this));
         break;
       case Flanger:
-        mpActivePage = new FlangerFrame(this);
+        mpActivePage.reset(new FlangerFrame(this));
         break;
       case FlangerOneway:
-        mpActivePage = new FlangerOnewayFrame(this);
+        mpActivePage.reset(new FlangerOnewayFrame(this));
         break;
       case Space:
-        mpActivePage = new SpaceFrame(this);
+        mpActivePage.reset(new SpaceFrame(this));
         break;
       case Transpose:
-        mpActivePage = new TransposeFrame(this);
+        mpActivePage.reset(new TransposeFrame(this));
         break;
       case PedalPitch:
-        mpActivePage = new PedalPitchFrame(this);
+        mpActivePage.reset(new PedalPitchFrame(this));
         break;
       case PedalVinylStop:
-        mpActivePage = new PedalVinylStopFrame(this);
+        mpActivePage.reset(new PedalVinylStopFrame(this));
         break;
       case ChromaticPitch:
-        mpActivePage = new ChromaticPitchFrame(this);
+        mpActivePage.reset(new ChromaticPitchFrame(this));
         break;
       case HarmonicPitch:
-        mpActivePage = new HarmonicPitchFrame(this);
+        mpActivePage.reset(new HarmonicPitchFrame(this));
         break;
       case AnalogOctaver:
-        mpActivePage = new AnalogOctaverFrame(this);
+        mpActivePage.reset(new AnalogOctaverFrame(this));
         break;
       case LoopMono:
       case LoopStereo:
-        mpActivePage = new LoopFrame(this);
+        mpActivePage.reset(new LoopFrame(this));
         break;
       case LoopDistortion:
-        mpActivePage = new LoopDistortionFrame(this);
+        mpActivePage.reset(new LoopDistortionFrame(this));
         break;
       case LegacyDelay:
-        mpActivePage = new LegacyDelayFrame(this);
+        mpActivePage.reset(new LegacyDelayFrame(this));
         break;
       default:
         ui.dummyStompFrame->show();
@@ -359,7 +357,7 @@ void StompEditorFrame::onActiveStompType(FXType fxType)
       ui.dummyStompFrame->hide();
       mpActivePage->activate(*pActiveStomp);
       setUpdatesEnabled(true);
-      emit editorPageChanged(mpActivePage);
+      emit editorPageChanged(mpActivePage.get());
       requestValues();
     }
   }
@@ -373,8 +371,8 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
     if(delayType != mActiveStompType)
     {
       mpActivePage->deactivate();
-      mpActivePage = nullptr;
-      emit editorPageChanged(mpActivePage);
+      mpActivePage.reset();
+      emit editorPageChanged(mpActivePage.get());
     }
   }
 
@@ -386,10 +384,10 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
     {
       case FreeDelay:
       case AnalogDelay:
-        mpActivePage = new DelayFrame(this);
+        mpActivePage.reset(new DelayFrame(this));
         break;
       case TapDelay:
-        mpActivePage = new TapDelayFrame(this);
+        mpActivePage.reset(new TapDelayFrame(this));
         break;
       default:
         ui.dummyStompFrame->show();
@@ -403,7 +401,7 @@ void StompEditorFrame::onDelayType(::DelayType delayType)
       ui.dummyStompFrame->hide();
       mpActivePage->activate(*pActiveDelay);
       setUpdatesEnabled(true);
-      emit editorPageChanged(mpActivePage);
+      emit editorPageChanged(mpActivePage.get());
       requestValues();
     }
   }
@@ -417,8 +415,8 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
     if(reverbType != mActiveStompType)
     {
       mpActivePage->deactivate();
-      mpActivePage = nullptr;
-      emit editorPageChanged(mpActivePage);
+      mpActivePage.reset();
+      emit editorPageChanged(mpActivePage.get());
     }
   }
 
@@ -433,7 +431,7 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
       case SmallRoom:
       case Ambience:
       case Matchbox:
-        mpActivePage = new ReverbFrame(this);
+        mpActivePage.reset(new ReverbFrame(this));
         break;
       default:
         ui.dummyStompFrame->show();
@@ -447,7 +445,7 @@ void StompEditorFrame::onReverbType(::ReverbType reverbType)
       mpActivePage->activate(*pActiveReverb);
       ui.dummyStompFrame->hide();
       setUpdatesEnabled(true);
-      emit editorPageChanged(mpActivePage);
+      emit editorPageChanged(mpActivePage.get());
       requestValues();
     }
   }
@@ -572,7 +570,7 @@ void StompEditorFrame::nextDisplayPage()
     if(pageToSet != currentPage)
     {
       mpActivePage->setCurrentDisplayPage(pageToSet);
-      emit editorPageChanged(mpActivePage);
+      emit editorPageChanged(mpActivePage.get());
     }
   }
 }
@@ -589,7 +587,7 @@ void StompEditorFrame::prevDisplayPage()
     if(pageToSet != currentPage)
     {
       mpActivePage->setCurrentDisplayPage(pageToSet);
-      emit editorPageChanged(mpActivePage);
+      emit editorPageChanged(mpActivePage.get());
     }
   }
 }
@@ -623,16 +621,16 @@ void StompEditorFrame::requestValues()
   profileObj.requestAmpName();
 }
 
-void StompEditorFrame::activatePage(IStompEditorPage* page)
+void StompEditorFrame::activatePage(std::unique_ptr<IStompEditorPage> page)
 {
-  mpActivePage = page;
+  mpActivePage = std::move(page);
   if(mpActivePage != nullptr && !mpActivePage->isActive())
   {
     setUpdatesEnabled(false);
     mpActivePage->activate(*mpActiveStomp);
     ui.dummyStompFrame->hide();
     setUpdatesEnabled(true);
-    emit editorPageChanged(mpActivePage);
+    emit editorPageChanged(mpActivePage.get());
     requestValues();
   }
 }

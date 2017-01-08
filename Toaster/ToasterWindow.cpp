@@ -61,10 +61,7 @@ ToasterWindow::ToasterWindow(QWidget *parent)
 
   if(mIsConnected2Midi)
   {
-    QTimer* timer = new QTimer(this);
-    timer->setSingleShot(true);
-    connect(timer, &QTimer::timeout, this, &ToasterWindow::onStartup);
-    timer->start(20);
+      QTimer::singleShot(20, this, &ToasterWindow::onStartup);
   }
 
   qRegisterMetaType<::FXType>("::FXType");
@@ -131,7 +128,7 @@ void ToasterWindow::openMidiPorts()
   }
 
   if(mIsConnected2Midi)
-    ui->statusBar->showMessage("Midi connected");  
+    ui->statusBar->showMessage("Midi connected");
 
   emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
 }
@@ -198,7 +195,7 @@ void ToasterWindow::on_actionUploadKIPRFile_triggered()
     return;
 #if 0
   VirtualKPA& vk = VirtualKPA::get();
-  VirtualRig* vr = vk.loadRig(fileName);
+  VirtualRig* vr(vk.loadRig(fileName));
   QString newFileName = fileName + "_save";
   vk.saveRig(*vr, newFileName);
 #else

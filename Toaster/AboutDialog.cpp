@@ -14,22 +14,14 @@
 *   If not, see <http://www.gnu.org/licenses/>.
 */
 #include "AboutDialog.h"
-#include "ui_AboutDialog.h"
 
 AboutDialog::AboutDialog(QWidget *parent) :
-  QDialog(parent),
-  ui(new Ui::AboutDialog)
+  QDialog(parent)
 {
-  ui->setupUi(this);
-}
-
-AboutDialog::~AboutDialog()
-{
-  if(ui != nullptr)
-    delete ui;
+  ui.setupUi(this);
 }
 
 void AboutDialog::setVersionString(const QString versionStr)
 {
-  ui->versionLabel->setText("Version " + versionStr);
+  ui.versionLabel->setText("Version " + versionStr);
 }

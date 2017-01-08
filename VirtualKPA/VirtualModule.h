@@ -15,8 +15,10 @@
 */
 #ifndef VIRTUALMODULE_H
 #define VIRTUALMODULE_H
-#include <QMap>
 #include "VirtualParam.h"
+#include <map>
+#include <memory>
+#include <vector>
 
 typedef unsigned int AddressPage;
 
@@ -48,7 +50,9 @@ private:
 
   AddressPage mAP;
 
-  typedef QMap<ParamId, VirtualParam*> Params;
+  std::vector<std::unique_ptr<VirtualParam>> mvParams;
+
+  typedef std::map<ParamId, VirtualParam*> Params;
 
   Params mParams;
 };

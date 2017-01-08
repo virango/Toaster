@@ -17,10 +17,7 @@
 #define BROWSERFRAME_H
 #include <QFrame>
 #include "Commons.h"
-
-namespace Ui {
-  class BrowserFrame;
-}
+#include "ui_BrowserFrame.h"
 
 class BrowserFrame : public QFrame
 {
@@ -88,7 +85,7 @@ private slots:
   void onBrowserView(unsigned int view);
 
 private:
-  Ui::BrowserFrame *ui;
+  Ui::BrowserFrame ui;
 };
 
 #endif // BROWSERFRAME_H

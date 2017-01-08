@@ -61,12 +61,12 @@ bool VirtualRig::load(QDataStream& stream, qint64 fileSize)
         VirtualModule* module = nullptr;
         if(it != mModules.end())
         {
-          module = (*it);
+          module = it->second.get();
         }
         else
         {
           module = new VirtualModule(moduleId);
-          mModules[moduleId] = module;
+          mModules[moduleId].reset(module);
         }
 
         VirtualParam* param = module->load(buf);
@@ -117,10 +117,10 @@ ByteArray VirtualRig::midiIn(const ByteArray& msg)
   if(msg.size() >= 11)
   {
     AddressPage ap = VirtualModule::extractAddressPage(msg.mid(1));
-    ModuleMap::iterator it = mModules.find(ap);
+    auto it = mModules.find(ap);
     if(it != mModules.end())
     {
-      VirtualModule* module = (*it);
+      VirtualModule* module = it->second.get();
       return module->midiIn(msg);
     }
   }

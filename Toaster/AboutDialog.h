@@ -17,10 +17,7 @@
 #define ABOUTDIALOG_H
 
 #include <QDialog>
-
-namespace Ui {
-class AboutDialog;
-}
+#include "ui_AboutDialog.h"
 
 class AboutDialog : public QDialog
 {
@@ -28,12 +25,11 @@ class AboutDialog : public QDialog
 
 public:
   explicit AboutDialog(QWidget *parent = 0);
-  ~AboutDialog();
 
   void setVersionString(const QString versionStr);
 
 private:
-  Ui::AboutDialog *ui;
+  Ui::AboutDialog ui;
 };
 
 #endif // ABOUTDIALOG_H
