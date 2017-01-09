@@ -17,10 +17,7 @@
 #define CONNECTIONSTATUSFRAME_H
 
 #include <QWidget>
-
-namespace Ui {
-class ConnectionStatusFrame;
-}
+#include "ui_ConnectionStatusFrame.h"
 
 class ConnectionStatusFrame : public QWidget
 {
@@ -35,7 +32,7 @@ public slots:
   void setKPAStatus(bool isConnected);
 
 private:
-  Ui::ConnectionStatusFrame *ui;
+  Ui::ConnectionStatusFrame ui;
 };
 
 #endif // CONNECTIONSTATUSFRAME_H

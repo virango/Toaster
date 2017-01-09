@@ -25,10 +25,9 @@
 
 BrowserFrame::BrowserFrame(QWidget *parent)
   : QFrame(parent)
-  , ui(new Ui::BrowserFrame)
 {
-  ui->setupUi(this);
-  ui->browseModeDial->setValues(ui->lcdDisplay->getBrowserModeViews());
+  ui.setupUi(this);
+  ui.browseModeDial->setValues(ui.lcdDisplay->getBrowserModeViews());
   // stomps
   connect(&stompAObj, &Stomp::onOffReceived, this, &BrowserFrame::onStompAOnOff);
   connect(&stompBObj, &Stomp::onOffReceived, this, &BrowserFrame::onStompBOnOff);
@@ -85,67 +84,67 @@ void BrowserFrame::requestValues()
 // kpa => ui
 void BrowserFrame::onStompAOnOff(bool onOff)
 {
-  ui->lcdDisplay->setStompAEnabled(onOff);
+  ui.lcdDisplay->setStompAEnabled(onOff);
 }
 
 void BrowserFrame::onStompBOnOff(bool onOff)
 {
-  ui->lcdDisplay->setStompBEnabled(onOff);
+  ui.lcdDisplay->setStompBEnabled(onOff);
 }
 
 void BrowserFrame::onStompCOnOff(bool onOff)
 {
-  ui->lcdDisplay->setStompCEnabled(onOff);
+  ui.lcdDisplay->setStompCEnabled(onOff);
 }
 
 void BrowserFrame::onStompDOnOff(bool onOff)
 {
-  ui->lcdDisplay->setStompDEnabled(onOff);
+  ui.lcdDisplay->setStompDEnabled(onOff);
 }
 
 void BrowserFrame::onStompXOnOff(bool onOff)
 {
-  ui->lcdDisplay->setStompXEnabled(onOff);
+  ui.lcdDisplay->setStompXEnabled(onOff);
 }
 
 void BrowserFrame::onStompModOnOff(bool onOff)
 {
-  ui->lcdDisplay->setStompModEnabled(onOff);
+  ui.lcdDisplay->setStompModEnabled(onOff);
 }
 
 void BrowserFrame::onStompAType(::FXType type)
 {
-  ui->lcdDisplay->setStompAFXType(type);
+  ui.lcdDisplay->setStompAFXType(type);
 }
 
 void BrowserFrame::onStompBType(::FXType type)
 {
-  ui->lcdDisplay->setStompBFXType(type);
+  ui.lcdDisplay->setStompBFXType(type);
 }
 
 void BrowserFrame::onStompCType(::FXType type)
 {
-  ui->lcdDisplay->setStompCFXType(type);
+  ui.lcdDisplay->setStompCFXType(type);
 }
 
 void BrowserFrame::onStompDType(::FXType type)
 {
-  ui->lcdDisplay->setStompDFXType(type);
+  ui.lcdDisplay->setStompDFXType(type);
 }
 
 void BrowserFrame::onStompXType(::FXType type)
 {
-  ui->lcdDisplay->setStompXFXType(type);
+  ui.lcdDisplay->setStompXFXType(type);
 }
 
 void BrowserFrame::onStompModType(::FXType type)
 {
-  ui->lcdDisplay->setStompModFXType(type);
+  ui.lcdDisplay->setStompModFXType(type);
 }
 
 void BrowserFrame::onStompDelayType(::FXType type)
 {
-  ui->lcdDisplay->setStompDelayFXType(type);
+  ui.lcdDisplay->setStompDelayFXType(type);
 }
 
 //------------------------------------------------------------------------------------------
@@ -155,7 +154,7 @@ void BrowserFrame::onStompDelayType(::FXType type)
 // kpa => ui
 void BrowserFrame::onDelayOnOff(bool onOff)
 {
-  ui->lcdDisplay->setDelayEnabled(onOff);
+  ui.lcdDisplay->setDelayEnabled(onOff);
 }
 //------------------------------------------------------------------------------------------
 
@@ -164,7 +163,7 @@ void BrowserFrame::onDelayOnOff(bool onOff)
 // kpa => ui
 void BrowserFrame::onReverbOnOff(bool onOff)
 {
-  ui->lcdDisplay->setReverbEnabled(onOff);
+  ui.lcdDisplay->setReverbEnabled(onOff);
 }
 //------------------------------------------------------------------------------------------
 
@@ -177,7 +176,7 @@ void BrowserFrame::on_eqBassDial_valueChanged(double value)
 
 void BrowserFrame::on_eqBassDial_valueChanged(const QString &value)
 {
-  ui->lcdDisplay->setBrowserModeBassValueText(value);
+  ui.lcdDisplay->setBrowserModeBassValueText(value);
 }
 
 void BrowserFrame::on_eqMiddleDial_valueChanged(double value)
@@ -187,7 +186,7 @@ void BrowserFrame::on_eqMiddleDial_valueChanged(double value)
 
 void BrowserFrame::on_eqMiddleDial_valueChanged(const QString &value)
 {
-  ui->lcdDisplay->setBrowserModeMiddleValueText(value);
+  ui.lcdDisplay->setBrowserModeMiddleValueText(value);
 }
 
 void BrowserFrame::on_eqTrebleDial_valueChanged(double value)
@@ -197,7 +196,7 @@ void BrowserFrame::on_eqTrebleDial_valueChanged(double value)
 
 void BrowserFrame::on_eqTrebleDial_valueChanged(const QString &value)
 {
-  ui->lcdDisplay->setBrowserModeTrebleValueText(value);
+  ui.lcdDisplay->setBrowserModeTrebleValueText(value);
 }
 
 void BrowserFrame::on_eqPresenceDial_valueChanged(double value)
@@ -207,31 +206,31 @@ void BrowserFrame::on_eqPresenceDial_valueChanged(double value)
 
 void BrowserFrame::on_eqPresenceDial_valueChanged(const QString &value)
 {
-  ui->lcdDisplay->setBrowserModePresenceValueText(value);
+  ui.lcdDisplay->setBrowserModePresenceValueText(value);
 }
 
 // kpa => ui
 void BrowserFrame::onEqBass(double bass)
 {
-  ui->eqBassDial->setValue(bass);
+  ui.eqBassDial->setValue(bass);
   update();
 }
 
 void BrowserFrame::onEqMiddle(double middle)
 {
-  ui->eqMiddleDial->setValue(middle);
+  ui.eqMiddleDial->setValue(middle);
   update();
 }
 
 void BrowserFrame::onEqTreble(double treble)
 {
-  ui->eqTrebleDial->setValue(treble);
+  ui.eqTrebleDial->setValue(treble);
   update();
 }
 
 void BrowserFrame::onEqPresence(double presence)
 {
-  ui->eqPresenceDial->setValue(presence);
+  ui.eqPresenceDial->setValue(presence);
   update();
 }
 //------------------------------------------------------------------------------------------
@@ -241,17 +240,17 @@ void BrowserFrame::onEqPresence(double presence)
 // kpa => ui
 void BrowserFrame::onRigName(const QString& rigName)
 {
-  ui->lcdDisplay->setBrowserModeRigName(rigName);
+  ui.lcdDisplay->setBrowserModeRigName(rigName);
 }
 
 void BrowserFrame::onRigAuthor(const QString& rigAuthor)
 {
-  ui->lcdDisplay->setBrowserModeRigAuthor(rigAuthor);
+  ui.lcdDisplay->setBrowserModeRigAuthor(rigAuthor);
 }
 
 void BrowserFrame::onAmpName(const QString& ampName)
 {
-  ui->lcdDisplay->setBrowserModeAmpName(ampName);
+  ui.lcdDisplay->setBrowserModeAmpName(ampName);
 }
 //------------------------------------------------------------------------------------------
 
@@ -265,7 +264,7 @@ void BrowserFrame::on_browseModeDial_valueChanged(int view)
 // kpa => ui
 void BrowserFrame::onBrowserView(unsigned int view)
 {
-  ui->lcdDisplay->setBrowserModeView(view);
+  ui.lcdDisplay->setBrowserModeView(view);
 }
 //------------------------------------------------------------------------------------------
 

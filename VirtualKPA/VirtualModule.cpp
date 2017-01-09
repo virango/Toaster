@@ -21,6 +21,7 @@
 #include "VirtualExtendedParam.h"
 #include "VirtualUnknownParam.h"
 #include "Utils.h"
+#include <memory>
 
 VirtualModule::VirtualModule(AddressPage ap)
   :mAP(ap)
@@ -29,7 +30,7 @@ VirtualModule::VirtualModule(AddressPage ap)
 
 VirtualParam* VirtualModule::load(const ByteArray& buf)
 {
-  VirtualParam* newParam = createParam(buf);
+  std::unique_ptr<VirtualParam> newParam(createParam(buf));
 
   if(newParam != nullptr)
   {
@@ -38,17 +39,17 @@ VirtualParam* VirtualModule::load(const ByteArray& buf)
       ParamIdRange idRange = newParam->getIdRange();
       for(ParamId it = idRange.first; it <= idRange.second; ++it)
       {
-        mParams[it] = newParam;
+        mParams[it] = newParam.get();
       }
     }
     else
     {
-      delete newParam;
-      newParam = nullptr;
+      newParam.reset();
     }
   }
 
-  return newParam;
+  mvParams.push_back(std::move(newParam));
+  return mvParams.back().get();
 }
 
 VirtualParam* VirtualModule::createParam(const ByteArray& buf)
@@ -97,7 +98,7 @@ ByteArray VirtualModule::midiIn(const ByteArray& msg)
     Params::iterator it = mParams.find(paramId);
     if(it != mParams.end())
     {
-      VirtualParam* param = (*it);
+      VirtualParam* param = it->second;
       if(paramType < 40)
       {
         param->setValue(msg);

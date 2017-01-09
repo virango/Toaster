@@ -16,7 +16,7 @@
 #ifndef VIRTUALRIG_H
 #define VIRTUALRIG_H
 #include <qglobal.h>
-#include <QMap>
+#include <map>
 #include "VirtualModule.h"
 
 class QDataStream;
@@ -37,7 +37,7 @@ public:
   const QString& getRigName();
 
 private:
-  typedef QMap<AddressPage, VirtualModule*> ModuleMap;
+  typedef std::map<AddressPage, std::unique_ptr<VirtualModule>> ModuleMap;
   typedef QList<VirtualParam*> ParamList;
 
   QString   mFilePath;

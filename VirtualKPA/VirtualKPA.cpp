@@ -52,8 +52,7 @@ VirtualRig* VirtualKPA::loadRig(const QString& rigFilePath)
     }
   }
 
-  if(newRig)
-    mCurrentRig = newRig;
+  mCurrentRig.reset(newRig);
 
   return newRig;
 }

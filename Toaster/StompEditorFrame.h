@@ -18,6 +18,7 @@
 #include <QStackedWidget>
 #include "ui_StompEditorFrame.h"
 #include "Commons.h"
+#include <memory>
 
 struct IStompEditorPage;
 
@@ -73,14 +74,14 @@ public slots:
 
 private:
   void requestValues();
-  void activatePage(IStompEditorPage* page);
+  void activatePage(std::unique_ptr<IStompEditorPage> page);
 
 private:
   Ui::StompEditorFrame ui;
 
   QObject*          mpActiveStomp;
   int               mActiveStompType;
-  IStompEditorPage* mpActivePage;
+  std::unique_ptr<IStompEditorPage> mpActivePage;
 };
 
 #endif // STOMPEDITORFRAME_H
