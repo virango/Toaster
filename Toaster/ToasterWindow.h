@@ -19,12 +19,13 @@
 #include <QMainWindow>
 #include <QLabel>
 #include "ConnectionStatusFrame.h"
+#include "MidiConsumer.h"
 
 namespace Ui {
 class ToasterWindow;
 }
 
-class ToasterWindow : public QMainWindow
+class ToasterWindow : public QMainWindow, public IMidiConsumer
 {
     Q_OBJECT
 
@@ -33,7 +34,7 @@ public:
     ~ToasterWindow();
 
 signals:
-  void connectionStatusChanged(bool midiConnected, bool kpaConnected);
+  void connectionStatusChanged(bool midiConnected, bool kpaConnected, bool kpaDataReceived);
 
 private slots:
   void onStartup();
@@ -55,6 +56,12 @@ private slots:
   void on_actionEditKIPRFile_triggered();
 
 private:
+  unsigned char getStatusByte() override { return 0xF0; }
+  void consume(const ByteArray&) override {
+      mDataReceivedfromKPA = true;
+      emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA, mDataReceivedfromKPA);
+  }
+
   //QTimer* timer;
   void showSettingsDialog();
   void openMidiPorts();
@@ -63,6 +70,7 @@ private:
 
   bool mIsConnected2Midi;
   bool mIsConnected2KPA;
+  bool mDataReceivedfromKPA;
 
   ConnectionStatusFrame mConnectionStatus;
 };

@@ -201,6 +201,7 @@ void QToasterEnumDial::setValues(QStringList values)
 {
   mValues = values;
   updateValueText();
+  updateLEDRing();
   QWidget::update();
 }
 

@@ -154,6 +154,7 @@ void QToasterLookUpTableDial::setLookUpTable(QVector<QPair<int,QString>>* lookUp
 
     mMinValueIndex = 0;
     mMaxValueIndex = mLookUpTable->size() - 1;
+    updateLEDRing();
   }
 }
 

@@ -210,6 +210,7 @@ void QToasterDial::setMinValue(double minValue)
   {
     mMinValue = minValue;
   }
+  updateLEDRing();
   QWidget::update();
 }
 
@@ -219,6 +220,7 @@ void QToasterDial::setMaxValue(double maxValue)
   {
     mMaxValue = maxValue;
   }
+  updateLEDRing();
   QWidget::update();
 }
 

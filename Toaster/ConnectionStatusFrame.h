@@ -29,7 +29,7 @@ public:
 
 public slots:
   void setMidiStatus(bool isConnected);
-  void setKPAStatus(bool isConnected);
+  void setKPAStatus(bool isConnected, bool dataReceived);
 
 private:
   Ui::ConnectionStatusFrame ui;
