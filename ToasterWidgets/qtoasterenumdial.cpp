@@ -186,6 +186,8 @@ void QToasterEnumDial::setKnobSize(KnobSize knobSize)
     mKnobSkinPixmaps = &sSmallKnobSkinPixmaps;
   else
     mKnobSkinPixmaps = &sBigKnobSkinPixmaps;
+
+  QWidget::update();
 }
 
 void QToasterEnumDial::setLEDRingType(LEDRingType ledRingType)
@@ -195,23 +197,30 @@ void QToasterEnumDial::setLEDRingType(LEDRingType ledRingType)
     mLEDRingSkinPixmaps = &sUniLEDRingSkinPixmaps;
   else
     mLEDRingSkinPixmaps = &sBiLEDRingSkinPixmaps;
+
+  QWidget::update();
 }
 
 void QToasterEnumDial::setValues(QStringList values)
 {
   mValues = values;
-  updateValueText();
+  this->setValue(mCurrValueIndex);
   QWidget::update();
 }
 
 void QToasterEnumDial::setValue(int value)
 {
-  if(value >= 0 && value < mValues.size() && mIsActive)
+  if(value >= 0 && value < mValues.size())
   {
     mCurrValueIndex = value;
     updateValueText();
     QWidget::update();
-    emit valueChanged(mCurrValueIndex);
+    if (mIsActive)
+        emit valueChanged(mCurrValueIndex);
+  } else {
+      //Defer updating ValueText until the values have been set
+      if (mValues.empty())
+          mCurrValueIndex = value;
   }
 }
 
@@ -292,5 +301,7 @@ void QToasterEnumDial::updateLEDRing()
     mCurrLEDRingFrameNo = (int) floor(value + 0.5);
     if(mCurrLEDRingFrameNo > sLEDRingSkinNoOfFrames)
       mCurrLEDRingFrameNo = sLEDRingSkinNoOfFrames;
+  } else {
+      mCurrLEDRingFrameNo = 0;
   }
 }

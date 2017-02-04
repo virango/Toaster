@@ -72,7 +72,7 @@ public slots:
   void setPrecision(unsigned int precision) { mPrecision = precision; }
   void setValue(double value);
   void setUnit(QString unit);
-  void setIsActive(bool active) { mIsActive = active; }
+  void setIsActive(bool active) { mIsActive = active; update(0); }
 
 protected:
   void createKnobSkin();
