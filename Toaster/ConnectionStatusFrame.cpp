@@ -37,10 +37,10 @@ void ConnectionStatusFrame::setMidiStatus(bool isConnected)
   update();
 }
 
-void ConnectionStatusFrame::setKPAStatus(bool isConnected)
+void ConnectionStatusFrame::setKPAStatus(bool isConnected, bool dataReceived)
 {
   if(isConnected)
-    ui.kpaStatusLed->setColor(QMultiColorLed::Green);
+    ui.kpaStatusLed->setColor(dataReceived ? QMultiColorLed::Green : QMultiColorLed::Red);
   else
     ui.kpaStatusLed->setColor(QMultiColorLed::Off);
   update();

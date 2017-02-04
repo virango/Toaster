@@ -105,10 +105,11 @@ void Midi::processMidiInput(std::vector<unsigned char> *msg)
 {
   if(msg && msg->size() > 0)
   {
+    auto bytes = ByteArray::fromStdVector(*msg);
     for(IMidiConsumer* consumer : mConsumer)
     {
       if((*msg)[0] == consumer->getStatusByte())
-        consumer->consume(ByteArray::fromStdVector(*msg));
+        consumer->consume(bytes);
     }
   }
 }
