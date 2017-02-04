@@ -193,7 +193,6 @@ void QToasterDial::setKnobSize(KnobSize knobSize)
     mKnobSkinPixmaps = &sSmallKnobSkinPixmaps;
   else
     mKnobSkinPixmaps = &sBigKnobSkinPixmaps;
-  QWidget::update();
 }
 
 void QToasterDial::setLEDRingType(LEDRingType ledRingType)
@@ -203,9 +202,6 @@ void QToasterDial::setLEDRingType(LEDRingType ledRingType)
     mLEDRingSkinPixmaps = &sUniLEDRingSkinPixmaps;
   else
     mLEDRingSkinPixmaps = &sBiLEDRingSkinPixmaps;
-
-  updateLEDRing();
-  QWidget::update();
 }
 
 void QToasterDial::setMinValue(double minValue)
@@ -214,7 +210,7 @@ void QToasterDial::setMinValue(double minValue)
   {
     mMinValue = minValue;
   }
-  update(0);
+  QWidget::update();
 }
 
 void QToasterDial::setMaxValue(double maxValue)
@@ -223,7 +219,7 @@ void QToasterDial::setMaxValue(double maxValue)
   {
     mMaxValue = maxValue;
   }
-  update(0);
+  QWidget::update();
 }
 
 void QToasterDial::setStepWidth(double stepWidth)
@@ -244,7 +240,6 @@ void QToasterDial::setValue(double value)
     mCurrValue = floor(value * tmp + 0.5) / tmp;
     updateValueText();
     updateLEDRing();
-    QWidget::update();
   }
 }
 

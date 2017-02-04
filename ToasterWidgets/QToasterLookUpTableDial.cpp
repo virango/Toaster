@@ -154,7 +154,6 @@ void QToasterLookUpTableDial::setLookUpTable(QVector<QPair<int,QString>>* lookUp
 
     mMinValueIndex = 0;
     mMaxValueIndex = mLookUpTable->size() - 1;
-    this->setValue(mCurrValue);
   }
 }
 
@@ -209,10 +208,13 @@ void QToasterLookUpTableDial::updateValueText()
 {
   if(mLookUpTable != nullptr)
   {
-    mCurrValueText = mLookUpTable->at(mCurrValue).second + " " + mUnit;
+    mCurrValueText = mLookUpTable->at((int)mCurrValue).second + " " + mUnit;
 
     if(mCurrValueText.startsWith("0.0") && mMinValueIndex < 0)
       mCurrValueText = "<" + mCurrValueText + ">";
+
+    if(mIsActive)
+      emit valueChanged(mCurrValueText);
   }
 }
 
@@ -223,7 +225,6 @@ void QToasterLookUpTableDial::setKnobSize(KnobSize knobSize)
     mKnobSkinPixmaps = &sSmallKnobSkinPixmaps;
   else
     mKnobSkinPixmaps = &sBigKnobSkinPixmaps;
-  QWidget::update();
 }
 
 void QToasterLookUpTableDial::setLEDRingType(LEDRingType ledRingType)
@@ -233,12 +234,11 @@ void QToasterLookUpTableDial::setLEDRingType(LEDRingType ledRingType)
     mLEDRingSkinPixmaps = &sUniLEDRingSkinPixmaps;
   else
     mLEDRingSkinPixmaps = &sBiLEDRingSkinPixmaps;
-  QWidget::update();
 }
 
 void QToasterLookUpTableDial::setValue(int value)
 {
-  if(mLookUpTable != nullptr)
+  if(mLookUpTable != nullptr && mIsActive)
   {
     for(int i = 0; i < mLookUpTable->size(); ++i)
     {
@@ -249,10 +249,8 @@ void QToasterLookUpTableDial::setValue(int value)
     if(mCurrValue > mMaxValueIndex)
       mCurrValue = mMaxValueIndex;
 
-    update(0);
-  } else {
-      //Defer lookup in the lookup table until it is set
-      mCurrValue = value;
+    updateValueText();
+    updateLEDRing();
   }
 }
 
@@ -331,7 +329,7 @@ void QToasterLookUpTableDial::showValueTooltip()
 
 void QToasterLookUpTableDial::updateLEDRing()
 {
-  if(mLEDRingType != None && mLookUpTable != nullptr && mIsActive)
+  if(mLEDRingType != None && mIsActive)
   {
     double step = (mMaxValue - mMinValue) / (sLEDRingSkinNoOfFrames - 1);
     double offset = mMinValue * (-1);
@@ -339,7 +337,5 @@ void QToasterLookUpTableDial::updateLEDRing()
     mCurrLEDRingFrameNo = (int) floor(value + 0.5);
     if(mCurrLEDRingFrameNo >= sLEDRingSkinNoOfFrames)
       mCurrLEDRingFrameNo = sLEDRingSkinNoOfFrames - 1;
-  } else {
-      mCurrLEDRingFrameNo = 0;
   }
 }

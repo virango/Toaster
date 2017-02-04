@@ -30,7 +30,6 @@ ToasterWindow::ToasterWindow(QWidget *parent)
   , ui(new Ui::ToasterWindow)
   , mIsConnected2Midi(false)
   , mIsConnected2KPA(false)
-  , mDataReceivedfromKPA(false)
 {
   ui->setupUi(this);
   ui->statusBar->addPermanentWidget(&mConnectionStatus);
@@ -39,22 +38,21 @@ ToasterWindow::ToasterWindow(QWidget *parent)
   setWindowTitle(title);
 
   connect(this, &ToasterWindow::connectionStatusChanged,
-          [=](bool midiConnected, bool, bool) { ui->actionUploadKIPRFile->setEnabled(midiConnected); });
+          [=](bool midiConnected, bool) { ui->actionUploadKIPRFile->setEnabled(midiConnected); });
   connect(this, &ToasterWindow::connectionStatusChanged,
-          [=](bool midiConnected, bool, bool) { ui->actionClose_MIDI_Ports->setEnabled(midiConnected); });
+          [=](bool midiConnected, bool) { ui->actionClose_MIDI_Ports->setEnabled(midiConnected); });
   connect(this, &ToasterWindow::connectionStatusChanged,
-          [=](bool midiConnected, bool, bool) { ui->actionRequestValues->setEnabled(midiConnected); });
+          [=](bool midiConnected, bool) { ui->actionRequestValues->setEnabled(midiConnected); });
   connect(this, &ToasterWindow::connectionStatusChanged,
-          [=](bool midiConnected, bool, bool) { ui->actionOpenMIDIPorts->setDisabled(midiConnected); });
+          [=](bool midiConnected, bool) { ui->actionOpenMIDIPorts->setDisabled(midiConnected); });
   connect(this, &ToasterWindow::connectionStatusChanged,
-          [=](bool midiConnected, bool kpaConnected, bool) { ui->actionDisconnectFromKPA->setEnabled(midiConnected && kpaConnected); });
+          [=](bool midiConnected, bool kpaConnected) { ui->actionDisconnectFromKPA->setEnabled(midiConnected && kpaConnected); });
   connect(this, &ToasterWindow::connectionStatusChanged,
-          [=](bool midiConnected, bool kpaConnected, bool) { ui->actionConnectToKPA->setEnabled(midiConnected && !kpaConnected);});
+          [=](bool midiConnected, bool kpaConnected) { ui->actionConnectToKPA->setEnabled(midiConnected && !kpaConnected);});
   connect(this, &ToasterWindow::connectionStatusChanged,
-          [=](bool midiConnected, bool, bool) { mConnectionStatus.setMidiStatus(midiConnected); });
+          [=](bool midiConnected, bool) { mConnectionStatus.setMidiStatus(midiConnected); });
   connect(this, &ToasterWindow::connectionStatusChanged,
-          [=](bool midiConnected, bool kpaConnected, bool dataReceived)
-  { mConnectionStatus.setKPAStatus(midiConnected && kpaConnected, dataReceived); });
+          [=](bool midiConnected, bool kpaConnected) { mConnectionStatus.setKPAStatus(midiConnected && kpaConnected); });
 
   if(!Settings::get().getDebuggerActive())
     ui->menuDebug->menuAction()->setVisible(false);
@@ -78,7 +76,6 @@ ToasterWindow::ToasterWindow(QWidget *parent)
 ToasterWindow::~ToasterWindow()
 {
   ui->mainFrame->disconnectFromKPA();
-  Midi::get().removeConsumer(this);
   Midi::get().closePorts();
   if(ui != nullptr)
     delete ui;
@@ -86,13 +83,11 @@ ToasterWindow::~ToasterWindow()
 
 void ToasterWindow::onStartup()
 {
-  Midi::get().addConsumer(this);
   QString connectName("Toaster ");
   ui->mainFrame->connect2KPA(connectName);
   ui->mainFrame->requestValues();
   mIsConnected2KPA = true;
-  mDataReceivedfromKPA = false;
-  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA, mDataReceivedfromKPA);
+  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
 }
 
 void ToasterWindow::on_actionRequestValues_triggered()
@@ -126,9 +121,6 @@ void ToasterWindow::openMidiPorts()
     }
 
     mIsConnected2Midi = Midi::get().openPorts(inPort, outPort);
-    // As we've just opened the midi connection assume
-    // we've not heard from the KPA yet
-    mDataReceivedfromKPA = false;
   }
   else
   {
@@ -138,9 +130,7 @@ void ToasterWindow::openMidiPorts()
   if(mIsConnected2Midi)
     ui->statusBar->showMessage("Midi connected");
 
-  emit connectionStatusChanged(mIsConnected2Midi,
-                               mIsConnected2KPA,
-                               mDataReceivedfromKPA);
+  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
 }
 
 void ToasterWindow::on_actionCmd_triggered()
@@ -378,10 +368,7 @@ void ToasterWindow::on_actionClose_MIDI_Ports_triggered()
   Midi::get().closePorts();
   mIsConnected2KPA = false;
   mIsConnected2Midi = false;
-  mDataReceivedfromKPA = false;
-  emit connectionStatusChanged(mIsConnected2Midi,
-                               mIsConnected2KPA,
-                               mDataReceivedfromKPA);
+  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
 }
 
 void ToasterWindow::on_actionConnectToKPA_triggered()
@@ -389,20 +376,14 @@ void ToasterWindow::on_actionConnectToKPA_triggered()
   QString connectName("Toaster ");
   ui->mainFrame->connect2KPA(connectName);
   mIsConnected2KPA = true;
-  mDataReceivedfromKPA = false;
-  emit connectionStatusChanged(mIsConnected2Midi,
-                               mIsConnected2KPA,
-                               mDataReceivedfromKPA);
+  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
 }
 
 void ToasterWindow::on_actionDisconnectFromKPA_triggered()
 {
   ui->mainFrame->disconnectFromKPA();
   mIsConnected2KPA = false;
-  mDataReceivedfromKPA = false;
-  emit connectionStatusChanged(mIsConnected2Midi,
-                               mIsConnected2KPA,
-                               mDataReceivedfromKPA);
+  emit connectionStatusChanged(mIsConnected2Midi, mIsConnected2KPA);
 }
 
 void ToasterWindow::on_actionExit_triggered()

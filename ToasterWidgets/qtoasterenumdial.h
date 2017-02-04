@@ -61,7 +61,7 @@ public slots:
   void setKnobSize(KnobSize knobSize);
   void setLEDRingType(LEDRingType ledType);
   void setValues(QStringList values);
-  void setIsActive(bool enabled) { mIsActive = enabled; update(0); }
+  void setIsActive(bool enabled) { mIsActive = enabled; }
   //void setValue(const QString& value);
   void setValue(int value);
 

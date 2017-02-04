@@ -64,7 +64,7 @@ public slots:
   void setLEDRingType(LEDRingType ledType);
   void setValue(int value);
   void setUnit(QString unit);
-  void setIsActive(bool active) { mIsActive = active; update(0); }
+  void setIsActive(bool active) { mIsActive = active; }
 
 protected:
   void createKnobSkin();
